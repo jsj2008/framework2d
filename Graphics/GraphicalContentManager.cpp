@@ -1,5 +1,5 @@
 #include "GraphicalContentManager.h"
-#include <Gl/gl.h>
+#include <GL/gl.h>
 #include <SDL/SDL_video.h>
 
 GraphicalContentManager::GraphicalContentManager()
