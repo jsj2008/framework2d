@@ -18,10 +18,11 @@ PhysicsManager::~PhysicsManager()
 b2Body* PhysicsManager::bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosition, void* userData)
 {
     def.bodyDef.userData = userData;
+    def.bodyDef.position = initialPosition;
     b2Body* body = mWorld->CreateBody(&(def.bodyDef));
-    def.fixtureDef.userData = userData;
-    def.fixtureDef.shape = &def.fixtureShape;
-    body->CreateFixture(&def.fixtureDef);
+    //def.fixtureDef.userData = userData;
+    //def.fixtureDef.shape = &def.fixtureShape;
+    body->CreateFixture(&def.shape, def.density);
     return body;
 }
 

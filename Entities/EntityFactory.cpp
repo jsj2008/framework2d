@@ -2,6 +2,7 @@
 #include <Entities/AllEntities.h>
 #include <Graphics/Camera.h>
 #include <Graphics/GraphicsManager.h>
+#include <AI/AIManager.h>
 #define PLAYER_STARTING_HEALTH 100
 EntityFactoryDef::EntityFactoryDef(EntityType _type)
 :entityDef(_type),graphicsDef(eStaticSkinType)
@@ -15,6 +16,19 @@ EntityFactoryDef::EntityDef::EntityDef(EntityType type)
         case ePlayerEntityType:
         {
             playerTypeDef.startingHealth = PLAYER_STARTING_HEALTH;
+            break;
+        }
+        case eCrateEntityType:
+        {
+            break;
+        }
+        case eStaticGeometryEntityType:
+        {
+            break;
+        }
+        case eAIEntityType:
+        {
+            aiEntityTypeDef.startingHealth = PLAYER_STARTING_HEALTH;
             break;
         }
         case eEntityTypeMax:
@@ -45,6 +59,21 @@ Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosit
         case ePlayerEntityType:
         {
             entity = new Player;
+            break;
+        }
+        case eCrateEntityType:
+        {
+            entity = new Crate;
+            break;
+        }
+        case eStaticGeometryEntityType:
+        {
+            entity = new StaticGeometry;
+            break;
+        }
+        case eAIEntityType:
+        {
+            entity = new AIEntity(pAIManager->brainFactory(def.entityDef.aiEntityTypeDef.brainFactoryDef));
             break;
         }
         case eEntityTypeMax:

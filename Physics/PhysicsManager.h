@@ -5,8 +5,8 @@
 struct PhysicsFactoryDef
 {
     b2BodyDef bodyDef;
-    b2FixtureDef fixtureDef;
-    b2PolygonShape fixtureShape;
+    b2PolygonShape shape;
+    float density;
 };
 class PhysicsManager
 {

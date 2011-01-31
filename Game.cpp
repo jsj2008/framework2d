@@ -17,14 +17,24 @@ Game::Game()
     mPhysicsManager = new PhysicsManager();
 
     EntityFactory dummyFactory(mGraphicsManager,mPhysicsManager);
-    EntityFactoryDef def(ePlayerEntityType);
-    def.physicsDef.bodyDef.type = b2_dynamicBody;
-    def.physicsDef.fixtureShape.SetAsBox(1,1);
-    def.graphicsDef.graphicsDef.staticSkinDef.texture = 0;
+    EntityFactoryDef player(ePlayerEntityType);
+
+    player.physicsDef.bodyDef.type = b2_dynamicBody;
+    player.physicsDef.shape.SetAsBox(2,1);
+    player.graphicsDef.graphicsDef.staticSkinDef.texture = 0;
+
+    EntityFactoryDef crate = EntityFactoryDef(eCrateEntityType);
+    crate.physicsDef.bodyDef.type = b2_staticBody;
+    crate.physicsDef.shape.SetAsBox(2,1);
+    crate.graphicsDef.graphicsDef.staticSkinDef.texture = 0;
 
     b2Vec2 initialPosition(0,0);
-    entity = dummyFactory.entityFactory(def,initialPosition);
+    entity = dummyFactory.entityFactory(player,initialPosition);
     dummyFactory.setCameraTarget(entity);
+    entities.push(entity);
+    initialPosition.Set(0,50);
+    entity = dummyFactory.entityFactory(crate,initialPosition);
+    entities.push(entity);
     cout << "EntityFactoryDef " << sizeof(EntityFactoryDef) << endl;
     cout << "EntityType " << sizeof(EntityType) << endl;
     cout << "EntityFactoryDef::EntityDef " << sizeof(EntityFactoryDef::EntityDef) << endl;
@@ -48,7 +58,11 @@ void Game::run()
         glVertex2i(200,200);
         glVertex2i(100,200);
         glEnd();
-        entity->render();
+        //entity->render();
+        for (int i = 0; i < entities.size(); i++)
+        {
+            entities[i]->render();
+        }
         mPhysicsManager->update();
         mGraphicsManager->endScene();
     }

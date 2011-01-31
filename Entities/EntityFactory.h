@@ -4,6 +4,7 @@
 #include <Entities/Entity.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
+#include <AI/AIManager.h>
 class GraphicsManager;
 struct EntityFactoryDef
 {
@@ -15,9 +16,23 @@ struct EntityFactoryDef
         {
             int startingHealth;
         };
+        struct CrateTypeDef
+        {
+
+        };
+        struct StaticGeometryTypeDef
+        {
+        };
+        struct AIEntityTypeDef
+        {
+            int startingHealth;
+            BrainFactoryDef brainFactoryDef;
+        };
         /// Members
         EntityDef(EntityType _type);
         PlayerTypeDef playerTypeDef;
+        CrateTypeDef crateTypeDef;
+        AIEntityTypeDef aiEntityTypeDef;
     };
     /// Members
     EntityFactoryDef(EntityType _type);
@@ -38,6 +53,7 @@ class EntityFactory
     private:
         GraphicsManager* pGraphicsManager;
         PhysicsManager* pPhysicsManager;
+        AIManager* pAIManager;
 };
 
 #endif // ENTITYFACTORY_H

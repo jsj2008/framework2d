@@ -6,6 +6,9 @@ class b2Body;
 enum EntityType
 {
     ePlayerEntityType,
+    eCrateEntityType,
+    eStaticGeometryEntityType,
+    eAIEntityType,
     eEntityTypeMax,
 };
 class Entity

@@ -1,14 +1,11 @@
 #include "InputManager.h"
 #include <SDL/SDL_events.h>
+#include <Input/EventListener.h>
 
 InputManager::InputManager()
 {
     //ctor
-    controls = new SDLKey[eActionsMax];
-    controls[eUp] = (SDLKey)'w';
-    controls[eDown] = (SDLKey)'a';
-    controls[eLeft] = (SDLKey)'s';
-    controls[eRight] = (SDLKey)'d';
+    controls = new ControlStruct[eInputActionsMax]{'w','a','s','d'};
 }
 
 InputManager::~InputManager()
@@ -26,10 +23,11 @@ bool InputManager::processInput()
         {
             case SDL_KEYDOWN:
             {
-                for (int i = 0; i < eActionsMax; i++)
+                for (int i = 0; i < eInputActionsMax; i++)
                 {
-                    if (controls[i] == event.key.keysym.sym)
+                    if (controls[i].key == event.key.keysym.sym)
                     {
+                        controls[i].event->trigger(i);
                     }
                 }
                 break;

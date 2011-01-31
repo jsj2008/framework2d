@@ -2,13 +2,14 @@
 #define INPUTMANAGER_H
 
 #include <SDL/SDL_keysym.h>
-enum Actions
+class EventListener;
+enum InputActions
 {
     eUp,
     eDown,
     eLeft,
     eRight,
-    eActionsMax
+    eInputActionsMax
 };
 class InputManager
 {
@@ -18,7 +19,13 @@ class InputManager
         bool processInput();
     protected:
     private:
-        SDLKey* controls;
+        struct ControlStruct
+        {
+            ControlStruct(SDLKey _key){key = _key;event = 0;}
+            SDLKey key;
+            EventListener* event;
+        };
+        ControlStruct* controls;
 };
 
 #endif // INPUTMANAGER_H
