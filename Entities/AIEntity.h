@@ -11,6 +11,7 @@ class AIEntity : public Entity
         virtual ~AIEntity();
         EntityType getType(){return eAIEntityType;}
         void update();
+        void jump();
     protected:
     private:
         Brain* mBrain;

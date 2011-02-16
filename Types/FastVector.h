@@ -12,13 +12,13 @@ template <typename T>
 class FastVector
 {
 public:
-	FastVector();
+	FastVector(unsigned int size = 20);
 	FastVector(const FastVector & rhs);
 	~FastVector();
-	void resize(int size);
+	void resize(unsigned int size);
 	void clear();
-	int push(T const &d);
-	void remove(int i);
+	unsigned int push(T const &d);
+	void remove(unsigned int i);
 	T const pop();
 	T const top();
 	T& at(int i);
@@ -28,19 +28,18 @@ public:
 	int maxSize();
 	inline T & operator [] (unsigned int i) {return items[i];}
 private:
-	int MaxFastVector;
-	int EmptyFastVector;
-	int Top;
+	unsigned int MaxFastVector;
+	unsigned int EmptyFastVector;
+	unsigned int Top;
 	T* items;
-	std::stack<int> inactiveElements;
 };
 
 template <typename T>
-FastVector<T>::FastVector()
+FastVector<T>::FastVector(unsigned int size)
 {
 	items = NULL;
 	Top = -1;
-	resize(20);
+	resize(size);
 }
 template <typename T>
 FastVector<T>::FastVector(const FastVector & rhs)
@@ -67,7 +66,7 @@ FastVector<T>::~FastVector()
 }
 
 template <typename T>
-void FastVector<T>::resize(int size)
+void FastVector<T>::resize(unsigned int size)
 {
     const unsigned int sizeofT = sizeof(T);
     T* newItems = (T*)malloc(sizeofT*size);
@@ -86,31 +85,19 @@ void FastVector<T>::clear()
     Top = EmptyFastVector = -1;
 }
 template <typename T>
-int FastVector<T>::push(T const &d)
+unsigned int FastVector<T>::push(T const &d)
 {
-    if (inactiveElements.empty())
+    if (++Top == MaxFastVector)
     {
-        Top++;
-        if (Top == MaxFastVector)
-        {
-            resize(Top*2);
-        }
-        items[Top] = d;
-        return Top;
+        resize(Top*2);
     }
-    else
-    {
-        int element = inactiveElements.top();
-        inactiveElements.pop();
-        items[element] = d;
-        return element;
-    }
+    items[Top] = d;
+    return Top;
 }
 template <typename T>
-void FastVector<T>::remove(int i)
+void FastVector<T>::remove(unsigned int i)
 {
-    inactiveElements.push(i);
-    items[i] = NULL;
+    items[i] = pop();
 }
 
 template <typename T>

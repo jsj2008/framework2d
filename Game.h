@@ -16,7 +16,6 @@ class Game
     private:
         GraphicsManager* mGraphicsManager;
         PhysicsManager* mPhysicsManager;
-        InputManager* mInputManager;
         FastVector<Entity*> entities;
 };
 

@@ -1,7 +1,7 @@
 #include "InputManager.h"
 #include <SDL/SDL_events.h>
 #include <Input/EventListener.h>
-
+InputManager g_InputManager;
 InputManager::InputManager()
 {
     //ctor
@@ -13,6 +13,10 @@ InputManager::~InputManager()
     //dtor
 }
 
+void InputManager::registerEvent(EventListener* event, InputActions action)
+{
+    controls[action].event = event;
+}
 bool InputManager::processInput()
 {
     bool returnValue = true;

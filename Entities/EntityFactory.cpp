@@ -7,17 +7,12 @@
 EntityFactoryDef::EntityFactoryDef(EntityType _type)
 :entityDef(_type),graphicsDef(eStaticSkinType)
 {
-    type = _type;
 }
-EntityFactoryDef::EntityDef::EntityDef(EntityType type)
+EntityFactoryDef::EntityDef::EntityDef(EntityType _type)
 {
+    type = _type;
     switch (type)
     {
-        case ePlayerEntityType:
-        {
-            playerTypeDef.startingHealth = PLAYER_STARTING_HEALTH;
-            break;
-        }
         case eCrateEntityType:
         {
             break;
@@ -50,37 +45,63 @@ EntityFactory::~EntityFactory()
 {
     //dtor
 }
-
-Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition)
+Entity* EntityFactory::createEntity(unsigned int index, b2Vec2& initialPosition)
 {
-    Entity* entity;
+    return entityFactory(factoryDefs[index],initialPosition);
+}
+unsigned int EntityFactory::addEntityDef(CreatureDef& def)
+{
+    unsigned int ret = factoryDefs.size();
+
+    EntityFactoryDef entity(eAIEntityType);
+
+    entity.physicsDef.bodyDef.type = b2_dynamicBody;
+
+    entity.physicsDef.shape.SetAsBox(def.dimensions.x,def.dimensions.y);
+    entity.graphicsDef.graphicsDef.staticSkinDef.width = def.dimensions.x;
+    entity.graphicsDef.graphicsDef.staticSkinDef.height = def.dimensions.y;
+    entity.graphicsDef.graphicsDef.staticSkinDef.texture = def.texture;
+    factoryDefs.push_back(entity);
+    return ret;
+}
+Entity* EntityFactory::crateEntity(CrateTypeDef& def)
+{
+    return new Crate;
+}
+Entity* EntityFactory::staticGeometryEntity(StaticGeometryTypeDef& def)
+{
+    return new Crate;
+}
+Entity* EntityFactory::aiEntity(AIEntityTypeDef& def)
+{
+    return new AIEntity(pAIManager->brainFactory(def.brainFactoryDef));
+}
+Entity* EntityFactory::createContainer(EntityFactoryDef::EntityDef& def)
+{
     switch (def.type)
     {
-        case ePlayerEntityType:
-        {
-            entity = new Player;
-            break;
-        }
         case eCrateEntityType:
         {
-            entity = new Crate;
-            break;
+            return crateEntity(def.crateTypeDef);
         }
         case eStaticGeometryEntityType:
         {
-            entity = new StaticGeometry;
-            break;
+            return staticGeometryEntity(def.staticGeometryTypeDef);
         }
         case eAIEntityType:
         {
-            entity = new AIEntity(pAIManager->brainFactory(def.entityDef.aiEntityTypeDef.brainFactoryDef));
-            break;
+            return aiEntity(def.aiEntityTypeDef);
         }
         case eEntityTypeMax:
         {
-            throw "Invalid enum";
+            break;
         }
     }
+    throw "Invalid enum";
+}
+Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition)
+{
+    Entity* entity = createContainer(def.entityDef);
     entity->mBody = pPhysicsManager->bodyFactory(def.physicsDef,initialPosition,(void*)entity);
     entity->mSkin = pGraphicsManager->skinFactory(def.graphicsDef);
     return entity;

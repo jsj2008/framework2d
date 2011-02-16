@@ -1,7 +1,14 @@
 #include "PhysicsManager.h"
 #include <Box2D/Box2D.h>
 #include <SDL/SDL_timer.h>
+#define kWorldGravity   -25.0
+#define kJumpImpulse   -0.85*kWorldGravity
+#define kPlayerMass   1.0
 
+PhysicsFactoryDef::PhysicsFactoryDef()
+{
+    density = 1.0f;
+}
 PhysicsManager::PhysicsManager()
 {
     //ctor
@@ -25,9 +32,11 @@ b2Body* PhysicsManager::bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosit
     body->CreateFixture(&def.shape, def.density);
     return body;
 }
-
+#include <iostream>
+using namespace std;
 void PhysicsManager::update()
 {
+    mWorld->DrawDebugData();
     unsigned int currentTime = SDL_GetTicks();
     unsigned int totalTimePassed = currentTime - startTime;
     unsigned int stepsToTake = totalTimePassed/60;
@@ -37,5 +46,6 @@ void PhysicsManager::update()
         int32 velocityIterations = 6;
         int32 positionIterations = 2;
         mWorld->Step(timestep, velocityIterations, positionIterations);
+        cout << stepsToTake << endl;
     }
 }

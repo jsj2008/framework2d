@@ -12,13 +12,14 @@ Camera::~Camera()
 {
     //dtor
 }
-
+#define PIXELS_PER_METER 48.0f
 void Camera::updateView(int xRes, int yRes)
 {
-    xRes /= 2;
-    yRes /= 2;
-    //xRes = yRes = 0;
+    float xView = xRes / (2.0f * PIXELS_PER_METER);
+    float yView = yRes / (2.0f * PIXELS_PER_METER);
+
     glLoadIdentity();
-    const b2Vec2 & center = body->GetWorldCenter();
-    glTranslatef(-center.x + xRes,-center.y + yRes,0);
+    b2Vec2 center = body->GetWorldCenter();
+    glScalef(PIXELS_PER_METER,PIXELS_PER_METER,0);
+    glTranslatef(-center.x + xView,-center.y + yView,0);
 }

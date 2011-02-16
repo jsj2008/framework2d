@@ -4,6 +4,7 @@
 #include <Box2D/Box2D.h>
 struct PhysicsFactoryDef
 {
+    PhysicsFactoryDef();
     b2BodyDef bodyDef;
     b2PolygonShape shape;
     float density;

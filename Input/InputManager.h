@@ -11,12 +11,13 @@ enum InputActions
     eRight,
     eInputActionsMax
 };
-class InputManager
+extern class InputManager
 {
     public:
         InputManager();
         virtual ~InputManager();
         bool processInput();
+        void registerEvent(EventListener* event, InputActions action);
     protected:
     private:
         struct ControlStruct
@@ -26,6 +27,6 @@ class InputManager
             EventListener* event;
         };
         ControlStruct* controls;
-};
+}g_InputManager;
 
 #endif // INPUTMANAGER_H

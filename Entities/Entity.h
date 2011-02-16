@@ -5,7 +5,6 @@ class Skin;
 class b2Body;
 enum EntityType
 {
-    ePlayerEntityType,
     eCrateEntityType,
     eStaticGeometryEntityType,
     eAIEntityType,
@@ -20,10 +19,10 @@ class Entity
         virtual void update()=0;
         virtual EntityType getType()=0;
     protected:
-    private:
         friend class EntityFactory;
         Skin* mSkin;
         b2Body* mBody;
+    private:
 };
 
 #endif // ENTITY_H

@@ -7,22 +7,25 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Framework2D" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option external_deps="bin/Debug/libBox2D.a;" />
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="bin/Debug/libBox2D.a" />
+					<Add option="-lSDL" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add library="bin\Debug\libBox2D.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Framework2D" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option external_deps="bin/Release/libBox2D.a;" />
+				<Option output="bin\Release\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option external_deps="bin\Release\libBox2D.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -30,7 +33,43 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="bin/Release/libBox2D.a" />
+					<Add option="-lSDL" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add library="bin\Release\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Debug win32">
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add library="bin\Debug\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Release win32">
+				<Option output="bin\Release\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option external_deps="bin\Release\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add library="bin\Release\libBox2D.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -38,78 +77,77 @@
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
 			<Add directory="." />
-			<Add directory="E:/Users/Alasdair/Documents/include" />
+			<Add directory="E:\Users\Alasdair\Documents\include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lSDL" />
-			<Add option="-lGL" />
-			<Add option="-lGLU" />
-			<Add directory="E:/Users/Alasdair/Documents/lib" />
+			<Add directory="E:\Users\Alasdair\Documents\lib" />
 		</Linker>
-		<Unit filename="AI/AIManager.cpp" />
-		<Unit filename="AI/AIManager.h" />
-		<Unit filename="AI/AllBrains.h" />
-		<Unit filename="AI/Brain.cpp" />
-		<Unit filename="AI/Brain.h" />
-		<Unit filename="AI/BrainFactory.cpp" />
-		<Unit filename="AI/BrainFactory.h" />
-		<Unit filename="AI/PlayerInputBrain.cpp" />
-		<Unit filename="AI/PlayerInputBrain.h" />
-		<Unit filename="Entities/AIEntity.cpp" />
-		<Unit filename="Entities/AIEntity.h" />
-		<Unit filename="Entities/AllEntities.h" />
-		<Unit filename="Entities/Crate.cpp" />
-		<Unit filename="Entities/Crate.h" />
-		<Unit filename="Entities/Entity.cpp" />
-		<Unit filename="Entities/Entity.h" />
-		<Unit filename="Entities/EntityFactory.cpp" />
-		<Unit filename="Entities/EntityFactory.h" />
-		<Unit filename="Entities/Player.cpp" />
-		<Unit filename="Entities/Player.h" />
-		<Unit filename="Entities/StaticGeometry.cpp" />
-		<Unit filename="Entities/StaticGeometry.h" />
+		<Unit filename="AI\AIManager.cpp" />
+		<Unit filename="AI\AIManager.h" />
+		<Unit filename="AI\AllBrains.h" />
+		<Unit filename="AI\Brain.cpp" />
+		<Unit filename="AI\Brain.h" />
+		<Unit filename="AI\BrainFactory.cpp" />
+		<Unit filename="AI\BrainFactory.h" />
+		<Unit filename="AI\PlayerInputBrain.cpp" />
+		<Unit filename="AI\PlayerInputBrain.h" />
+		<Unit filename="Entities\AIEntity.cpp" />
+		<Unit filename="Entities\AIEntity.h" />
+		<Unit filename="Entities\AllEntities.h" />
+		<Unit filename="Entities\Crate.cpp" />
+		<Unit filename="Entities\Crate.h" />
+		<Unit filename="Entities\Entity.cpp" />
+		<Unit filename="Entities\Entity.h" />
+		<Unit filename="Entities\EntityFactory.cpp" />
+		<Unit filename="Entities\EntityFactory.h" />
+		<Unit filename="Entities\StaticGeometry.cpp" />
+		<Unit filename="Entities\StaticGeometry.h" />
+		<Unit filename="Factory\CrateFactory.cpp" />
+		<Unit filename="Factory\CrateFactory.h" />
+		<Unit filename="Factory\Factory.cpp" />
+		<Unit filename="Factory\Factory.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
-		<Unit filename="Graphics/Camera.cpp" />
-		<Unit filename="Graphics/Camera.h" />
-		<Unit filename="Graphics/Contexts/TextureContext.cpp" />
-		<Unit filename="Graphics/Contexts/TextureContext.h" />
-		<Unit filename="Graphics/GLee.c">
+		<Unit filename="Graphics\Camera.cpp" />
+		<Unit filename="Graphics\Camera.h" />
+		<Unit filename="Graphics\Contexts\TextureContext.cpp" />
+		<Unit filename="Graphics\Contexts\TextureContext.h" />
+		<Unit filename="Graphics\GLee.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Graphics/GraphicalContentManager.cpp" />
-		<Unit filename="Graphics/GraphicalContentManager.h" />
-		<Unit filename="Graphics/GraphicsManager.cpp" />
-		<Unit filename="Graphics/GraphicsManager.h" />
-		<Unit filename="Graphics/Skins/AllSkins.h" />
-		<Unit filename="Graphics/Skins/Skin.cpp" />
-		<Unit filename="Graphics/Skins/Skin.h" />
-		<Unit filename="Graphics/Skins/StaticSkin.cpp" />
-		<Unit filename="Graphics/Skins/StaticSkin.h" />
-		<Unit filename="Input/EventListener.cpp" />
-		<Unit filename="Input/EventListener.h" />
-		<Unit filename="Input/InputManager.cpp" />
-		<Unit filename="Input/InputManager.h" />
-		<Unit filename="Physics/PhysicsManager.cpp" />
-		<Unit filename="Physics/PhysicsManager.h" />
-		<Unit filename="Types/Doubles.h" />
-		<Unit filename="Types/FastVector.h" />
-		<Unit filename="Types/List.h" />
-		<Unit filename="Types/Mat3x3f.cpp" />
-		<Unit filename="Types/Mat3x3f.h" />
-		<Unit filename="Types/Mat4x4f.cpp" />
-		<Unit filename="Types/Mat4x4f.h" />
-		<Unit filename="Types/MultiString.cpp" />
-		<Unit filename="Types/MultiString.h" />
-		<Unit filename="Types/MyQueue.h" />
-		<Unit filename="Types/MyStack.h" />
-		<Unit filename="Types/MyVector.h" />
-		<Unit filename="Types/Vec2f.cpp" />
-		<Unit filename="Types/Vec2f.h" />
-		<Unit filename="Types/Vec2i.cpp" />
-		<Unit filename="Types/Vec2i.h" />
-		<Unit filename="Types/Vec3f.cpp" />
-		<Unit filename="Types/Vec3f.h" />
+		<Unit filename="Graphics\GraphicalContentManager.cpp" />
+		<Unit filename="Graphics\GraphicalContentManager.h" />
+		<Unit filename="Graphics\GraphicsManager.cpp" />
+		<Unit filename="Graphics\GraphicsManager.h" />
+		<Unit filename="Graphics\Skins\AllSkins.h" />
+		<Unit filename="Graphics\Skins\Skin.cpp" />
+		<Unit filename="Graphics\Skins\Skin.h" />
+		<Unit filename="Graphics\Skins\StaticSkin.cpp" />
+		<Unit filename="Graphics\Skins\StaticSkin.h" />
+		<Unit filename="Input\EventListener.cpp" />
+		<Unit filename="Input\EventListener.h" />
+		<Unit filename="Input\InputManager.cpp" />
+		<Unit filename="Input\InputManager.h" />
+		<Unit filename="Physics\PhysicsManager.cpp" />
+		<Unit filename="Physics\PhysicsManager.h" />
+		<Unit filename="Types\Doubles.h" />
+		<Unit filename="Types\FastVector.h" />
+		<Unit filename="Types\List.h" />
+		<Unit filename="Types\Mat3x3f.cpp" />
+		<Unit filename="Types\Mat3x3f.h" />
+		<Unit filename="Types\Mat4x4f.cpp" />
+		<Unit filename="Types\Mat4x4f.h" />
+		<Unit filename="Types\MultiString.cpp" />
+		<Unit filename="Types\MultiString.h" />
+		<Unit filename="Types\MyQueue.h" />
+		<Unit filename="Types\MyStack.h" />
+		<Unit filename="Types\MyVector.h" />
+		<Unit filename="Types\Vec2f.cpp" />
+		<Unit filename="Types\Vec2f.h" />
+		<Unit filename="Types\Vec2i.cpp" />
+		<Unit filename="Types\Vec2i.h" />
+		<Unit filename="Types\Vec3f.cpp" />
+		<Unit filename="Types\Vec3f.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
