@@ -120,6 +120,8 @@
 		<Unit filename="Graphics\GraphicsManager.cpp" />
 		<Unit filename="Graphics\GraphicsManager.h" />
 		<Unit filename="Graphics\Skins\AllSkins.h" />
+		<Unit filename="Graphics\Skins\ConvexPolygonSkin.cpp" />
+		<Unit filename="Graphics\Skins\ConvexPolygonSkin.h" />
 		<Unit filename="Graphics\Skins\Skin.cpp" />
 		<Unit filename="Graphics\Skins\Skin.h" />
 		<Unit filename="Graphics\Skins\StaticSkin.cpp" />

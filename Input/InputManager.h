@@ -1,32 +1,30 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include <SDL/SDL_keysym.h>
+#include <vector>
+#include <Input/InputState.h>
 class EventListener;
-enum InputActions
-{
-    eUp,
-    eDown,
-    eLeft,
-    eRight,
-    eInputActionsMax
-};
+
 extern class InputManager
 {
     public:
         InputManager();
         virtual ~InputManager();
         bool processInput();
-        void registerEvent(EventListener* event, InputActions action);
+        void registerEvent(EventListener* event, InputActions action); /// These are global controls
+        void setInputState(InputState* _currentState);
     protected:
     private:
-        struct ControlStruct
+        InputState* currentState;
+        unsigned int* globalEventsSizeWhenSeen;
+        struct InputStateHistory
         {
-            ControlStruct(SDLKey _key){key = _key;event = 0;}
-            SDLKey key;
-            EventListener* event;
+            InputStateHistory(InputState* _state, unsigned int _globalEventsSizeWhenSeen){state = _state; globalEventsSizeWhenSeen = _globalEventsSizeWhenSeen;}
+            InputState* state;
+            unsigned int globalEventsSizeWhenSeen;
         };
-        ControlStruct* controls;
+        std::vector<InputStateHistory> inputStates;
+        std::vector<std::pair<EventListener*,InputActions> > globalEvents;
 }g_InputManager;
 
 #endif // INPUTMANAGER_H

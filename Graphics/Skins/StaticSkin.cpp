@@ -15,14 +15,16 @@ StaticSkin::~StaticSkin()
 
 void StaticSkin::vRender()
 {
+    float hw = width*0.5f;
+    float hh = height*0.5f;
     glBegin(GL_QUADS);
     glTexCoord2f(0,0);
-    glVertex2i(0,0);
+    glVertex2i(-hw,-hh);
     glTexCoord2f(1,0);
-    glVertex2i(width,0);
+    glVertex2i(hw,-hh);
     glTexCoord2f(1,1);
-    glVertex2i(width,height);
+    glVertex2i(hw,hh);
     glTexCoord2f(0,1);
-    glVertex2i(0,height);
+    glVertex2i(-hw,hh);
     glEnd();
 }

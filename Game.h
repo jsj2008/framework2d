@@ -5,6 +5,7 @@ class GraphicsManager;
 class PhysicsManager;
 class InputManager;
 class Entity;
+class GameMode;
 #include <Types/FastVector.h>
 class Game
 {
@@ -14,9 +15,9 @@ class Game
         void run();
     protected:
     private:
-        GraphicsManager* mGraphicsManager;
         PhysicsManager* mPhysicsManager;
         FastVector<Entity*> entities;
+        GameMode* editorMode;
 };
 
 #endif // GAME_H

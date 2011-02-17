@@ -3,7 +3,19 @@
 #include <Graphics/Camera.h>
 #include <Graphics/GraphicsManager.h>
 #include <AI/AIManager.h>
+#include <cstring>
 #define PLAYER_STARTING_HEALTH 100
+PlatformDef::PlatformDef()
+{
+    texture = -1;
+    numPoints = 0;
+}
+void PlatformDef::addPoint(const b2Vec2& p)
+{
+    assert(numPoints != b2_maxPolygonVertices);
+    points[numPoints] = p;
+    numPoints++;
+}
 EntityFactoryDef::EntityFactoryDef(EntityType _type)
 :entityDef(_type),graphicsDef(eStaticSkinType)
 {
@@ -32,12 +44,10 @@ EntityFactoryDef::EntityDef::EntityDef(EntityType _type)
         }
     }
 }
-
-EntityFactory::EntityFactory(GraphicsManager* _GraphicsManager,
-                            PhysicsManager* _PhysicsManager)
+EntityFactory g_EntityFactory;
+void EntityFactory::init(PhysicsManager* _PhysicsManager)
 {
     //ctor
-    pGraphicsManager = _GraphicsManager;
     pPhysicsManager = _PhysicsManager;
 }
 
@@ -56,11 +66,36 @@ unsigned int EntityFactory::addEntityDef(CreatureDef& def)
     EntityFactoryDef entity(eAIEntityType);
 
     entity.physicsDef.bodyDef.type = b2_dynamicBody;
+    //entity.physicsDef.bodyDef.fixedRotation = true;
+    entity.physicsDef.shape.SetAsBox(def.dimensions.x*0.5f,def.dimensions.y*0.5f);
+#ifdef JUMPING_SENSOR
+    /// Sensor
+    b2PolygonShape* sensorBox = new b2PolygonShape();
+    sensorBox->SetAsBox(def.dimensions.x*0.5f,def.dimensions.y*0.5f);
+    entity.physicsDef.additionalFixture.shape = sensorBox;
+    entity.physicsDef.additionalFixture.isSensor = true;
+    entity.physicsDef.useAdditionalFixture = true;
+#endif
 
-    entity.physicsDef.shape.SetAsBox(def.dimensions.x,def.dimensions.y);
     entity.graphicsDef.graphicsDef.staticSkinDef.width = def.dimensions.x;
     entity.graphicsDef.graphicsDef.staticSkinDef.height = def.dimensions.y;
     entity.graphicsDef.graphicsDef.staticSkinDef.texture = def.texture;
+    factoryDefs.push_back(entity);
+    return ret;
+}
+unsigned int EntityFactory::addEntityDef(PlatformDef& def)
+{
+    unsigned int ret = factoryDefs.size();
+
+    EntityFactoryDef entity(eStaticGeometryEntityType);
+
+    entity.physicsDef.shape.Set(def.points,def.numPoints);
+
+    entity.graphicsDef.type = eConvexPolygonSkinType;
+    entity.graphicsDef.graphicsDef.convexPolygonSkinDef.texture = def.texture;
+    entity.graphicsDef.graphicsDef.convexPolygonSkinDef.numPoints = def.numPoints;
+    memcpy(entity.graphicsDef.graphicsDef.convexPolygonSkinDef.points,def.points,sizeof(b2Vec2)*def.numPoints);
+
     factoryDefs.push_back(entity);
     return ret;
 }
@@ -103,12 +138,12 @@ Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosit
 {
     Entity* entity = createContainer(def.entityDef);
     entity->mBody = pPhysicsManager->bodyFactory(def.physicsDef,initialPosition,(void*)entity);
-    entity->mSkin = pGraphicsManager->skinFactory(def.graphicsDef);
+    entity->mSkin = g_GraphicsManager.skinFactory(def.graphicsDef);
     return entity;
 }
 
 void EntityFactory::setCameraTarget(const Entity* entity)
 {
     Camera* camera = new Camera(entity->mBody);
-    pGraphicsManager->setCamera(camera);
+    g_GraphicsManager.setCamera(camera);
 }

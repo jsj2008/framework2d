@@ -6,6 +6,7 @@ class TextureContext;
 enum SkinType
 {
     eStaticSkinType,
+    eConvexPolygonSkinType,
     eSkinTypeMax
 };
 class Skin

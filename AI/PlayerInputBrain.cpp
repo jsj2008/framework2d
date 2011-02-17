@@ -6,6 +6,9 @@ PlayerInputBrain::PlayerInputBrain()
 {
     //ctor
     g_InputManager.registerEvent(this,eUp);
+    g_InputManager.registerEvent(this,eLeft);
+    g_InputManager.registerEvent(this,eDown);
+    g_InputManager.registerEvent(this,eRight);
 }
 
 PlayerInputBrain::~PlayerInputBrain()
@@ -20,23 +23,26 @@ void PlayerInputBrain::trigger(InputActions action)
         case eUp:
         {
             mEntity->jump();
-            break;
+            return;
         }
         case eDown:
         {
-            break;
+            return;
         }
         case eRight:
         {
-            break;
+            mEntity->walkRight();
+            return;
         }
         case eLeft:
         {
-            break;
+            mEntity->walkLeft();
+            return;
         }
         case eInputActionsMax:
         {
-            throw -1;
+            break;
         }
     }
+    throw -1;
 }

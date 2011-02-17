@@ -2,6 +2,7 @@
 #define AIENTITY_H
 
 #include "Entity.h"
+#include <Box2D/Common/b2Math.h>
 class Brain;
 
 class AIEntity : public Entity
@@ -12,9 +13,13 @@ class AIEntity : public Entity
         EntityType getType(){return eAIEntityType;}
         void update();
         void jump();
+        void walkLeft();
+        void walkRight();
     protected:
     private:
         Brain* mBrain;
+        bool grounded;
+        b2Vec2 groundNormal;
 };
 
 #endif // AIENTITY_H

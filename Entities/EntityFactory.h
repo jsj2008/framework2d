@@ -55,15 +55,16 @@ struct CreatureDef
 };
 struct PlatformDef
 {
+    PlatformDef();
+    void addPoint(const b2Vec2& p);
     b2Vec2 points[b2_maxPolygonVertices];
     unsigned char numPoints;
     int texture;
 };
-class EntityFactory
+extern class EntityFactory
 {
     public:
-        EntityFactory(GraphicsManager* _GraphicsManager,
-                      PhysicsManager* _PhysicsManager);
+        void init(PhysicsManager* _PhysicsManager);
         virtual ~EntityFactory();
         unsigned int addEntityDef(CreatureDef& def);
         unsigned int addEntityDef(PlatformDef& def);
@@ -73,13 +74,12 @@ class EntityFactory
     private:
         Entity* entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition);
         std::vector<EntityFactoryDef> factoryDefs;
-        GraphicsManager* pGraphicsManager;
         PhysicsManager* pPhysicsManager;
         AIManager* pAIManager;
         Entity* createContainer(EntityFactoryDef::EntityDef& def);
         Entity* crateEntity(CrateTypeDef& def);
         Entity* staticGeometryEntity(StaticGeometryTypeDef& def);
         Entity* aiEntity(AIEntityTypeDef& def);
-};
+}g_EntityFactory;
 
 #endif // ENTITYFACTORY_H

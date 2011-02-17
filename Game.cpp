@@ -4,52 +4,71 @@
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
 #include <Entities/EntityFactory.h>
+#include <Timer.h>
+#include <GameModes/Editor/EditorMode.h>
 #include <GL/gl.h>
-#include <iostream>
 #include <cstring>
+#include <iostream>
 using namespace std;
 Game::Game()
 {
     //ctor
-    mGraphicsManager = new GraphicsManager();
     mPhysicsManager = new PhysicsManager();
+    g_EntityFactory.init(mPhysicsManager);
 
-    EntityFactory dummyFactory(mGraphicsManager,mPhysicsManager);
-
-    b2Vec2 initialPosition(40,0);
+    b2Vec2 initialPosition(0,-10);
     CreatureDef player;
     player.dimensions.Set(2,2);
     player.texture = 0;
     player.type = ePlayerInputBrainType;
-    unsigned int playerInt = dummyFactory.addEntityDef(player);
-    Entity* entity = dummyFactory.createEntity(playerInt,initialPosition);
-    dummyFactory.setCameraTarget(entity);
+    unsigned int playerInt = g_EntityFactory.addEntityDef(player);
+    Entity* entity = g_EntityFactory.createEntity(playerInt,initialPosition);
+    g_EntityFactory.setCameraTarget(entity);
     entities.push(entity);
-    initialPosition.Set(0,50);
-    //entity = dummyFactory.entityFactory(crate,initialPosition);
-    //entities.push(entity);
+
+    initialPosition.Set(0,10);
+    PlatformDef platform;
+    platform.addPoint(b2Vec2(-10,0));
+    platform.addPoint(b2Vec2(10,0));
+    platform.addPoint(b2Vec2(0,10));
+    unsigned int platformInt = g_EntityFactory.addEntityDef(platform);
+    entity = g_EntityFactory.createEntity(platformInt,initialPosition);
+    entities.push(entity);
     cout << "EntityFactoryDef " << sizeof(EntityFactoryDef) << endl;
     cout << "EntityType " << sizeof(EntityType) << endl;
     cout << "EntityFactoryDef::EntityDef " << sizeof(EntityFactoryDef::EntityDef) << endl;
     cout << "PhysicsFactoryDef " << sizeof(PhysicsFactoryDef) << endl;
     cout << "GraphicsFactoryDef " << sizeof(GraphicsFactoryDef) << endl;
-}
 
+    editorMode = new EditorMode;
+    g_Timer.init();
+    mPhysicsManager->init();
+}
+Entity* g_Temp = NULL;
 Game::~Game()
 {
     //dtor
 }
 void Game::run()
 {
-    while (g_InputManager.processInput())
+    bool running = true;
+    while (running)
     {
-        mGraphicsManager->beginScene();
-        for (int i = 0; i < entities.size(); i++)
+        g_GraphicsManager.beginScene();
+        if (mPhysicsManager->update())
         {
-            entities[i]->render();
-            entities[i]->update();
+            running = g_InputManager.processInput();
+            for (int i = 0; i < entities.size(); i++)
+            {
+                entities[i]->render();
+                entities[i]->update();
+            }
+            if (g_Temp != NULL)
+            {
+                g_Temp->render();
+                g_Temp->update();
+            }
         }
-        mPhysicsManager->update();
-        mGraphicsManager->endScene();
+        g_GraphicsManager.endScene();
     }
 }
