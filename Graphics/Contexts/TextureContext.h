@@ -2,9 +2,13 @@
 #define TEXTURECONTEXT_H
 
 
+#define MAX_FILENAME 32
 class TextureContext
 {
     public:
+        TextureContext();
+        virtual ~TextureContext();
+        void assertDelete();
         TextureContext(const char* _textureName);
         void bindTexture();
         /// These are the reference counting functions
@@ -14,11 +18,8 @@ class TextureContext
     private:
         unsigned int texture;
         unsigned int referenceCount;
-        char textureName[32];
+        char textureName[MAX_FILENAME];
         void loadFromFile();
-
-        friend class GraphicalContentManager;
-        virtual ~TextureContext();
 };
 
 #endif // TEXTURECONTEXT_H

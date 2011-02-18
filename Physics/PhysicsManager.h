@@ -17,6 +17,7 @@ struct PhysicsFactoryDef
 #endif
     float density;
 };
+class RenderCallback;
 class PhysicsManager
 {
     public:
@@ -25,9 +26,12 @@ class PhysicsManager
         virtual ~PhysicsManager();
         b2Body* bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosition, void* userData);
         bool update();
+        void render();
     protected:
     private:
+        void updateEntities();
         b2World* mWorld;
+        RenderCallback* mRenderCallback;
         unsigned int startTime;
         unsigned int stepsTaken;
 };

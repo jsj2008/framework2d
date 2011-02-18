@@ -30,7 +30,6 @@ struct GraphicsFactoryDef
     SkinType type;
     GraphicsDef graphicsDef;
 };
-#define PIXELS_PER_METER 15.0f
 extern class GraphicsManager
 {
     public:
@@ -43,6 +42,7 @@ extern class GraphicsManager
         int getYRes(){return yRes;}
         int getViewX();
         int getViewY();
+        float getPixelsPerMeter();
         void setCamera(Camera* _camera){mCamera = _camera;}
         Skin* skinFactory(GraphicsFactoryDef& def);
     protected:

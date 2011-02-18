@@ -1,5 +1,7 @@
 #include "AIManager.h"
 #include "AllBrains.h"
+#include <Game.h>
+#include <GameModes/GameMode.h>
 
 AIManager::AIManager()
 {
@@ -18,7 +20,8 @@ Brain* AIManager::brainFactory(BrainFactoryDef& def)
     {
         case ePlayerInputBrainType:
         {
-            brain = new PlayerInputBrain;
+            GameMode* gameMode = g_Game.getGameMode(ePlayGameMode);
+            brain = new PlayerInputBrain(gameMode->mInputState);
             break;
         };
         case eBrainTypesMax:

@@ -18,10 +18,10 @@ class Entity
         virtual void render();
         virtual void update()=0;
         virtual EntityType getType()=0;
+        b2Body* mBody;
     protected:
         friend class EntityFactory;
         Skin* mSkin;
-        b2Body* mBody;
     private:
 };
 

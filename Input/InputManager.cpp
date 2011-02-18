@@ -4,9 +4,10 @@ using namespace std;
 InputManager::InputManager()
 {
     //ctor
-    currentState = new InputState;
+    /*currentState = new InputState;
     inputStates.push_back(InputStateHistory(currentState,0));
-    globalEventsSizeWhenSeen = &inputStates[0].globalEventsSizeWhenSeen;
+    globalEventsSizeWhenSeen = &inputStates[0].globalEventsSizeWhenSeen;*/
+    currentState = NULL;
 }
 
 InputManager::~InputManager()
@@ -15,6 +16,13 @@ InputManager::~InputManager()
 }
 
 void InputManager::registerEvent(EventListener* event, InputActions action)
+{
+    if (currentState != NULL)
+    {
+        currentState->registerEvent(event,action);
+    }
+}
+void InputManager::registerGlobalEvent(EventListener* event, InputActions action)
 {
     globalEvents.push_back(pair<EventListener*,InputActions>(event,action));
     if (currentState != NULL)
@@ -27,7 +35,7 @@ void InputManager::setInputState(InputState* _currentState)
 {
     unsigned int lastSeenSize = 0;
     currentState = _currentState;
-    for (int i = 0; i < inputStates.size(); i++)
+    for (unsigned int i = 0; i < inputStates.size(); i++)
     {
         if (currentState == inputStates[i].state)
         {/// This one has been seen before
@@ -42,7 +50,43 @@ void InputManager::setInputState(InputState* _currentState)
         currentState->registerEvent(globalEvents[i].first, globalEvents[i].second);
     }
 }
+void InputManager::render()
+{
+    currentState->render();
+}
 bool InputManager::processInput()
 {
     return currentState->processInput();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

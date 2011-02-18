@@ -6,7 +6,7 @@
 InputState::InputState()
 {
     //ctor
-    controls = new ControlStruct[eInputActionsMax]{'w','a','s','d'};
+    controls = new ControlStruct[eInputActionsMax]{'w','a','s','d',SDLK_KP_PLUS,SDLK_KP_MINUS};
     activeEvent = NULL;
 }
 
@@ -25,7 +25,8 @@ void InputState::registerEvent(ClickEvent* event)
 }
 bool InputState::processInput()
 {
-    controls[eLeft].key = 'a'; /// wtf? no idea why this is neccessary
+    controls[eLeft].key = (SDLKey)'a'; /// wtf? no idea why this is neccessary
+    Uint8* keys = SDL_GetKeyState(NULL);
     bool returnValue = true;
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -53,9 +54,10 @@ bool InputState::processInput()
             }
             case SDL_MOUSEBUTTONDOWN:
             {
-                for (unsigned int i = 0; i < clickEvents.size(); i++)
+                //for (unsigned int i = 0; i < clickEvents.size(); i++)
+                for (unsigned int i = clickEvents.size()-1; i != (unsigned int)-1; i--)
                 {
-                    if (clickEvents[i]->buttonDown(event.button.x,event.button.y))
+                    if (clickEvents[i]->buttonDown(event.button.x,event.button.y,event.button.button))
                     {
                         activeEvent = clickEvents[i];
                         break;
@@ -73,9 +75,17 @@ bool InputState::processInput()
             }
             case SDL_MOUSEBUTTONUP:
             {
-                if (activeEvent != NULL)
+                if (event.button.button == SDL_BUTTON_WHEELUP)
                 {
-                    activeEvent->buttonUp(event.button.x,event.button.y);
+                    keys[SDLK_KP_PLUS] = 1;
+                }
+                else if (event.button.button == SDL_BUTTON_WHEELDOWN)
+                {
+                    keys[SDLK_KP_MINUS] = 1;
+                }
+                else if (activeEvent != NULL)
+                {
+                    activeEvent->buttonUp(event.button.x,event.button.y,event.button.button);
                     activeEvent = NULL;
                 }
                 break;
@@ -87,17 +97,26 @@ bool InputState::processInput()
             }
         }
     }
-    Uint8* keys = SDL_GetKeyState(NULL);
     for (int i = 0; i < eInputActionsMax; i++)
     {
         if (keys[controls[i].key])
         {
-            controls[i].event->trigger((InputActions)i);
+            if (controls[i].event != NULL)
+            {
+                controls[i].event->trigger((InputActions)i);
+            }
         }
     }
+    keys[SDLK_KP_PLUS] = keys[SDLK_KP_MINUS] = 0;
     return returnValue;
 }
-
+void InputState::render()
+{
+    for (unsigned int i = 0; i < clickEvents.size(); i++)
+    {
+        clickEvents[i]->render();
+    }
+}
 
 
 

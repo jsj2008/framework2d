@@ -3,12 +3,13 @@
 
 #include "Brain.h"
 #include <Input/EventListener.h>
+class InputState;
 
 
 class PlayerInputBrain : public Brain, public EventListener
 {
     public:
-        PlayerInputBrain();
+        PlayerInputBrain(InputState* inputState);
         virtual ~PlayerInputBrain();
         void trigger(InputActions actions);
     protected:

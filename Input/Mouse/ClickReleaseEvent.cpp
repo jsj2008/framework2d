@@ -11,7 +11,7 @@ ClickReleaseEvent::~ClickReleaseEvent()
     //dtor
 }
 
-bool ClickReleaseEvent::buttonDown(int mouseX, int mouseY)
+bool ClickReleaseEvent::buttonDown(int mouseX, int mouseY, unsigned char button)
 {
     return mRect.contained(mouseX, mouseY);
 }
@@ -19,10 +19,10 @@ void ClickReleaseEvent::mouseMove(int mouseX, int mouseY)
 {
 
 }
-void ClickReleaseEvent::buttonUp(int mouseX, int mouseY)
+void ClickReleaseEvent::buttonUp(int mouseX, int mouseY, unsigned char button)
 {
     if (mRect.contained(mouseX, mouseY))
     {
-        click(mouseX, mouseY);
+        click(mouseX, mouseY, button);
     }
 }

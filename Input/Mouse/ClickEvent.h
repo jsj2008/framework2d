@@ -12,9 +12,10 @@ class ClickEvent
     public:
         ClickEvent(const Rect& _Rect);
         virtual ~ClickEvent();
-        virtual bool buttonDown(int mouseX, int mouseY)=0;
+        virtual void render(){}
+        virtual bool buttonDown(int mouseX, int mouseY, unsigned char button)=0;
         virtual void mouseMove(int mouseX, int mouseY)=0;
-        virtual void buttonUp(int mouseX, int mouseY)=0;
+        virtual void buttonUp(int mouseX, int mouseY, unsigned char button)=0;
     protected:
         Rect mRect;
     private:

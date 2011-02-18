@@ -11,8 +11,10 @@ extern class InputManager
         InputManager();
         virtual ~InputManager();
         bool processInput();
-        void registerEvent(EventListener* event, InputActions action); /// These are global controls
+        void registerEvent(EventListener* event, InputActions action);
+        void registerGlobalEvent(EventListener* event, InputActions action); /// These are global controls
         void setInputState(InputState* _currentState);
+        void render();
     protected:
     private:
         InputState* currentState;

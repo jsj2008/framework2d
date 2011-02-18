@@ -2,7 +2,7 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <Graphics/Camera.h>
+#include <Graphics/Camera/Camera.h>
 #include <cassert>
 #include <Graphics/Skins/AllSkins.h>
 GraphicsManager g_GraphicsManager;
@@ -44,6 +44,8 @@ GraphicsManager::GraphicsManager()
 	glClearColor(1,0,0,0);
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+    glLineWidth(5);
+    glPointSize(5);
 
     mCamera = 0;
 }
@@ -100,21 +102,25 @@ int GraphicsManager::getViewY()
 {
     return mCamera->getViewY();
 }
+float GraphicsManager::getPixelsPerMeter()
+{
+    return mCamera->getPixelsPerMeter();
+}
 Skin* GraphicsManager::skinFactory(GraphicsFactoryDef& def)
 {
-    Skin* returnValue;
+    Skin* returnValue = NULL;
     switch (def.type)
     {
         case eStaticSkinType:
         {
             returnValue = new StaticSkin(def.graphicsDef.staticSkinDef.width,def.graphicsDef.staticSkinDef.height);
-            returnValue->texture = mContentManager.getTexture(def.graphicsDef.staticSkinDef.texture);
+            returnValue->material = mContentManager.getMaterial(def.graphicsDef.staticSkinDef.texture);
             break;
         }
         case eConvexPolygonSkinType:
         {
             returnValue = new ConvexPolygonSkin(def.graphicsDef.convexPolygonSkinDef.points,def.graphicsDef.convexPolygonSkinDef.numPoints);
-            returnValue->texture = mContentManager.getTexture(def.graphicsDef.convexPolygonSkinDef.texture);
+            returnValue->material = mContentManager.getMaterial(def.graphicsDef.convexPolygonSkinDef.texture);
             break;
         }
         case eSkinTypeMax:

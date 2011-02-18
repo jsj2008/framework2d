@@ -11,7 +11,6 @@ class EditorMode : public GameMode
         virtual ~EditorMode();
     protected:
     private:
-        InputState* geometryEditor;
 };
 
 #endif // EDITORMODE_H

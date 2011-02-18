@@ -1,14 +1,10 @@
 #include "PlayerInputBrain.h"
 #include <Entities/AIEntity.h>
-#include <Input/InputManager.h>
-PlayerInputBrain::PlayerInputBrain()
-:Brain()
+#include <Input/InputState.h>
+PlayerInputBrain::PlayerInputBrain(InputState* inputState)
+:EventListener(inputState)
 {
     //ctor
-    g_InputManager.registerEvent(this,eUp);
-    g_InputManager.registerEvent(this,eLeft);
-    g_InputManager.registerEvent(this,eDown);
-    g_InputManager.registerEvent(this,eRight);
 }
 
 PlayerInputBrain::~PlayerInputBrain()
@@ -39,6 +35,8 @@ void PlayerInputBrain::trigger(InputActions action)
             mEntity->walkLeft();
             return;
         }
+        case ePlus:
+        case eMinus:
         case eInputActionsMax:
         {
             break;

@@ -57,9 +57,10 @@ struct PlatformDef
 {
     PlatformDef();
     void addPoint(const b2Vec2& p);
+    bool sort();
     b2Vec2 points[b2_maxPolygonVertices];
     unsigned char numPoints;
-    int texture;
+    unsigned int texture;
 };
 extern class EntityFactory
 {
@@ -68,8 +69,10 @@ extern class EntityFactory
         virtual ~EntityFactory();
         unsigned int addEntityDef(CreatureDef& def);
         unsigned int addEntityDef(PlatformDef& def);
+        void pop(){factoryDefs.pop_back();}
         Entity* createEntity(unsigned int index, b2Vec2& initialPosition);
-        void setCameraTarget(const Entity* entity);
+
+        Entity* createEntity(PlatformDef& def, b2Vec2& initialPosition); /// Doesn't store the def
     protected:
     private:
         Entity* entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition);

@@ -1,19 +1,20 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-class b2Body;
 class Camera
 {
     public:
-        Camera(b2Body* _body);
+        Camera();
         virtual ~Camera();
-        virtual void updateView(int xRes, int yRes);
+        void updateView(int xRes, int yRes);
         int getViewX(){return viewX;}
         int getViewY(){return viewY;}
+        float getPixelsPerMeter(){return scale;}
     protected:
-    private:
-        b2Body* body;
+        virtual void updateTransform(int xRes, int yRes)=0;
+        float xTrans, yTrans, scale;
         int viewX, viewY;
+    private:
 };
 
 #endif // CAMERA_H

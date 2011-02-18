@@ -74,6 +74,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
 			<Add directory="." />
@@ -108,8 +109,28 @@
 		<Unit filename="Factory\Factory.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
-		<Unit filename="Graphics\Camera.cpp" />
-		<Unit filename="Graphics\Camera.h" />
+		<Unit filename="GameModes\Editor\EditorMode.cpp" />
+		<Unit filename="GameModes\Editor\EditorMode.h" />
+		<Unit filename="GameModes\Editor\GeometryEditor.cpp" />
+		<Unit filename="GameModes\Editor\GeometryEditor.h" />
+		<Unit filename="GameModes\Editor\GeometryEditorMode.cpp" />
+		<Unit filename="GameModes\Editor\GeometryEditorMode.h" />
+		<Unit filename="GameModes\Editor\StateSwitcher.cpp" />
+		<Unit filename="GameModes\Editor\StateSwitcher.h" />
+		<Unit filename="GameModes\GameMode.cpp" />
+		<Unit filename="GameModes\GameMode.h" />
+		<Unit filename="GameModes\PlayMode.cpp" />
+		<Unit filename="GameModes\PlayMode.h" />
+		<Unit filename="Graphics\Camera\Camera.cpp" />
+		<Unit filename="Graphics\Camera\Camera.h" />
+		<Unit filename="Graphics\Camera\FreeCamera.cpp" />
+		<Unit filename="Graphics\Camera\FreeCamera.h" />
+		<Unit filename="Graphics\Camera\PhysicsCamera.cpp" />
+		<Unit filename="Graphics\Camera\PhysicsCamera.h" />
+		<Unit filename="Graphics\Contexts\MaterialContext.cpp" />
+		<Unit filename="Graphics\Contexts\MaterialContext.h" />
+		<Unit filename="Graphics\Contexts\ShaderContext.cpp" />
+		<Unit filename="Graphics\Contexts\ShaderContext.h" />
 		<Unit filename="Graphics\Contexts\TextureContext.cpp" />
 		<Unit filename="Graphics\Contexts\TextureContext.h" />
 		<Unit filename="Graphics\GLee.c">
@@ -130,8 +151,24 @@
 		<Unit filename="Input\EventListener.h" />
 		<Unit filename="Input\InputManager.cpp" />
 		<Unit filename="Input\InputManager.h" />
+		<Unit filename="Input\InputState.cpp" />
+		<Unit filename="Input\InputState.h" />
+		<Unit filename="Input\Mouse\ClickDragEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickDragEvent.h" />
+		<Unit filename="Input\Mouse\ClickEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickEvent.h" />
+		<Unit filename="Input\Mouse\ClickReleaseEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickReleaseEvent.h" />
+		<Unit filename="Input\Mouse\SelectionBox.cpp" />
+		<Unit filename="Input\Mouse\SelectionBox.h" />
+		<Unit filename="Level\LevelManager.cpp" />
+		<Unit filename="Level\LevelManager.h" />
 		<Unit filename="Physics\PhysicsManager.cpp" />
 		<Unit filename="Physics\PhysicsManager.h" />
+		<Unit filename="Physics\RenderCallback.cpp" />
+		<Unit filename="Physics\RenderCallback.h" />
+		<Unit filename="Timer.cpp" />
+		<Unit filename="Timer.h" />
 		<Unit filename="Types\Doubles.h" />
 		<Unit filename="Types\FastVector.h" />
 		<Unit filename="Types\List.h" />
@@ -139,8 +176,6 @@
 		<Unit filename="Types\Mat3x3f.h" />
 		<Unit filename="Types\Mat4x4f.cpp" />
 		<Unit filename="Types\Mat4x4f.h" />
-		<Unit filename="Types\MultiString.cpp" />
-		<Unit filename="Types\MultiString.h" />
 		<Unit filename="Types\MyQueue.h" />
 		<Unit filename="Types\MyStack.h" />
 		<Unit filename="Types\MyVector.h" />

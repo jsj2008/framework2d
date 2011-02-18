@@ -1,16 +1,37 @@
 #ifndef GRAPHICALCONTENTMANAGER_H
 #define GRAPHICALCONTENTMANAGER_H
 
-#include <Graphics/Contexts/TextureContext.h>
+#include <Graphics/Contexts/MaterialContext.h>
+#include <unordered_map>
+#include <locale>
+#include <vector>
+#include <string>
+#include <Types/MyStack.h>
+struct MaterialDef
+{
+    MaterialDef();
+    MaterialDef(char* _textureName, char* _shaderName);
+    MaterialDef(char* _textureName);
+    char *textureName;
+    char *shaderName;
+};
 class GraphicalContentManager
 {
     public:
         GraphicalContentManager();
         virtual ~GraphicalContentManager();
-        TextureContext* getTexture(unsigned int reference);
+        MaterialContext* getMaterial(unsigned int reference);
+        unsigned int findMaterial(const char* materialName);
     protected:
     private:
-        TextureContext* textures;
+        unsigned int addMaterial(MaterialDef& def);
+        TextureContext* addTexture(const char* name); /// These two functions check for its previous existance, addMaterial does not
+        ShaderContext* addShader(const char* name);
+        MyStack<MaterialContext> materials;
+        MyStack<TextureContext> textures;
+        MyStack<ShaderContext> shaders;
+        std::unordered_map<std::string, unsigned int> materialMap;
+        std::unordered_map<std::string, unsigned int> textureMap;
+        std::unordered_map<std::string, unsigned int> shaderMap;
 };
-
 #endif // GRAPHICALCONTENTMANAGER_H

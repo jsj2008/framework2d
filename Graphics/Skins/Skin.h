@@ -2,7 +2,7 @@
 #define SKIN_H
 
 class b2Body;
-class TextureContext;
+class MaterialContext;
 enum SkinType
 {
     eStaticSkinType,
@@ -20,7 +20,7 @@ class Skin
     protected:
     private:
         friend class GraphicsManager;
-        TextureContext* texture;
+        MaterialContext* material;
         unsigned int program;
 };
 

@@ -18,6 +18,7 @@ public:
 	void resize(int size);
 	void clear();
 	void push(T const &d);
+	inline void push_back(T const &d){push(d);}
 	T const pop();
 	T const top();
 	T& at(int j);

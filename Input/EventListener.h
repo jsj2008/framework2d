@@ -6,7 +6,7 @@
 class EventListener
 {
     public:
-        EventListener();
+        EventListener(InputState* inputState);
         virtual ~EventListener();
         virtual void trigger(InputActions action)=0;
     protected:

@@ -7,17 +7,23 @@ class InputManager;
 class Entity;
 class GameMode;
 #include <Types/FastVector.h>
-class Game
+enum GameModes
+{
+    eEditorGameMode,
+    ePlayGameMode,
+    eGameModesMax
+};
+extern class Game
 {
     public:
-        Game();
+        void init();
         virtual ~Game();
         void run();
+        GameMode* getGameMode(GameModes mode);
     protected:
     private:
         PhysicsManager* mPhysicsManager;
-        FastVector<Entity*> entities;
-        GameMode* editorMode;
-};
+        GameMode* mGameModes[eGameModesMax];
+}g_Game;
 
 #endif // GAME_H

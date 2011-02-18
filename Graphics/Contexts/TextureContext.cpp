@@ -1,20 +1,38 @@
 #include "TextureContext.h"
 #include <cstring>
+#include <cassert>
 #include <GL/gl.h>
 #include <SDL/SDL_video.h>
 
+TextureContext::TextureContext()
+{
+    memset(textureName,0,MAX_FILENAME);
+}
 TextureContext::TextureContext(const char* _textureName)
 {
     //ctor
-    strcpy(textureName,_textureName);
-    referenceCount = 0;
+    if (_textureName != NULL)
+    {
+        strcpy(textureName,_textureName);
+        referenceCount = 0;
+    }
+    else
+    {
+        memset(textureName,0,MAX_FILENAME);
+        referenceCount = 1;
+    }
 }
 
 TextureContext::~TextureContext()
 {
     //dtor
+    assert(referenceCount == 0 || textureName[0] == '\0');
 }
 
+void TextureContext::assertDelete()
+{
+    assert(referenceCount == 0);
+}
 void TextureContext::bindTexture()
 {
     glBindTexture(GL_TEXTURE_2D,texture);

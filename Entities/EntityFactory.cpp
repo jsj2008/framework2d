@@ -1,13 +1,15 @@
 #include "EntityFactory.h"
 #include <Entities/AllEntities.h>
-#include <Graphics/Camera.h>
+#include <Graphics/Camera/PhysicsCamera.h>
 #include <Graphics/GraphicsManager.h>
 #include <AI/AIManager.h>
+#include <Types/Mat3x3f.h>
 #include <cstring>
 #define PLAYER_STARTING_HEALTH 100
+#define M_PI 3.14159265358979323846
 PlatformDef::PlatformDef()
 {
-    texture = -1;
+    texture = 0;
     numPoints = 0;
 }
 void PlatformDef::addPoint(const b2Vec2& p)
@@ -15,6 +17,56 @@ void PlatformDef::addPoint(const b2Vec2& p)
     assert(numPoints != b2_maxPolygonVertices);
     points[numPoints] = p;
     numPoints++;
+}
+#include <iostream>
+using namespace std;
+bool PlatformDef::sort()
+{
+    bool alreadySorted = false;
+    for (unsigned char i = 0; i < numPoints; i++)
+    {
+#define points(i) points[i%numPoints]
+        b2Vec2 start = points(i);
+        b2Vec2 middle = points((i+1));
+        b2Vec2 end = points((i+2));
+#undef points
+        b2Vec2 a = start - middle;
+        b2Vec2 b = end - middle;
+        a.Normalize();
+        b.Normalize();
+
+		float myAngle = atan2(a.y,a.x);
+		float tAngle = atan2(b.y,b.x);
+		float angle = myAngle - tAngle;
+		if (angle <= -M_PI)
+		{
+			angle += M_PI*2.0;
+		}
+		if (angle >= M_PI)
+		{
+			angle -= M_PI*2.0;
+		}
+		angle *= 180/M_PI;
+        if (angle < 0.0f)
+        {
+            if (alreadySorted)
+            {
+                return false;
+            }
+            else
+            {
+                for (unsigned char ii = 0; ii < numPoints/2; ii++)
+                {
+                    b2Vec2 temp = points[ii];
+                    points[ii] = points[numPoints-(ii+1)];
+                    points[numPoints-(ii+1)] = temp;
+                }
+                alreadySorted = true;
+                i = 0;
+            }
+        }
+    }
+    return true;
 }
 EntityFactoryDef::EntityFactoryDef(EntityType _type)
 :entityDef(_type),graphicsDef(eStaticSkinType)
@@ -58,6 +110,13 @@ EntityFactory::~EntityFactory()
 Entity* EntityFactory::createEntity(unsigned int index, b2Vec2& initialPosition)
 {
     return entityFactory(factoryDefs[index],initialPosition);
+}
+Entity* EntityFactory::createEntity(PlatformDef& def, b2Vec2& initialPosition)
+{
+    unsigned int entity = addEntityDef(def);
+    Entity* ret = createEntity(entity,initialPosition);
+    pop();
+    return ret;
 }
 unsigned int EntityFactory::addEntityDef(CreatureDef& def)
 {
@@ -142,8 +201,13 @@ Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosit
     return entity;
 }
 
-void EntityFactory::setCameraTarget(const Entity* entity)
+/*void EntityFactory::setCameraTarget(const Entity* entity)
 {
-    Camera* camera = new Camera(entity->mBody);
+    static Camera* camera = NULL;
+    if (camera != NULL)
+    {
+        delete camera;
+    }
+    camera = new PhysicsCamera(entity->mBody);
     g_GraphicsManager.setCamera(camera);
-}
+}*/

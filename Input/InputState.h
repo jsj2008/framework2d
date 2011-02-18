@@ -12,6 +12,8 @@ enum InputActions
     eLeft,
     eDown,
     eRight,
+    ePlus, /// Need to make these the scroll wheel
+    eMinus,
     eInputActionsMax
 };
 
@@ -23,6 +25,7 @@ class InputState
         virtual bool processInput();
         void registerEvent(EventListener* event, InputActions action);
         void registerEvent(ClickEvent* event);
+        void render();
     protected:
     private:
         struct ControlStruct
