@@ -11,18 +11,18 @@ ClickReleaseEvent::~ClickReleaseEvent()
     //dtor
 }
 
-bool ClickReleaseEvent::buttonDown(int mouseX, int mouseY, unsigned char button)
+bool ClickReleaseEvent::buttonDown(Vec2i mouse, unsigned char button)
 {
-    return mRect.contained(mouseX, mouseY);
+    return mRect.contained(mouse);
 }
-void ClickReleaseEvent::mouseMove(int mouseX, int mouseY)
+void ClickReleaseEvent::mouseMove(Vec2i mouse)
 {
 
 }
-void ClickReleaseEvent::buttonUp(int mouseX, int mouseY, unsigned char button)
+void ClickReleaseEvent::buttonUp(Vec2i mouse, unsigned char button)
 {
-    if (mRect.contained(mouseX, mouseY))
+    if (mRect.contained(mouse))
     {
-        click(mouseX, mouseY, button);
+        click(mouse, button);
     }
 }

@@ -14,7 +14,7 @@ class ConvexPolygonSkin : public Skin
         SkinType getType(){return eConvexPolygonSkinType;}
     protected:
     private:
-        b2Vec2 points[b2_maxPolygonVertices];
+        Vec2f points[b2_maxPolygonVertices];
         unsigned char numPoints;
 };
 

@@ -17,7 +17,7 @@ LevelManager::~LevelManager()
 void LevelManager::addPlatform(PlatformDef* def)
 {
     defs.push_back(*def);
-    b2Vec2 origin(0,0);
+    Vec2f origin(0,0);
     g_EntityFactory.createEntity(*def,origin);
 }
 #define CREATE_FILE_NAME \
@@ -36,7 +36,7 @@ void LevelManager::removeBody(b2Body* body)
     g_PhysicsManager.destroyBody(body);
     /*g_PhysicsManager.clear();
     bodyToDefTable.clear();
-    b2Vec2 origin(0,0);
+    Vec2f origin(0,0);
     for (unsigned int i = 0; i < defs.size(); i++)
     {
         b2Body* body = g_EntityFactory.createEntity(defs[i],origin)->mBody;
@@ -56,7 +56,7 @@ void LevelManager::loadLevel(const char* name)
     file.read((char*)&size,sizeof(unsigned int));
     defs.resize(size);
     file.read((char*)&defs[0],sizeof(PlatformDef)*size);
-    b2Vec2 origin(0,0);
+    Vec2f origin(0,0);
     unsigned int old_buckets = bodyToDefTable.bucket_count();
     for (unsigned int i = 0; i < size; i++)
     {

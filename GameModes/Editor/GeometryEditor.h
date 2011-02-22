@@ -10,7 +10,7 @@ class GeometryEditor : public ClickReleaseEvent
     public:
         GeometryEditor(const Rect& _Rect);
         virtual ~GeometryEditor();
-        void click(int mouseX, int mouseY, unsigned char button);
+        void click(Vec2i mouse, unsigned char button);
         void render();
     protected:
     private:

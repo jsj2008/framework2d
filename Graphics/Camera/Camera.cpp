@@ -4,7 +4,6 @@
 Camera::Camera()
 {
     //ctor
-    viewX = viewY = 0;
 }
 
 Camera::~Camera()
@@ -12,14 +11,14 @@ Camera::~Camera()
     //dtor
 }
 
-void Camera::updateView(int xRes, int yRes)
+void Camera::updateView(Vec2i resolution)
 {
-    updateTransform(xRes,yRes);
+    updateTransform(resolution);
 
     glLoadIdentity();
     glScalef(scale,scale,0);
     glTranslatef(xTrans,yTrans,0);
 
-    viewX = (-xTrans)*scale;
-    viewY = (-yTrans)*scale;
+    view.x = (-xTrans)*scale;
+    view.y = (-yTrans)*scale;
 }

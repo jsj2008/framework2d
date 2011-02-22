@@ -9,7 +9,7 @@ class SelectionBox : public ClickReleaseEvent
     public:
         SelectionBox(const Rect& _Rect, int _numElements);
         virtual ~SelectionBox();
-        void click(int mouseX, int mouseY, unsigned char button);
+        void click(Vec2i mouse, unsigned char button);
         void render();
     protected:
         virtual void selectionTrigger()=0;

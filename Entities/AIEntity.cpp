@@ -32,7 +32,7 @@ void AIEntity::update()
         b2Contact* contact = ce->contact;
         b2WorldManifold manifold;
         contact->GetWorldManifold(&manifold);
-        float dot = b2Dot(manifold.normal,b2Vec2(0,1));
+        float dot = b2Dot(manifold.normal,Vec2f(0,1));
         if (dot > 0.8f) // Close enough to a floor
         {
             grounded = true;
@@ -51,24 +51,24 @@ void AIEntity::jump()
 {
     if (grounded)
     {
-        b2Vec2 point(0,0);
+        Vec2f point(0,0);
         point = mBody->GetWorldCenter();
-        mBody->ApplyLinearImpulse(b2Vec2(0.0,JUMP_IMPULSE), point);
+        mBody->ApplyLinearImpulse(Vec2f(0.0,JUMP_IMPULSE), point);
         grounded = false;
     }
 }
 void AIEntity::walkLeft()
 {
-    b2Vec2 point(0,0);
+    Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(b2Vec2(-0.05,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(-0.05,0), point);
 }
 
 void AIEntity::walkRight()
 {
-    b2Vec2 point(0,0);
+    Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(b2Vec2(0.05,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(0.05,0), point);
 }
 
 

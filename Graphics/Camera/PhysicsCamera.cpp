@@ -14,11 +14,11 @@ PhysicsCamera::~PhysicsCamera()
     //dtor
 }
 
-void PhysicsCamera::updateTransform(int xRes, int yRes)
+void PhysicsCamera::updateTransform(Vec2i resolution)
 {
-    float xView = xRes / (2.0f * scale);
-    float yView = yRes / (2.0f * scale);
-    b2Vec2 center = body->GetWorldCenter();
+    float xView = resolution.x / (2.0f * scale);
+    float yView = resolution.y / (2.0f * scale);
+    Vec2f center = body->GetWorldCenter();
 
     xTrans = -center.x + xView;
     yTrans = -center.y + yView;

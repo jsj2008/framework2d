@@ -10,8 +10,8 @@ class GeometrySelector : public ClickDragEvent
         GeometrySelector(const Rect& _Rect);
         virtual ~GeometrySelector();
         void start(unsigned char button);
-        void mouseMove(int mouseX, int mouseY);
-        void buttonUp(int mouseX, int mouseY, unsigned char button);
+        void mouseMove(Vec2i mouse);
+        void buttonUp(Vec2i mouse, unsigned char button);
         void render();
     protected:
     private:

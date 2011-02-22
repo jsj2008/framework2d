@@ -49,7 +49,7 @@ bool InputState::processInput()
             }*/
             case SDL_VIDEORESIZE:
             {
-                g_GraphicsManager.resize(event.resize.w,event.resize.h);
+                g_GraphicsManager.resize(Vec2i(event.resize.w,event.resize.h));
                 break;
             }
             case SDL_MOUSEBUTTONDOWN:
@@ -57,7 +57,7 @@ bool InputState::processInput()
                 //for (unsigned int i = 0; i < clickEvents.size(); i++)
                 for (unsigned int i = clickEvents.size()-1; i != (unsigned int)-1; i--)
                 {
-                    if (clickEvents[i]->buttonDown(event.button.x,event.button.y,event.button.button))
+                    if (clickEvents[i]->buttonDown(Vec2i(event.button.x,event.button.y),event.button.button))
                     {
                         activeEvent = clickEvents[i];
                         break;
@@ -69,7 +69,7 @@ bool InputState::processInput()
             {
                 if (activeEvent != NULL)
                 {
-                    activeEvent->mouseMove(event.motion.x,event.motion.y);
+                    activeEvent->mouseMove(Vec2i(event.motion.x,event.motion.y));
                 }
                 break;
             }
@@ -85,7 +85,7 @@ bool InputState::processInput()
                 }
                 else if (activeEvent != NULL)
                 {
-                    activeEvent->buttonUp(event.button.x,event.button.y,event.button.button);
+                    activeEvent->buttonUp(Vec2i(event.button.x,event.button.y),event.button.button);
                     activeEvent = NULL;
                 }
                 break;

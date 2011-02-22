@@ -14,8 +14,8 @@ struct Vec2i { //Simple vector class
 	Vec2i operator*( int s ) { return Vec2i( x*s, y*s ); }
 	Vec2i operator/( int s ) { return Vec2i( x/s, y/s ); }
 	Vec2i operator+( int s ) { return Vec2i( x+s, y+s ); }
-	Vec2i operator+( Vec2i B ) { return Vec2i( x + B.x, y + B.y ); }
-	Vec2i operator-( Vec2i B ) { return Vec2i( x - B.x, y - B.y ); }
+	Vec2i operator+(const Vec2i B ) { return Vec2i( x + B.x, y + B.y ); }
+	Vec2i operator-(const Vec2i B ) { return Vec2i( x - B.x, y - B.y ); }
 	Vec2i operator-() { return Vec2i( -x, -y ); }
 	int operator*( Vec2i B ) { return x*B.x + y*B.y; }
 	void operator=( Vec2i B ) { x = B.x; y = B.y; }
@@ -26,7 +26,7 @@ struct Vec2i { //Simple vector class
 	bool operator==( Vec2i B ) { return x == B.x && y == B.y; }
 	bool operator!=( Vec2i B ) { return x != B.x || y != B.y; }
 	int Length() { return sqrt( float(x*x) + float(y*y) ); }
-	Vec2f ScreenToWorldSpace();
+	const Vec2f ScreenToWorldSpace() const;
 
 };
 

@@ -6,7 +6,7 @@ ConvexPolygonSkin::ConvexPolygonSkin(float *_points, unsigned char _numPoints)
 {
     //ctor
     numPoints = _numPoints;
-    memcpy(points,_points,sizeof(b2Vec2)*numPoints);
+    memcpy(points,_points,sizeof(Vec2f)*numPoints);
 }
 
 ConvexPolygonSkin::~ConvexPolygonSkin()

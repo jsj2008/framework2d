@@ -49,16 +49,16 @@ struct EntityFactoryDef
 };
 struct CreatureDef
 {
-    b2Vec2 dimensions;
+    Vec2f dimensions;
     int texture;
     BrainType type;
 };
 struct PlatformDef
 {
     PlatformDef();
-    void addPoint(const b2Vec2& p);
+    void addPoint(const Vec2f& p);
     bool sort();
-    b2Vec2 points[b2_maxPolygonVertices];
+    Vec2f points[b2_maxPolygonVertices];
     unsigned char numPoints;
     unsigned int texture;
 };
@@ -70,12 +70,12 @@ extern class EntityFactory
         unsigned int addEntityDef(CreatureDef& def);
         unsigned int addEntityDef(PlatformDef& def);
         void pop(){factoryDefs.pop_back();}
-        Entity* createEntity(unsigned int index, b2Vec2& initialPosition);
+        Entity* createEntity(unsigned int index, Vec2f& initialPosition);
 
-        Entity* createEntity(PlatformDef& def, b2Vec2& initialPosition); /// Doesn't store the def
+        Entity* createEntity(PlatformDef& def, Vec2f& initialPosition); /// Doesn't store the def
     protected:
     private:
-        Entity* entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition);
+        Entity* entityFactory(EntityFactoryDef& def, Vec2f& initialPosition);
         std::vector<EntityFactoryDef> factoryDefs;
         AIManager* pAIManager;
         Entity* createContainer(EntityFactoryDef::EntityDef& def);

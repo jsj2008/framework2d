@@ -19,7 +19,7 @@ PhysicsManager::~PhysicsManager()
 }
 void PhysicsManager::init()
 {
-    mWorld = new b2World(b2Vec2(0,WORLD_GRAVITY),true);
+    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
     mRenderCallback = new RenderCallback;
     stepsTaken = 0;
     startTime = g_Timer.getTicks();
@@ -34,9 +34,9 @@ void PhysicsManager::clear()
         body = body->GetNext();
     }
     delete mWorld;
-    mWorld = new b2World(b2Vec2(0,WORLD_GRAVITY),true);
+    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
 }
-b2Body* PhysicsManager::bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosition, void* userData)
+b2Body* PhysicsManager::bodyFactory(PhysicsFactoryDef& def, Vec2f& initialPosition, void* userData)
 {
     def.bodyDef.userData = userData;
     def.bodyDef.position = initialPosition;
@@ -56,7 +56,7 @@ void PhysicsManager::destroyBody(b2Body* body)
     delete entity;
     mWorld->DestroyBody(body);
 }
-b2MouseJoint* PhysicsManager::createJoint(b2Body* body, b2Vec2& point)
+b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 {
     static b2Body* groundBody = NULL;
     if (groundBody == NULL)
@@ -106,13 +106,20 @@ void PhysicsManager::updateEntities()
 void PhysicsManager::render()
 {
     b2AABB aabb;
-    float x = (float)g_GraphicsManager.getViewX() / g_GraphicsManager.getPixelsPerMeter();
-    float y = (float)g_GraphicsManager.getViewY() / g_GraphicsManager.getPixelsPerMeter();
-    aabb.lowerBound = b2Vec2(x,y);
-    float x2 = x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());
-    float y2 = y + ((float)g_GraphicsManager.getYRes() / g_GraphicsManager.getPixelsPerMeter());
-    aabb.upperBound = b2Vec2(x2,y2);
+    Vec2i view = g_GraphicsManager.getView();
+    float x = (float)view.x / g_GraphicsManager.getPixelsPerMeter();
+    float y = (float)view.y / g_GraphicsManager.getPixelsPerMeter();
+    aabb.lowerBound = Vec2f(x,y);
+    Vec2i resolution = g_GraphicsManager.getResolution();
+    float x2 = x + ((float)resolution.x / g_GraphicsManager.getPixelsPerMeter());
+    float y2 = y + ((float)resolution.y / g_GraphicsManager.getPixelsPerMeter());
+    aabb.upperBound = Vec2f(x2,y2);
     mWorld->QueryAABB(mRenderCallback,aabb);
+
+    /*aabb.lowerBound = Vec2f(g_GraphicsManager.getView().ScreenToWorldSpace());
+    x2 = aabb.lowerBound.x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());
+    y2 = aabb.lowerBound.y + ((float)g_GraphicsManager.getYRes() / g_GraphicsManager.getPixelsPerMeter());
+    aabb.upperBound = Vec2f(x2,y2);*/
 }
 class PhySimpleCallback : public b2QueryCallback
 {
@@ -132,14 +139,14 @@ public:
     }
     b2Body* ret;
 };
-b2Body* PhysicsManager::select(b2Vec2& position)
+b2Body* PhysicsManager::select(Vec2f& position)
 {
     b2AABB aabb;
     PhySimpleCallback callback;
     aabb.lowerBound = position;
     //float x2 = x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());
     //float y2 = y + ((float)g_GraphicsManager.getYRes() / g_GraphicsManager.getPixelsPerMeter());
-    aabb.upperBound = b2Vec2(position.x+0.001f,position.y+0.001f);
+    aabb.upperBound = Vec2f(position.x+0.001f,position.y+0.001f);
     mWorld->QueryAABB(&callback,aabb);
     return callback.ret;
 }

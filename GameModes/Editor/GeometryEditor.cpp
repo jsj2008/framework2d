@@ -13,13 +13,11 @@ GeometryEditor::~GeometryEditor()
 {
     //dtor
 }
-void GeometryEditor::click(int mouseX, int mouseY, unsigned char button)
+void GeometryEditor::click(Vec2i mouse, unsigned char button)
 {
     if (button == 1)
     {
-        float x = mouseX + g_GraphicsManager.getViewX();
-        float y = mouseY + g_GraphicsManager.getViewY();
-        b2Vec2 point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());
+        Vec2f point = mouse.ScreenToWorldSpace();
         def.addPoint(point);
     }
     if (def.numPoints == b2_maxPolygonVertices || button == 3)

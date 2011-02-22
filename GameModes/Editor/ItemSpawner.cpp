@@ -11,7 +11,7 @@ ItemSpawner::~ItemSpawner()
     //dtor
 }
 
-void ItemSpawner::click(int mouseX, int mouseY, unsigned char button)
+void ItemSpawner::click(Vec2i mouse, unsigned char button)
 {
 
 }

@@ -3,13 +3,13 @@
 
 #include <vector>
 class Entity;
-class b2Vec2;
+class Vec2f;
 class Factory
 {
     public:
         Factory();
         virtual ~Factory();
-        virtual Entity* createEntity(b2Vec2* origin)=0;
+        virtual Entity* createEntity(Vec2f* origin)=0;
     protected:
     private:
 };

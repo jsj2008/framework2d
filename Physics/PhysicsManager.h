@@ -24,13 +24,13 @@ extern class PhysicsManager
         void init();
         virtual ~PhysicsManager();
         void clear();
-        b2Body* bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosition, void* userData);
+        b2Body* bodyFactory(PhysicsFactoryDef& def, Vec2f& initialPosition, void* userData);
         void destroyBody(b2Body* body);
-        b2MouseJoint* createJoint(b2Body* body, b2Vec2& point);
+        b2MouseJoint* createJoint(b2Body* body, Vec2f& point);
         void deleteJoint(b2MouseJoint* joint);
         bool update();
         void render();
-        b2Body* select(b2Vec2& position);
+        b2Body* select(Vec2f& position);
     protected:
     private:
         void updateEntities();

@@ -38,7 +38,7 @@ GraphicsManager::GraphicsManager()
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);
         assert(result == 0);
-    resize(800,600);
+    resize(Vec2i(800,600));
 
     glDisable(GL_DEPTH_TEST);
 	glClearColor(1,0,0,0);
@@ -59,12 +59,12 @@ void GraphicsManager::beginScene()
 {
     if (mCamera != 0)
     {
-        mCamera->updateView(xRes, yRes);
+        mCamera->updateView(resolution);
     }
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, xRes, yRes, 0, 0, 1); // Parralel projection (no 3d or depth test)
+    glOrtho(0, resolution.x, resolution.y, 0, 0, 1); // Parralel projection (no 3d or depth test)
 
     glMatrixMode(GL_MODELVIEW);
 }
@@ -80,27 +80,22 @@ void GraphicsManager::endScene()
 	    throw (const char*)gluErrorString(errorCode);
 	}
 }
-void GraphicsManager::resize(int newXRes, int newYRes)
+void GraphicsManager::resize(Vec2i newResolution)
 {
-    xRes = newXRes;
-    yRes = newYRes;
-    SDL_Surface* screen = SDL_SetVideoMode(xRes, yRes, 0, SDL_OPENGL|SDL_RESIZABLE|SDL_DOUBLEBUF);
+    resolution = newResolution;
+    SDL_Surface* screen = SDL_SetVideoMode(resolution.x, resolution.y, 0, SDL_OPENGL|SDL_RESIZABLE|SDL_DOUBLEBUF);
         assert(screen != NULL);
 
-    glViewport(0,0,xRes,yRes);
+    glViewport(0,0,resolution.x,resolution.y);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, xRes, yRes, 0, 0, 1); // Parralel projection (no 3d or depth test)
+    glOrtho(0, resolution.x, resolution.y, 0, 0, 1); // Parralel projection (no 3d or depth test)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-int GraphicsManager::getViewX()
+const Vec2i& GraphicsManager::getView()
 {
-    return mCamera->getViewX();
-}
-int GraphicsManager::getViewY()
-{
-    return mCamera->getViewY();
+    return mCamera->getView();
 }
 float GraphicsManager::getPixelsPerMeter()
 {

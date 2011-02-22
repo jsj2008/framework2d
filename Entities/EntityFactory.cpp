@@ -12,7 +12,7 @@ PlatformDef::PlatformDef()
     texture = 0;
     numPoints = 0;
 }
-void PlatformDef::addPoint(const b2Vec2& p)
+void PlatformDef::addPoint(const Vec2f& p)
 {
     assert(numPoints != b2_maxPolygonVertices);
     points[numPoints] = p;
@@ -26,12 +26,12 @@ bool PlatformDef::sort()
     for (unsigned char i = 0; i < numPoints; i++)
     {
 #define points(i) points[i%numPoints]
-        b2Vec2 start = points(i);
-        b2Vec2 middle = points((i+1));
-        b2Vec2 end = points((i+2));
+        Vec2f start = points(i);
+        Vec2f middle = points((i+1));
+        Vec2f end = points((i+2));
 #undef points
-        b2Vec2 a = start - middle;
-        b2Vec2 b = end - middle;
+        Vec2f a = start - middle;
+        Vec2f b = end - middle;
         a.Normalize();
         b.Normalize();
 
@@ -57,7 +57,7 @@ bool PlatformDef::sort()
             {
                 for (unsigned char ii = 0; ii < numPoints/2; ii++)
                 {
-                    b2Vec2 temp = points[ii];
+                    Vec2f temp = points[ii];
                     points[ii] = points[numPoints-(ii+1)];
                     points[numPoints-(ii+1)] = temp;
                 }
@@ -106,11 +106,11 @@ EntityFactory::~EntityFactory()
 {
     //dtor
 }
-Entity* EntityFactory::createEntity(unsigned int index, b2Vec2& initialPosition)
+Entity* EntityFactory::createEntity(unsigned int index, Vec2f& initialPosition)
 {
     return entityFactory(factoryDefs[index],initialPosition);
 }
-Entity* EntityFactory::createEntity(PlatformDef& def, b2Vec2& initialPosition)
+Entity* EntityFactory::createEntity(PlatformDef& def, Vec2f& initialPosition)
 {
     unsigned int entity = addEntityDef(def);
     Entity* ret = createEntity(entity,initialPosition);
@@ -152,7 +152,7 @@ unsigned int EntityFactory::addEntityDef(PlatformDef& def)
     entity.graphicsDef.type = eConvexPolygonSkinType;
     entity.graphicsDef.graphicsDef.convexPolygonSkinDef.texture = def.texture;
     entity.graphicsDef.graphicsDef.convexPolygonSkinDef.numPoints = def.numPoints;
-    memcpy(entity.graphicsDef.graphicsDef.convexPolygonSkinDef.points,def.points,sizeof(b2Vec2)*def.numPoints);
+    memcpy(entity.graphicsDef.graphicsDef.convexPolygonSkinDef.points,def.points,sizeof(Vec2f)*def.numPoints);
 
     factoryDefs.push_back(entity);
     return ret;
@@ -192,7 +192,7 @@ Entity* EntityFactory::createContainer(EntityFactoryDef::EntityDef& def)
     }
     throw "Invalid enum";
 }
-Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition)
+Entity* EntityFactory::entityFactory(EntityFactoryDef& def, Vec2f& initialPosition)
 {
     Entity* entity = createContainer(def.entityDef);
     entity->mBody = g_PhysicsManager.bodyFactory(def.physicsDef,initialPosition,(void*)entity);

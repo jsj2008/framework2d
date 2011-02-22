@@ -26,7 +26,7 @@ void Game::init()
     mGameModes[eEditorGameMode] = new EditorMode;
 
 
-    b2Vec2 initialPosition(0,-10);
+    Vec2f initialPosition(0,-10);
     CreatureDef player;
     player.dimensions.Set(2,2);
     player.texture = 1;
@@ -37,8 +37,8 @@ void Game::init()
     ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
     gameModeStack.push(NULL);
+    set(NULL,mGameModes[ePlayGameMode]);
     set(NULL,mGameModes[eEditorGameMode]);
-    //set(NULL,mGameModes[ePlayGameMode]);
 
     initialPosition.Set(0,10);
     cout << "EntityFactoryDef " << sizeof(EntityFactoryDef) << endl;

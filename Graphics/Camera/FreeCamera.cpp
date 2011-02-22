@@ -6,7 +6,6 @@ FreeCamera::FreeCamera(InputState* inputState)
 :EventListener(inputState)
 {
     //ctor
-    xPos = yPos = 0;
     if (inputState != NULL)
     {
         inputState->registerEvent(this,ePlus);
@@ -33,13 +32,13 @@ void FreeCamera::registerWithInputState(InputState* inputState)
     inputState->registerEvent(this,ePlus);
     inputState->registerEvent(this,eMinus);
 }
-void FreeCamera::updateTransform(int xRes, int yRes)
+void FreeCamera::updateTransform(Vec2i resolution)
 {
-    float xView = xRes / (2.0f * scale);
-    float yView = yRes / (2.0f * scale);
+    float xView = resolution.x / (2.0f * scale);
+    float yView = resolution.y / (2.0f * scale);
 
-    xTrans = -(xPos/scale) + xView;
-    yTrans = -(yPos/scale) + yView;
+    xTrans = -(position.x/scale) + xView;
+    yTrans = -(position.y/scale) + yView;
 }
 #include <iostream>
 using namespace std;
@@ -59,22 +58,22 @@ void FreeCamera::trigger(InputActions action)
         }
         case eUp:
         {
-            yPos--;
+            position.y--;
             return;
         }
         case eDown:
         {
-            yPos++;
+            position.y++;
             return;
         }
         case eRight:
         {
-            xPos++;
+            position.x++;
             return;
         }
         case eLeft:
         {
-            xPos--;
+            position.x--;
             return;
         }
         case eInputActionsMax:

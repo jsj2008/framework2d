@@ -13,9 +13,9 @@ class ClickDragEvent : public ClickEvent
         ///void mouseMove(int mouseX, int mouseY); Override these instead
         ///void buttonUp(int mouseX, int mouseY);
     protected:
-        int startXPos, startYPos;
+        Vec2i startPos;
     private:
-        bool buttonDown(int mouseX, int mouseY, unsigned char button);
+        bool buttonDown(Vec2i mouse, unsigned char button);
 };
 
 #endif // CLICKDRAGEVENT_H

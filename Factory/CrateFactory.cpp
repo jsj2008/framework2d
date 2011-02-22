@@ -12,7 +12,7 @@ CrateFactory::~CrateFactory()
 {
     //dtor
 }
-Entity* CrateFactory::createEntity(b2Vec2* origin)
+Entity* CrateFactory::createEntity(Vec2f* origin)
 {
     Entity* ret = new Crate;
     return ret;

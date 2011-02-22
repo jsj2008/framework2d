@@ -4,6 +4,7 @@
 class Camera;
 #include <Graphics/Skins/Skin.h>
 #include <Graphics/GraphicalContentManager.h>
+#include <Types/Vec2i.h>
 #include <Box2D/Common/b2Settings.h>
 struct GraphicsFactoryDef
 {
@@ -37,18 +38,16 @@ extern class GraphicsManager
         virtual ~GraphicsManager();
         void beginScene();
         void endScene();
-        void resize(int newXRes, int newYRes);
-        int getXRes(){return xRes;}
-        int getYRes(){return yRes;}
-        int getViewX();
-        int getViewY();
+        void resize(Vec2i newResolution);
+        Vec2i getResolution(){return resolution;}
+        const Vec2i& getView();
         float getPixelsPerMeter();
         void setCamera(Camera* _camera){mCamera = _camera;}
         Skin* skinFactory(GraphicsFactoryDef& def);
     protected:
     private:
         Camera* mCamera;
-        int xRes, yRes;
+        Vec2i resolution;
         GraphicalContentManager mContentManager;
 }g_GraphicsManager;
 

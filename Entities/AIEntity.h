@@ -19,7 +19,7 @@ class AIEntity : public Entity
     private:
         Brain* mBrain;
         bool grounded;
-        b2Vec2 groundNormal;
+        Vec2f groundNormal;
 };
 
 #endif // AIENTITY_H

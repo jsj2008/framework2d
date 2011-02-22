@@ -10,12 +10,12 @@ class FreeCamera : public Camera, public EventListener
     public:
         FreeCamera(InputState* inputState);
         virtual ~FreeCamera();
-        void updateTransform(int xRes, int yRes);
+        void updateTransform(Vec2i resolution);
         void trigger(InputActions actions);
         void registerWithInputState(InputState* inputState);
     protected:
     private:
-        int xPos, yPos;
+        Vec2i position;
 };
 
 #endif // FREECAMERA_H

@@ -18,9 +18,10 @@ GeometrySelector::~GeometrySelector()
 
 void GeometrySelector::start(unsigned char button)
 {
-    float x = startXPos + g_GraphicsManager.getViewX();
+    /*float x = startXPos + g_GraphicsManager.getViewX();
     float y = startYPos + g_GraphicsManager.getViewY();
-    b2Vec2 point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());
+    Vec2f point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());CHECKME */
+    Vec2f point = startPos.ScreenToWorldSpace();
     b2Body* body = g_PhysicsManager.select(point);
     if (body != NULL)
     {
@@ -34,22 +35,23 @@ void GeometrySelector::start(unsigned char button)
         }
     }
 }
-void GeometrySelector::mouseMove(int mouseX, int mouseY)
+void GeometrySelector::mouseMove(Vec2i mouse)
 {
     if (joint != NULL)
     {
-        float x = mouseX + g_GraphicsManager.getViewX();
+        /*float x = mouseX + g_GraphicsManager.getViewX();
         float y = mouseY + g_GraphicsManager.getViewY();
-        b2Vec2 point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());
+        Vec2f point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());CHECKME */
+        Vec2f point = mouse.ScreenToWorldSpace();
         joint->SetTarget(point);
         b2Body* body = joint->GetBodyB();
         body->SetAwake(true);
         assert(joint->IsActive());
         assert(body->GetType() == b2_dynamicBody);
-        b2Vec2 position = body->GetWorldCenter();
+        Vec2f position = body->GetWorldCenter();
     }
 }
-void GeometrySelector::buttonUp(int mouseX, int mouseY, unsigned char button)
+void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
 {
     if (joint != NULL)
     {

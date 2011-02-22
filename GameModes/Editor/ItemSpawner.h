@@ -9,7 +9,7 @@ class ItemSpawner : public ClickReleaseEvent
     public:
         ItemSpawner(const Rect& _Rect);
         virtual ~ItemSpawner();
-        void click(int mouseX, int mouseY, unsigned char button);
+        void click(Vec2i mouse, unsigned char button);
     protected:
     private:
 };

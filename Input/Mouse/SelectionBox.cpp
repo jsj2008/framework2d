@@ -14,10 +14,10 @@ SelectionBox::~SelectionBox()
     //dtor
 }
 /// This only works horizontally atm
-void SelectionBox::click(int mouseX, int mouseY, unsigned char button)
+void SelectionBox::click(Vec2i mouse, unsigned char button)
 {
-    mouseX -= mRect.x;
-    int newSelection = mouseX / div;
+    mouse.x -= mRect.x;
+    int newSelection = mouse.x / div;
     currentSelection = newSelection;
     selectionTrigger();
 }

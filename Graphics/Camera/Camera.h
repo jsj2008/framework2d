@@ -1,19 +1,19 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <Types/Vec2i.h>
 class Camera
 {
     public:
         Camera();
         virtual ~Camera();
-        void updateView(int xRes, int yRes);
-        int getViewX(){return viewX;}
-        int getViewY(){return viewY;}
+        void updateView(Vec2i resolution);
+        const Vec2i& getView(){return view;}
         float getPixelsPerMeter(){return scale;}
     protected:
-        virtual void updateTransform(int xRes, int yRes)=0;
+        virtual void updateTransform(Vec2i resolution)=0;
         float xTrans, yTrans, scale;
-        int viewX, viewY;
+        Vec2i view;
     private:
 };
 

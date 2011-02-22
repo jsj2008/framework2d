@@ -20,7 +20,7 @@ void Skin::render(b2Body* body)
 {
     material->bindTexture();
     //glUseProgram(0);
-    const b2Vec2 & center = body->GetWorldCenter();
+    const Vec2f & center = body->GetWorldCenter();
     float rotation = -body->GetAngle();
     glPushMatrix();
         glTranslatef(center.x,center.y,0);
