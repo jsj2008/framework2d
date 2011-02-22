@@ -9,13 +9,13 @@ class ClickDragEvent : public ClickEvent
     public:
         ClickDragEvent(const Rect& _Rect);
         virtual ~ClickDragEvent();
-        virtual void start()=0;
+        virtual void start(unsigned char button)=0;
         ///void mouseMove(int mouseX, int mouseY); Override these instead
         ///void buttonUp(int mouseX, int mouseY);
     protected:
         int startXPos, startYPos;
     private:
-        bool buttonDown(int mouseX, int mouseY);
+        bool buttonDown(int mouseX, int mouseY, unsigned char button);
 };
 
 #endif // CLICKDRAGEVENT_H

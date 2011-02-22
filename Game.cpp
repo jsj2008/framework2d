@@ -16,8 +16,10 @@ Game g_Game;
 void Game::init()
 {
     //ctor
-    mPhysicsManager = new PhysicsManager();
-    g_EntityFactory.init(mPhysicsManager);
+    g_Timer.init();
+    g_Timer.pause();
+    g_EntityFactory.init();
+    g_PhysicsManager.init();
 
     //editorMode = new EditorMode;
     mGameModes[ePlayGameMode] = new PlayMode;
@@ -34,8 +36,9 @@ void Game::init()
 
     ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
-    mGameModes[ePlayGameMode]->set();
-    mGameModes[eEditorGameMode]->set();
+    gameModeStack.push(NULL);
+    set(NULL,mGameModes[eEditorGameMode]);
+    //set(NULL,mGameModes[ePlayGameMode]);
 
     initialPosition.Set(0,10);
     cout << "EntityFactoryDef " << sizeof(EntityFactoryDef) << endl;
@@ -44,9 +47,9 @@ void Game::init()
     cout << "PhysicsFactoryDef " << sizeof(PhysicsFactoryDef) << endl;
     cout << "GraphicsFactoryDef " << sizeof(GraphicsFactoryDef) << endl;
 
-    g_Timer.init();
-    mPhysicsManager->init();
+    g_LevelManager.loadLevel("default");
 
+    g_Timer.unPause();
 }
 Game::~Game()
 {
@@ -56,20 +59,38 @@ GameMode* Game::getGameMode(GameModes mode)
 {
     return mGameModes[mode];
 }
+void Game::set(GameMode* root, GameMode* mode)
+{
+    GameMode* mTop = gameModeStack.top();
+    while (mTop != root)
+    {
+        gameModeStack.pop();
+        mTop = gameModeStack.top();
+    }
+    if (mode == NULL)
+    {
+        mTop->set();
+    }
+    else
+    {
+        gameModeStack.push(mode);
+        mode->set();
+    }
+}
 void Game::run()
 {
     bool running = true;
-    g_LevelManager.loadLevel("default");
     while (running)
     {
         g_GraphicsManager.beginScene();
-        if (mPhysicsManager->update())
+        if (g_PhysicsManager.update())
         {
             running = g_InputManager.processInput();
-            mPhysicsManager->render();
+            g_PhysicsManager.render();
             g_InputManager.render();
         }
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");
+    g_PhysicsManager.clear();
 }

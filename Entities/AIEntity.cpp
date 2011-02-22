@@ -16,6 +16,7 @@ AIEntity::AIEntity(Brain* _Brain)
 AIEntity::~AIEntity()
 {
     //dtor
+    delete mBrain;
 }
 void AIEntity::update()
 {

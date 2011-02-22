@@ -21,6 +21,9 @@
 
 #include <cassert>
 #include <cmath>
+#include <cfloat>
+#include <cstddef>
+#include <limits>
 
 #define B2_NOT_USED(x) ((void)(x))
 #define b2Assert(A) assert(A)
@@ -32,6 +35,9 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef float float32;
+
+#define	b2Sqrt(x)	sqrtf(x)
+#define	b2Atan2(y, x)	atan2f(y, x)
 
 #define	b2_maxFloat		FLT_MAX
 #define	b2_epsilon		FLT_EPSILON

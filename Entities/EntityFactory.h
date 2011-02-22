@@ -65,7 +65,7 @@ struct PlatformDef
 extern class EntityFactory
 {
     public:
-        void init(PhysicsManager* _PhysicsManager);
+        void init();
         virtual ~EntityFactory();
         unsigned int addEntityDef(CreatureDef& def);
         unsigned int addEntityDef(PlatformDef& def);
@@ -77,7 +77,6 @@ extern class EntityFactory
     private:
         Entity* entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition);
         std::vector<EntityFactoryDef> factoryDefs;
-        PhysicsManager* pPhysicsManager;
         AIManager* pAIManager;
         Entity* createContainer(EntityFactoryDef::EntityDef& def);
         Entity* crateEntity(CrateTypeDef& def);

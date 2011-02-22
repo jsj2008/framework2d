@@ -1,6 +1,7 @@
 #ifndef VEC2I_H
 #define VEC2I_H
 #include <math.h>
+#include <Types/Vec2f.h>
 
 struct Vec2i { //Simple vector class
 	int x;
@@ -25,7 +26,7 @@ struct Vec2i { //Simple vector class
 	bool operator==( Vec2i B ) { return x == B.x && y == B.y; }
 	bool operator!=( Vec2i B ) { return x != B.x || y != B.y; }
 	int Length() { return sqrt( float(x*x) + float(y*y) ); }
-
+	Vec2f ScreenToWorldSpace();
 
 };
 

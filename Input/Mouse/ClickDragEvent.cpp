@@ -11,13 +11,13 @@ ClickDragEvent::~ClickDragEvent()
     //dtor
 }
 
-bool ClickDragEvent::buttonDown(int mouseX, int mouseY)
+bool ClickDragEvent::buttonDown(int mouseX, int mouseY, unsigned char button)
 {
     if (mRect.contained(mouseX, mouseY))
     {
         startXPos = mouseX;
         startYPos = mouseY;
-        start();
+        start(button);
         return true;
     }
     else return false;

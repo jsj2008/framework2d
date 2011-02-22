@@ -57,14 +57,13 @@ inline float32 b2InvSqrt(float32 x)
 	return x;
 }
 
-#define	b2Sqrt(x)	sqrtf(x)
-#define	b2Atan2(y, x)	atan2f(y, x)
 
 inline float32 b2Abs(float32 a)
 {
 	return a > 0.0f ? a : -a;
 }
-
+#include <Types/Vec2f.h>
+/*
 /// A 2D column vector.
 struct b2Vec2
 {
@@ -82,7 +81,7 @@ struct b2Vec2
 
 	/// Negate this vector.
 	b2Vec2 operator -() const { b2Vec2 v; v.Set(-x, -y); return v; }
-	
+
 	/// Read from and indexed element.
 	float32 operator () (int32 i) const
 	{
@@ -100,7 +99,7 @@ struct b2Vec2
 	{
 		x += v.x; y += v.y;
 	}
-	
+
 	/// Subtract a vector from this vector.
 	void operator -= (const b2Vec2& v)
 	{
@@ -149,7 +148,7 @@ struct b2Vec2
 
 	float32 x, y;
 };
-
+*/
 /// A 2D column vector with 3 elements.
 struct b2Vec3
 {

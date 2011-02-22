@@ -6,7 +6,7 @@ class PhysicsManager;
 class InputManager;
 class Entity;
 class GameMode;
-#include <Types/FastVector.h>
+#include <stack>
 enum GameModes
 {
     eEditorGameMode,
@@ -20,9 +20,10 @@ extern class Game
         virtual ~Game();
         void run();
         GameMode* getGameMode(GameModes mode);
+        void set(GameMode* root, GameMode* mode); /// This'll pop until it finds root, then push mode. NULL for the root will pop everything from the stack. NULL for mode won't push it
     protected:
     private:
-        PhysicsManager* mPhysicsManager;
+        std::stack<GameMode*> gameModeStack;
         GameMode* mGameModes[eGameModesMax];
 }g_Game;
 

@@ -97,10 +97,9 @@ EntityFactoryDef::EntityDef::EntityDef(EntityType _type)
     }
 }
 EntityFactory g_EntityFactory;
-void EntityFactory::init(PhysicsManager* _PhysicsManager)
+void EntityFactory::init()
 {
     //ctor
-    pPhysicsManager = _PhysicsManager;
 }
 
 EntityFactory::~EntityFactory()
@@ -196,7 +195,7 @@ Entity* EntityFactory::createContainer(EntityFactoryDef::EntityDef& def)
 Entity* EntityFactory::entityFactory(EntityFactoryDef& def, b2Vec2& initialPosition)
 {
     Entity* entity = createContainer(def.entityDef);
-    entity->mBody = pPhysicsManager->bodyFactory(def.physicsDef,initialPosition,(void*)entity);
+    entity->mBody = g_PhysicsManager.bodyFactory(def.physicsDef,initialPosition,(void*)entity);
     entity->mSkin = g_GraphicsManager.skinFactory(def.graphicsDef);
     return entity;
 }

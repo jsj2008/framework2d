@@ -11,6 +11,7 @@ Entity::Entity()
 Entity::~Entity()
 {
     //dtor
+    delete mSkin;
 }
 
 void Entity::render()

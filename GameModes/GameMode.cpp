@@ -2,6 +2,7 @@
 #include <Graphics/GraphicsManager.h>
 #include <Input/InputManager.h>
 #include <Input/InputState.h>
+#include <Game.h>
 #include <cassert>
 GameMode::GameMode()
 {

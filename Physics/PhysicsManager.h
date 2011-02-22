@@ -18,15 +18,19 @@ struct PhysicsFactoryDef
     float density;
 };
 class RenderCallback;
-class PhysicsManager
+extern class PhysicsManager
 {
     public:
-        PhysicsManager();
         void init();
         virtual ~PhysicsManager();
+        void clear();
         b2Body* bodyFactory(PhysicsFactoryDef& def, b2Vec2& initialPosition, void* userData);
+        void destroyBody(b2Body* body);
+        b2MouseJoint* createJoint(b2Body* body, b2Vec2& point);
+        void deleteJoint(b2MouseJoint* joint);
         bool update();
         void render();
+        b2Body* select(b2Vec2& position);
     protected:
     private:
         void updateEntities();
@@ -34,6 +38,6 @@ class PhysicsManager
         RenderCallback* mRenderCallback;
         unsigned int startTime;
         unsigned int stepsTaken;
-};
+}g_PhysicsManager;
 
 #endif // PHYSICSMANAGER_H
