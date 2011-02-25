@@ -8,7 +8,7 @@
 class ConvexPolygonSkin : public Skin
 {
     public:
-        ConvexPolygonSkin(float *_points, unsigned char _numPoints);
+        ConvexPolygonSkin(Vec2f *_points, unsigned char _numPoints);
         virtual ~ConvexPolygonSkin();
         void vRender();
         SkinType getType(){return eConvexPolygonSkinType;}

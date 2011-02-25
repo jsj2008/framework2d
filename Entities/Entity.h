@@ -19,9 +19,9 @@ class Entity
         virtual void update()=0;
         virtual EntityType getType()=0;
         b2Body* mBody;
+        Skin* mSkin;
     protected:
         friend class EntityFactory;
-        Skin* mSkin;
     private:
 };
 

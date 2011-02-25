@@ -7,12 +7,11 @@
 class CrateFactory : public Factory
 {
     public:
-        CrateFactory(int _width, int _height);
+        CrateFactory();
         virtual ~CrateFactory();
-        Entity* createEntity(Vec2f* origin);
+        Entity* createEntity(FactoryDef* data);
     protected:
     private:
-        int width, height;
 };
 
 #endif // CRATEFACTORY_H

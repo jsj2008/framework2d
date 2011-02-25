@@ -6,7 +6,6 @@
 Skin::Skin()
 {
     //ctor
-    program = 0;
     material = NULL;
 }
 

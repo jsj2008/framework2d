@@ -1,18 +1,17 @@
 #include "CrateFactory.h"
 #include <Entities/Crate.h>
+using namespace std;
 
-CrateFactory::CrateFactory(int _width, int _height)
+CrateFactory::CrateFactory()
 {
     //ctor
-    width = _width;
-    height = _height;
 }
 
 CrateFactory::~CrateFactory()
 {
     //dtor
 }
-Entity* CrateFactory::createEntity(Vec2f* origin)
+Entity* CrateFactory::createEntity(FactoryDef* data)
 {
     Entity* ret = new Crate;
     return ret;

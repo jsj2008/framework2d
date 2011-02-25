@@ -1,5 +1,6 @@
 #include "LevelManager.h"
 #include <Entities/EntityFactory.h>
+#include <Factory/FactoryList.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -55,12 +56,13 @@ void LevelManager::loadLevel(const char* name)
     unsigned int size;
     file.read((char*)&size,sizeof(unsigned int));
     defs.resize(size);
-    file.read((char*)&defs[0],sizeof(PlatformDef)*size);
+    //file.read((char*)&defs[0],sizeof(PlatformDef)*size);
     Vec2f origin(0,0);
     unsigned int old_buckets = bodyToDefTable.bucket_count();
     for (unsigned int i = 0; i < size; i++)
     {
         b2Body* body = g_EntityFactory.createEntity(defs[i],origin)->mBody;
+        //b2Body* body = g_FactoryList.factory(&file,origin)->mBody;
         bodyToDefTable[body] = i;
     }
     unsigned int new_buckets = bodyToDefTable.bucket_count();

@@ -17,11 +17,10 @@ class Skin
         void render(b2Body* body);
         virtual void vRender()=0;
         virtual SkinType getType()=0;
+        MaterialContext* material; /// FIXME
     protected:
     private:
-        friend class GraphicsManager;
-        MaterialContext* material;
-        unsigned int program;
+        friend class Factory;
 };
 
 #endif // SKIN_H

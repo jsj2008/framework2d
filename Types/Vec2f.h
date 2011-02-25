@@ -16,8 +16,8 @@ struct Vec2f
 	void operator/=( float s ) { x /= s; y /= s; }
 	bool operator==( Vec2f B ) { return x == B.x && y == B.y; }
 	bool operator!=( Vec2f B ) { return x != B.x || y != B.y; }
-	/// Default constructor does nothing (for performance).
-	Vec2f() {}
+
+	Vec2f() {x=y=0;}
 
 	/// Construct using coordinates.
 	Vec2f(float32 x, float32 y) : x(x), y(y) {}

@@ -114,7 +114,7 @@ Skin* GraphicsManager::skinFactory(GraphicsFactoryDef& def)
         }
         case eConvexPolygonSkinType:
         {
-            returnValue = new ConvexPolygonSkin(def.graphicsDef.convexPolygonSkinDef.points,def.graphicsDef.convexPolygonSkinDef.numPoints);
+            returnValue = new ConvexPolygonSkin((Vec2f*)def.graphicsDef.convexPolygonSkinDef.points,def.graphicsDef.convexPolygonSkinDef.numPoints);
             returnValue->material = mContentManager.getMaterial(def.graphicsDef.convexPolygonSkinDef.texture);
             break;
         }

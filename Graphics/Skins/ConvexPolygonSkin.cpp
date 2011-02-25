@@ -2,7 +2,7 @@
 #include <cstring>
 #include <GL/gl.h>
 
-ConvexPolygonSkin::ConvexPolygonSkin(float *_points, unsigned char _numPoints)
+ConvexPolygonSkin::ConvexPolygonSkin(Vec2f *_points, unsigned char _numPoints)
 {
     //ctor
     numPoints = _numPoints;

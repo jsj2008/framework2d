@@ -1,4 +1,5 @@
 #include "Factory.h"
+#include <Graphics/Skins/Skin.h>
 
 Factory::Factory()
 {
@@ -8,4 +9,9 @@ Factory::Factory()
 Factory::~Factory()
 {
     //dtor
+}
+
+void Factory::setMaterial(Skin* skin, MaterialContext* material)
+{
+    skin->material = material;
 }

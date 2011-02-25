@@ -47,7 +47,7 @@ void Game::init()
     cout << "PhysicsFactoryDef " << sizeof(PhysicsFactoryDef) << endl;
     cout << "GraphicsFactoryDef " << sizeof(GraphicsFactoryDef) << endl;
 
-    g_LevelManager.loadLevel("default");
+    //g_LevelManager.loadLevel("default");
 
     g_Timer.unPause();
 }

@@ -44,6 +44,7 @@ extern class GraphicsManager
         float getPixelsPerMeter();
         void setCamera(Camera* _camera){mCamera = _camera;}
         Skin* skinFactory(GraphicsFactoryDef& def);
+        MaterialContext* getMaterial(unsigned int index){return mContentManager.getMaterial(index);}
     protected:
     private:
         Camera* mCamera;
