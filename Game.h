@@ -16,6 +16,7 @@ enum GameModes
 extern class Game
 {
     public:
+        Game();
         void init();
         virtual ~Game();
         void run();

@@ -6,31 +6,6 @@ class Camera;
 #include <Graphics/GraphicalContentManager.h>
 #include <Types/Vec2i.h>
 #include <Box2D/Common/b2Settings.h>
-struct GraphicsFactoryDef
-{
-    /// Types
-    union GraphicsDef
-    {
-        GraphicsDef(SkinType _type);
-        struct StaticSkinDef
-        {
-            unsigned int texture;
-            int width,height;
-        };
-        struct ConvexPolygonSkinDef
-        {
-            unsigned int texture;
-            float points[b2_maxPolygonVertices*2];
-            unsigned char numPoints;
-        };
-        StaticSkinDef staticSkinDef;
-        ConvexPolygonSkinDef convexPolygonSkinDef;
-    };
-    /// Members
-    GraphicsFactoryDef(SkinType _type);
-    SkinType type;
-    GraphicsDef graphicsDef;
-};
 extern class GraphicsManager
 {
     public:
@@ -43,8 +18,7 @@ extern class GraphicsManager
         const Vec2i& getView();
         float getPixelsPerMeter();
         void setCamera(Camera* _camera){mCamera = _camera;}
-        Skin* skinFactory(GraphicsFactoryDef& def);
-        MaterialContext* getMaterial(unsigned int index){return mContentManager.getMaterial(index);}
+        MaterialContext* getMaterial(const char* material){return mContentManager.getMaterial(material);}
     protected:
     private:
         Camera* mCamera;

@@ -6,68 +6,8 @@
 #include <Types/Mat3x3f.h>
 #include <cstring>
 #define PLAYER_STARTING_HEALTH 100
-#define M_PI 3.14159265358979323846
-PlatformDef::PlatformDef()
-{
-    texture = 0;
-    numPoints = 0;
-}
-void PlatformDef::addPoint(const Vec2f& p)
-{
-    assert(numPoints != b2_maxPolygonVertices);
-    points[numPoints] = p;
-    numPoints++;
-}
-#include <iostream>
-using namespace std;
-bool PlatformDef::sort()
-{
-    bool alreadySorted = false;
-    for (unsigned char i = 0; i < numPoints; i++)
-    {
-#define points(i) points[i%numPoints]
-        Vec2f start = points(i);
-        Vec2f middle = points((i+1));
-        Vec2f end = points((i+2));
-#undef points
-        Vec2f a = start - middle;
-        Vec2f b = end - middle;
-        a.Normalize();
-        b.Normalize();
+/*
 
-		float myAngle = atan2(a.y,a.x);
-		float tAngle = atan2(b.y,b.x);
-		float angle = myAngle - tAngle;
-		if (angle <= -M_PI)
-		{
-			angle += M_PI*2.0;
-		}
-		if (angle >= M_PI)
-		{
-			angle -= M_PI*2.0;
-		}
-		angle *= 180/M_PI;
-        if (angle < 0.0f)
-        {
-            if (alreadySorted)
-            {
-                return false;
-            }
-            else
-            {
-                for (unsigned char ii = 0; ii < numPoints/2; ii++)
-                {
-                    Vec2f temp = points[ii];
-                    points[ii] = points[numPoints-(ii+1)];
-                    points[numPoints-(ii+1)] = temp;
-                }
-                alreadySorted = true;
-                i = 0;
-            }
-        }
-    }
-    return true;
-}
 EntityFactoryDef::EntityFactoryDef(EntityType _type)
 :entityDef(_type),graphicsDef(eStaticSkinType)
 {
@@ -199,7 +139,7 @@ Entity* EntityFactory::entityFactory(EntityFactoryDef& def, Vec2f& initialPositi
     entity->mSkin = g_GraphicsManager.skinFactory(def.graphicsDef);
     return entity;
 }
-
+*/
 /*void EntityFactory::setCameraTarget(const Entity* entity)
 {
     static Camera* camera = NULL;

@@ -9,9 +9,10 @@
 #include <Types/MyStack.h>
 struct MaterialDef
 {
-    MaterialDef();
-    MaterialDef(char* _textureName, char* _shaderName);
-    MaterialDef(char* _textureName);
+    MaterialDef(char* _materialName);
+    MaterialDef(char* _materialName, char* _textureName, char* _shaderName);
+    MaterialDef(char* _materialName, char* _textureName);
+    char* materialName;
     char *textureName;
     char *shaderName;
 };
@@ -20,7 +21,7 @@ class GraphicalContentManager
     public:
         GraphicalContentManager();
         virtual ~GraphicalContentManager();
-        MaterialContext* getMaterial(unsigned int reference);
+        MaterialContext* getMaterial(const char* name);
         unsigned int findMaterial(const char* materialName);
     protected:
     private:

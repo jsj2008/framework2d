@@ -1,7 +1,7 @@
 #ifndef LEVELMANAGER_H
 #define LEVELMANAGER_H
 
-class PlatformDef;
+class ConvexGeometryDef;
 #include <vector>
 #include <unordered_map>
 #include <Entities/StaticGeometry.h>
@@ -11,14 +11,14 @@ extern class LevelManager
     public:
         LevelManager();
         virtual ~LevelManager();
-        void addPlatform(PlatformDef* def);
+        void addPlatform(ConvexGeometryDef* def);
         void removeBody(b2Body* body);
         void loadLevel(const char* name);
         void saveLevel(const char* name);
     protected:
     private:
         void constructBodies();
-        std::vector<PlatformDef> defs;
+        std::vector<ConvexGeometryDef> defs;
         std::unordered_map<b2Body*, unsigned int> bodyToDefTable; /// Maps a body to a defs index
 }g_LevelManager;
 

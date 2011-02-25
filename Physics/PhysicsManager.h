@@ -24,7 +24,10 @@ extern class PhysicsManager
         void init();
         virtual ~PhysicsManager();
         void clear();
-        b2Body* bodyFactory(PhysicsFactoryDef& def, Vec2f& initialPosition, void* userData);
+
+        b2Body* createBody(b2BodyDef* def);
+        b2Joint* createJoint(b2JointDef* def);
+        /// You create fixtures on the body
         void destroyBody(b2Body* body);
         b2MouseJoint* createJoint(b2Body* body, Vec2f& point);
         void deleteJoint(b2MouseJoint* joint);

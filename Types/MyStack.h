@@ -52,7 +52,7 @@ MyStack<T>::MyStack(const MyStack & rhs)
 	//items = rhs.items;
 	items = NULL;
 	resize(rhs.MaxMyStack);
-	memcpy(items,rhs.items,sizeof(T)*MaxMyStack); //FIXME
+	memcpy(items,rhs.items,sizeof(T)*MaxMyStack);
 	Top = rhs.Top;
 	EmptyMyStack = rhs.EmptyMyStack;
 	deleteContents = true;

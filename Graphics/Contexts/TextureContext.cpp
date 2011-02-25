@@ -1,5 +1,4 @@
 #include "TextureContext.h"
-#include <cstring>
 #include <cassert>
 #include <GL/gl.h>
 #include <SDL/SDL_video.h>
@@ -18,7 +17,7 @@ TextureContext::TextureContext(const char* _textureName)
     }
     else
     {
-        memset(textureName,0,MAX_FILENAME);
+        textureName[0] = '\0';
         referenceCount = 1;
     }
 }

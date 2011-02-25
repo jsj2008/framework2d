@@ -55,7 +55,7 @@ MyVector<T>::MyVector(const MyVector & rhs)
 	//items = rhs.items;
 	items = NULL;
 	resize(rhs.MaxMyVector);
-	memcpy(items,rhs.items,sizeof(T)*MaxMyVector); //FIXME
+	memcpy(items,rhs.items,sizeof(T)*MaxMyVector);
 	Top = rhs.Top;
 	EmptyMyVector = rhs.EmptyMyVector;
 	deleteContents = true;

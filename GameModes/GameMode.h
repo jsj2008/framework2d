@@ -11,8 +11,9 @@ class GameMode
         virtual ~GameMode();
         void registerEvent(ClickEvent* event);
         void set();
-        InputState* mInputState; /// FIXME player input brain constructor needs this
+        InputState* getInputState(){return mInputState;} /// For callback event construction
     protected:
+        InputState* mInputState;
         Camera* mCamera;
     private:
 };

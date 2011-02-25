@@ -1,9 +1,9 @@
 #include "Game.h"
-
+#include <Factory/FactoryList.h>
+#include <Factory/FactoryDef.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
-#include <Entities/EntityFactory.h>
 #include <GameModes/PlayMode.h>
 #include <Timer.h>
 #include <GameModes/Editor/EditorMode.h>
@@ -13,41 +13,32 @@
 #include <iostream>
 using namespace std;
 Game g_Game;
+Game::Game()
+///:gameModeStack({NULL}) Compiler segmentation fault? wtf?
+{
+    gameModeStack.push(NULL);
+}
 void Game::init()
 {
     //ctor
     g_Timer.init();
     g_Timer.pause();
-    g_EntityFactory.init();
     g_PhysicsManager.init();
 
     //editorMode = new EditorMode;
     mGameModes[ePlayGameMode] = new PlayMode;
     mGameModes[eEditorGameMode] = new EditorMode;
 
-
-    Vec2f initialPosition(0,-10);
-    CreatureDef player;
-    player.dimensions.Set(2,2);
-    player.texture = 1;
-    player.type = ePlayerInputBrainType;
-    unsigned int playerInt = g_EntityFactory.addEntityDef(player);
-    Entity* entity = g_EntityFactory.createEntity(playerInt,initialPosition);
+    FactoryDef def;
+    def.position = Vec2f(0,0);
+    Entity* entity = g_FactoryList.useFactory(&def,FactoryList::ePlayerFactory);
 
     ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
-    gameModeStack.push(NULL);
     set(NULL,mGameModes[ePlayGameMode]);
-    set(NULL,mGameModes[eEditorGameMode]);
+    //set(NULL,mGameModes[eEditorGameMode]);
 
-    initialPosition.Set(0,10);
-    cout << "EntityFactoryDef " << sizeof(EntityFactoryDef) << endl;
-    cout << "EntityType " << sizeof(EntityType) << endl;
-    cout << "EntityFactoryDef::EntityDef " << sizeof(EntityFactoryDef::EntityDef) << endl;
-    cout << "PhysicsFactoryDef " << sizeof(PhysicsFactoryDef) << endl;
-    cout << "GraphicsFactoryDef " << sizeof(GraphicsFactoryDef) << endl;
-
-    //g_LevelManager.loadLevel("default");
+    g_LevelManager.loadLevel("default");
 
     g_Timer.unPause();
 }

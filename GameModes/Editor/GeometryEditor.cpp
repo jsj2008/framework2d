@@ -20,25 +20,25 @@ void GeometryEditor::click(Vec2i mouse, unsigned char button)
         Vec2f point = mouse.ScreenToWorldSpace();
         def.addPoint(point);
     }
-    if (def.numPoints == b2_maxPolygonVertices || button == 3)
+    if (def.numVertices == b2_maxPolygonVertices || button == 3)
     {
         if (def.sort())
             g_LevelManager.addPlatform(&def);
-        def.numPoints = 0;
+        def.numVertices = 0;
     }
 }
 
 void GeometryEditor::render()
 {
-    if (def.numPoints > 0)
+    if (def.numVertices > 0)
     {
         glBegin(GL_POINTS);
-        glVertex2f(def.points[0].x,def.points[0].y);
+        glVertex2f(def.vertices[0].x,def.vertices[0].y);
         glEnd();
         glBegin(GL_LINE_STRIP);
-        for (unsigned char i = 0; i < def.numPoints; i++)
+        for (unsigned char i = 0; i < def.numVertices; i++)
         {
-            glVertex2f(def.points[i].x,def.points[i].y);
+            glVertex2f(def.vertices[i].x,def.vertices[i].y);
         }
         glEnd();
     }

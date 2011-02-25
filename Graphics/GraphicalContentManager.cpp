@@ -2,22 +2,24 @@
 #include <string>
 #include <Graphics/Contexts/TextureContext.h>
 #include <Graphics/Contexts/ShaderContext.h>
-MaterialDef::MaterialDef()
+MaterialDef::MaterialDef(char* _materialName)
 {
+    materialName = _materialName;
     textureName = shaderName = NULL;
 }
-MaterialDef::MaterialDef(char* _textureName)
+MaterialDef::MaterialDef(char* _materialName, char* _textureName)
 {
+    materialName = _materialName;
     textureName = _textureName;
     shaderName = NULL;
 }
 GraphicalContentManager::GraphicalContentManager()
 {
     //ctor
-    textures.push(0);
-    MaterialDef blank;
+    textures.push(NULL);
+    MaterialDef blank("");
     addMaterial(blank);
-    MaterialDef player("player.bmp");
+    MaterialDef player("player", "player.bmp");
     addMaterial(player);
 }
 
@@ -29,10 +31,11 @@ GraphicalContentManager::~GraphicalContentManager()
         materials[i].assertDelete();
     }
 }
-MaterialContext* GraphicalContentManager::getMaterial(unsigned int reference)
+MaterialContext* GraphicalContentManager::getMaterial(const char* materialName)
 {
-    materials[reference].grab();
-    return &materials[0] + reference;
+    MaterialContext* material = &materials[materialMap[materialName]];
+    material->grab();
+    return material;
 }
 unsigned int GraphicalContentManager::findMaterial(const char* materialName)
 {
@@ -40,7 +43,7 @@ unsigned int GraphicalContentManager::findMaterial(const char* materialName)
 }
 unsigned int GraphicalContentManager::addMaterial(MaterialDef& def)
 {
-    unsigned int ret = materials.size();
+    unsigned int index = materials.size();
     TextureContext* texture;
     if (def.textureName == NULL)
     {
@@ -51,7 +54,8 @@ unsigned int GraphicalContentManager::addMaterial(MaterialDef& def)
         texture = addTexture(def.textureName);
     }
     materials.push(MaterialContext(texture));
-    return ret;
+    materialMap[def.materialName] = index;
+    return index;
 }
 TextureContext* GraphicalContentManager::addTexture(const char* name)
 {

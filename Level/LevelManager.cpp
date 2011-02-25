@@ -1,6 +1,7 @@
 #include "LevelManager.h"
-#include <Entities/EntityFactory.h>
+#include <Factory/ConvexGeometryDef.h>
 #include <Factory/FactoryList.h>
+#include <Physics/PhysicsManager.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -15,11 +16,10 @@ LevelManager::~LevelManager()
 {
     //dtor
 }
-void LevelManager::addPlatform(PlatformDef* def)
+void LevelManager::addPlatform(ConvexGeometryDef* def)
 {
     defs.push_back(*def);
-    Vec2f origin(0,0);
-    g_EntityFactory.createEntity(*def,origin);
+    g_FactoryList.useFactory(def,FactoryList::eConvexPolygonFactory);
 }
 #define CREATE_FILE_NAME \
     char filename[strlen(name)+strlen("Levels/")+strlen(".lvl")];\
@@ -53,20 +53,17 @@ void LevelManager::loadLevel(const char* name)
         cout << "Error: File does not appear to exist, or maybe this program doesn't have filesystem rights" << filename << endl;
         throw -1;
     }
-    unsigned int size;
-    file.read((char*)&size,sizeof(unsigned int));
+    unsigned short size;
+    file.read((char*)&size,sizeof(unsigned short));
     defs.resize(size);
-    //file.read((char*)&defs[0],sizeof(PlatformDef)*size);
+    file.read((char*)&defs[0],sizeof(ConvexGeometryDef)*size);
     Vec2f origin(0,0);
-    unsigned int old_buckets = bodyToDefTable.bucket_count();
-    for (unsigned int i = 0; i < size; i++)
+    for (unsigned short i = 0; i < size; i++)
     {
-        b2Body* body = g_EntityFactory.createEntity(defs[i],origin)->mBody;
+        b2Body* body = g_FactoryList.useFactory(&defs[i],FactoryList::eConvexPolygonFactory)->mBody;
         //b2Body* body = g_FactoryList.factory(&file,origin)->mBody;
         bodyToDefTable[body] = i;
     }
-    unsigned int new_buckets = bodyToDefTable.bucket_count();
-    unsigned int diff = old_buckets - new_buckets;
 }
 void LevelManager::saveLevel(const char* name)
 {
@@ -78,8 +75,8 @@ void LevelManager::saveLevel(const char* name)
         cout << "Error: File failed to open for writing, make sure the directory already exists, or maybe this program just doesn't have filesystem rights" << filename << endl;
         throw -1;
     }
-    unsigned int size = defs.size();
-    file.write((const char*)&size,sizeof(unsigned int));
-    file.write((const char*)&defs[0],sizeof(PlatformDef)*size);
+    unsigned short size = defs.size();
+    file.write((const char*)&size,sizeof(unsigned short));
+    file.write((const char*)&defs[0],sizeof(ConvexGeometryDef)*size);
     defs.clear();
 }

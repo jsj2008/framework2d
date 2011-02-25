@@ -12,7 +12,9 @@ extern class FactoryList
     public:
         enum StandardFactories
         {
+            ePlayerFactory,
             eConvexPolygonFactory,
+            eCrateFactory,
             eStandardFactoriesMax
         };
         FactoryList();

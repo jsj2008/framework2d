@@ -23,9 +23,12 @@ Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
 
     physicsDef.shape.Set(def->vertices,def->numVertices);
 
-    entity->mBody = g_PhysicsManager.bodyFactory(physicsDef,def->position,(void*)entity);
-    entity->mSkin = new ConvexPolygonSkin(def->vertices,def->numVertices);
+    physicsDef.bodyDef.position = def->position;
+    physicsDef.bodyDef.userData = (void*)entity;
+    entity->mBody = g_PhysicsManager.createBody(&physicsDef.bodyDef);
+    entity->mBody->CreateFixture(&physicsDef.shape, physicsDef.density);
 
+    entity->mSkin = new ConvexPolygonSkin(def->vertices,def->numVertices);
     MaterialContext* material = g_GraphicsManager.getMaterial(def->materialName);
     setMaterial(entity->mSkin,material);
 

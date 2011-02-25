@@ -1,26 +1,13 @@
 #ifndef AIMANAGER_H
 #define AIMANAGER_H
 
-#include <AI/Brain.h>
-struct BrainFactoryDef
-{
-    BrainType brainType;
-    union BrainTypeDef
-    {
-        struct PlayerInputBrainDef
-        {
-        };
-        PlayerInputBrainDef playerInputBrainDef;
-    };
-};
-class AIManager
+extern class AIManager
 {
     public:
         AIManager();
         virtual ~AIManager();
-        Brain* brainFactory(BrainFactoryDef& def);
     protected:
     private:
-};
+}g_AIManager;
 
 #endif // AIMANAGER_H

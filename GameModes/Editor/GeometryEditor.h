@@ -3,7 +3,7 @@
 
 #include <Input/Mouse/ClickReleaseEvent.h>
 #include <Entities/EntityFactory.h>
-
+#include <Factory/ConvexGeometryDef.h>
 
 class GeometryEditor : public ClickReleaseEvent
 {
@@ -14,7 +14,7 @@ class GeometryEditor : public ClickReleaseEvent
         void render();
     protected:
     private:
-        PlatformDef def;
+        ConvexGeometryDef def;
 };
 
 #endif // GEOMETRYEDITOR_H

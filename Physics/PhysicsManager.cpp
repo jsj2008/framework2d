@@ -36,19 +36,13 @@ void PhysicsManager::clear()
     delete mWorld;
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
 }
-b2Body* PhysicsManager::bodyFactory(PhysicsFactoryDef& def, Vec2f& initialPosition, void* userData)
+b2Body* PhysicsManager::createBody(b2BodyDef* def)
 {
-    def.bodyDef.userData = userData;
-    def.bodyDef.position = initialPosition;
-    b2Body* body = mWorld->CreateBody(&(def.bodyDef));
-    body->CreateFixture(&def.shape, def.density);
-#ifdef JUMPING_SENSOR
-    if (def.useAdditionalFixture)
-    {
-        body->CreateFixture(&def.additionalFixture);
-    }
-#endif
-    return body;
+    return mWorld->CreateBody(def);
+}
+b2Joint* PhysicsManager::createJoint(b2JointDef* def)
+{
+    return mWorld->CreateJoint(def);
 }
 void PhysicsManager::destroyBody(b2Body* body)
 {

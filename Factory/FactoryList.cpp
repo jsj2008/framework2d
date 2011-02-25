@@ -1,11 +1,12 @@
 #include "FactoryList.h"
 #include "Factory/AllFactories.h"
 using namespace std;
-
+FactoryList g_FactoryList;
 FactoryList::FactoryList()
+:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory})
 {
+    assert(factories[eStandardFactoriesMax-1]);
     //ctor
-    factories["Platform"] = (new ConvexGeometryFactory);
 }
 
 FactoryList::~FactoryList()

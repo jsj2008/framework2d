@@ -51,7 +51,7 @@ FastVector<T>::FastVector(const FastVector & rhs)
 	//items = rhs.items;
 	items = NULL;
 	resize(rhs.MaxFastVector);
-	memcpy(items,rhs.items,sizeof(T)*MaxFastVector); //FIXME
+	memcpy(items,rhs.items,sizeof(T)*MaxFastVector);
 	Top = rhs.Top;
 	EmptyFastVector = rhs.EmptyFastVector;
 }

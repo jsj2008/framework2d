@@ -116,6 +116,8 @@
 		<Unit filename="Factory\FactoryDef.h" />
 		<Unit filename="Factory\FactoryList.cpp" />
 		<Unit filename="Factory\FactoryList.h" />
+		<Unit filename="Factory\PlayerFactory.cpp" />
+		<Unit filename="Factory\PlayerFactory.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes\Editor\EditorMode.cpp" />

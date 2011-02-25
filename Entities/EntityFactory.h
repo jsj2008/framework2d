@@ -1,6 +1,6 @@
 #ifndef ENTITYFACTORY_H
 #define ENTITYFACTORY_H
-
+/*
 #include <vector>
 
 #include <Entities/Entity.h>
@@ -83,5 +83,5 @@ extern class EntityFactory
         Entity* staticGeometryEntity(StaticGeometryTypeDef& def);
         Entity* aiEntity(AIEntityTypeDef& def);
 }g_EntityFactory;
-
+*/
 #endif // ENTITYFACTORY_H

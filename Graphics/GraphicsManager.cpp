@@ -6,32 +6,6 @@
 #include <cassert>
 #include <Graphics/Skins/AllSkins.h>
 GraphicsManager g_GraphicsManager;
-GraphicsFactoryDef::GraphicsFactoryDef(SkinType _type)
-:graphicsDef(_type)
-{
-    type = _type;
-}
-GraphicsFactoryDef::GraphicsDef::GraphicsDef(SkinType _type)
-{
-    switch (_type)
-    {
-        case eStaticSkinType:
-        {
-            staticSkinDef.texture = 0;
-            staticSkinDef.width = staticSkinDef.height = 50;
-            break;
-        }
-        case eConvexPolygonSkinType:
-        {
-            convexPolygonSkinDef.texture = 0;
-            convexPolygonSkinDef.numPoints = 0;
-        }
-        case eSkinTypeMax:
-        {
-            throw "Enum out of range";
-        }
-    }
-}
 
 GraphicsManager::GraphicsManager()
 {
@@ -101,31 +75,6 @@ float GraphicsManager::getPixelsPerMeter()
 {
     return mCamera->getPixelsPerMeter();
 }
-Skin* GraphicsManager::skinFactory(GraphicsFactoryDef& def)
-{
-    Skin* returnValue = NULL;
-    switch (def.type)
-    {
-        case eStaticSkinType:
-        {
-            returnValue = new StaticSkin(def.graphicsDef.staticSkinDef.width,def.graphicsDef.staticSkinDef.height);
-            returnValue->material = mContentManager.getMaterial(def.graphicsDef.staticSkinDef.texture);
-            break;
-        }
-        case eConvexPolygonSkinType:
-        {
-            returnValue = new ConvexPolygonSkin((Vec2f*)def.graphicsDef.convexPolygonSkinDef.points,def.graphicsDef.convexPolygonSkinDef.numPoints);
-            returnValue->material = mContentManager.getMaterial(def.graphicsDef.convexPolygonSkinDef.texture);
-            break;
-        }
-        case eSkinTypeMax:
-        {
-            throw "Enum out of range";
-        }
-    }
-    return returnValue;
-}
-
 
 
 
