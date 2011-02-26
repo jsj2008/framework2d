@@ -4,6 +4,7 @@
 #include <GL/glu.h>
 #include <Graphics/Camera/Camera.h>
 #include <cassert>
+#include <iostream>
 #include <Graphics/Skins/AllSkins.h>
 GraphicsManager g_GraphicsManager;
 
@@ -12,6 +13,7 @@ GraphicsManager::GraphicsManager()
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);
         assert(result == 0);
+    SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL,0);
     resize(Vec2i(800,600));
 
     glDisable(GL_DEPTH_TEST);
@@ -51,7 +53,8 @@ void GraphicsManager::endScene()
     GLenum errorCode = glGetError();
 	if (errorCode != GL_NO_ERROR)
 	{
-	    throw (const char*)gluErrorString(errorCode);
+	    std::cout << (const char*)gluErrorString(errorCode) << std::endl;
+	    throw -1;
 	}
 }
 void GraphicsManager::resize(Vec2i newResolution)

@@ -7,12 +7,13 @@
 class BubbleSkin : public Skin
 {
     public:
-        BubbleSkin();
+        BubbleSkin(float _radius);
         virtual ~BubbleSkin();
         void vRender();
         SkinType getType(){return eBubbleSkinType;}
     protected:
     private:
+        float radius;
 };
 
 #endif // BUBBLESKIN_H

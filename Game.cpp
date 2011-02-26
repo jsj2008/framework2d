@@ -36,14 +36,8 @@ void Game::init()
     def.height = 2;
     Entity* entity = g_FactoryList.useFactory(&def,FactoryList::ePlayerFactory);
 
-    BubbleDef bubble;
-    bubble.position = Vec2f(0,0);
-    bubble.radius = 5;
-    g_FactoryList.useFactory(&bubble,FactoryList::eBubbleFactory);
-
     ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
-    set(NULL,mGameModes[ePlayGameMode]);
     set(NULL,mGameModes[eEditorGameMode]);
 
     g_LevelManager.loadLevel("default");

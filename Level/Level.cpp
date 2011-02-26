@@ -39,10 +39,10 @@ void Level::addCrate(CrateDef* def)
     bodyToCrateDefTable[body] = crateDefs.size()-1;
 }
 #define CREATE_FILE_NAME \
-    char filename[strlen(name)+strlen("Levels/")+strlen(".lvl")];\
-    strcpy(filename,"Levels/");\
-    strcpy(filename+strlen("Levels/"),name);\
-    strcpy(filename+strlen("Levels/")+strlen(name),".lvl")
+    char filename[strlen(name)+strlen("Resources/Levels/")+strlen(".lvl")];\
+    strcpy(filename,"Resources/Levels/");\
+    strcpy(filename+strlen("Resources/Levels/"),name);\
+    strcpy(filename+strlen("Resources/Levels/")+strlen(name),".lvl")
 void Level::removeBody(b2Body* body)
 {
     auto result = bodyToGeometryDefTable.find(body);

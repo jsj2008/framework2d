@@ -1,6 +1,7 @@
 #include "GraphicalContentManager.h"
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <cstring>
 #include <Graphics/Contexts/TextureContext.h>
 #include <Graphics/Contexts/ShaderContext.h>
@@ -31,7 +32,11 @@ void GraphicalContentManager::MaterialDef::parseMaterialFile()
             if (input == "=")
             {
                 file >> textureName;
-            } else throw "Expected a \"=\"";
+            }
+            else
+            {
+                std::cout << "Expected a \"=\"" << std::endl;
+            }
         }
         else if (input == "shader")
         {
@@ -39,9 +44,16 @@ void GraphicalContentManager::MaterialDef::parseMaterialFile()
             if (input == "=")
             {
                 file >> shaderName;
-            } else throw "Expected a \"=\"";
+            }
+            else
+            {
+                std::cout << "Expected a \"=\"" << std::endl;
+            }
         }
-        else throw "Unrecognised name";
+        else
+        {
+            std::cout << "Unrecognised token: " << input << std::endl;
+        }
     }
     fullFileName.replace(fullFileName.end()-4,fullFileName.end(),".mat");
     std::ofstream outfile(fullFileName.c_str(),std::ios::binary); /// FIXME also

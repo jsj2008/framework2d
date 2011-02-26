@@ -140,8 +140,6 @@ b2Body* PhysicsManager::select(Vec2f& position)
     b2AABB aabb;
     PhySimpleCallback callback;
     aabb.lowerBound = position;
-    //float x2 = x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());
-    //float y2 = y + ((float)g_GraphicsManager.getYRes() / g_GraphicsManager.getPixelsPerMeter());
     aabb.upperBound = Vec2f(position.x+0.001f,position.y+0.001f);
     mWorld->QueryAABB(&callback,aabb);
     return callback.ret;

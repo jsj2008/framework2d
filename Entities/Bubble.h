@@ -2,7 +2,7 @@
 #define BUBBLE_H
 
 #include <Entities/Entity.h>
-
+#include <Types/Vec2f.h>
 
 class Bubble : public Entity
 {
@@ -10,9 +10,17 @@ class Bubble : public Entity
         Bubble();
         virtual ~Bubble();
         void update();
+        enum BubbleType
+        {
+            eSuctionBubbleType,
+            eUpwardsGravityBubbleType,
+            eBubbleTypesMax
+        };
+        virtual BubbleType getBubbleType()=0; /// Should I combine these types? Its odd, but its useful
         EntityType getType(){return eBubbleEntityType;}
     protected:
     private:
+        virtual void affectBody(b2Body* body, Vec2f directionTo)=0;
 };
 
 #endif // BUBBLE_H

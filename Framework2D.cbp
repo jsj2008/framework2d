@@ -121,6 +121,11 @@
 		<Unit filename="Entities\AllEntities.h" />
 		<Unit filename="Entities\Bubble.cpp" />
 		<Unit filename="Entities\Bubble.h" />
+		<Unit filename="Entities\Bubbles\AllBubbles.h" />
+		<Unit filename="Entities\Bubbles\SuctionBubble.cpp" />
+		<Unit filename="Entities\Bubbles\SuctionBubble.h" />
+		<Unit filename="Entities\Bubbles\UpwardsGravityBubble.cpp" />
+		<Unit filename="Entities\Bubbles\UpwardsGravityBubble.h" />
 		<Unit filename="Entities\Crate.cpp" />
 		<Unit filename="Entities\Crate.h" />
 		<Unit filename="Entities\Entity.cpp" />
@@ -152,6 +157,8 @@
 		<Unit filename="Factory\PlayerFactory.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GameModes\BubbleDrawEvent.cpp" />
+		<Unit filename="GameModes\BubbleDrawEvent.h" />
 		<Unit filename="GameModes\Editor\EditorMode.cpp" />
 		<Unit filename="GameModes\Editor\EditorMode.h" />
 		<Unit filename="GameModes\Editor\GeometryEditor.cpp" />

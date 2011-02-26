@@ -1,6 +1,6 @@
 #include "BubbleFactory.h"
 #include <Factory/BubbleDef.h>
-#include <Entities/Bubble.h>
+#include <Entities/Bubbles/AllBubbles.h>
 #include <Graphics/Skins/BubbleSkin.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/PhysicsManager.h>
@@ -22,7 +22,20 @@ BubbleFactory::~BubbleFactory()
 Entity* BubbleFactory::createEntity(FactoryDef* data)
 {
     BubbleDef* def = (BubbleDef*)data;
-    Entity* entity = new Bubble;
+    Entity* entity;
+    switch (def->type)
+    {
+        case Bubble::eSuctionBubbleType:
+        {
+            entity = new SuctionBubble;;
+            break;
+        }
+        case Bubble::eUpwardsGravityBubbleType:
+        {
+            entity = new UpwardsGravityBubble;
+            break;
+        }
+    }
 
     bodyDef.position = def->position;
     shapeDef.m_radius = def->radius;
@@ -30,7 +43,7 @@ Entity* BubbleFactory::createEntity(FactoryDef* data)
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new BubbleSkin();
+    entity->mSkin = new BubbleSkin(def->radius);
     setMaterial(entity->mSkin,g_GraphicsManager.getMaterial(def->materialName));
     return entity;
 }
