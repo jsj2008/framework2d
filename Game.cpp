@@ -80,8 +80,8 @@ void Game::run()
         {
             running = g_InputManager.processInput();
         }
-        g_InputManager.render();
         g_PhysicsManager.render();
+        g_InputManager.render();
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");

@@ -1,11 +1,12 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <vector>
 #include <unordered_map>
 #include <Factory/ConvexGeometryDef.h>
 #include <Entities/StaticGeometry.h>
 #include <Factory/CrateDef.h>
+class b2Joint;
+class b2JointDef;
 
 class Level
 {
@@ -15,16 +16,16 @@ class Level
         virtual ~Level();
         void addPlatform(ConvexGeometryDef* def);
         void addCrate(CrateDef* def);
+        void addJoint(b2JointDef* def);
         void removeBody(b2Body* body);
     protected:
     private:
         const char* name;
         void loadLevel();
         void saveLevel();
-        std::vector<ConvexGeometryDef> geometryDefs;
-        std::vector<CrateDef> crateDefs;
-        std::unordered_map<b2Body*, unsigned int> bodyToGeometryDefTable; /// Maps a body to a defs index
-        std::unordered_map<b2Body*, unsigned int> bodyToCrateDefTable;
+        std::unordered_map<b2Body*, ConvexGeometryDef> bodyToGeometryDefTable; /// Maps a body to a defs index
+        std::unordered_map<b2Body*, CrateDef> bodyToCrateDefTable;
+        std::unordered_map<b2Joint*, b2JointDef*> jointToDefTable;
 };
 
 #endif // LEVEL_H

@@ -15,6 +15,7 @@ extern class LevelManager
         virtual ~LevelManager();
         void addPlatform(ConvexGeometryDef* def){return level->addPlatform(def);}
         void addCrate(CrateDef* def){return level->addCrate(def);}
+        void addJoint(b2JointDef* def){return level->addJoint(def);}
         void removeBody(b2Body* body){return level->removeBody(body);}
         void loadLevel(const char* name){level = new Level(name);}
         void saveLevel(const char* name){delete level;}

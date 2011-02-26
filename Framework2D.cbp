@@ -159,6 +159,7 @@
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes\BubbleDrawEvent.cpp" />
 		<Unit filename="GameModes\BubbleDrawEvent.h" />
+		<Unit filename="GameModes\Editor\AllEditorModes.h" />
 		<Unit filename="GameModes\Editor\EditorMode.cpp" />
 		<Unit filename="GameModes\Editor\EditorMode.h" />
 		<Unit filename="GameModes\Editor\GeometryEditor.cpp" />
@@ -173,6 +174,10 @@
 		<Unit filename="GameModes\Editor\ItemSpawner.h" />
 		<Unit filename="GameModes\Editor\ItemSpawnerMode.cpp" />
 		<Unit filename="GameModes\Editor\ItemSpawnerMode.h" />
+		<Unit filename="GameModes\Editor\JointEditor.cpp" />
+		<Unit filename="GameModes\Editor\JointEditor.h" />
+		<Unit filename="GameModes\Editor\JointEditorMode.cpp" />
+		<Unit filename="GameModes\Editor\JointEditorMode.h" />
 		<Unit filename="GameModes\Editor\StateSwitcher.cpp" />
 		<Unit filename="GameModes\Editor\StateSwitcher.h" />
 		<Unit filename="GameModes\GameMode.cpp" />

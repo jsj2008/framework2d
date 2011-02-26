@@ -27,13 +27,17 @@ Entity* BubbleFactory::createEntity(FactoryDef* data)
     {
         case Bubble::eSuctionBubbleType:
         {
-            entity = new SuctionBubble;;
+            entity = new SuctionBubble;
             break;
         }
         case Bubble::eUpwardsGravityBubbleType:
         {
             entity = new UpwardsGravityBubble;
             break;
+        }
+        default:
+        {
+            return NULL;
         }
     }
 
