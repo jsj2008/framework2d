@@ -1,14 +1,18 @@
 #ifndef SHADERCONTEXT_H
 #define SHADERCONTEXT_H
 
+#include <Graphics/Contexts/GraphicalContext.h>
 
-class ShaderContext
+class ShaderContext: public GraphicalContext
 {
     public:
-        ShaderContext();
+        ShaderContext(const char* _name = NULL);
         virtual ~ShaderContext();
     protected:
     private:
+        void load(){}
+        void unload(){}
+        void bind(){}
 };
 
 #endif // SHADERCONTEXT_H

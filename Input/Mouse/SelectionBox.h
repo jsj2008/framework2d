@@ -12,6 +12,8 @@ class SelectionBox : public ClickReleaseEvent
         void click(Vec2i mouse, unsigned char button);
         void render();
         int getCurrentSelection(){return currentSelection;}
+        void setNumElements(int _numElements);
+        int getNumElements(){return numElements;}
     protected:
         virtual void selectionTrigger(){}
         int currentSelection;

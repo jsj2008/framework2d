@@ -2,10 +2,12 @@
 #include "TextureContext.h"
 #include <cassert>
 
-MaterialContext::MaterialContext()
+MaterialContext::MaterialContext(const char* _name)
+:GraphicalContext(_name)
 {
 }
 MaterialContext::MaterialContext(TextureContext* _TextureContext)
+:GraphicalContext(NULL)
 {
     //ctor
     mTextureContext = _TextureContext;
@@ -16,18 +18,16 @@ MaterialContext::~MaterialContext()
     //dtor
 }
 
-void MaterialContext::assertDelete()
+void MaterialContext::bind()
 {
+    mTextureContext->bind();
 }
-void MaterialContext::bindTexture()
-{
-}
-void MaterialContext::grab()
+void MaterialContext::vGrab()
 {
     mTextureContext->grab();
 }
 
-void MaterialContext::release()
+void MaterialContext::vRelease()
 {
     mTextureContext->release();
 }

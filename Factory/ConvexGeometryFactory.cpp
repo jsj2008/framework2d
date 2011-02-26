@@ -8,6 +8,11 @@ using namespace std;
 ConvexGeometryFactory::ConvexGeometryFactory()
 {
     //ctor
+    fixtureDef.filter.categoryBits = PhysicsManager::BubbleCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::BubbleCategory);
+    fixtureDef.shape = &shapeDef;
+    fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 ConvexGeometryFactory::~ConvexGeometryFactory()
@@ -21,12 +26,12 @@ Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
 
     assert(def->numVertices < b2_maxPolygonVertices);
 
-    physicsDef.shape.Set(def->vertices,def->numVertices);
+    shapeDef.Set(def->vertices,def->numVertices);
 
-    physicsDef.bodyDef.position = def->position;
-    physicsDef.bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&physicsDef.bodyDef);
-    entity->mBody->CreateFixture(&physicsDef.shape, physicsDef.density);
+    bodyDef.position = def->position;
+    bodyDef.userData = (void*)entity;
+    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
+    entity->mBody->CreateFixture(&fixtureDef);
 
     entity->mSkin = new ConvexPolygonSkin(def->vertices,def->numVertices);
     MaterialContext* material = g_GraphicsManager.getMaterial(def->materialName);

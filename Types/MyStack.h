@@ -39,7 +39,7 @@ template <typename T>
 MyStack<T>::MyStack()
 {
 	items = NULL;
-	resize(20);
+	resize(1);
 	deleteContents = true;
 }
 template <typename T>
@@ -87,6 +87,10 @@ void MyStack<T>::clear()
 template <typename T>
 void MyStack<T>::push(T const &d)
 {
+    if (Top == MaxMyStack)
+    {
+        resize(MaxMyStack*2);
+    }
    items[++Top] = d;
 }
 

@@ -2,37 +2,41 @@
 #define GRAPHICALCONTENTMANAGER_H
 
 #include <Graphics/Contexts/MaterialContext.h>
+#include <Graphics/Contexts/StaticModelContext.h>
+#include <Graphics/Contexts/ShaderContext.h>
+#include <Graphics/Contexts/TextureContext.h>
 #include <unordered_map>
 #include <locale>
 #include <vector>
 #include <string>
 #include <Types/MyStack.h>
-struct MaterialDef
-{
-    MaterialDef(char* _materialName);
-    MaterialDef(char* _materialName, char* _textureName, char* _shaderName);
-    MaterialDef(char* _materialName, char* _textureName);
-    char* materialName;
-    char *textureName;
-    char *shaderName;
-};
+
 class GraphicalContentManager
 {
     public:
         GraphicalContentManager();
         virtual ~GraphicalContentManager();
         MaterialContext* getMaterial(const char* name);
-        unsigned int findMaterial(const char* materialName);
+        TextureContext* getTexture(const char* name);
+        StaticModelContext* getModel(const char* name);
     protected:
     private:
-        unsigned int addMaterial(MaterialDef& def);
+        struct MaterialDef
+        {
+            MaterialDef(const char* _materialName);
+            MaterialDef(const char* _materialName, const char* _textureName, const char* _shaderName);
+            MaterialDef(const char* _materialName, const char* _textureName);
+            void parseMaterialFile();
+            char materialName[32];
+            char textureName[32];
+            char shaderName[32];
+        };
+        MaterialContext* addMaterial(MaterialDef& def);
         TextureContext* addTexture(const char* name); /// These two functions check for its previous existance, addMaterial does not
         ShaderContext* addShader(const char* name);
-        MyStack<MaterialContext> materials;
-        MyStack<TextureContext> textures;
-        MyStack<ShaderContext> shaders;
-        std::unordered_map<std::string, unsigned int> materialMap;
-        std::unordered_map<std::string, unsigned int> textureMap;
-        std::unordered_map<std::string, unsigned int> shaderMap;
+        std::unordered_map<std::string, MaterialContext> materialMap;
+        std::unordered_map<std::string, TextureContext> textureMap;
+        std::unordered_map<std::string, ShaderContext> shaderMap;
+        std::unordered_map<std::string, StaticModelContext> staticModelMap;
 };
 #endif // GRAPHICALCONTENTMANAGER_H

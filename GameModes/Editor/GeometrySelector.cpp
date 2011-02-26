@@ -25,7 +25,7 @@ void GeometrySelector::start(unsigned char button)
     b2Body* body = g_PhysicsManager.select(point);
     if (body != NULL)
     {
-        if (button == 1)
+        if (button == 1 && body->GetType() == b2_dynamicBody)
         {
             joint = g_PhysicsManager.createJoint(body,point);
         }
@@ -47,7 +47,6 @@ void GeometrySelector::mouseMove(Vec2i mouse)
         b2Body* body = joint->GetBodyB();
         body->SetAwake(true);
         assert(joint->IsActive());
-        assert(body->GetType() == b2_dynamicBody);
         Vec2f position = body->GetWorldCenter();
     }
 }

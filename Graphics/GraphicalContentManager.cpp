@@ -1,72 +1,117 @@
 #include "GraphicalContentManager.h"
 #include <string>
+#include <fstream>
+#include <cstring>
 #include <Graphics/Contexts/TextureContext.h>
 #include <Graphics/Contexts/ShaderContext.h>
-MaterialDef::MaterialDef(char* _materialName)
+GraphicalContentManager::MaterialDef::MaterialDef(const char* _materialName)
 {
-    materialName = _materialName;
-    textureName = shaderName = NULL;
+    strcpy(materialName,_materialName);
+    textureName[0] = shaderName[0] = '\0';
 }
-MaterialDef::MaterialDef(char* _materialName, char* _textureName)
+GraphicalContentManager::MaterialDef::MaterialDef(const char* _materialName, const char* _textureName)
 {
-    materialName = _materialName;
-    textureName = _textureName;
-    shaderName = NULL;
+    strcpy(materialName,_materialName);
+    strcpy(textureName,_textureName);
+    shaderName[0] = '\0';
+}
+void GraphicalContentManager::MaterialDef::parseMaterialFile()
+{
+    std::string fullFileName("Resources/Graphics/Materials/");
+    fullFileName.append(materialName);
+    fullFileName.append(".txt");
+    std::ifstream file(fullFileName.c_str()); /// FIXME passing the string directly gives a linker error. Will probably be fixed in a newer version of g++
+    while (file.good())
+    {
+        std::string input;
+        file >> input;
+        if (input == "texture")
+        {
+            file >> input;
+            if (input == "=")
+            {
+                file >> textureName;
+            } else throw "Expected a \"=\"";
+        }
+        else if (input == "shader")
+        {
+            file >> input;
+            if (input == "=")
+            {
+                file >> shaderName;
+            } else throw "Expected a \"=\"";
+        }
+        else throw "Unrecognised name";
+    }
+    fullFileName.replace(fullFileName.end()-4,fullFileName.end(),".mat");
+    std::ofstream outfile(fullFileName.c_str(),std::ios::binary); /// FIXME also
+    outfile.write((char*)this,sizeof(MaterialDef));
 }
 GraphicalContentManager::GraphicalContentManager()
 {
     //ctor
-    textures.push(NULL);
+    textureMap[""] = TextureContext("");
     MaterialDef blank("");
     addMaterial(blank);
-    MaterialDef player("player", "player.bmp");
-    addMaterial(player);
 }
 
 GraphicalContentManager::~GraphicalContentManager()
 {
     //dtor
-    for (int i = 0; i < materials.size(); i++)
-    {
-        materials[i].assertDelete();
-    }
 }
 MaterialContext* GraphicalContentManager::getMaterial(const char* materialName)
 {
-    MaterialContext* material = &materials[materialMap[materialName]];
+    auto iter = materialMap.find(materialName);
+    MaterialContext* material;
+    if (iter == materialMap.end())
+    {
+        MaterialDef def(materialName);
+        def.parseMaterialFile();
+        material = addMaterial(def);
+    }
+    else material = &iter->second;
     material->grab();
     return material;
 }
-unsigned int GraphicalContentManager::findMaterial(const char* materialName)
+TextureContext* GraphicalContentManager::getTexture(const char* textureName)
 {
-    return materialMap[materialName];
+    TextureContext* texture = &textureMap[textureName];
+    texture->grab();
+    return texture;
 }
-unsigned int GraphicalContentManager::addMaterial(MaterialDef& def)
+StaticModelContext* GraphicalContentManager::getModel(const char* modelName)
 {
-    unsigned int index = materials.size();
+    StaticModelContext* model = &staticModelMap[modelName];
+    model->grab();
+    return model;
+}
+MaterialContext* GraphicalContentManager::addMaterial(MaterialDef& def)
+{
     TextureContext* texture;
-    if (def.textureName == NULL)
+    if (def.textureName[0] == '\0')
     {
-        texture = &textures[0];
+        texture = &textureMap.begin()->second;
     }
     else
     {
         texture = addTexture(def.textureName);
     }
-    materials.push(MaterialContext(texture));
-    materialMap[def.materialName] = index;
-    return index;
+    return &(materialMap[def.materialName] = MaterialContext(texture));
 }
 TextureContext* GraphicalContentManager::addTexture(const char* name)
 {
-    unsigned int index = textureMap[name];
-    if (index == 0)
+    if (name[0] == '\0')
     {
-        index = textures.size();
-        textures.push(TextureContext(name));
-        textureMap[name] = index;
+        return &textureMap.begin()->second;
     }
-    return &textures[index];
+    TextureContext* texture;
+    auto iter = textureMap.find(name);
+    if (iter == textureMap.end())
+    {
+        texture = &(textureMap[name] = TextureContext(name));
+    }
+    else texture = &iter->second;
+    return texture;
 }
 
 

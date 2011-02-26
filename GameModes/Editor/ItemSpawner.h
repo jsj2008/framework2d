@@ -2,6 +2,8 @@
 #define ITEMSPAWNER_H
 
 #include <Input/Mouse/ClickReleaseEvent.h>
+#include <vector>
+#include <Factory/CrateDef.h>
 class SelectionBox;
 
 class ItemSpawner : public ClickReleaseEvent
@@ -13,6 +15,8 @@ class ItemSpawner : public ClickReleaseEvent
     protected:
     private:
         SelectionBox* selectionBox;
+        std::vector<CrateDef> crateDefs;
+        void addElement();
 };
 
 #endif // ITEMSPAWNER_H

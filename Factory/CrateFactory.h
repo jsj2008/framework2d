@@ -2,6 +2,7 @@
 #define CRATEFACTORY_H
 
 #include "Factory.h"
+#include <Physics/PhysicsManager.h>
 
 
 class CrateFactory : public Factory
@@ -12,6 +13,9 @@ class CrateFactory : public Factory
         Entity* createEntity(FactoryDef* data);
     protected:
     private:
+        b2BodyDef bodyDef;
+        b2PolygonShape shape;
+        float density;
 };
 
 #endif // CRATEFACTORY_H

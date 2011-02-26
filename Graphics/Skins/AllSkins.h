@@ -3,5 +3,6 @@
 
 #include "StaticSkin.h"
 #include "ConvexPolygonSkin.h"
+#include "BubbleSkin.h"
 
 #endif // ALLSKINS_H_INCLUDED

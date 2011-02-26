@@ -8,6 +8,8 @@ class FactoryDef
     public:
         FactoryDef();
         Vec2f position;
+        char materialName[32];
+        void setMaterial(const char* _materialName);
 };
 
 #endif // FACTORYDEF_H

@@ -22,8 +22,11 @@ void GeometryEditor::click(Vec2i mouse, unsigned char button)
     }
     if (def.numVertices == b2_maxPolygonVertices || button == 3)
     {
-        if (def.sort())
-            g_LevelManager.addPlatform(&def);
+        if (def.numVertices > 2)
+        {
+            if (def.sort())
+                g_LevelManager.addPlatform(&def);
+        }
         def.numVertices = 0;
     }
 }

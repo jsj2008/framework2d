@@ -1,25 +1,19 @@
 #ifndef TEXTURECONTEXT_H
 #define TEXTURECONTEXT_H
 
+#include <Graphics/Contexts/GraphicalContext.h>
 
-#define MAX_FILENAME 32
-class TextureContext
+class TextureContext: public GraphicalContext
 {
     public:
-        TextureContext();
+        TextureContext(const char* _textureName = NULL);
         virtual ~TextureContext();
         void assertDelete();
-        TextureContext(const char* _textureName);
-        void bindTexture();
-        /// These are the reference counting functions
-        void grab(); /// ++
-        void release(); /// --
+        void bind();
     protected:
     private:
-        unsigned int texture;
-        unsigned int referenceCount;
-        char textureName[MAX_FILENAME];
-        void loadFromFile();
+        void load();
+        void unload();
 };
 
 #endif // TEXTURECONTEXT_H

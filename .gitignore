@@ -6,3 +6,6 @@
 *.o
 *.bat
 *.lvl
+*.mat
+gmon.out
+gprofout.txt

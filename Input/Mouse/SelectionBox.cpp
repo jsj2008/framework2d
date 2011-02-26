@@ -5,13 +5,17 @@ SelectionBox::SelectionBox(const Rect& _Rect, int _numElements)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
-    numElements = _numElements;
-    div = (mRect.x2 - mRect.x)/numElements;
+    setNumElements(_numElements);
 }
 
 SelectionBox::~SelectionBox()
 {
     //dtor
+}
+void SelectionBox::setNumElements(int _numElements)
+{
+    numElements = _numElements;
+    div = (mRect.x2 - mRect.x)/numElements;
 }
 /// This only works horizontally atm
 void SelectionBox::click(Vec2i mouse, unsigned char button)

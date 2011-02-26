@@ -19,6 +19,7 @@ extern class GraphicsManager
         float getPixelsPerMeter();
         void setCamera(Camera* _camera){mCamera = _camera;}
         MaterialContext* getMaterial(const char* material){return mContentManager.getMaterial(material);}
+        TextureContext* getTexture(const char* texture){return mContentManager.getTexture(texture);}
     protected:
     private:
         Camera* mCamera;

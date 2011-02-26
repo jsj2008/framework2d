@@ -3,24 +3,14 @@
 
 #include <Box2D/Box2D.h>
 #define JUMPING
-//#define JUMPING_SENSOR
 
-#define WORLD_GRAVITY 1.0f
-struct PhysicsFactoryDef
-{
-    PhysicsFactoryDef();
-    b2BodyDef bodyDef;
-    b2PolygonShape shape;
-#ifdef JUMPING_SENSOR
-    b2FixtureDef additionalFixture;
-    bool useAdditionalFixture;
-#endif
-    float density;
-};
+#define WORLD_GRAVITY 9.8f
+
 class RenderCallback;
 extern class PhysicsManager
 {
     public:
+        PhysicsManager();
         void init();
         virtual ~PhysicsManager();
         void clear();
@@ -34,8 +24,18 @@ extern class PhysicsManager
         bool update();
         void render();
         b2Body* select(Vec2f& position);
+        enum CollisionCategory
+        {
+            PlayerCategory = 0x0001,
+            CrateCategory,
+            StaticGeometryCategory,
+            BubbleCategory,
+            CollisionCategoriesMax
+        };
+        unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
     protected:
     private:
+        unsigned short collisionMasks[CollisionCategoriesMax];
         void updateEntities();
         b2World* mWorld;
         RenderCallback* mRenderCallback;

@@ -17,8 +17,7 @@ Skin::~Skin()
 
 void Skin::render(b2Body* body)
 {
-    material->bindTexture();
-    //glUseProgram(0);
+    material->bind();
     const Vec2f & center = body->GetWorldCenter();
     float rotation = -body->GetAngle();
     glPushMatrix();

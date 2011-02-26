@@ -3,6 +3,7 @@
 
 #include <GameModes/GameMode.h>
 class FreeCamera;
+class SelectionBox;
 
 class ItemSpawnerMode : public GameMode
 {

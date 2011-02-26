@@ -72,8 +72,32 @@
 					<Add library="bin\Release\libBox2D.a" />
 				</Linker>
 			</Target>
+			<Target title="Profile win32">
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add library="bin\Debug\libBox2D.a" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Winit-self" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wundef" />
+			<Add option="-Winline" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-Wswitch-enum" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
@@ -95,6 +119,8 @@
 		<Unit filename="Entities\AIEntity.cpp" />
 		<Unit filename="Entities\AIEntity.h" />
 		<Unit filename="Entities\AllEntities.h" />
+		<Unit filename="Entities\Bubble.cpp" />
+		<Unit filename="Entities\Bubble.h" />
 		<Unit filename="Entities\Crate.cpp" />
 		<Unit filename="Entities\Crate.h" />
 		<Unit filename="Entities\Entity.cpp" />
@@ -104,10 +130,16 @@
 		<Unit filename="Entities\StaticGeometry.cpp" />
 		<Unit filename="Entities\StaticGeometry.h" />
 		<Unit filename="Factory\AllFactories.h" />
+		<Unit filename="Factory\BubbleDef.cpp" />
+		<Unit filename="Factory\BubbleDef.h" />
+		<Unit filename="Factory\BubbleFactory.cpp" />
+		<Unit filename="Factory\BubbleFactory.h" />
 		<Unit filename="Factory\ConvexGeometryDef.cpp" />
 		<Unit filename="Factory\ConvexGeometryDef.h" />
 		<Unit filename="Factory\ConvexGeometryFactory.cpp" />
 		<Unit filename="Factory\ConvexGeometryFactory.h" />
+		<Unit filename="Factory\CrateDef.cpp" />
+		<Unit filename="Factory\CrateDef.h" />
 		<Unit filename="Factory\CrateFactory.cpp" />
 		<Unit filename="Factory\CrateFactory.h" />
 		<Unit filename="Factory\Factory.cpp" />
@@ -146,10 +178,14 @@
 		<Unit filename="Graphics\Camera\FreeCamera.h" />
 		<Unit filename="Graphics\Camera\PhysicsCamera.cpp" />
 		<Unit filename="Graphics\Camera\PhysicsCamera.h" />
+		<Unit filename="Graphics\Contexts\GraphicalContext.cpp" />
+		<Unit filename="Graphics\Contexts\GraphicalContext.h" />
 		<Unit filename="Graphics\Contexts\MaterialContext.cpp" />
 		<Unit filename="Graphics\Contexts\MaterialContext.h" />
 		<Unit filename="Graphics\Contexts\ShaderContext.cpp" />
 		<Unit filename="Graphics\Contexts\ShaderContext.h" />
+		<Unit filename="Graphics\Contexts\StaticModelContext.cpp" />
+		<Unit filename="Graphics\Contexts\StaticModelContext.h" />
 		<Unit filename="Graphics\Contexts\TextureContext.cpp" />
 		<Unit filename="Graphics\Contexts\TextureContext.h" />
 		<Unit filename="Graphics\GLee.c">
@@ -160,6 +196,8 @@
 		<Unit filename="Graphics\GraphicsManager.cpp" />
 		<Unit filename="Graphics\GraphicsManager.h" />
 		<Unit filename="Graphics\Skins\AllSkins.h" />
+		<Unit filename="Graphics\Skins\BubbleSkin.cpp" />
+		<Unit filename="Graphics\Skins\BubbleSkin.h" />
 		<Unit filename="Graphics\Skins\ConvexPolygonSkin.cpp" />
 		<Unit filename="Graphics\Skins\ConvexPolygonSkin.h" />
 		<Unit filename="Graphics\Skins\Skin.cpp" />
@@ -180,6 +218,8 @@
 		<Unit filename="Input\Mouse\ClickReleaseEvent.h" />
 		<Unit filename="Input\Mouse\SelectionBox.cpp" />
 		<Unit filename="Input\Mouse\SelectionBox.h" />
+		<Unit filename="Level\Level.cpp" />
+		<Unit filename="Level\Level.h" />
 		<Unit filename="Level\LevelManager.cpp" />
 		<Unit filename="Level\LevelManager.h" />
 		<Unit filename="Physics\PhysicsManager.cpp" />

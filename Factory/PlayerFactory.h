@@ -2,9 +2,7 @@
 #define PLAYERFACTORY_H
 
 #include <Factory/Factory.h>
-#include <AI/AIManager.h>
 #include <Physics/PhysicsManager.h>
-#include <Graphics/GraphicsManager.h>
 
 
 class PlayerFactory : public Factory
@@ -15,7 +13,9 @@ class PlayerFactory : public Factory
         Entity* createEntity(FactoryDef* def);
     protected:
     private:
-        PhysicsFactoryDef physicsDef;
+        b2BodyDef bodyDef;
+        b2FixtureDef fixtureDef;
+        b2PolygonShape shapeDef;
 };
 
 #endif // PLAYERFACTORY_H

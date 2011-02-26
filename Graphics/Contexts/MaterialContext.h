@@ -1,22 +1,23 @@
 #ifndef MaterialContext_H
 #define MaterialContext_H
 
-#define MAX_FILENAME 32
+#include <Graphics/Contexts/GraphicalContext.h>
 class TextureContext;
 class ShaderContext;
-class MaterialContext
+
+class MaterialContext: public GraphicalContext
 {
     public:
-        MaterialContext();
+        MaterialContext(const char* _name = NULL);
         virtual ~MaterialContext();
-        void assertDelete();
         MaterialContext(TextureContext* _TextureContext);
-        void bindTexture();
-        /// These are the reference counting functions
-        void grab(); /// ++
-        void release(); /// --
+        void bind();
     protected:
     private:
+        void vGrab();
+        void vRelease();
+        void load(){}
+        void unload(){}
         TextureContext* mTextureContext;
 };
 

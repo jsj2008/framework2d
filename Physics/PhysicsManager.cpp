@@ -5,14 +5,15 @@
 #include <Graphics/GraphicsManager.h>
 #include <Physics/RenderCallback.h>
 PhysicsManager g_PhysicsManager;
-PhysicsFactoryDef::PhysicsFactoryDef()
+#define MASK(x) (1 << x)
+PhysicsManager::PhysicsManager()
 {
-    density = 1.0f;
-#ifdef JUMPING_SENSOR
-    useAdditionalFixture = false;
-#endif
+    //ctor
+    collisionMasks[PlayerCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
+    collisionMasks[CrateCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
+    collisionMasks[StaticGeometryCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
+    collisionMasks[BubbleCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
 }
-
 PhysicsManager::~PhysicsManager()
 {
     //dtor
@@ -74,7 +75,7 @@ bool PhysicsManager::update()
 {
     unsigned int currentTime = g_Timer.getTicks();
     unsigned int totalTimePassed = currentTime - startTime;
-    unsigned int stepsToTake = (totalTimePassed*60)/1000;
+    unsigned int stepsToTake = (totalTimePassed*60)/1000.0f;
     if (stepsToTake > stepsTaken)
     {
         float timestep = 1.0f / 60.0f;
@@ -82,6 +83,7 @@ bool PhysicsManager::update()
         int32 positionIterations = 2;
         mWorld->Step(timestep, velocityIterations, positionIterations);
         updateEntities();
+        stepsTaken++;
         return true;
     }
     else return false;

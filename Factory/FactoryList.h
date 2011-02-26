@@ -15,6 +15,7 @@ extern class FactoryList
             ePlayerFactory,
             eConvexPolygonFactory,
             eCrateFactory,
+            eBubbleFactory,
             eStandardFactoriesMax
         };
         FactoryList();

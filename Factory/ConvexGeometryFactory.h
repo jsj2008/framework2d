@@ -19,7 +19,21 @@ class ConvexGeometryFactory : public Factory
         Entity* createEntity(FactoryDef* data);
     protected:
     private:
-        PhysicsFactoryDef physicsDef;
+        b2BodyDef bodyDef;
+        b2FixtureDef fixtureDef;
+        b2PolygonShape shapeDef;
+
 };
 
 #endif // CONVEXGEOMETRYFACTORY_H
+/*struct PhysicsFactoryDef
+{
+    PhysicsFactoryDef();
+    b2BodyDef bodyDef;
+    b2PolygonShape shape;
+#ifdef JUMPING_SENSOR
+    b2FixtureDef additionalFixture;
+    bool useAdditionalFixture;
+#endif
+    float density;
+};*/

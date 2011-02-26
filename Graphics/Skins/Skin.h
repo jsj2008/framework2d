@@ -7,6 +7,7 @@ enum SkinType
 {
     eStaticSkinType,
     eConvexPolygonSkinType,
+    eBubbleSkinType,
     eSkinTypeMax
 };
 class Skin

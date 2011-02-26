@@ -58,22 +58,22 @@ void FreeCamera::trigger(InputActions action)
         }
         case eUp:
         {
-            position.y--;
+            position.y-=15;
             return;
         }
         case eDown:
         {
-            position.y++;
+            position.y+=15;
             return;
         }
         case eRight:
         {
-            position.x++;
+            position.x+=15;
             return;
         }
         case eLeft:
         {
-            position.x--;
+            position.x-=15;
             return;
         }
         case eInputActionsMax:

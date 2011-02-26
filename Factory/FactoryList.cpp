@@ -3,7 +3,7 @@
 using namespace std;
 FactoryList g_FactoryList;
 FactoryList::FactoryList()
-:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory})
+:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory, new BubbleFactory})
 {
     assert(factories[eStandardFactoriesMax-1]);
     //ctor

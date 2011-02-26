@@ -1,8 +1,9 @@
 #include "PlayerFactory.h"
 #include <Entities/AIEntity.h>
 #include <Graphics/Skins/StaticSkin.h>
+#include <Graphics/GraphicsManager.h>
 #include <AI/PlayerInputBrain.h>
-#include <Factory/FactoryDef.h>
+#include <Factory/CrateDef.h>
 #include <Game.h>
 #include <GameModes/GameMode.h>
 #include <cstring>
@@ -10,8 +11,10 @@
 PlayerFactory::PlayerFactory()
 {
     //ctor
-    physicsDef.bodyDef.type = b2_dynamicBody;
-    physicsDef.shape.SetAsBox(2*0.5f,2*0.5f);
+    bodyDef.type = b2_dynamicBody;
+    fixtureDef.shape = &shapeDef;
+    fixtureDef.filter.categoryBits = PhysicsManager::PlayerCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::PlayerCategory);
 }
 
 PlayerFactory::~PlayerFactory()
@@ -21,14 +24,16 @@ PlayerFactory::~PlayerFactory()
 
 Entity* PlayerFactory::createEntity(FactoryDef* data)
 {
+    CrateDef* def = (CrateDef*)data;
     Entity* entity = new AIEntity(new PlayerInputBrain(g_Game.getGameMode(ePlayGameMode)->getInputState()));
 
-    physicsDef.bodyDef.position = data->position;
-    physicsDef.bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&physicsDef.bodyDef);
-    entity->mBody->CreateFixture(&physicsDef.shape, physicsDef.density);
+    bodyDef.position = def->position;
+    shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);
+    bodyDef.userData = (void*)entity;
+    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
+    entity->mBody->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new StaticSkin(2,2);
+    entity->mSkin = new StaticSkin(def->width,def->height);
     setMaterial(entity->mSkin,g_GraphicsManager.getMaterial("player"));
     return entity;
 }

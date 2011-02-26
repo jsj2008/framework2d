@@ -3,7 +3,7 @@
 #include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
 #include <cassert>
-#define JUMP_IMPULSE -5.0f*WORLD_GRAVITY
+#define JUMP_IMPULSE -10.0f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain)
 {
@@ -61,14 +61,14 @@ void AIEntity::walkLeft()
 {
     Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(-0.05,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(-5,0), point);
 }
 
 void AIEntity::walkRight()
 {
     Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(0.05,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(5,0), point);
 }
 
 
