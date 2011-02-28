@@ -9,3 +9,10 @@ const Vec2f Vec2i::ScreenToWorldSpace() const
     ret /= g_GraphicsManager.getPixelsPerMeter();
     return ret;
 }
+
+void Vec2i::worldToScreenSpace(Vec2f world)
+{
+    world *= g_GraphicsManager.getPixelsPerMeter();
+    *this = Vec2i(world.x,world.y);
+    *this -= g_GraphicsManager.getView();
+}

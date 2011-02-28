@@ -15,7 +15,7 @@ GeometryEditor::~GeometryEditor()
 }
 void GeometryEditor::click(Vec2i mouse, unsigned char button)
 {
-    if (button == 1)
+    if (button == 1 && def.numVertices < b2_maxPolygonVertices)
     {
         Vec2f point = mouse.ScreenToWorldSpace();
         def.addPoint(point);

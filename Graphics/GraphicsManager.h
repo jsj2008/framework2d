@@ -6,6 +6,8 @@ class Camera;
 #include <Graphics/GraphicalContentManager.h>
 #include <Types/Vec2i.h>
 #include <Box2D/Common/b2Settings.h>
+class Icon;
+
 extern class GraphicsManager
 {
     public:

@@ -123,6 +123,10 @@ void Level::removeBody(b2Body* body)
     }
     g_PhysicsManager.destroyBody(body);
 }
+void Level::removeJoint(b2Joint* joint)
+{
+    jointToDefTable.erase(joint);
+}
 #include <vector>
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
@@ -158,23 +162,20 @@ void Level::loadLevel()
     file.read((char*)&size,sizeof(unsigned short));
     for (unsigned short i = 0; i < size; i++)
     {
-        b2JointType type;
-        file.read((char*)&type,sizeof(b2JointType));
-        unsigned int size = getJointDefSize(type);
-        b2JointDef* def = (b2JointDef*)new char[size-sizeof(b2JointType)];
-        file.read((char*)def+sizeof(b2JointType),size);
-        def->type = type;
+        b2DistanceJointDef joint;
+        file.read((char*)&joint,sizeof(b2DistanceJointDef));
         {
             auto iter = bodyToCrateDefTable.begin();
-            for (unsigned int i = 0; i < def->bodyA; i++)iter++;
-            def->bodyA = iter->first;
+            for (unsigned int i = 0; i < joint.bodyA; i++)iter++;
+            joint.bodyA = iter->first;
         }
         {
             auto iter = bodyToGeometryDefTable.begin();
-            for (unsigned int i = 0; i < def->bodyB; i++)iter++;
-            def->bodyB = iter->first;
+            for (unsigned int i = 0; i < joint.bodyB; i++)iter++;
+            joint.bodyB = iter->first;
         }
-        addJoint(def);
+        joint.collideConnected = true;
+        addJoint(&joint);
     }
 }
 void Level::saveLevel()
@@ -231,7 +232,8 @@ void Level::saveLevel()
             position++;
         }
         i->second->bodyB = position;
-        file.write((const char*)i->second,getJointDefSize(i->second->type));
+        //i->second.
+        file.write((const char*)i->second,sizeof(b2DistanceJointDef));
     }
     bodyToCrateDefTable.clear();
     bodyToGeometryDefTable.clear();
@@ -280,7 +282,24 @@ unsigned int getJointDefSize(b2JointType type)
     }
     return 0;
 }
-
+#include <GL/gl.h>
+#include <Types/Vec2i.h>
+void Level::tempRender()
+{
+    glColor3f(0,1,0);
+    glBegin(GL_LINES);
+    for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
+    {
+        b2Joint* joint = i->first;
+        Vec2f point = joint->GetAnchorA();
+        //point.worldToScreenSpace();
+        glVertex2f(point.x,point.y);
+        point = joint->GetAnchorB();
+        glVertex2f(point.x,point.y);
+    }
+    glEnd();
+    glColor3f(1,1,1);
+}
 
 
 

@@ -17,7 +17,9 @@ class Level
         void addPlatform(ConvexGeometryDef* def);
         void addCrate(CrateDef* def);
         void addJoint(b2JointDef* def);
+        void tempRender();
         void removeBody(b2Body* body);
+        void removeJoint(b2Joint* joint);
     protected:
     private:
         const char* name;

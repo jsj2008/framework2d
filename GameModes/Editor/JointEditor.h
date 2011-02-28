@@ -13,8 +13,8 @@ class JointEditor : public ClickReleaseEvent
     protected:
     private:
         b2Body* bodyA;
-        Vec2f worldPointA;
-        void createJoint(b2Body* bodyB, Vec2f& worldPointB);
+        Vec2f localPointA;
+        void createJoint(b2Body* bodyB, Vec2f& localPointB);
 };
 
 #endif // JOINTEDITOR_H

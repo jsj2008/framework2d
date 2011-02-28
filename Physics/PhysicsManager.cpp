@@ -4,6 +4,7 @@
 #include <Entities/Entity.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/RenderCallback.h>
+#include <Level/LevelManager.h>
 PhysicsManager g_PhysicsManager;
 #define MASK(x) (1 << x)
 PhysicsManager::PhysicsManager()
@@ -47,6 +48,12 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 }
 void PhysicsManager::destroyBody(b2Body* body)
 {
+    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != NULL;)
+    {
+        b2Joint* joint = jointEdge->joint;
+        jointEdge = jointEdge->next;
+        deleteJoint(joint);
+    }
     Entity* entity = (Entity*)body->GetUserData();
     delete entity;
     mWorld->DestroyBody(body);
@@ -67,9 +74,10 @@ b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
     def.maxForce = 1000.0f * body->GetMass();
     return (b2MouseJoint*)mWorld->CreateJoint(&def);
 }
-void PhysicsManager::deleteJoint(b2MouseJoint* joint)
+void PhysicsManager::deleteJoint(b2Joint* joint)
 {
     mWorld->DestroyJoint(joint);
+    g_LevelManager.removeJoint(joint);
 }
 bool PhysicsManager::update()
 {

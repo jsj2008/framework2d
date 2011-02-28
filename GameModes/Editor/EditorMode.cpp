@@ -3,8 +3,9 @@
 #include <Input/InputState.h>
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
+#include <Graphics/Primitives/Icon.h>
 #include <Game.h>
-#include "StateSwitcher.h"
+#include "EditorStateSwitcher.h"
 #define NUM_MODES 5
 EditorMode::EditorMode()
 {
@@ -14,14 +15,20 @@ EditorMode::EditorMode()
     FreeCamera* mFreeCamera = new FreeCamera(mInputState);
     mCamera = mFreeCamera;
 
-    modes[0] = new GeometryEditorMode(mFreeCamera);
-    modes[1] = new GeometrySelectorMode(mFreeCamera);
+    modes[0] = new GeometrySelectorMode(mFreeCamera);
+    modes[1] = new GeometryEditorMode(mFreeCamera);
     modes[2] = new ItemSpawnerMode(mFreeCamera);
     modes[3] = new JointEditorMode(mFreeCamera);
     modes[4] = g_Game.getGameMode(ePlayGameMode);
 
     Rect rect(0,0,500,100);
-    ClickEvent* selectionBox = new StateSwitcher(rect,NUM_MODES,this,modes);
+    selectionBox = new EditorStateSwitcher(rect,{
+        new Icon("GeometrySelector"),
+        new Icon("GeometryEditor"),
+        new Icon("ItemSpawner"),
+        new Icon("JointEditor"),
+        new Icon("TestPlay")
+        },this,modes);
 
     mInputState->registerEvent(selectionBox);
     for (unsigned int i = 0; i < NUM_MODES; i++)
@@ -35,4 +42,5 @@ EditorMode::EditorMode()
 EditorMode::~EditorMode()
 {
     //dtor
+    delete selectionBox;
 }

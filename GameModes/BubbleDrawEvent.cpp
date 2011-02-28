@@ -27,7 +27,7 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
 {
     def.position = startPos.ScreenToWorldSpace();
     def.radius = (def.position-mouse.ScreenToWorldSpace()).Length();
-    def.type = selectionBox->getCurrentSelection();
+    def.type = (Bubble::BubbleType)selectionBox->getCurrentSelection();
     if (def.radius != 0.0f)
     {
         g_FactoryList.useFactory(&def, FactoryList::eBubbleFactory);

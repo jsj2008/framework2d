@@ -10,8 +10,6 @@ BubbleFactory::BubbleFactory()
     //ctor
     fixtureDef.isSensor = true;
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::BubbleCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::BubbleCategory);
 }
 
 BubbleFactory::~BubbleFactory()

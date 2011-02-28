@@ -3,6 +3,7 @@
 
 #include "../GameMode.h"
 class InputState;
+class SelectionBox;
 
 class EditorMode : public GameMode
 {
@@ -11,6 +12,7 @@ class EditorMode : public GameMode
         virtual ~EditorMode();
     protected:
     private:
+        SelectionBox* selectionBox;
 };
 
 #endif // EDITORMODE_H

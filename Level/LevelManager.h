@@ -13,10 +13,12 @@ extern class LevelManager
     public:
         LevelManager();
         virtual ~LevelManager();
-        void addPlatform(ConvexGeometryDef* def){return level->addPlatform(def);}
-        void addCrate(CrateDef* def){return level->addCrate(def);}
-        void addJoint(b2JointDef* def){return level->addJoint(def);}
-        void removeBody(b2Body* body){return level->removeBody(body);}
+        void addPlatform(ConvexGeometryDef* def){level->addPlatform(def);}
+        void addCrate(CrateDef* def){level->addCrate(def);}
+        void addJoint(b2JointDef* def){level->addJoint(def);}
+        void removeBody(b2Body* body){level->removeBody(body);}
+        void tempRender(){level->tempRender();}
+        void removeJoint(b2Joint* joint){level->removeJoint(joint);}
         void loadLevel(const char* name){level = new Level(name);}
         void saveLevel(const char* name){delete level;}
     protected:

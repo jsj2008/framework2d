@@ -82,10 +82,13 @@ void Game::run()
         }
         g_PhysicsManager.render();
         g_InputManager.render();
+        g_LevelManager.tempRender();
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");
     g_PhysicsManager.clear();
+    delete mGameModes[ePlayGameMode];
+    delete mGameModes[eEditorGameMode];
 }
 
 

@@ -4,6 +4,7 @@
 #include <GameModes/BubbleDrawEvent.h>
 #include <Input/Mouse/SelectionBox.h>
 #include <Entities/Bubble.h>
+#include <Graphics/Primitives/Icon.h>
 
 PlayMode::PlayMode(b2Body* cameraBody)
 {
@@ -11,7 +12,7 @@ PlayMode::PlayMode(b2Body* cameraBody)
     mInputState = new InputState;
     Rect selectionBoxRect(0,400,300,450);
     Rect fullScreen(0,0,5000,5000);
-    SelectionBox* selectionBox = new SelectionBox(selectionBoxRect,Bubble::eBubbleTypesMax);
+    SelectionBox* selectionBox = new SelectionBox(selectionBoxRect,{new Icon("defaultBubble"),new Icon("defaultBubble")});
     mInputState->registerEvent(new BubbleDrawEvent(fullScreen,selectionBox));
     mInputState->registerEvent(selectionBox);
 }

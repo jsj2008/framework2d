@@ -162,6 +162,8 @@
 		<Unit filename="GameModes\Editor\AllEditorModes.h" />
 		<Unit filename="GameModes\Editor\EditorMode.cpp" />
 		<Unit filename="GameModes\Editor\EditorMode.h" />
+		<Unit filename="GameModes\Editor\EditorStateSwitcher.cpp" />
+		<Unit filename="GameModes\Editor\EditorStateSwitcher.h" />
 		<Unit filename="GameModes\Editor\GeometryEditor.cpp" />
 		<Unit filename="GameModes\Editor\GeometryEditor.h" />
 		<Unit filename="GameModes\Editor\GeometryEditorMode.cpp" />
@@ -178,8 +180,6 @@
 		<Unit filename="GameModes\Editor\JointEditor.h" />
 		<Unit filename="GameModes\Editor\JointEditorMode.cpp" />
 		<Unit filename="GameModes\Editor\JointEditorMode.h" />
-		<Unit filename="GameModes\Editor\StateSwitcher.cpp" />
-		<Unit filename="GameModes\Editor\StateSwitcher.h" />
 		<Unit filename="GameModes\GameMode.cpp" />
 		<Unit filename="GameModes\GameMode.h" />
 		<Unit filename="GameModes\PlayMode.cpp" />
@@ -207,6 +207,12 @@
 		<Unit filename="Graphics\GraphicalContentManager.h" />
 		<Unit filename="Graphics\GraphicsManager.cpp" />
 		<Unit filename="Graphics\GraphicsManager.h" />
+		<Unit filename="Graphics\Primitives\Icon.cpp" />
+		<Unit filename="Graphics\Primitives\Icon.h" />
+		<Unit filename="Graphics\Primitives\Primitive.cpp" />
+		<Unit filename="Graphics\Primitives\Primitive.h" />
+		<Unit filename="Graphics\Primitives\Primitive2D.cpp" />
+		<Unit filename="Graphics\Primitives\Primitive2D.h" />
 		<Unit filename="Graphics\Skins\AllSkins.h" />
 		<Unit filename="Graphics\Skins\BubbleSkin.cpp" />
 		<Unit filename="Graphics\Skins\BubbleSkin.h" />

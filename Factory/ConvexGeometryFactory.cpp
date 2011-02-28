@@ -8,11 +8,7 @@ using namespace std;
 ConvexGeometryFactory::ConvexGeometryFactory()
 {
     //ctor
-    fixtureDef.filter.categoryBits = PhysicsManager::BubbleCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::BubbleCategory);
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 ConvexGeometryFactory::~ConvexGeometryFactory()
@@ -24,7 +20,7 @@ Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
     ConvexGeometryDef* def = (ConvexGeometryDef*)data;
     StaticGeometry* entity = new StaticGeometry;
 
-    assert(def->numVertices < b2_maxPolygonVertices);
+    assert(def->numVertices <= b2_maxPolygonVertices);
 
     shapeDef.Set(def->vertices,def->numVertices);
 

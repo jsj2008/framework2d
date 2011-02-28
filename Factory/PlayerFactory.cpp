@@ -13,8 +13,6 @@ PlayerFactory::PlayerFactory()
     //ctor
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::PlayerCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::PlayerCategory);
 }
 
 PlayerFactory::~PlayerFactory()

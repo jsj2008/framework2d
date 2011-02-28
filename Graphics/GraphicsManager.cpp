@@ -80,4 +80,3 @@ float GraphicsManager::getPixelsPerMeter()
 }
 
 
-

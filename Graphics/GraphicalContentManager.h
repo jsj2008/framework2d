@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <Types/MyStack.h>
+class Icon;
 
 class GraphicalContentManager
 {
@@ -19,6 +20,7 @@ class GraphicalContentManager
         MaterialContext* getMaterial(const char* name);
         TextureContext* getTexture(const char* name);
         StaticModelContext* getModel(const char* name);
+        Icon* getIcon(const char* name);
     protected:
     private:
         struct MaterialDef

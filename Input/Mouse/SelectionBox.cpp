@@ -1,21 +1,26 @@
 #include "SelectionBox.h"
 #include <GL/gl.h>
+#include <Graphics/Primitives/Icon.h>
 
-SelectionBox::SelectionBox(const Rect& _Rect, int _numElements)
+SelectionBox::SelectionBox(const Rect& _Rect,std::initializer_list<Icon*> _icons)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
-    setNumElements(_numElements);
+    icons = _icons;
+    div = (mRect.x2 - mRect.x)/icons.size();
+    currentSelection = icons.size();
 }
 
 SelectionBox::~SelectionBox()
 {
     //dtor
-}
-void SelectionBox::setNumElements(int _numElements)
-{
-    numElements = _numElements;
-    div = (mRect.x2 - mRect.x)/numElements;
+    for (auto i = icons.begin(); i != icons.end(); i++)
+    {
+        if (*i != NULL)
+        {
+            delete (*i);
+        }
+    }
 }
 /// This only works horizontally atm
 void SelectionBox::click(Vec2i mouse, unsigned char button)
@@ -25,33 +30,88 @@ void SelectionBox::click(Vec2i mouse, unsigned char button)
     currentSelection = newSelection;
     selectionTrigger();
 }
+void SelectionBox::setNumElements(unsigned int numElements)
+{
+    while (icons.size() < numElements)
+    {
+        icons.push_back(NULL);
+    }
+    while (icons.size() > numElements)
+    {
+        delete icons.back();
+        icons.pop_back();
+    }
+}
 
 void SelectionBox::render()
 {
-    glPushMatrix(); /// Setting states
+    glPushMatrix(); /// Want to maintain the original transform
     glLoadIdentity();
-    glColor3f(0,0,0);
-
-    glBegin(GL_LINES);
-    glVertex2i(mRect.x,mRect.y);
-    glVertex2i(mRect.x2,mRect.y);
-
-    glVertex2i(mRect.x2,mRect.y);
-    glVertex2i(mRect.x2,mRect.y2);
-
-    glVertex2i(mRect.x2,mRect.y2);
-    glVertex2i(mRect.x,mRect.y2);
-
-    glVertex2i(mRect.x,mRect.y2);
-    glVertex2i(mRect.x,mRect.y);
-
-    for (int i = 0; i < numElements; i++)
+    Vec2i topLeft(mRect.x,mRect.y);
+    Vec2i bottomRight(mRect.x+div,mRect.y2);
+    for (unsigned int i = 0; i < icons.size(); i++)
     {
+        glColor3f(0,0,0);
+        glBegin(GL_LINES);
         glVertex2i(mRect.x+(i*div),mRect.y);
         glVertex2i(mRect.x+(i*div),mRect.y2);
+        glEnd();
+        if (icons[i] != NULL)
+        {
+            Icon* icon = icons[i];
+            icon->draw(topLeft,bottomRight);
+        }
+        else
+        {
+            glColor3f(1,1,1);
+            glBegin(GL_QUADS);
+            glTexCoord2f(0,0);
+            glVertex2i(mRect.x+(i*div),mRect.y);
+            glTexCoord2f(0,1);
+            glVertex2i(mRect.x+(i*div),mRect.y2);
+            glTexCoord2f(1,1);
+            glVertex2i(mRect.x+((i+1)*div),mRect.y2);
+            glTexCoord2f(1,0);
+            glVertex2i(mRect.x+((i+1)*div),mRect.y);
+            glEnd();
+        }
+        topLeft.x = bottomRight.x;
+        bottomRight.x += div;
     }
-    glEnd();
-
-    glPopMatrix(); /// Reverting defaults
-    glColor3f(1,1,1);
+    if (currentSelection < icons.size())
+    {
+        glColor3f(1,0,0);
+        glBegin(GL_LINE_LOOP);
+        glVertex2i(mRect.x+(currentSelection*div),mRect.y);
+        glVertex2i(mRect.x+(currentSelection*div),mRect.y2);
+        glVertex2i(mRect.x+((currentSelection+1)*div),mRect.y2);
+        glVertex2i(mRect.x+((currentSelection+1)*div),mRect.y);
+        glEnd();
+        glColor3f(1,1,1);
+    }
+    glPopMatrix();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

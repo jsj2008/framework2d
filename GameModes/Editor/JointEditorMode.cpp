@@ -12,7 +12,7 @@ JointEditorMode::JointEditorMode(FreeCamera* camera)
     Rect fullScreen(0,0,10000,10000);
     mInputState->registerEvent(new JointEditor(fullScreen));
     Rect rect(0,400,300,450);
-    SelectionBox* selectionBox = new SelectionBox(rect,1);
+    SelectionBox* selectionBox = new SelectionBox(rect,{NULL});
     mInputState->registerEvent(selectionBox);
 }
 

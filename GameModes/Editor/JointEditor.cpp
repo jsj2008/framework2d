@@ -23,22 +23,53 @@ void JointEditor::click(Vec2i mouse, unsigned char button)
         if (bodyA == NULL)
         {
             bodyA = body;
-            worldPointA = point;
+            localPointA = body->GetLocalPoint(point);
         }
         else
         {
             if (body != bodyA)
             {
-                createJoint(body,point);
+                Vec2f localPointB = body->GetLocalPoint(point);
+                createJoint(body,localPointB);
                 bodyA = NULL;
             }
         }
     }
 }
 
-void JointEditor::createJoint(b2Body* bodyB, Vec2f& worldPointB)
+void JointEditor::createJoint(b2Body* bodyB, Vec2f& localPointB)
 {
     b2DistanceJointDef def;
-    def.Initialize(bodyA,bodyB,worldPointA,worldPointB);
+    def.Initialize(bodyA,bodyB,localPointA,localPointB);
+	def.bodyA = bodyA;
+	def.bodyB = bodyB;
+	def.localAnchorA = localPointA;
+	def.localAnchorB = localPointB;
+	b2Vec2 d = bodyB->GetWorldPoint(localPointB) - bodyA->GetWorldPoint(localPointA);
+	def.length = d.Length();
     g_LevelManager.addJoint(&def);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
