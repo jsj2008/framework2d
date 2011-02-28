@@ -21,9 +21,9 @@ class SelectionBox : public ClickReleaseEvent
         void changeResolution(Vec2i newResolution);
     protected:
         unsigned int currentSelection;
+        std::vector<Icon*> icons;
     private:
         int div;
-        std::vector<Icon*> icons;
         std::vector<FontPrimitive*> fonts;
 };
 

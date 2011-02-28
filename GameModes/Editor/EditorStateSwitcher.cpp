@@ -2,13 +2,13 @@
 #include <GameModes/GameMode.h>
 #include <Game.h>
 
-EditorStateSwitcher::EditorStateSwitcher(const Rect& _Rect, std::initializer_list<const char*> icons, GameMode* _root, GameMode** _states)
-:SelectionBox(_Rect,icons)
+EditorStateSwitcher::EditorStateSwitcher(const Rect& _Rect, std::initializer_list<const char*> _icons, GameMode* _root, GameMode** _states)
+:SelectionBox(_Rect,_icons)
 {
     //ctor
     root = _root;
-    states = new GameMode*[icons.size()]; /// numElements is private but we can intercept it here :)
-    for (unsigned int i = 0; i < icons.size(); i++)
+    states = new GameMode*[_icons.size()];
+    for (unsigned int i = 0; i < _icons.size(); i++)
     {
         states[i] = _states[i];
     }
@@ -17,6 +17,10 @@ EditorStateSwitcher::EditorStateSwitcher(const Rect& _Rect, std::initializer_lis
 EditorStateSwitcher::~EditorStateSwitcher()
 {
     //dtor
+    for (unsigned int i = 0; i < icons.size(); i++)
+    {
+        delete states[i];
+    }
 }
 
 void EditorStateSwitcher::selectionTrigger()

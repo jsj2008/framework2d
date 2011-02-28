@@ -1,0 +1,6 @@
+#ifndef ALLJOINTEDITORS_H_INCLUDED
+#define ALLJOINTEDITORS_H_INCLUDED
+
+#include "DistanceJointEditor.h"
+
+#endif // ALLJOINTEDITORS_H_INCLUDED

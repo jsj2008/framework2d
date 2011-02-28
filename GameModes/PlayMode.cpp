@@ -12,7 +12,7 @@ PlayMode::PlayMode(b2Body* cameraBody)
     mInputState = new InputState;
     Rect selectionBoxRect(0,400,300,450);
     Rect fullScreen(0,0,5000,5000);
-    SelectionBox* selectionBox = new SelectionBox(selectionBoxRect,{"defaultBubble","defaultBubble"});
+    selectionBox = new SelectionBox(selectionBoxRect,{"defaultBubble","defaultBubble"});
     mInputState->registerEvent(new BubbleDrawEvent(fullScreen,selectionBox));
     mInputState->registerEvent(selectionBox);
 }
@@ -20,6 +20,7 @@ PlayMode::PlayMode(b2Body* cameraBody)
 PlayMode::~PlayMode()
 {
     //dtor
+    delete selectionBox;
 }
 
 void PlayMode::setBody(b2Body* cameraBody)

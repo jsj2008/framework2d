@@ -3,20 +3,22 @@
 
 #include <GameModes/GameMode.h>
 #include <Input/Mouse/ClickReleaseEvent.h>
+class EditorStateSwitcher;
+class SelectionBox;
 class b2Body;
 class FreeCamera;
+#define NUM_JOINT_MODES 1
 
-class JointEditor : public GameMode, public ClickReleaseEvent
+class JointEditor : public GameMode
 {
     public:
         JointEditor(FreeCamera* camera, const Rect& _Rect);
         virtual ~JointEditor();
-        void click(Vec2i mouse, unsigned char button);
+        void registerEvent(ClickEvent* event);
     protected:
     private:
-        b2Body* bodyA;
-        Vec2f localPointA;
-        void createJoint(b2Body* bodyB, Vec2f& localPointB);
+        GameMode* modes[NUM_JOINT_MODES];
+        EditorStateSwitcher* stateSwitcher;
 };
 
 #endif // JOINTEDITOR_H

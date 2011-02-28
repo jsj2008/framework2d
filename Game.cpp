@@ -83,17 +83,12 @@ void Game::run()
         g_PhysicsManager.render();
         g_InputManager.render();
         g_LevelManager.tempRender();
+        SDL_Delay(30);
         g_GraphicsManager.endScene();
     }
-    delete mGameModes[ePlayGameMode];
-    delete mGameModes[eEditorGameMode];
-    while (!gameModeStack.empty())
-    {
-        GameMode* mode = gameModeStack.top();
-        gameModeStack.pop();
-        delete mode;
-    }
     g_LevelManager.saveLevel("default");
+    //delete mGameModes[ePlayGameMode];
+    //delete mGameModes[eEditorGameMode];
     g_PhysicsManager.clear();
 }
 

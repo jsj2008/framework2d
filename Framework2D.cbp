@@ -177,6 +177,11 @@
 		<Unit filename="GameModes\Editor\ItemSpawner.h" />
 		<Unit filename="GameModes\Editor\JointEditor.cpp" />
 		<Unit filename="GameModes\Editor\JointEditor.h" />
+		<Unit filename="GameModes\Editor\Joints\AllJointEditors.h" />
+		<Unit filename="GameModes\Editor\Joints\BaseJointEditor.cpp" />
+		<Unit filename="GameModes\Editor\Joints\BaseJointEditor.h" />
+		<Unit filename="GameModes\Editor\Joints\DistanceJointEditor.cpp" />
+		<Unit filename="GameModes\Editor\Joints\DistanceJointEditor.h" />
 		<Unit filename="GameModes\GameMode.cpp" />
 		<Unit filename="GameModes\GameMode.h" />
 		<Unit filename="GameModes\PlayMode.cpp" />
@@ -229,6 +234,8 @@
 		<Unit filename="Input\InputManager.h" />
 		<Unit filename="Input\InputState.cpp" />
 		<Unit filename="Input\InputState.h" />
+		<Unit filename="Input\Mouse\CheckBox.cpp" />
+		<Unit filename="Input\Mouse\CheckBox.h" />
 		<Unit filename="Input\Mouse\ClickDragEvent.cpp" />
 		<Unit filename="Input\Mouse\ClickDragEvent.h" />
 		<Unit filename="Input\Mouse\ClickEvent.cpp" />

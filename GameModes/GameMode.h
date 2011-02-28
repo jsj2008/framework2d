@@ -9,7 +9,7 @@ class GameMode
     public:
         GameMode();
         virtual ~GameMode();
-        void registerEvent(ClickEvent* event);
+        virtual void registerEvent(ClickEvent* event);
         void set();
         InputState* getInputState(){return mInputState;} /// For callback event construction
     protected:

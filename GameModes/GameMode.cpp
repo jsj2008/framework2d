@@ -14,6 +14,7 @@ GameMode::GameMode()
 GameMode::~GameMode()
 {
     //dtor
+    delete mInputState;
 }
 
 void GameMode::registerEvent(ClickEvent* event)

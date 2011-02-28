@@ -1,6 +1,5 @@
 #include "GraphicalContext.h"
 #include <cstring>
-#include <cassert>
 
 GraphicalContext::GraphicalContext(const char* _name)
 {
@@ -18,7 +17,6 @@ GraphicalContext::GraphicalContext(const char* _name)
 GraphicalContext::~GraphicalContext()
 {
     //dtor
-    assert(referenceCount == 0 || name[0] == '\0');
 }
 
 void GraphicalContext::grab()
@@ -33,7 +31,6 @@ void GraphicalContext::grab()
 
 void GraphicalContext::release()
 {
-    assert (referenceCount != 0);
     referenceCount--;
     if (referenceCount == 0)
     {

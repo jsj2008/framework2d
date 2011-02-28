@@ -81,6 +81,8 @@ void Level::addJoint(b2JointDef* def)
             copy = new b2FrictionJointDef(*(b2FrictionJointDef*)def);
             break;
         }
+        case e_unknownJoint:
+        case e_mouseJoint:
         default:
         {
             std::cout << "Unrecognised joint type" << std::endl;
@@ -165,22 +167,39 @@ void Level::loadLevel()
     for (unsigned short i = 0; i < size; i++)
     {
         unsigned short bodyA, bodyB;
-        file.read((const char*)&(bodyA),sizeof(unsigned short));
-        file.read((const char*)&(bodyB),sizeof(unsigned short));
+        file.read((char*)&(bodyA),sizeof(unsigned short));
+        file.read((char*)&(bodyB),sizeof(unsigned short));
         b2JointType type;
-        file.read((const char*)&(type),sizeof(b2JointType));
+        file.read((char*)&(type),sizeof(b2JointType));
         switch (type)
         {
             case e_distanceJoint:
             {
                 Vec2f worldAnchorA;
                 Vec2f worldAnchorB;
-                file.read((const char*)&(worldAnchorA),sizeof(Vec2f));
-                file.read((const char*)&(worldAnchorB),sizeof(Vec2f));
+                file.read((char*)&(worldAnchorA),sizeof(Vec2f));
+                file.read((char*)&(worldAnchorB),sizeof(Vec2f));
                 b2DistanceJointDef def;
                 def.Initialize(readLocations[bodyA],readLocations[bodyB],worldAnchorA, worldAnchorB);
+                file.read((char*)&(def.collideConnected),sizeof(bool));
+                file.read((char*)&(def.frequencyHz),sizeof(float));
+                file.read((char*)&(def.dampingRatio),sizeof(float));
                 addJoint(&def);
                 break;
+            }
+            case e_revoluteJoint:
+            case e_prismaticJoint:
+            case e_pulleyJoint:
+            case e_gearJoint:
+            case e_lineJoint:
+            case e_weldJoint:
+            case e_frictionJoint:
+            case e_unknownJoint:
+            case e_mouseJoint:
+            default:
+            {
+                cout << "Invalid joint to load" << endl;
+                throw -1;
             }
         }
     }
@@ -219,24 +238,37 @@ void Level::saveLevel()
     file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
     {
-        if (i->first->GetType() != e_distanceJoint) continue;
+        b2JointType type = i->first->GetType();
+        if (type != e_distanceJoint) continue;
         auto bodyA = writeLocations.find(i->first->GetBodyA());
         auto bodyB = writeLocations.find(i->first->GetBodyB());
         if (bodyA == writeLocations.end() || bodyB == writeLocations.end()) continue;
         file.write((const char*)&(bodyA->second),sizeof(unsigned short));
         file.write((const char*)&(bodyB->second),sizeof(unsigned short));
-        switch (i->first->GetType())
+        file.write((const char*)&(type),sizeof(b2JointType));
+        switch (type)
         {
             case e_distanceJoint:
             {
-                b2JointType type = e_distanceJoint;
-                file.write((const char*)&(type),sizeof(b2JointType));
                 Vec2f worldAnchorA = i->first->GetAnchorA();
                 Vec2f worldAnchorB = i->first->GetAnchorB();
                 file.write((const char*)&(worldAnchorA),sizeof(Vec2f));
                 file.write((const char*)&(worldAnchorB),sizeof(Vec2f));
+                b2DistanceJointDef* distanceCast = (b2DistanceJointDef*)i->second;
+                file.write((const char*)&(distanceCast->collideConnected),sizeof(bool));
+                file.write((const char*)&(distanceCast->frequencyHz),sizeof(float));
+                file.write((const char*)&(distanceCast->dampingRatio),sizeof(float));
                 break;
             }
+            case e_revoluteJoint:
+            case e_prismaticJoint:
+            case e_pulleyJoint:
+            case e_gearJoint:
+            case e_lineJoint:
+            case e_weldJoint:
+            case e_frictionJoint:
+            case e_unknownJoint:
+            case e_mouseJoint:
             default:
             {
                 cout << "Invalid joint to save" << endl;
@@ -288,6 +320,14 @@ unsigned int getJointDefSize(b2JointType type)
         {
             return sizeof(b2FrictionJointDef);
         }
+        case e_unknownJoint:
+        case e_mouseJoint:
+        default:
+        {
+            cout << "Invalid joint to get size of" << endl;
+            throw -1;
+        }
+
     }
     return 0;
 }

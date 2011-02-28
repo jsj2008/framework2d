@@ -3,6 +3,7 @@
 
 #include "GameMode.h"
 class b2Body;
+class SelectionBox;
 
 class PlayMode : public GameMode
 {
@@ -12,6 +13,7 @@ class PlayMode : public GameMode
         void setBody(b2Body* cameraBody);
     protected:
     private:
+        SelectionBox* selectionBox;
 };
 
 #endif // PLAYMODE_H
