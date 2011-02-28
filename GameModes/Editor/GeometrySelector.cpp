@@ -18,20 +18,25 @@ GeometrySelector::~GeometrySelector()
 
 void GeometrySelector::start(unsigned char button)
 {
-    /*float x = startXPos + g_GraphicsManager.getViewX();
-    float y = startYPos + g_GraphicsManager.getViewY();
-    Vec2f point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());CHECKME */
-    Vec2f point = startPos.ScreenToWorldSpace();
-    b2Body* body = g_PhysicsManager.select(point);
-    if (body != NULL)
+    if (joint != NULL)
     {
-        if (button == 1 && body->GetType() == b2_dynamicBody)
+        mouseMove(startPos);
+        joint = NULL;
+    }
+    else
+    {
+        Vec2f point = startPos.ScreenToWorldSpace();
+        b2Body* body = g_PhysicsManager.select(point);
+        if (body != NULL)
         {
-            joint = g_PhysicsManager.createJoint(body,point);
-        }
-        else
-        {
-            g_LevelManager.removeBody(body);
+            if (button == 1 && body->GetType() == b2_dynamicBody)
+            {
+                joint = g_PhysicsManager.createJoint(body,point);
+            }
+            else
+            {
+                g_LevelManager.removeBody(body);
+            }
         }
     }
 }
@@ -39,9 +44,6 @@ void GeometrySelector::mouseMove(Vec2i mouse)
 {
     if (joint != NULL)
     {
-        /*float x = mouseX + g_GraphicsManager.getViewX();
-        float y = mouseY + g_GraphicsManager.getViewY();
-        Vec2f point(x/g_GraphicsManager.getPixelsPerMeter(),y/g_GraphicsManager.getPixelsPerMeter());CHECKME */
         Vec2f point = mouse.ScreenToWorldSpace();
         joint->SetTarget(point);
         b2Body* body = joint->GetBodyB();

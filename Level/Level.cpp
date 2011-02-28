@@ -132,6 +132,7 @@ unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
 {
     CREATE_FILE_NAME;
+    std::vector<b2Body*> readLocations;
     ifstream file(filename,ios::binary);
     if(!file.is_open())
     {
@@ -147,6 +148,7 @@ void Level::loadLevel()
     {
         b2Body* body = g_FactoryList.useFactory(&geometryDefs[i],FactoryList::eConvexPolygonFactory)->mBody;
         bodyToGeometryDefTable[body] = geometryDefs[i];
+        readLocations.push_back(body);
     }
 
     std::vector<CrateDef> crateDefs;
@@ -157,29 +159,36 @@ void Level::loadLevel()
     {
         b2Body* body = g_FactoryList.useFactory(&crateDefs[i],FactoryList::eCrateFactory)->mBody;
         bodyToCrateDefTable[body] = crateDefs[i];
+        readLocations.push_back(body);
     }
-
     file.read((char*)&size,sizeof(unsigned short));
     for (unsigned short i = 0; i < size; i++)
     {
-        b2DistanceJointDef joint;
-        file.read((char*)&joint,sizeof(b2DistanceJointDef));
+        unsigned short bodyA, bodyB;
+        file.read((const char*)&(bodyA),sizeof(unsigned short));
+        file.read((const char*)&(bodyB),sizeof(unsigned short));
+        b2JointType type;
+        file.read((const char*)&(type),sizeof(b2JointType));
+        switch (type)
         {
-            auto iter = bodyToCrateDefTable.begin();
-            for (unsigned int i = 0; i < joint.bodyA; i++)iter++;
-            joint.bodyA = iter->first;
+            case e_distanceJoint:
+            {
+                Vec2f worldAnchorA;
+                Vec2f worldAnchorB;
+                file.read((const char*)&(worldAnchorA),sizeof(Vec2f));
+                file.read((const char*)&(worldAnchorB),sizeof(Vec2f));
+                b2DistanceJointDef def;
+                def.Initialize(readLocations[bodyA],readLocations[bodyB],worldAnchorA, worldAnchorB);
+                addJoint(&def);
+                break;
+            }
         }
-        {
-            auto iter = bodyToGeometryDefTable.begin();
-            for (unsigned int i = 0; i < joint.bodyB; i++)iter++;
-            joint.bodyB = iter->first;
-        }
-        joint.collideConnected = true;
-        addJoint(&joint);
     }
 }
 void Level::saveLevel()
 {
+    std::unordered_map<b2Body*, unsigned short> writeLocations;
+    unsigned short writeLocation = 0;
     CREATE_FILE_NAME;
     ofstream file;
     file.open(filename,ios::binary);
@@ -193,6 +202,8 @@ void Level::saveLevel()
     for (auto i = bodyToGeometryDefTable.begin(); i != bodyToGeometryDefTable.end(); i++)
     {
         file.write((const char*)&i->second,sizeof(ConvexGeometryDef));
+        writeLocations[i->first] = writeLocation;
+        writeLocation++;
     }
 
     size = bodyToCrateDefTable.size();
@@ -201,39 +212,37 @@ void Level::saveLevel()
     {
         i->second.position = i->first->GetPosition();
         file.write((const char*)&i->second,sizeof(CrateDef));
+        writeLocations[i->first] = writeLocation;
+        writeLocation++;
     }
-
     size = jointToDefTable.size();
     file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
     {
-        b2Body* bodyA = i->second->bodyA;
-        b2Body* bodyB = i->second->bodyB;
-        auto crateIter = bodyToCrateDefTable.find(bodyA);
-        auto geometryIter = bodyToGeometryDefTable.find(bodyB);
-        if (crateIter == bodyToCrateDefTable.end())
+        if (i->first->GetType() != e_distanceJoint) continue;
+        auto bodyA = writeLocations.find(i->first->GetBodyA());
+        auto bodyB = writeLocations.find(i->first->GetBodyB());
+        if (bodyA == writeLocations.end() || bodyB == writeLocations.end()) continue;
+        file.write((const char*)&(bodyA->second),sizeof(unsigned short));
+        file.write((const char*)&(bodyB->second),sizeof(unsigned short));
+        switch (i->first->GetType())
         {
-            crateIter = bodyToCrateDefTable.find(bodyB);
-            geometryIter = bodyToGeometryDefTable.find(bodyA);
+            case e_distanceJoint:
+            {
+                b2JointType type = e_distanceJoint;
+                file.write((const char*)&(type),sizeof(b2JointType));
+                Vec2f worldAnchorA = i->first->GetAnchorA();
+                Vec2f worldAnchorB = i->first->GetAnchorB();
+                file.write((const char*)&(worldAnchorA),sizeof(Vec2f));
+                file.write((const char*)&(worldAnchorB),sizeof(Vec2f));
+                break;
+            }
+            default:
+            {
+                cout << "Invalid joint to save" << endl;
+                throw -1;
+            }
         }
-        if (crateIter == bodyToCrateDefTable.end() || geometryIter == bodyToGeometryDefTable.end())
-        {
-            assert(false);
-        }
-        unsigned int position = 0;
-        for (auto crateFind = bodyToCrateDefTable.begin(); crateFind != crateIter; crateFind++)
-        {
-            position++;
-        }
-        i->second->bodyA = position;
-        position = 0;
-        for (auto geometryFind = bodyToGeometryDefTable.begin(); geometryFind != geometryIter; geometryFind++)
-        {
-            position++;
-        }
-        i->second->bodyB = position;
-        //i->second.
-        file.write((const char*)i->second,sizeof(b2DistanceJointDef));
     }
     bodyToCrateDefTable.clear();
     bodyToGeometryDefTable.clear();
