@@ -128,27 +128,33 @@ void PhysicsManager::render()
 class PhySimpleCallback : public b2QueryCallback
 {
 public:
-    PhySimpleCallback()
+    PhySimpleCallback(Vec2f& _position)
     {
         ret = NULL;
+        position = _position;
     }
     bool ReportFixture(b2Fixture* fixture)
     {
-        ret = fixture->GetBody();
-        if (ret->GetType() != b2_dynamicBody)
+        if (fixture->TestPoint(position))
         {
-            return true; /// Continue the search, we prefer dynamic bodies
+            ret = fixture->GetBody();
+            if (ret->GetType() != b2_dynamicBody)
+            {
+                return true; /// Continue the search, we prefer dynamic bodies
+            }
+            else return false;
         }
-        else return false;
+        else return true;
     }
     b2Body* ret;
+    Vec2f position;
 };
 b2Body* PhysicsManager::select(Vec2f& position)
 {
     b2AABB aabb;
-    PhySimpleCallback callback;
-    aabb.lowerBound = position;
-    aabb.upperBound = Vec2f(position.x+0.001f,position.y+0.001f);
+    PhySimpleCallback callback(position);
+    aabb.lowerBound = Vec2f(position.x-0.0001f,position.y-0.0001f);
+    aabb.upperBound = Vec2f(position.x+0.0001f,position.y+0.0001f);
     mWorld->QueryAABB(&callback,aabb);
     return callback.ret;
 }

@@ -1,6 +1,7 @@
 #ifndef GEOMETRYSELECTOR_H
 #define GEOMETRYSELECTOR_H
 
+#include <unordered_set>
 #include <Input/Mouse/ClickDragEvent.h>
 class b2MouseJoint;
 
@@ -16,6 +17,8 @@ class GeometrySelector : public ClickDragEvent
     protected:
     private:
         b2MouseJoint* joint;
+        std::unordered_set<b2MouseJoint*> activeMouseJoints;
+        void drawMouseJoints();
 };
 
 #endif // GEOMETRYSELECTOR_H

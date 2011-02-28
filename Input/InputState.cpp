@@ -14,7 +14,13 @@ InputState::~InputState()
 {
     //dtor
 }
-
+void InputState::changeResolution(const Vec2i newResolution)
+{
+    for (unsigned int i = 0; i < clickEvents.size(); i++)
+    {
+        clickEvents[i]->changeResolution(newResolution);
+    }
+}
 void InputState::registerEvent(EventListener* event, InputActions action)
 {
     controls[action].event = event;

@@ -4,6 +4,7 @@
 class Camera;
 #include <Graphics/Skins/Skin.h>
 #include <Graphics/GraphicalContentManager.h>
+#include <Graphics/FontRenderer.h>
 #include <Types/Vec2i.h>
 #include <Box2D/Common/b2Settings.h>
 class Icon;
@@ -22,11 +23,13 @@ extern class GraphicsManager
         void setCamera(Camera* _camera){mCamera = _camera;}
         MaterialContext* getMaterial(const char* material){return mContentManager.getMaterial(material);}
         TextureContext* getTexture(const char* texture){return mContentManager.getTexture(texture);}
+        FontPrimitive* renderFont(const char* string, int wrap){return mFontRenderer.renderFont(string,wrap);}
     protected:
     private:
         Camera* mCamera;
         Vec2i resolution;
         GraphicalContentManager mContentManager;
+        FontRenderer mFontRenderer;
 }g_GraphicsManager;
 
 #endif // GRAPHICSMANAGER_H

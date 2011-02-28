@@ -2,6 +2,7 @@
 #include "JointEditor.h"
 #include <Graphics/Camera/FreeCamera.h>
 #include <Input/Mouse/SelectionBox.h>
+#include <Input/Mouse/SliderBar.h>
 
 JointEditorMode::JointEditorMode(FreeCamera* camera)
 {
@@ -14,6 +15,7 @@ JointEditorMode::JointEditorMode(FreeCamera* camera)
     Rect rect(0,400,300,450);
     SelectionBox* selectionBox = new SelectionBox(rect,{NULL});
     mInputState->registerEvent(selectionBox);
+    mInputState->registerEvent(new SliderBar(Vec2i(0,450),300,"Arp"));
 }
 
 JointEditorMode::~JointEditorMode()

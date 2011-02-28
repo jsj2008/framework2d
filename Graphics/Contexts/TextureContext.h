@@ -12,6 +12,7 @@ class TextureContext: public GraphicalContext
         void bind();
     protected:
     private:
+        unsigned int texture;
         void load();
         void unload();
 };

@@ -11,8 +11,8 @@ ItemSpawnerMode::ItemSpawnerMode(FreeCamera* camera)
     mInputState = new InputState;
     camera->registerWithInputState(mInputState);
     mCamera = camera;
-    Rect rect(0,100,500,200);
-    SelectionBox* selectionBox = new SelectionBox(rect,{new Icon("")});
+    Rect rect(0,100,200,200);
+    SelectionBox* selectionBox = new SelectionBox(rect,{new Icon("",Vec2i(50,50))});
     Rect fullScreen(0,0,10000,10000);
     mInputState->registerEvent(new ItemSpawner(fullScreen,selectionBox));
 

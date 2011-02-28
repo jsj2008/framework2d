@@ -9,7 +9,7 @@ class Primitive2D : public Primitive
     public:
         Primitive2D();
         virtual ~Primitive2D();
-        virtual void draw(Vec2i& topLeft, Vec2i& bottomRight)=0;
+        virtual void draw(const Vec2i topLeft)=0;
     protected:
     private:
 };

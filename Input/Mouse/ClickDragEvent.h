@@ -10,8 +10,8 @@ class ClickDragEvent : public ClickEvent
         ClickDragEvent(const Rect& _Rect);
         virtual ~ClickDragEvent();
         virtual void start(unsigned char button)=0;
-        ///void mouseMove(int mouseX, int mouseY); Override these instead
-        ///void buttonUp(int mouseX, int mouseY);
+        ///void mouseMove(Vec2i mouse); Override these instead
+        ///void buttonUp(Vec2i mouse, Vec2i mouse, unsigned char button);
     protected:
         Vec2i startPos;
     private:

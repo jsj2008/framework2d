@@ -14,7 +14,15 @@ InputManager::~InputManager()
 {
     //dtor
 }
-
+void InputManager::changeResolution(const Vec2i newResolution)
+{
+    if (currentState != NULL)
+        currentState->changeResolution(newResolution);
+    for (unsigned int i = 0; i < inputStates.size(); i++)
+    {
+        inputStates[i].state->changeResolution(newResolution);
+    }
+}
 void InputManager::registerEvent(EventListener* event, InputActions action)
 {
     if (currentState != NULL)

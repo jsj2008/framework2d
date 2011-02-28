@@ -19,6 +19,7 @@ class SelectionBox : public ClickReleaseEvent
         //Icon** getIcons(){return icons;}
         void setIcons();
         virtual void selectionTrigger(){} /// Its useful to be able to call this after everything is set up
+        void changeResolution(Vec2i newResolution);
     protected:
         int currentSelection;
     private:

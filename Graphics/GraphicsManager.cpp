@@ -6,9 +6,11 @@
 #include <cassert>
 #include <iostream>
 #include <Graphics/Skins/AllSkins.h>
+#include <Input/InputManager.h>
 GraphicsManager g_GraphicsManager;
 
 GraphicsManager::GraphicsManager()
+:mFontRenderer("FreeSans",16)
 {
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);
@@ -20,7 +22,7 @@ GraphicsManager::GraphicsManager()
 	glClearColor(1,0,0,0);
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
-    glLineWidth(5);
+    glLineWidth(3);
     glPointSize(5);
 
     mCamera = 0;
@@ -69,6 +71,7 @@ void GraphicsManager::resize(Vec2i newResolution)
     glOrtho(0, resolution.x, resolution.y, 0, 0, 1); // Parralel projection (no 3d or depth test)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    g_InputManager.changeResolution(newResolution);
 }
 const Vec2i& GraphicsManager::getView()
 {

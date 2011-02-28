@@ -3,6 +3,7 @@
 
 #include <SDL/SDL_keysym.h>
 #include <vector>
+#include <Types/Vec2i.h>
 
 class EventListener;
 class ClickEvent;
@@ -26,6 +27,7 @@ class InputState
         void registerEvent(EventListener* event, InputActions action);
         void registerEvent(ClickEvent* event);
         void render();
+        void changeResolution(const Vec2i newResolution);
     protected:
     private:
         struct ControlStruct

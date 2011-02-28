@@ -22,12 +22,13 @@ EditorMode::EditorMode()
     modes[4] = g_Game.getGameMode(ePlayGameMode);
 
     Rect rect(0,0,500,100);
+    Vec2i dimensions(500/NUM_MODES,100);
     selectionBox = new EditorStateSwitcher(rect,{
-        new Icon("GeometrySelector"),
-        new Icon("GeometryEditor"),
-        new Icon("ItemSpawner"),
-        new Icon("JointEditor"),
-        new Icon("TestPlay")
+        new Icon("GeometrySelector",dimensions),
+        new Icon("GeometryEditor",dimensions),
+        new Icon("ItemSpawner",dimensions),
+        new Icon("JointEditor",dimensions),
+        new Icon("TestPlay",dimensions)
         },this,modes);
 
     mInputState->registerEvent(selectionBox);

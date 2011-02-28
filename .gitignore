@@ -7,5 +7,6 @@
 *.bat
 *.lvl
 *.mat
+*.dll
 gmon.out
 gprofout.txt

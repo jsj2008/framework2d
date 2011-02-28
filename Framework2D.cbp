@@ -19,6 +19,7 @@
 					<Add option="-lSDL" />
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
+					<Add option="-lSDL_ttf" />
 					<Add library="bin\Debug\libBox2D.a" />
 				</Linker>
 			</Target>
@@ -36,6 +37,7 @@
 					<Add option="-lSDL" />
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
+					<Add option="-lSDL_ttf" />
 					<Add library="bin\Release\libBox2D.a" />
 				</Linker>
 			</Target>
@@ -52,6 +54,7 @@
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
 					<Add library="bin\Debug\libBox2D.a" />
 				</Linker>
 			</Target>
@@ -69,6 +72,7 @@
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
 					<Add library="bin\Release\libBox2D.a" />
 				</Linker>
 			</Target>
@@ -87,6 +91,7 @@
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
 					<Add library="bin\Debug\libBox2D.a" />
 				</Linker>
 			</Target>
@@ -200,6 +205,8 @@
 		<Unit filename="Graphics\Contexts\StaticModelContext.h" />
 		<Unit filename="Graphics\Contexts\TextureContext.cpp" />
 		<Unit filename="Graphics\Contexts\TextureContext.h" />
+		<Unit filename="Graphics\FontRenderer.cpp" />
+		<Unit filename="Graphics\FontRenderer.h" />
 		<Unit filename="Graphics\GLee.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -207,6 +214,8 @@
 		<Unit filename="Graphics\GraphicalContentManager.h" />
 		<Unit filename="Graphics\GraphicsManager.cpp" />
 		<Unit filename="Graphics\GraphicsManager.h" />
+		<Unit filename="Graphics\Primitives\FontPrimitive.cpp" />
+		<Unit filename="Graphics\Primitives\FontPrimitive.h" />
 		<Unit filename="Graphics\Primitives\Icon.cpp" />
 		<Unit filename="Graphics\Primitives\Icon.h" />
 		<Unit filename="Graphics\Primitives\Primitive.cpp" />
@@ -236,6 +245,8 @@
 		<Unit filename="Input\Mouse\ClickReleaseEvent.h" />
 		<Unit filename="Input\Mouse\SelectionBox.cpp" />
 		<Unit filename="Input\Mouse\SelectionBox.h" />
+		<Unit filename="Input\Mouse\SliderBar.cpp" />
+		<Unit filename="Input\Mouse\SliderBar.h" />
 		<Unit filename="Level\Level.cpp" />
 		<Unit filename="Level\Level.h" />
 		<Unit filename="Level\LevelManager.cpp" />

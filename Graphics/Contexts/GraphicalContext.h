@@ -19,7 +19,6 @@ class GraphicalContext
         virtual void load()=0;
         virtual void unload()=0;
         virtual void bind()=0;
-        unsigned int texture;
         unsigned int referenceCount;
         char name[MAX_NAME];
     private:

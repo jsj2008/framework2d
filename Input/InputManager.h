@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <Input/InputState.h>
+#include <Types/Vec2i.h>
 class EventListener;
 
 extern class InputManager
@@ -10,6 +11,7 @@ extern class InputManager
     public:
         InputManager();
         virtual ~InputManager();
+        void changeResolution(const Vec2i newResolution);
         bool processInput();
         void registerEvent(EventListener* event, InputActions action);
         void registerGlobalEvent(EventListener* event, InputActions action); /// These are global controls

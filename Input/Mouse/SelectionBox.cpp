@@ -9,6 +9,12 @@ SelectionBox::SelectionBox(const Rect& _Rect,std::initializer_list<Icon*> _icons
     icons = _icons;
     div = (mRect.x2 - mRect.x)/icons.size();
     currentSelection = icons.size();
+    Vec2i dimensions(div,mRect.y2-mRect.y);
+    for (unsigned int i = 0; i < icons.size(); i++)
+    {
+        if (icons[i] != NULL) // FIXME
+            icons[i]->setDimensions(dimensions);
+    }
 }
 
 SelectionBox::~SelectionBox()
@@ -21,6 +27,11 @@ SelectionBox::~SelectionBox()
             delete (*i);
         }
     }
+}
+void SelectionBox::changeResolution(Vec2i newResolution)
+{
+    mRect.changeResolution(newResolution);
+    div = (mRect.x2 - mRect.x)/icons.size();
 }
 /// This only works horizontally atm
 void SelectionBox::click(Vec2i mouse, unsigned char button)
@@ -48,7 +59,6 @@ void SelectionBox::render()
     glPushMatrix(); /// Want to maintain the original transform
     glLoadIdentity();
     Vec2i topLeft(mRect.x,mRect.y);
-    Vec2i bottomRight(mRect.x+div,mRect.y2);
     for (unsigned int i = 0; i < icons.size(); i++)
     {
         glColor3f(0,0,0);
@@ -59,10 +69,10 @@ void SelectionBox::render()
         if (icons[i] != NULL)
         {
             Icon* icon = icons[i];
-            icon->draw(topLeft,bottomRight);
+            icon->draw(topLeft);
         }
         else
-        {
+        { // Remove this, icons shouldn't be NULL once I'm done FIXME
             glColor3f(1,1,1);
             glBegin(GL_QUADS);
             glTexCoord2f(0,0);
@@ -75,8 +85,7 @@ void SelectionBox::render()
             glVertex2i(mRect.x+((i+1)*div),mRect.y);
             glEnd();
         }
-        topLeft.x = bottomRight.x;
-        bottomRight.x += div;
+        topLeft.x += div;
     }
     if (currentSelection < icons.size())
     {

@@ -5,9 +5,10 @@
 #include <string>
 
 
-Icon::Icon(const char* iconName)
+Icon::Icon(const char* iconName, const Vec2i _dimensions)
 {
     //ctor
+    dimensions = _dimensions;
     std::string filename("Icons/");
     filename.append(iconName);
     materialContext = g_GraphicsManager.getMaterial(filename.c_str());
@@ -19,8 +20,9 @@ Icon::~Icon()
     materialContext->release();
 }
 
-void Icon::draw(Vec2i& topLeft, Vec2i& bottomRight)
+void Icon::draw(const Vec2i topLeft)
 {
+    Vec2i bottomRight = topLeft + dimensions;
     materialContext->bind();
     glColor3f(1,1,1);
     glBegin(GL_QUADS);
