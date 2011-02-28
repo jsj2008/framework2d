@@ -3,12 +3,14 @@
 
 #include <unordered_set>
 #include <Input/Mouse/ClickDragEvent.h>
+#include <GameModes/GameMode.h>
 class b2MouseJoint;
+class FreeCamera;
 
-class GeometrySelector : public ClickDragEvent
+class GeometrySelector : public GameMode, public ClickDragEvent
 {
     public:
-        GeometrySelector(const Rect& _Rect);
+        GeometrySelector(FreeCamera* camera, const Rect& _Rect);
         virtual ~GeometrySelector();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);

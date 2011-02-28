@@ -11,6 +11,7 @@ extern class InputManager
     public:
         InputManager();
         virtual ~InputManager();
+        void cleanup();
         void changeResolution(const Vec2i newResolution);
         bool processInput();
         void registerEvent(EventListener* event, InputActions action);

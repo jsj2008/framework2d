@@ -1,9 +1,9 @@
 #ifndef ALLEDITORMODES_H_INCLUDED
 #define ALLEDITORMODES_H_INCLUDED
 
-#include "GeometryEditorMode.h"
-#include "GeometrySelectorMode.h"
-#include "ItemSpawnerMode.h"
-#include "JointEditorMode.h"
+#include "GeometryEditor.h"
+#include "GeometrySelector.h"
+#include "ItemSpawner.h"
+#include "JointEditor.h"
 
 #endif // ALLEDITORMODES_H_INCLUDED

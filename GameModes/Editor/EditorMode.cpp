@@ -14,22 +14,17 @@ EditorMode::EditorMode()
     mInputState = new InputState;
     FreeCamera* mFreeCamera = new FreeCamera(mInputState);
     mCamera = mFreeCamera;
+    Rect fullscreen(0,0,10000,10000);
 
-    modes[0] = new GeometrySelectorMode(mFreeCamera);
-    modes[1] = new GeometryEditorMode(mFreeCamera);
-    modes[2] = new ItemSpawnerMode(mFreeCamera);
-    modes[3] = new JointEditorMode(mFreeCamera);
+    modes[0] = new GeometrySelector(mFreeCamera,fullscreen);
+    modes[1] = new GeometryEditor(mFreeCamera,fullscreen);
+    modes[2] = new ItemSpawner(mFreeCamera,fullscreen);
+    modes[3] = new JointEditor(mFreeCamera,fullscreen);
     modes[4] = g_Game.getGameMode(ePlayGameMode);
 
     Rect rect(0,0,500,100);
     Vec2i dimensions(500/NUM_MODES,100);
-    selectionBox = new EditorStateSwitcher(rect,{
-        new Icon("GeometrySelector",dimensions),
-        new Icon("GeometryEditor",dimensions),
-        new Icon("ItemSpawner",dimensions),
-        new Icon("JointEditor",dimensions),
-        new Icon("TestPlay",dimensions)
-        },this,modes);
+    selectionBox = new EditorStateSwitcher(rect,{"GeometrySelector","GeometryEditor","ItemSpawner","JointEditor","TestPlay"},this,modes);
 
     mInputState->registerEvent(selectionBox);
     for (unsigned int i = 0; i < NUM_MODES; i++)

@@ -10,7 +10,7 @@
 GraphicsManager g_GraphicsManager;
 
 GraphicsManager::GraphicsManager()
-:mFontRenderer("FreeSans",16)
+:mFontRenderer("FreeSans",12)
 {
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);

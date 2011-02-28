@@ -35,9 +35,9 @@ class GraphicalContentManager
         MaterialContext* addMaterial(MaterialDef& def);
         TextureContext* addTexture(const char* name); /// These two functions check for its previous existance, addMaterial does not
         ShaderContext* addShader(const char* name);
-        std::unordered_map<std::string, MaterialContext> materialMap;
         std::unordered_map<std::string, TextureContext> textureMap;
         std::unordered_map<std::string, ShaderContext> shaderMap;
         std::unordered_map<std::string, StaticModelContext> staticModelMap;
+        std::unordered_map<std::string, MaterialContext> materialMap;
 };
 #endif // GRAPHICALCONTENTMANAGER_H

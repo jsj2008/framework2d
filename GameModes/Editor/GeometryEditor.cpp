@@ -1,12 +1,19 @@
 #include "GeometryEditor.h"
 #include <Graphics/GraphicsManager.h>
 #include <Level/LevelManager.h>
+#include <Input/InputState.h>
+#include <Graphics/Camera/FreeCamera.h>
 #include <GL/gl.h>
 
-GeometryEditor::GeometryEditor(const Rect& _Rect)
+GeometryEditor::GeometryEditor(FreeCamera* camera, const Rect& _Rect)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
+    mInputState = new InputState;
+    camera->registerWithInputState(mInputState);
+    mCamera = camera;
+    Rect fullScreen(0,0,10000,10000);
+    mInputState->registerEvent(this);
 }
 
 GeometryEditor::~GeometryEditor()

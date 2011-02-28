@@ -7,7 +7,7 @@ class GameMode;
 class EditorStateSwitcher : public SelectionBox
 {
     public:
-        EditorStateSwitcher(const Rect& _Rect, std::initializer_list<Icon*> icons, GameMode* _root, GameMode** _states);
+        EditorStateSwitcher(const Rect& _Rect, std::initializer_list<const char*> icons, GameMode* _root, GameMode** _states);
         virtual ~EditorStateSwitcher();
     protected:
     private:

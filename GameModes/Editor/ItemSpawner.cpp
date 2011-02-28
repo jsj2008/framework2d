@@ -1,14 +1,23 @@
 #include "ItemSpawner.h"
 #include <Input/Mouse/SelectionBox.h>
+#include <Graphics/Camera/FreeCamera.h>
 #include <Level/LevelManager.h>
+#include <Input/InputState.h>
 
-ItemSpawner::ItemSpawner(const Rect& _Rect, SelectionBox* _selectionBox)
+ItemSpawner::ItemSpawner(FreeCamera* camera, const Rect& _Rect)
 :ClickReleaseEvent(_Rect),
 crateDefs({CrateDef(4,2,""),CrateDef(1,1,"player")})
 {
     //ctor
-    selectionBox = _selectionBox;
-    selectionBox->setNumElements(3);
+    mInputState = new InputState;
+    camera->registerWithInputState(mInputState);
+    mCamera = camera;
+    Rect rect(0,100,200,200);
+    selectionBox = new SelectionBox(rect,{"GeometrySelector"});
+    Rect fullScreen(0,0,10000,10000);
+    mInputState->registerEvent(this);
+
+    mInputState->registerEvent(selectionBox);
 }
 
 ItemSpawner::~ItemSpawner()
@@ -19,7 +28,7 @@ ItemSpawner::~ItemSpawner()
 void ItemSpawner::click(Vec2i mouse, unsigned char button)
 {
     int which = selectionBox->getCurrentSelection();
-    if (which == selectionBox->getNumElements()-1)
+    if (which == selectionBox->getNumElements())
     {
         addElement();
     }
@@ -35,7 +44,6 @@ using namespace std;
 /// Should replace this with a graphical editor at some point FIXME
 void ItemSpawner::addElement()
 {
-    selectionBox->setNumElements(selectionBox->getNumElements()+1);
     CrateDef def;
     cout << "Box width?" << endl;
     cin >> def.width;

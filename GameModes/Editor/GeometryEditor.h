@@ -4,11 +4,13 @@
 #include <Input/Mouse/ClickReleaseEvent.h>
 #include <Entities/EntityFactory.h>
 #include <Factory/ConvexGeometryDef.h>
+#include <GameModes/GameMode.h>
+class FreeCamera;
 
-class GeometryEditor : public ClickReleaseEvent
+class GeometryEditor : public GameMode, public ClickReleaseEvent
 {
     public:
-        GeometryEditor(const Rect& _Rect);
+        GeometryEditor(FreeCamera* camera, const Rect& _Rect);
         virtual ~GeometryEditor();
         void click(Vec2i mouse, unsigned char button);
         void render();

@@ -33,6 +33,7 @@ void GraphicalContext::grab()
 
 void GraphicalContext::release()
 {
+    assert (referenceCount != 0);
     referenceCount--;
     if (referenceCount == 0)
     {

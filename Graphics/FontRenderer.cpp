@@ -33,6 +33,10 @@ int nextpoweroftwo(int x)
 unsigned int surfaceToTexture(SDL_Surface* surface);
 FontPrimitive* FontRenderer::renderFont(const char* string, int wrap)
 {
+    if (string[0] == '\0')
+    {
+        return NULL;
+    }
     auto iter = fontMap.find(string);
     if (iter != fontMap.end())
     {

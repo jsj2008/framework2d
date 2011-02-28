@@ -1,12 +1,24 @@
 #include "JointEditor.h"
+#include <Graphics/Camera/FreeCamera.h>
+#include <Input/Mouse/SelectionBox.h>
+#include <Input/Mouse/SliderBar.h>
 #include <Physics/PhysicsManager.h>
 #include <Level/LevelManager.h>
 
-JointEditor::JointEditor(const Rect& _Rect)
+JointEditor::JointEditor(FreeCamera* camera, const Rect& _Rect)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
     bodyA = NULL;
+    mCamera = camera;
+    mInputState = new InputState;
+    camera->registerWithInputState(mInputState);
+    Rect fullScreen(0,0,10000,10000);
+    mInputState->registerEvent(this);
+    Rect rect(0,400,300,450);
+    SelectionBox* selectionBox = new SelectionBox(rect,{"Distance joint"});
+    mInputState->registerEvent(selectionBox);
+    mInputState->registerEvent(new SliderBar(Vec2i(0,450),300,"Arp"));
 }
 
 JointEditor::~JointEditor()
@@ -49,27 +61,3 @@ void JointEditor::createJoint(b2Body* bodyB, Vec2f& localPointB)
 	def.length = d.Length();
     g_LevelManager.addJoint(&def);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

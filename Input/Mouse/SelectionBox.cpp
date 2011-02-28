@@ -1,30 +1,35 @@
 #include "SelectionBox.h"
 #include <GL/gl.h>
 #include <Graphics/Primitives/Icon.h>
+#include <Graphics/Primitives/FontPrimitive.h>
+#include <Graphics/GraphicsManager.h>
 
-SelectionBox::SelectionBox(const Rect& _Rect,std::initializer_list<Icon*> _icons)
+SelectionBox::SelectionBox(const Rect& _Rect,std::initializer_list<const char*> _icons)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
-    icons = _icons;
+    for (auto i = _icons.begin(); i != _icons.end(); i++)
+    {
+        icons.push_back(new Icon(*i));
+        fonts.push_back(g_GraphicsManager.renderFont(*i,-1));
+    }
     div = (mRect.x2 - mRect.x)/icons.size();
     currentSelection = icons.size();
     Vec2i dimensions(div,mRect.y2-mRect.y);
     for (unsigned int i = 0; i < icons.size(); i++)
     {
-        if (icons[i] != NULL) // FIXME
-            icons[i]->setDimensions(dimensions);
+        icons[i]->setDimensions(dimensions);
     }
 }
 
 SelectionBox::~SelectionBox()
 {
     //dtor
-    for (auto i = icons.begin(); i != icons.end(); i++)
+    for (unsigned int i = 0; i < icons.size(); i++)
     {
-        if (*i != NULL)
+        if (icons[i] != NULL)
         {
-            delete (*i);
+            delete icons[i];
         }
     }
 }
@@ -41,25 +46,13 @@ void SelectionBox::click(Vec2i mouse, unsigned char button)
     currentSelection = newSelection;
     selectionTrigger();
 }
-void SelectionBox::setNumElements(unsigned int numElements)
-{
-    while (icons.size() < numElements)
-    {
-        icons.push_back(NULL);
-    }
-    while (icons.size() > numElements)
-    {
-        delete icons.back();
-        icons.pop_back();
-    }
-}
 
 void SelectionBox::render()
 {
     glPushMatrix(); /// Want to maintain the original transform
     glLoadIdentity();
     Vec2i topLeft(mRect.x,mRect.y);
-    for (unsigned int i = 0; i < icons.size(); i++)
+    for (unsigned int i = 0; i < fonts.size(); i++)
     {
         glColor3f(0,0,0);
         glBegin(GL_LINES);
@@ -67,23 +60,11 @@ void SelectionBox::render()
         glVertex2i(mRect.x+(i*div),mRect.y2);
         glEnd();
         if (icons[i] != NULL)
+            icons[i]->draw(topLeft);
+        if (fonts[i] != NULL)
         {
-            Icon* icon = icons[i];
-            icon->draw(topLeft);
-        }
-        else
-        { // Remove this, icons shouldn't be NULL once I'm done FIXME
-            glColor3f(1,1,1);
-            glBegin(GL_QUADS);
-            glTexCoord2f(0,0);
-            glVertex2i(mRect.x+(i*div),mRect.y);
-            glTexCoord2f(0,1);
-            glVertex2i(mRect.x+(i*div),mRect.y2);
-            glTexCoord2f(1,1);
-            glVertex2i(mRect.x+((i+1)*div),mRect.y2);
-            glTexCoord2f(1,0);
-            glVertex2i(mRect.x+((i+1)*div),mRect.y);
-            glEnd();
+            fonts[i]->draw(topLeft);
+            glColor3f(0,0,0);
         }
         topLeft.x += div;
     }
@@ -99,6 +80,7 @@ void SelectionBox::render()
         glColor3f(1,1,1);
     }
     glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D,0);
 }
 
 

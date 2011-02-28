@@ -1,13 +1,15 @@
 #ifndef JOINTEDITOR_H
 #define JOINTEDITOR_H
 
+#include <GameModes/GameMode.h>
 #include <Input/Mouse/ClickReleaseEvent.h>
 class b2Body;
+class FreeCamera;
 
-class JointEditor : public ClickReleaseEvent
+class JointEditor : public GameMode, public ClickReleaseEvent
 {
     public:
-        JointEditor(const Rect& _Rect);
+        JointEditor(FreeCamera* camera, const Rect& _Rect);
         virtual ~JointEditor();
         void click(Vec2i mouse, unsigned char button);
     protected:

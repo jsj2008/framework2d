@@ -71,6 +71,7 @@ GraphicalContentManager::GraphicalContentManager()
 GraphicalContentManager::~GraphicalContentManager()
 {
     //dtor
+    materialMap.clear();
 }
 MaterialContext* GraphicalContentManager::getMaterial(const char* materialName)
 {

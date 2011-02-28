@@ -2,7 +2,7 @@
 #include <GameModes/GameMode.h>
 #include <Game.h>
 
-EditorStateSwitcher::EditorStateSwitcher(const Rect& _Rect, std::initializer_list<Icon*> icons, GameMode* _root, GameMode** _states)
+EditorStateSwitcher::EditorStateSwitcher(const Rect& _Rect, std::initializer_list<const char*> icons, GameMode* _root, GameMode** _states)
 :SelectionBox(_Rect,icons)
 {
     //ctor
