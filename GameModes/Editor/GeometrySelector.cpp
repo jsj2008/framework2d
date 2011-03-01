@@ -10,7 +10,7 @@ GeometrySelector::GeometrySelector(FreeCamera* camera, const Rect& _Rect)
 :ClickDragEvent(_Rect)
 {
     //ctor
-    joint = NULL;
+    mouseJoint = NULL;
     mInputState = new InputState;
     camera->registerWithInputState(mInputState);
     mCamera = camera;
@@ -25,11 +25,11 @@ GeometrySelector::~GeometrySelector()
 
 void GeometrySelector::start(unsigned char button)
 {
-    if (joint != NULL)
+    if (mouseJoint != NULL)
     {
         mouseMove(startPos);
-        activeMouseJoints.insert(joint);
-        joint = NULL;
+        activeMouseJoints.insert(mouseJoint);
+        mouseJoint = NULL;
     }
     else
     {
@@ -39,9 +39,9 @@ void GeometrySelector::start(unsigned char button)
         {
             if (button == 1)
             {
-                joint = g_PhysicsManager.createJoint(body,point);
+                mouseJoint = g_PhysicsManager.createJoint(body,point);
             }
-            else
+            else if (button == 3)
             {
                 bool mouseJointRemoved = false;
                 for (b2JointEdge* edge = body->GetJointList(); edge != NULL;)
@@ -66,20 +66,20 @@ void GeometrySelector::start(unsigned char button)
 }
 void GeometrySelector::mouseMove(Vec2i mouse)
 {
-    if (joint != NULL)
+    if (mouseJoint != NULL)
     {
         Vec2f point = mouse.ScreenToWorldSpace();
-        joint->SetTarget(point);
-        b2Body* body = joint->GetBodyB();
+        mouseJoint->SetTarget(point);
+        b2Body* body = mouseJoint->GetBodyB();
         Vec2f position = body->GetWorldCenter();
     }
 }
 void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
 {
-    if (joint != NULL)
+    if (mouseJoint != NULL)
     {
-        g_PhysicsManager.deleteJoint(joint);
-        joint = NULL;
+        g_PhysicsManager.deleteJoint(mouseJoint);
+        mouseJoint = NULL;
     }
 }
 #include <GL/gl.h>
@@ -103,11 +103,11 @@ void GeometrySelector::drawMouseJoints()
         position = (*i)->GetAnchorB();
         glVertex2f(position.x,position.y);
     }
-    if (joint != NULL)
+    if (mouseJoint != NULL)
     {
-        Vec2f position = joint->GetAnchorA();
+        Vec2f position = mouseJoint->GetAnchorA();
         glVertex2f(position.x,position.y);
-        position = joint->GetAnchorB();
+        position = mouseJoint->GetAnchorB();
         glVertex2f(position.x,position.y);
     }
 }

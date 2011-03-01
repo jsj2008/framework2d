@@ -20,6 +20,7 @@ CheckBox::~CheckBox()
 void CheckBox::click(Vec2i mouse, unsigned char button)
 {
     checked = !checked;
+    flick();
 }
 
 void CheckBox::render()

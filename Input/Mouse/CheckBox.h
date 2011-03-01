@@ -12,6 +12,7 @@ class CheckBox : public ClickReleaseEvent
         void click(Vec2i mouse, unsigned char button);
         void render();
         bool getChecked(){return checked;}
+        virtual void flick(){}
     protected:
     private:
         FontPrimitive* text;

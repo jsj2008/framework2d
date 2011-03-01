@@ -30,7 +30,7 @@ void ItemSpawner::click(Vec2i mouse, unsigned char button)
     int which = selectionBox->getCurrentSelection();
     if (which == selectionBox->getNumElements())
     {
-        addElement();
+        //addElement();
     }
     else
     {

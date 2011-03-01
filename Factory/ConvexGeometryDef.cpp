@@ -7,6 +7,10 @@ ConvexGeometryDef::ConvexGeometryDef()
 void ConvexGeometryDef::addPoint(const Vec2f& p)
 {
     assert(numVertices != b2_maxPolygonVertices);
+    if (!((vertices[numVertices-1]-p).LengthSquared() > b2_epsilon * b2_epsilon))
+    {
+        return; /// Discard polygon
+    }
     vertices[numVertices] = p;
     numVertices++;
 }

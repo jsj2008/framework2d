@@ -83,7 +83,7 @@ void Game::run()
         g_PhysicsManager.render();
         g_InputManager.render();
         g_LevelManager.tempRender();
-        SDL_Delay(30);
+        //SDL_Delay(30);
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");

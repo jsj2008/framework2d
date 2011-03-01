@@ -48,12 +48,14 @@ void FreeCamera::trigger(InputActions action)
     {
         case ePlus:
         {
-            scale *= 1.1f;
+            if (scale < 60.0f)
+                scale *= 1.1f;
             return;
         }
         case eMinus:
         {
-            scale /= 1.1f;
+            if (scale > 4.0f)
+                scale /= 1.1f;
             return;
         }
         case eUp:

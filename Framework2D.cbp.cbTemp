@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Framework2D" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-lSDL_ttf" />
+					<Add library="bin\Debug\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option external_deps="bin\Release\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-lSDL_ttf" />
+					<Add library="bin\Release\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Debug win32">
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
+					<Add library="bin\Debug\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Release win32">
+				<Option output="bin\Release\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option external_deps="bin\Release\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
+					<Add library="bin\Release\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Profile win32">
+				<Option output="bin\Debug\Framework2D" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option external_deps="bin\Debug\libBox2D.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add option="-lSDL" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add option="-lSDL_ttf" />
+					<Add library="bin\Debug\libBox2D.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Winit-self" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wundef" />
+			<Add option="-Winline" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-Wswitch-enum" />
+			<Add option="-std=c++0x" />
+			<Add option="-Wall" />
+			<Add option="-fpermissive" />
+			<Add directory="." />
+			<Add directory="E:\Users\Alasdair\Documents\include" />
+		</Compiler>
+		<Linker>
+			<Add directory="E:\Users\Alasdair\Documents\lib" />
+		</Linker>
+		<Unit filename="AI\AIManager.cpp" />
+		<Unit filename="AI\AIManager.h" />
+		<Unit filename="AI\AllBrains.h" />
+		<Unit filename="AI\Brain.cpp" />
+		<Unit filename="AI\Brain.h" />
+		<Unit filename="AI\BrainFactory.cpp" />
+		<Unit filename="AI\BrainFactory.h" />
+		<Unit filename="AI\PlayerInputBrain.cpp" />
+		<Unit filename="AI\PlayerInputBrain.h" />
+		<Unit filename="Entities\AIEntity.cpp" />
+		<Unit filename="Entities\AIEntity.h" />
+		<Unit filename="Entities\AllEntities.h" />
+		<Unit filename="Entities\Bubble.cpp" />
+		<Unit filename="Entities\Bubble.h" />
+		<Unit filename="Entities\Bubbles\AllBubbles.h" />
+		<Unit filename="Entities\Bubbles\SuctionBubble.cpp" />
+		<Unit filename="Entities\Bubbles\SuctionBubble.h" />
+		<Unit filename="Entities\Bubbles\UpwardsGravityBubble.cpp" />
+		<Unit filename="Entities\Bubbles\UpwardsGravityBubble.h" />
+		<Unit filename="Entities\Crate.cpp" />
+		<Unit filename="Entities\Crate.h" />
+		<Unit filename="Entities\Entity.cpp" />
+		<Unit filename="Entities\Entity.h" />
+		<Unit filename="Entities\EntityFactory.cpp" />
+		<Unit filename="Entities\EntityFactory.h" />
+		<Unit filename="Entities\StaticGeometry.cpp" />
+		<Unit filename="Entities\StaticGeometry.h" />
+		<Unit filename="Factory\AllFactories.h" />
+		<Unit filename="Factory\BubbleDef.cpp" />
+		<Unit filename="Factory\BubbleDef.h" />
+		<Unit filename="Factory\BubbleFactory.cpp" />
+		<Unit filename="Factory\BubbleFactory.h" />
+		<Unit filename="Factory\ConvexGeometryDef.cpp" />
+		<Unit filename="Factory\ConvexGeometryDef.h" />
+		<Unit filename="Factory\ConvexGeometryFactory.cpp" />
+		<Unit filename="Factory\ConvexGeometryFactory.h" />
+		<Unit filename="Factory\CrateDef.cpp" />
+		<Unit filename="Factory\CrateDef.h" />
+		<Unit filename="Factory\CrateFactory.cpp" />
+		<Unit filename="Factory\CrateFactory.h" />
+		<Unit filename="Factory\Factory.cpp" />
+		<Unit filename="Factory\Factory.h" />
+		<Unit filename="Factory\FactoryDef.cpp" />
+		<Unit filename="Factory\FactoryDef.h" />
+		<Unit filename="Factory\FactoryList.cpp" />
+		<Unit filename="Factory\FactoryList.h" />
+		<Unit filename="Factory\PlayerFactory.cpp" />
+		<Unit filename="Factory\PlayerFactory.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="GameModes\BubbleDrawEvent.cpp" />
+		<Unit filename="GameModes\BubbleDrawEvent.h" />
+		<Unit filename="GameModes\Editor\AllEditorModes.h" />
+		<Unit filename="GameModes\Editor\EditorMode.cpp" />
+		<Unit filename="GameModes\Editor\EditorMode.h" />
+		<Unit filename="GameModes\Editor\EditorStateSwitcher.cpp" />
+		<Unit filename="GameModes\Editor\EditorStateSwitcher.h" />
+		<Unit filename="GameModes\Editor\GeometryEditor.cpp" />
+		<Unit filename="GameModes\Editor\GeometryEditor.h" />
+		<Unit filename="GameModes\Editor\GeometrySelector.cpp" />
+		<Unit filename="GameModes\Editor\GeometrySelector.h" />
+		<Unit filename="GameModes\Editor\ItemSpawner.cpp" />
+		<Unit filename="GameModes\Editor\ItemSpawner.h" />
+		<Unit filename="GameModes\Editor\JointEditor.cpp" />
+		<Unit filename="GameModes\Editor\JointEditor.h" />
+		<Unit filename="GameModes\Editor\Joints\AllJointEditors.h" />
+		<Unit filename="GameModes\Editor\Joints\BaseJointEditor.cpp" />
+		<Unit filename="GameModes\Editor\Joints\BaseJointEditor.h" />
+		<Unit filename="GameModes\Editor\Joints\DistanceJointEditor.cpp" />
+		<Unit filename="GameModes\Editor\Joints\DistanceJointEditor.h" />
+		<Unit filename="GameModes\GameMode.cpp" />
+		<Unit filename="GameModes\GameMode.h" />
+		<Unit filename="GameModes\PlayMode.cpp" />
+		<Unit filename="GameModes\PlayMode.h" />
+		<Unit filename="Graphics\Camera\Camera.cpp" />
+		<Unit filename="Graphics\Camera\Camera.h" />
+		<Unit filename="Graphics\Camera\FreeCamera.cpp" />
+		<Unit filename="Graphics\Camera\FreeCamera.h" />
+		<Unit filename="Graphics\Camera\PhysicsCamera.cpp" />
+		<Unit filename="Graphics\Camera\PhysicsCamera.h" />
+		<Unit filename="Graphics\Contexts\GraphicalContext.cpp" />
+		<Unit filename="Graphics\Contexts\GraphicalContext.h" />
+		<Unit filename="Graphics\Contexts\MaterialContext.cpp" />
+		<Unit filename="Graphics\Contexts\MaterialContext.h" />
+		<Unit filename="Graphics\Contexts\ShaderContext.cpp" />
+		<Unit filename="Graphics\Contexts\ShaderContext.h" />
+		<Unit filename="Graphics\Contexts\StaticModelContext.cpp" />
+		<Unit filename="Graphics\Contexts\StaticModelContext.h" />
+		<Unit filename="Graphics\Contexts\TextureContext.cpp" />
+		<Unit filename="Graphics\Contexts\TextureContext.h" />
+		<Unit filename="Graphics\FontRenderer.cpp" />
+		<Unit filename="Graphics\FontRenderer.h" />
+		<Unit filename="Graphics\GLee.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Graphics\GraphicalContentManager.cpp" />
+		<Unit filename="Graphics\GraphicalContentManager.h" />
+		<Unit filename="Graphics\GraphicsManager.cpp" />
+		<Unit filename="Graphics\GraphicsManager.h" />
+		<Unit filename="Graphics\Primitives\FontPrimitive.cpp" />
+		<Unit filename="Graphics\Primitives\FontPrimitive.h" />
+		<Unit filename="Graphics\Primitives\Icon.cpp" />
+		<Unit filename="Graphics\Primitives\Icon.h" />
+		<Unit filename="Graphics\Primitives\Primitive.cpp" />
+		<Unit filename="Graphics\Primitives\Primitive.h" />
+		<Unit filename="Graphics\Primitives\Primitive2D.cpp" />
+		<Unit filename="Graphics\Primitives\Primitive2D.h" />
+		<Unit filename="Graphics\Skins\AllSkins.h" />
+		<Unit filename="Graphics\Skins\BubbleSkin.cpp" />
+		<Unit filename="Graphics\Skins\BubbleSkin.h" />
+		<Unit filename="Graphics\Skins\ConvexPolygonSkin.cpp" />
+		<Unit filename="Graphics\Skins\ConvexPolygonSkin.h" />
+		<Unit filename="Graphics\Skins\Skin.cpp" />
+		<Unit filename="Graphics\Skins\Skin.h" />
+		<Unit filename="Graphics\Skins\StaticSkin.cpp" />
+		<Unit filename="Graphics\Skins\StaticSkin.h" />
+		<Unit filename="Input\EventListener.cpp" />
+		<Unit filename="Input\EventListener.h" />
+		<Unit filename="Input\InputManager.cpp" />
+		<Unit filename="Input\InputManager.h" />
+		<Unit filename="Input\InputState.cpp" />
+		<Unit filename="Input\InputState.h" />
+		<Unit filename="Input\Mouse\CheckBox.cpp" />
+		<Unit filename="Input\Mouse\CheckBox.h" />
+		<Unit filename="Input\Mouse\ClickDragEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickDragEvent.h" />
+		<Unit filename="Input\Mouse\ClickEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickEvent.h" />
+		<Unit filename="Input\Mouse\ClickReleaseEvent.cpp" />
+		<Unit filename="Input\Mouse\ClickReleaseEvent.h" />
+		<Unit filename="Input\Mouse\SelectionBox.cpp" />
+		<Unit filename="Input\Mouse\SelectionBox.h" />
+		<Unit filename="Input\Mouse\SliderBar.cpp" />
+		<Unit filename="Input\Mouse\SliderBar.h" />
+		<Unit filename="Level\Level.cpp" />
+		<Unit filename="Level\Level.h" />
+		<Unit filename="Level\LevelManager.cpp" />
+		<Unit filename="Level\LevelManager.h" />
+		<Unit filename="Physics\PhysicsManager.cpp" />
+		<Unit filename="Physics\PhysicsManager.h" />
+		<Unit filename="Physics\RenderCallback.cpp" />
+		<Unit filename="Physics\RenderCallback.h" />
+		<Unit filename="Timer.cpp" />
+		<Unit filename="Timer.h" />
+		<Unit filename="Types\Doubles.h" />
+		<Unit filename="Types\FastVector.h" />
+		<Unit filename="Types\List.h" />
+		<Unit filename="Types\Mat3x3f.cpp" />
+		<Unit filename="Types\Mat3x3f.h" />
+		<Unit filename="Types\Mat4x4f.cpp" />
+		<Unit filename="Types\Mat4x4f.h" />
+		<Unit filename="Types\MyQueue.h" />
+		<Unit filename="Types\MyStack.h" />
+		<Unit filename="Types\MyVector.h" />
+		<Unit filename="Types\Vec2f.cpp" />
+		<Unit filename="Types\Vec2f.h" />
+		<Unit filename="Types\Vec2i.cpp" />
+		<Unit filename="Types\Vec2i.h" />
+		<Unit filename="Types\Vec3f.cpp" />
+		<Unit filename="Types\Vec3f.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
