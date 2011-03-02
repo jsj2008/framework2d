@@ -135,8 +135,6 @@
 		<Unit filename="Entities\Crate.h" />
 		<Unit filename="Entities\Entity.cpp" />
 		<Unit filename="Entities\Entity.h" />
-		<Unit filename="Entities\EntityFactory.cpp" />
-		<Unit filename="Entities\EntityFactory.h" />
 		<Unit filename="Entities\StaticGeometry.cpp" />
 		<Unit filename="Entities\StaticGeometry.h" />
 		<Unit filename="Factory\AllFactories.h" />
@@ -246,10 +244,14 @@
 		<Unit filename="Input\Mouse\SelectionBox.h" />
 		<Unit filename="Input\Mouse\SliderBar.cpp" />
 		<Unit filename="Input\Mouse\SliderBar.h" />
+		<Unit filename="Input\Mouse\TextBox.cpp" />
+		<Unit filename="Input\Mouse\TextBox.h" />
 		<Unit filename="Level\Level.cpp" />
 		<Unit filename="Level\Level.h" />
 		<Unit filename="Level\LevelManager.cpp" />
 		<Unit filename="Level\LevelManager.h" />
+		<Unit filename="Physics\ContactListener.cpp" />
+		<Unit filename="Physics\ContactListener.h" />
 		<Unit filename="Physics\PhysicsManager.cpp" />
 		<Unit filename="Physics\PhysicsManager.h" />
 		<Unit filename="Physics\RenderCallback.cpp" />

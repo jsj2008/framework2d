@@ -4,6 +4,7 @@
 FactoryDef::FactoryDef()
 {
     //ctor
+    materialName[0] = '\0';
 }
 
 void FactoryDef::setMaterial(const char* _materialName)

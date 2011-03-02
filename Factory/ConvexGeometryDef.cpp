@@ -3,6 +3,7 @@
 ConvexGeometryDef::ConvexGeometryDef()
 {
     //ctor
+    numVertices = 0;
 }
 void ConvexGeometryDef::addPoint(const Vec2f& p)
 {

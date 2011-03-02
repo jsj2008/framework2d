@@ -37,25 +37,21 @@ FontPrimitive* FontRenderer::renderFont(const char* string, int wrap)
     {
         return NULL;
     }
-    auto iter = fontMap.find(string);
+    /*auto iter = fontMap.find(string);
     if (iter != fontMap.end())
     {
         return iter->second;
     }
-    else
+    else*/
     {
-        SDL_Colour colour = {128,0,0};
+        SDL_Colour colour = {0,255,0,1};
         SDL_Surface* initial = TTF_RenderText_Blended(font,string,colour);
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, initial->w, initial->h, 32,
-                0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-        SDL_BlitSurface(initial, 0, surface, 0);
-        unsigned int texture = surfaceToTexture(surface);
+        unsigned int texture = surfaceToTexture(initial);
 
         FontPrimitive* primitive = new FontPrimitive(string,texture,Vec2i(initial->w,initial->h));
-        fontMap[primitive->getString()] = primitive;
+        //fontMap[primitive->getString()] = primitive;
 
         SDL_FreeSurface(initial);
-        SDL_FreeSurface(surface);
         return primitive;
     }
 }

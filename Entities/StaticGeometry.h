@@ -8,11 +8,11 @@ class StaticGeometry : public Entity
 {
     public:
         StaticGeometry();
-        virtual ~StaticGeometry();
         void update();
         EntityType getType(){return eStaticGeometryEntityType;}
     protected:
     private:
+        virtual ~StaticGeometry();
 };
 
 #endif // STATICGEOMETRY_H

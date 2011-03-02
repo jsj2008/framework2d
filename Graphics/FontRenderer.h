@@ -14,7 +14,7 @@ class FontRenderer
         FontPrimitive* renderFont(const char* string, int wrap);
     protected:
     private:
-        std::unordered_map<std::string,FontPrimitive*> fontMap;
+        //std::unordered_map<std::string,FontPrimitive*> fontMap;
         TTF_Font* font;
 };
 

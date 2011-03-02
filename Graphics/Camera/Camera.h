@@ -10,9 +10,11 @@ class Camera
         void updateView(Vec2i resolution);
         const Vec2i& getView(){return view;}
         float getPixelsPerMeter(){return scale;}
+        const Vec2f& getTranslation(){return translation;}
     protected:
         virtual void updateTransform(Vec2i resolution)=0;
-        float xTrans, yTrans, scale;
+        Vec2f translation;
+        float scale;
         Vec2i view;
     private:
 };

@@ -35,7 +35,11 @@ void BaseJointEditor::click(Vec2i mouse, unsigned char button)
         }
         else
         {
-            if (body != bodyA)
+            if (body == bodyA)
+            {
+                localPointA = body->GetLocalPoint(point);
+            }
+            else
             {
                 Vec2f localPointB = body->GetLocalPoint(point);
                 createJoint(body,localPointB);

@@ -1,13 +1,14 @@
 #include "InputState.h"
-#include <SDL/SDL_events.h>
 #include <Input/EventListener.h>
-#include <Input/Mouse/ClickEvent.h>
+#include <Input/Mouse/TextBox.h>
 #include <Graphics/GraphicsManager.h>
+
 InputState::InputState()
 {
     //ctor
     controls = new ControlStruct[eInputActionsMax]{'w','a','s','d',SDLK_KP_PLUS,SDLK_KP_MINUS};
     activeEvent = NULL;
+    textBox = NULL;
 }
 
 InputState::~InputState()
@@ -29,6 +30,10 @@ void InputState::registerEvent(ClickEvent* event)
 {
     clickEvents.push_back(event);
 }
+void InputState::activeTextBox(TextBox* _textBox)
+{
+    textBox = _textBox;
+}
 bool InputState::processInput()
 {
     controls[eLeft].key = (SDLKey)'a'; /// wtf? no idea why this is neccessary
@@ -39,9 +44,13 @@ bool InputState::processInput()
     {
         switch (event.type)
         {
-            /*case SDL_KEYDOWN:
+            case SDL_KEYDOWN:
             {
-                for (int i = 0; i < eInputActionsMax; i++)
+                if (textBox != NULL)
+                {
+                    textBox->inputCharacter(event.key.keysym.sym);
+                }
+                /*for (int i = 0; i < eInputActionsMax; i++)
                 {
                     if (controls[i].key == event.key.keysym.sym)
                     {
@@ -50,12 +59,13 @@ bool InputState::processInput()
                             controls[i].event->trigger(InputActions(i));
                         }
                     }
-                }
+                }*/
                 break;
-            }*/
+            }
             case SDL_VIDEORESIZE:
             {
                 g_GraphicsManager.resize(Vec2i(event.resize.w,event.resize.h));
+                g_InputManager.changeResolution(Vec2i(event.resize.w,event.resize.h));
                 break;
             }
             case SDL_MOUSEBUTTONDOWN:
@@ -103,6 +113,7 @@ bool InputState::processInput()
             }
         }
     }
+    if (textBox == NULL)
     for (int i = 0; i < eInputActionsMax; i++)
     {
         if (keys[controls[i].key])

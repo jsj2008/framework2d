@@ -12,12 +12,14 @@ FontPrimitive::FontPrimitive(const char* name, unsigned int _texture, const Vec2
 FontPrimitive::~FontPrimitive()
 {
     //dtor
+    glDeleteTextures(1,&texture);
 }
 
 void FontPrimitive::draw(const Vec2i topLeft)
 {
     Vec2i bottomRight = topLeft + dimensions;
     glBindTexture(GL_TEXTURE_2D,texture);
+    glColor3f(1,1,1);
     glBegin(GL_QUADS);
     glTexCoord2f(0,0);
     glVertex2i(topLeft.x,topLeft.y);

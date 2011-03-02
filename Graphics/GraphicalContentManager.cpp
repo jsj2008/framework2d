@@ -87,12 +87,6 @@ MaterialContext* GraphicalContentManager::getMaterial(const char* materialName)
     material->grab();
     return material;
 }
-TextureContext* GraphicalContentManager::getTexture(const char* textureName)
-{
-    TextureContext* texture = &textureMap[textureName];
-    texture->grab();
-    return texture;
-}
 StaticModelContext* GraphicalContentManager::getModel(const char* modelName)
 {
     StaticModelContext* model = &staticModelMap[modelName];
@@ -108,11 +102,11 @@ MaterialContext* GraphicalContentManager::addMaterial(MaterialDef& def)
     }
     else
     {
-        texture = addTexture(def.textureName);
+        texture = getTexture(def.textureName);
     }
     return &(materialMap[def.materialName] = MaterialContext(texture));
 }
-TextureContext* GraphicalContentManager::addTexture(const char* name)
+TextureContext* GraphicalContentManager::getTexture(const char* name)
 {
     if (name[0] == '\0')
     {

@@ -1,12 +1,13 @@
 #ifndef INPUTSTATE_H
 #define INPUTSTATE_H
 
-#include <SDL/SDL_keysym.h>
+#include <SDL/SDL_events.h>
 #include <vector>
 #include <Types/Vec2i.h>
-
 class EventListener;
 class ClickEvent;
+class TextBox;
+
 enum InputActions
 {
     eUp,
@@ -28,6 +29,7 @@ class InputState
         void registerEvent(ClickEvent* event);
         void render();
         void changeResolution(const Vec2i newResolution);
+        void activeTextBox(TextBox* _textBox);
     protected:
     private:
         struct ControlStruct
@@ -40,6 +42,7 @@ class InputState
         ControlStruct* controls;
         std::vector<ClickEvent*> clickEvents;
         ClickEvent* activeEvent;
+        TextBox* textBox;
 };
 
 #endif // INPUTSTATE_H

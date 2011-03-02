@@ -8,11 +8,11 @@ class Crate : public Entity
 {
     public:
         Crate();
-        virtual ~Crate();
         void update();
         EntityType getType(){return eCrateEntityType;}
     protected:
     private:
+        virtual ~Crate();
 };
 
 #endif // CRATE_H

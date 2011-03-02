@@ -37,8 +37,8 @@ void FreeCamera::updateTransform(Vec2i resolution)
     float xView = resolution.x / (2.0f * scale);
     float yView = resolution.y / (2.0f * scale);
 
-    xTrans = -(position.x/scale) + xView;
-    yTrans = -(position.y/scale) + yView;
+    translation.x = -(position.x/scale) + xView;
+    translation.y = -(position.y/scale) + yView;
 }
 #include <iostream>
 using namespace std;

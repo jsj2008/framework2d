@@ -19,6 +19,7 @@ Game::Game()
 {
     gameModeStack.push(NULL);
 }
+#include <SDL/SDL_timer.h>
 void Game::init()
 {
     //ctor
@@ -70,20 +71,24 @@ void Game::set(GameMode* root, GameMode* mode)
         mode->set();
     }
 }
+#include <GL/gl.h>
 void Game::run()
 {
     bool running = true;
     while (running)
     {
         g_GraphicsManager.beginScene();
+        g_LevelManager.renderBackground();
         if (g_PhysicsManager.update())
         {
             running = g_InputManager.processInput();
         }
         g_PhysicsManager.render();
+        glColor4f(1,1,1,0.5);
         g_InputManager.render();
+        glColor4f(1,1,1,1);
         g_LevelManager.tempRender();
-        //SDL_Delay(30);
+        SDL_Delay(30);
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");

@@ -15,14 +15,15 @@ class Entity
 {
     public:
         Entity();
-        virtual ~Entity();
         virtual void render();
         virtual void update()=0;
         virtual EntityType getType()=0;
         b2Body* mBody;
         Skin* mSkin;
+        virtual void damage(){}
     protected:
-        friend class EntityFactory;
+        friend class PhysicsManager; // Just want to assert nobody else can delete these
+        virtual ~Entity();
     private:
 };
 

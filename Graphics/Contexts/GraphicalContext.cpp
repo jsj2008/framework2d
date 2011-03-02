@@ -1,5 +1,6 @@
 #include "GraphicalContext.h"
 #include <cstring>
+#include <iostream>
 
 GraphicalContext::GraphicalContext(const char* _name)
 {
@@ -17,6 +18,10 @@ GraphicalContext::GraphicalContext(const char* _name)
 GraphicalContext::~GraphicalContext()
 {
     //dtor
+    if (referenceCount != 0 && name[0] != '\0')
+    {
+        std::cout << "Warning: Graphical context: " << name << " not completely freed" << std::endl;
+    }
 }
 
 void GraphicalContext::grab()

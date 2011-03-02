@@ -1,4 +1,6 @@
 #include "InputManager.h"
+#include <SDL/SDL_thread.h>
+#include <SDL/SDL_timer.h>
 InputManager g_InputManager;
 using namespace std;
 InputManager::InputManager()
@@ -8,20 +10,21 @@ InputManager::InputManager()
     inputStates.push_back(InputStateHistory(currentState,0));
     globalEventsSizeWhenSeen = &inputStates[0].globalEventsSizeWhenSeen;*/
     currentState = NULL;
+    inputGrabber = NULL;
 }
 
 InputManager::~InputManager()
 {
     //dtor
 }
+void InputManager::activeTextBox(TextBox* _textBox)
+{
+    currentState->activeTextBox(_textBox);
+}
 void InputManager::changeResolution(const Vec2i newResolution)
 {
     if (currentState != NULL)
         currentState->changeResolution(newResolution);
-    for (unsigned int i = 0; i < inputStates.size(); i++)
-    {
-        inputStates[i].state->changeResolution(newResolution);
-    }
 }
 void InputManager::registerEvent(EventListener* event, InputActions action)
 {
@@ -43,6 +46,8 @@ void InputManager::setInputState(InputState* _currentState)
 {
     unsigned int lastSeenSize = 0;
     currentState = _currentState;
+    currentState->changeResolution(currentResolution);
+    bool seenBefore = false;
     for (unsigned int i = 0; i < inputStates.size(); i++)
     {
         if (currentState == inputStates[i].state)
@@ -50,8 +55,13 @@ void InputManager::setInputState(InputState* _currentState)
             lastSeenSize = inputStates[i].globalEventsSizeWhenSeen;
             inputStates[i].globalEventsSizeWhenSeen = globalEvents.size();
             globalEventsSizeWhenSeen = &inputStates[i].globalEventsSizeWhenSeen;
+            seenBefore = true;
             break;
         }
+    }
+    if (!seenBefore)
+    {
+        inputStates.push_back(InputStateHistory(_currentState,globalEvents.size()));
     }
     for (unsigned int i = lastSeenSize; i < globalEvents.size(); i++)
     {

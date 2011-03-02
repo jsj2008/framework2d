@@ -18,6 +18,7 @@ extern class LevelManager
         void addJoint(b2JointDef* def){level->addJoint(def);}
         void removeBody(b2Body* body){level->removeBody(body);}
         void tempRender(){level->tempRender();}
+        void renderBackground(){level->renderBackground();}
         void removeJoint(b2Joint* joint){level->removeJoint(joint);}
         void loadLevel(const char* name){level = new Level(name);}
         void saveLevel(const char* name){delete level;}

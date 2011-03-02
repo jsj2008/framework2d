@@ -9,14 +9,16 @@ class AIEntity : public Entity
 {
     public:
         AIEntity(Brain* _Brain);
-        virtual ~AIEntity();
         EntityType getType(){return eAIEntityType;}
         void update();
         void jump();
         void walkLeft();
         void walkRight();
+        void damage();
     protected:
     private:
+        int health;
+        virtual ~AIEntity();
         Brain* mBrain;
         bool grounded;
         Vec2f groundNormal;

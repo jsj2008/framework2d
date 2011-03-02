@@ -6,7 +6,6 @@
 #include <cassert>
 #include <iostream>
 #include <Graphics/Skins/AllSkins.h>
-#include <Input/InputManager.h>
 GraphicsManager g_GraphicsManager;
 
 GraphicsManager::GraphicsManager()
@@ -19,11 +18,13 @@ GraphicsManager::GraphicsManager()
     resize(Vec2i(800,600));
 
     glDisable(GL_DEPTH_TEST);
-	glClearColor(1,0,0,0);
+    glEnable(GL_BLEND);
+	glClearColor(1,0,0,1);
 	glEnable(GL_TEXTURE_2D);
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glLineWidth(3);
     glPointSize(5);
+    glColor4f(1,1,1,1);
 
     mCamera = 0;
 }
@@ -42,7 +43,8 @@ void GraphicsManager::beginScene()
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, resolution.x, resolution.y, 0, 0, 1); // Parralel projection (no 3d or depth test)
+    glOrtho(0, resolution.x, resolution.y, 0, 0, 1);
+    gluLookAt(0,0,1,0,0,-1,0,1,0);
 
     glMatrixMode(GL_MODELVIEW);
 }
@@ -71,7 +73,6 @@ void GraphicsManager::resize(Vec2i newResolution)
     glOrtho(0, resolution.x, resolution.y, 0, 0, 1); // Parralel projection (no 3d or depth test)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    g_InputManager.changeResolution(newResolution);
 }
 const Vec2i& GraphicsManager::getView()
 {

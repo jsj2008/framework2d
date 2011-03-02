@@ -2,9 +2,13 @@
 #define INPUTMANAGER_H
 
 #include <vector>
+#include <queue>
+#include <SDL/SDL_events.h>
 #include <Input/InputState.h>
 #include <Types/Vec2i.h>
 class EventListener;
+class InputGrabber;
+class TextBox;
 
 extern class InputManager
 {
@@ -17,10 +21,13 @@ extern class InputManager
         void registerEvent(EventListener* event, InputActions action);
         void registerGlobalEvent(EventListener* event, InputActions action); /// These are global controls
         void setInputState(InputState* _currentState);
+        void activeTextBox(TextBox* _textBox);
         void render();
     protected:
     private:
+        InputGrabber* inputGrabber;
         InputState* currentState;
+        Vec2i currentResolution;
         unsigned int* globalEventsSizeWhenSeen;
         struct InputStateHistory
         {

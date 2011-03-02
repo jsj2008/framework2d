@@ -38,6 +38,7 @@ extern class PhysicsManager
         unsigned short collisionMasks[CollisionCategoriesMax];
         void updateEntities();
         b2World* mWorld;
+        b2ContactListener* contactListener;
         RenderCallback* mRenderCallback;
         unsigned int startTime;
         unsigned int stepsTaken;

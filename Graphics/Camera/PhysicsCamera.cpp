@@ -20,6 +20,6 @@ void PhysicsCamera::updateTransform(Vec2i resolution)
     float yView = resolution.y / (2.0f * scale);
     Vec2f center = body->GetWorldCenter();
 
-    xTrans = -center.x + xView;
-    yTrans = -center.y + yView;
+    translation.x = -center.x + xView;
+    translation.y = -center.y + yView;
 }

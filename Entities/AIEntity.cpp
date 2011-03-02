@@ -11,6 +11,7 @@ AIEntity::AIEntity(Brain* _Brain)
     mBrain = _Brain;
     mBrain->setEntity(this);
     grounded = false;
+    health = 100;
 }
 
 AIEntity::~AIEntity()
@@ -18,15 +19,14 @@ AIEntity::~AIEntity()
     //dtor
     delete mBrain;
 }
+void AIEntity::damage()
+{
+    health -= 150;
+}
 void AIEntity::update()
 {
 #ifdef JUMPING
     b2Fixture* fixture = mBody->GetFixtureList();
-#ifdef JUMPING_SENSOR
-    assert(fixture->IsSensor());
-#else
-    assert(!fixture->IsSensor());
-#endif
     for (b2ContactEdge* ce = mBody->GetContactList(); ce; ce = ce->next)
     {
         b2Contact* contact = ce->contact;
@@ -44,6 +44,10 @@ void AIEntity::update()
             groundNormal.y = -t;
             break;
         }
+    }
+    if (health  < 0)
+    {
+        g_PhysicsManager.destroyBody(mBody);
     }
 #endif
 }

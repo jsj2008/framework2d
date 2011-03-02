@@ -2,10 +2,10 @@
 #define GEOMETRYEDITOR_H
 
 #include <Input/Mouse/ClickReleaseEvent.h>
-#include <Entities/EntityFactory.h>
 #include <Factory/ConvexGeometryDef.h>
 #include <GameModes/GameMode.h>
 class FreeCamera;
+class TextBox;
 
 class GeometryEditor : public GameMode, public ClickReleaseEvent
 {
@@ -17,6 +17,7 @@ class GeometryEditor : public GameMode, public ClickReleaseEvent
     protected:
     private:
         ConvexGeometryDef def;
+        TextBox* materialName;
 };
 
 #endif // GEOMETRYEDITOR_H

@@ -13,6 +13,7 @@ class GraphicalContext
         /// These are the reference counting functions
         void grab(); /// ++
         void release(); /// --
+        const char* getName(){return name;}
     protected:
         virtual void vGrab(){}
         virtual void vRelease(){}

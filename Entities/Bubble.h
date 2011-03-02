@@ -8,7 +8,6 @@ class Bubble : public Entity
 {
     public:
         Bubble();
-        virtual ~Bubble();
         void update();
         enum BubbleType
         {
@@ -19,6 +18,7 @@ class Bubble : public Entity
         virtual BubbleType getBubbleType()=0; /// Should I combine these types? Its odd, but its useful
         EntityType getType(){return eBubbleEntityType;}
     protected:
+        virtual ~Bubble();
     private:
         virtual void affectBody(b2Body* body, Vec2f directionTo)=0;
 };

@@ -4,6 +4,7 @@
 #include <Entities/Entity.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/RenderCallback.h>
+#include <Physics/ContactListener.h>
 #include <Level/LevelManager.h>
 PhysicsManager g_PhysicsManager;
 #define MASK(x) (1 << x)
@@ -23,6 +24,8 @@ void PhysicsManager::init()
 {
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
     mRenderCallback = new RenderCallback;
+    contactListener = new ContactListener;
+    mWorld->SetContactListener(contactListener);
     stepsTaken = 0;
     startTime = g_Timer.getTicks();
 }

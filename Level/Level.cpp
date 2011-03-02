@@ -2,18 +2,19 @@
 #include <Factory/ConvexGeometryDef.h>
 #include <Factory/FactoryList.h>
 #include <Physics/PhysicsManager.h>
+#include <Graphics/GraphicsManager.h>
+#include <Graphics/Contexts/TextureContext.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>
 using namespace std;
-Level::Level()
-{
-    name = NULL;
-}
 Level::Level(const char* _name)
 {
     //ctor
+    backgroundScale = Vec2f(0,0);
+    backgroundTransform = Vec2f(0,0);
     name = _name;
+    backgroundTexture = NULL;
     loadLevel();
 }
 
@@ -129,6 +130,34 @@ void Level::removeJoint(b2Joint* joint)
 {
     jointToDefTable.erase(joint);
 }
+#include <GL/gl.h>
+void Level::renderBackground()
+{
+    backgroundTexture->bind();
+    glPushMatrix();
+    backgroundScale = Vec2f(1.5,1.5);
+    backgroundTransform = Vec2f(2,2);
+    Vec2f cameraTransform = g_GraphicsManager.getCameraTranslation();
+
+    glTranslatef(-cameraTransform.x*0.5,-cameraTransform.y*0.5,-10000);
+    glScalef(backgroundScale.x,backgroundScale.y,1);
+    glTranslatef(backgroundTransform.x,backgroundTransform.y,-10000);
+
+    glBegin(GL_QUADS);
+    glTexCoord2f(0,0);
+    glVertex2i(0,0);
+
+    glTexCoord2f(1,0);
+    glVertex2i(80,0);
+
+    glTexCoord2f(1,1);
+    glVertex2i(80,60);
+
+    glTexCoord2f(0,1);
+    glVertex2i(0,60);
+    glEnd();
+    glPopMatrix();
+}
 #include <vector>
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
@@ -203,6 +232,12 @@ void Level::loadLevel()
             }
         }
     }
+    char backgroundName[32];
+    file.read(backgroundName,32);
+    backgroundTexture = g_GraphicsManager.getTexture(backgroundName);
+    backgroundTexture->grab();
+    file.read((char*)&backgroundScale,sizeof(Vec2f));
+    file.read((char*)&backgroundTransform,sizeof(Vec2f));
 }
 void Level::saveLevel()
 {
@@ -276,6 +311,11 @@ void Level::saveLevel()
             }
         }
     }
+    char backgroundName[32];
+    strcpy(backgroundName,backgroundTexture->getName());
+    file.write(backgroundName,32);
+    file.write((const char*)&backgroundScale,sizeof(Vec2f));
+    file.write((const char*)&backgroundTransform,sizeof(Vec2f));
     bodyToCrateDefTable.clear();
     bodyToGeometryDefTable.clear();
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)

@@ -2,6 +2,7 @@
 #include <Graphics/GraphicsManager.h>
 #include <Level/LevelManager.h>
 #include <Input/InputState.h>
+#include <Input/Mouse/TextBox.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <GL/gl.h>
 
@@ -14,6 +15,8 @@ GeometryEditor::GeometryEditor(FreeCamera* camera, const Rect& _Rect)
     mCamera = camera;
     Rect fullScreen(0,0,10000,10000);
     mInputState->registerEvent(this);
+    materialName = new TextBox(Vec2i(0,100),"Material name");
+    mInputState->registerEvent(materialName);
 }
 
 GeometryEditor::~GeometryEditor()
@@ -32,7 +35,10 @@ void GeometryEditor::click(Vec2i mouse, unsigned char button)
         if (def.numVertices > 2)
         {
             if (def.sort())
+            {
+                def.setMaterial(materialName->getString());
                 g_LevelManager.addPlatform(&def);
+            }
         }
         def.numVertices = 0;
     }
