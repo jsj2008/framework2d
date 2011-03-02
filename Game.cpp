@@ -31,11 +31,11 @@ void Game::init()
     mGameModes[ePlayGameMode] = new PlayMode;
     mGameModes[eEditorGameMode] = new EditorMode;
 
-    CrateDef def;
-    def.position = Vec2f(0,0);
+    PlayerDef def;
+    def.setPosition(Vec2f(0,0));
     def.width = 2;
     def.height = 2;
-    Entity* entity = g_FactoryList.useFactory(&def,FactoryList::ePlayerFactory);
+    Entity* entity = g_FactoryList.useFactory(def,ePlayerFactory);
 
     ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
@@ -88,7 +88,7 @@ void Game::run()
         g_InputManager.render();
         glColor4f(1,1,1,1);
         g_LevelManager.tempRender();
-        SDL_Delay(30);
+        SDL_Delay(5);
         g_GraphicsManager.endScene();
     }
     g_LevelManager.saveLevel("default");

@@ -5,5 +5,6 @@
 #include "CrateFactory.h"
 #include "ConvexGeometryFactory.h"
 #include "BubbleFactory.h"
+#include "ParticleFactory.h"
 
 #endif // ALLFACTORIES_H_INCLUDED

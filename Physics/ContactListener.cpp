@@ -14,10 +14,22 @@ ContactListener::~ContactListener()
 using namespace std;
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
-    b2Body* bodyA = contact->GetFixtureA()->GetBody();
-    b2Body* bodyB = contact->GetFixtureB()->GetBody();
     if (impulse->normalImpulses[0] > 50)
     {
-        ((Entity*)bodyA->GetUserData())->damage();
+        HighVelocityImpact impact;
+        impact.entityA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData();
+        impact.entityB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData();
+        highVelocityImpacts.push(impact);
+    }
+}
+
+void ContactListener::process()
+{
+    while (!highVelocityImpacts.empty())
+    {
+        HighVelocityImpact impact = highVelocityImpacts.front();
+        impact.entityA->damage();
+        impact.entityB->damage();
+        highVelocityImpacts.pop();
     }
 }

@@ -9,6 +9,7 @@ enum EntityType
     eStaticGeometryEntityType,
     eAIEntityType,
     eBubbleEntityType,
+    ePhysicsParticleEntityType,
     eEntityTypeMax,
 };
 class Entity

@@ -1,18 +1,19 @@
 #include "ConvexGeometryDef.h"
 
-ConvexGeometryDef::ConvexGeometryDef()
+Vec2f& ConvexGeometryDef::getVertex(unsigned int i)
 {
-    //ctor
-    numVertices = 0;
+    float* f = &vertices[i*2];
+    Vec2f* vec = (Vec2f*)f;
+    return *vec;
 }
 void ConvexGeometryDef::addPoint(const Vec2f& p)
 {
     assert(numVertices != b2_maxPolygonVertices);
-    if (!((vertices[numVertices-1]-p).LengthSquared() > b2_epsilon * b2_epsilon))
+    if (!((getVertex(numVertices-1)-p).LengthSquared() > b2_epsilon * b2_epsilon))
     {
         return; /// Discard polygon
     }
-    vertices[numVertices] = p;
+    getVertex(numVertices) = p;
     numVertices++;
 }
 #define M_PI 3.14159265358979323846
@@ -23,7 +24,7 @@ bool ConvexGeometryDef::sort()
     bool alreadySorted = false;
     for (unsigned char i = 0; i < numVertices; i++)
     {
-#define vertices(i) vertices[i%numVertices]
+#define vertices(i) getVertex(i%numVertices)
         Vec2f start = vertices(i);
         Vec2f middle = vertices((i+1));
         Vec2f end = vertices((i+2));
@@ -55,9 +56,9 @@ bool ConvexGeometryDef::sort()
             {
                 for (unsigned char ii = 0; ii < numVertices/2; ii++)
                 {
-                    Vec2f temp = vertices[ii];
-                    vertices[ii] = vertices[numVertices-(ii+1)];
-                    vertices[numVertices-(ii+1)] = temp;
+                    Vec2f temp = getVertex(ii);
+                    getVertex(ii) = getVertex(numVertices-(ii+1));
+                    getVertex(numVertices-(ii+1)) = temp;
                 }
                 alreadySorted = true;
                 i = 0;

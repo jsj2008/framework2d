@@ -5,9 +5,12 @@
 #include <Input/InputState.h>
 
 ItemSpawner::ItemSpawner(FreeCamera* camera, const Rect& _Rect)
-:ClickReleaseEvent(_Rect),
-crateDefs({CrateDef(4,2,""),CrateDef(1,1,"player")})
+:ClickReleaseEvent(_Rect)
+//,crateDefs({CrateDef(4,2,""),CrateDef(1,1,"player")})
 {
+    crateDefs.resize(2);
+    crateDefs[0].set(4,2,"");
+    crateDefs[1].set(1,1,"player");
     //ctor
     mInputState = new InputState;
     camera->registerWithInputState(mInputState);
@@ -35,7 +38,7 @@ void ItemSpawner::click(Vec2i mouse, unsigned char button)
     else
     {
         Vec2f worldSpace = mouse.ScreenToWorldSpace();
-        crateDefs[which].position = worldSpace;
+        crateDefs[which].setPosition(worldSpace);
         g_LevelManager.addCrate(&crateDefs[which]);
     }
 }

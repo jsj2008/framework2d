@@ -86,18 +86,20 @@ bool PhysicsManager::update()
 {
     unsigned int currentTime = g_Timer.getTicks();
     unsigned int totalTimePassed = currentTime - startTime;
-    unsigned int stepsToTake = (totalTimePassed*60)/1000.0f;
-    if (stepsToTake > stepsTaken)
+    unsigned int stepsToTake = totalTimePassed*60.0f/1000.0f;
+    bool ret = false;
+    while (stepsToTake > stepsTaken)
     {
         float timestep = 1.0f / 60.0f;
         int32 velocityIterations = 6;
         int32 positionIterations = 2;
         mWorld->Step(timestep, velocityIterations, positionIterations);
+        contactListener->process();
         updateEntities();
         stepsTaken++;
-        return true;
+        ret = true;
     }
-    else return false;
+    return ret;
 }
 void PhysicsManager::updateEntities()
 {

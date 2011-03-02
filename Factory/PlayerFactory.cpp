@@ -25,7 +25,7 @@ Entity* PlayerFactory::createEntity(FactoryDef* data)
     CrateDef* def = (CrateDef*)data;
     Entity* entity = new AIEntity(new PlayerInputBrain(g_Game.getGameMode(ePlayGameMode)->getInputState()));
 
-    bodyDef.position = def->position;
+    bodyDef.position = def->getPosition();
     shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);

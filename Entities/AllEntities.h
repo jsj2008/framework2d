@@ -5,5 +5,6 @@
 #include "StaticGeometry.h"
 #include "AIEntity.h"
 #include "Bubble.h"
+#include "PhysicsParticle.h"
 
 #endif // ALLENTITIES_H_INCLUDED

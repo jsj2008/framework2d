@@ -11,30 +11,25 @@ using namespace std;
 Level::Level(const char* _name)
 {
     //ctor
-    backgroundScale = Vec2f(0,0);
-    backgroundTransform = Vec2f(0,0);
     name = _name;
-    backgroundTexture = NULL;
     loadLevel();
+    //backgroundTexture = g_GraphicsManager.getTexture("defaultBackground");
+    //backgroundTexture->grab();
 }
 
 Level::~Level()
 {
     //dtor
-    if (name == NULL)
-    {
-        name = "default";
-    }
     saveLevel();
 }
 void Level::addPlatform(ConvexGeometryDef* def)
 {
-    b2Body* body = g_FactoryList.useFactory(def,FactoryList::eConvexPolygonFactory)->mBody;
+    b2Body* body = g_FactoryList.useFactory(*def,eConvexPolygonFactory)->mBody;
     bodyToGeometryDefTable[body] = *def;
 }
 void Level::addCrate(CrateDef* def)
 {
-    b2Body* body = g_FactoryList.useFactory(def,FactoryList::eCrateFactory)->mBody;
+    b2Body* body = g_FactoryList.useFactory(*def,eCrateFactory)->mBody;
     bodyToCrateDefTable[body] = *def;
 }
 void Level::addJoint(b2JointDef* def)
@@ -177,7 +172,7 @@ void Level::loadLevel()
     file.read((char*)&geometryDefs[0],sizeof(ConvexGeometryDef)*size);
     for (unsigned short i = 0; i < size; i++)
     {
-        b2Body* body = g_FactoryList.useFactory(&geometryDefs[i],FactoryList::eConvexPolygonFactory)->mBody;
+        b2Body* body = g_FactoryList.useFactory(geometryDefs[i],eConvexPolygonFactory)->mBody;
         bodyToGeometryDefTable[body] = geometryDefs[i];
         readLocations.push_back(body);
     }
@@ -188,7 +183,7 @@ void Level::loadLevel()
     file.read((char*)&crateDefs[0],sizeof(CrateDef)*size);
     for (unsigned short i = 0; i < size; i++)
     {
-        b2Body* body = g_FactoryList.useFactory(&crateDefs[i],FactoryList::eCrateFactory)->mBody;
+        b2Body* body = g_FactoryList.useFactory(crateDefs[i],eCrateFactory)->mBody;
         bodyToCrateDefTable[body] = crateDefs[i];
         readLocations.push_back(body);
     }
@@ -264,7 +259,7 @@ void Level::saveLevel()
     file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = bodyToCrateDefTable.begin(); i != bodyToCrateDefTable.end(); i++)
     {
-        i->second.position = i->first->GetPosition();
+        i->second.setPosition(i->first->GetPosition());
         file.write((const char*)&i->second,sizeof(CrateDef));
         writeLocations[i->first] = writeLocation;
         writeLocation++;

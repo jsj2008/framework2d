@@ -2,10 +2,8 @@
 #define FACTORY_H
 
 #include <vector>
-#include <istream>
 class FactoryDef;
 class Entity;
-class Vec2f;
 class Skin;
 class MaterialContext;
 class Factory

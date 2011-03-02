@@ -10,6 +10,7 @@ GeometryEditor::GeometryEditor(FreeCamera* camera, const Rect& _Rect)
 :ClickReleaseEvent(_Rect)
 {
     //ctor
+    def.numVertices = 0;
     mInputState = new InputState;
     camera->registerWithInputState(mInputState);
     mCamera = camera;
@@ -49,12 +50,12 @@ void GeometryEditor::render()
     if (def.numVertices > 0)
     {
         glBegin(GL_POINTS);
-        glVertex2f(def.vertices[0].x,def.vertices[0].y);
+        glVertex2f(def.getVertex(0).x,def.getVertex(0).y);
         glEnd();
         glBegin(GL_LINE_STRIP);
         for (unsigned char i = 0; i < def.numVertices; i++)
         {
-            glVertex2f(def.vertices[i].x,def.vertices[i].y);
+            glVertex2f(def.getVertex(i).x,def.getVertex(i).y);
         }
         glEnd();
     }

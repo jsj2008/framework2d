@@ -1,26 +1,33 @@
 #ifndef FACTORYLIST_H
 #define FACTORYLIST_H
 
-#include <istream>
 #include <vector>
+#include <queue>
+#include <Factory/AllFactoryDefs.h>
 class Factory;
-class FactoryDef;
 class Entity;
+union StandardFactoryDef
+{
+    StandardFactoryDef(PlayerDef& def);
+    StandardFactoryDef(CrateDef& def);
+    StandardFactoryDef(ConvexGeometryDef& def);
+    StandardFactoryDef(BubbleDef& def);
+    StandardFactoryDef(ParticleDef& def);
+    StandardFactories type;
+    PlayerDef playerDef;
+    CrateDef crateDef;
+    ConvexGeometryDef convexGeometryDef;
+    BubbleDef bubbleDef;
+    ParticleDef particleDef;
+};
 
 extern class FactoryList
 {
     public:
-        enum StandardFactories
-        {
-            ePlayerFactory,
-            eConvexPolygonFactory,
-            eCrateFactory,
-            eBubbleFactory,
-            eStandardFactoriesMax
-        };
         FactoryList();
         virtual ~FactoryList();
-        Entity* useFactory(FactoryDef* def, StandardFactories factory);
+        Entity* useFactory(StandardFactoryDef def, StandardFactories factoryType);
+        //Entity* useFactory(FactoryDef* def, StandardFactories factory);
         Factory* getFactory(StandardFactories factory);
     protected:
     private:

@@ -7,7 +7,6 @@
 class BubbleDef : public FactoryDef
 {
     public:
-        BubbleDef();
         float radius;
         Bubble::BubbleType type;
 };

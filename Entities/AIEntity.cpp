@@ -2,6 +2,8 @@
 #include <AI/Brain.h>
 #include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
+#include <Factory/ParticleDef.h>
+#include <Factory/FactoryList.h>
 #include <cassert>
 #define JUMP_IMPULSE -1.0f*WORLD_GRAVITY
 
@@ -21,12 +23,14 @@ AIEntity::~AIEntity()
 }
 void AIEntity::damage()
 {
-    health -= 150;
+    ParticleDef def;
+    def.setMaterial("Spark");
+    def.setPosition(mBody->GetPosition());
+    g_FactoryList.useFactory(def,eParticleFactory);
 }
 void AIEntity::update()
 {
 #ifdef JUMPING
-    b2Fixture* fixture = mBody->GetFixtureList();
     for (b2ContactEdge* ce = mBody->GetContactList(); ce; ce = ce->next)
     {
         b2Contact* contact = ce->contact;

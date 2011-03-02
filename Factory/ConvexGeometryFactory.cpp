@@ -22,14 +22,14 @@ Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
 
     assert(def->numVertices <= b2_maxPolygonVertices);
 
-    shapeDef.Set(def->vertices,def->numVertices);
+    shapeDef.Set(&def->getVertex(0),def->numVertices);
 
-    bodyDef.position = def->position;
+    bodyDef.position = def->getPosition();
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new ConvexPolygonSkin(def->vertices,def->numVertices);
+    entity->mSkin = new ConvexPolygonSkin(&def->getVertex(0),def->numVertices);
     MaterialContext* material = g_GraphicsManager.getMaterial(def->materialName);
     setMaterial(entity->mSkin,material);
 

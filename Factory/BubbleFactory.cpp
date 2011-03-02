@@ -39,7 +39,7 @@ Entity* BubbleFactory::createEntity(FactoryDef* data)
         }
     }
 
-    bodyDef.position = def->position;
+    bodyDef.position = def->getPosition();
     shapeDef.m_radius = def->radius;
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);

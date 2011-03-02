@@ -5,8 +5,9 @@
 #define JUMPING
 
 #define WORLD_GRAVITY 9.8f
-
 class RenderCallback;
+class ContactListener;
+
 extern class PhysicsManager
 {
     public:
@@ -38,7 +39,7 @@ extern class PhysicsManager
         unsigned short collisionMasks[CollisionCategoriesMax];
         void updateEntities();
         b2World* mWorld;
-        b2ContactListener* contactListener;
+        ContactListener* contactListener;
         RenderCallback* mRenderCallback;
         unsigned int startTime;
         unsigned int stepsTaken;
