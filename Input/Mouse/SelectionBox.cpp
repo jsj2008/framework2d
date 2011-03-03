@@ -13,12 +13,15 @@ SelectionBox::SelectionBox(const Rect& _Rect,std::initializer_list<const char*> 
         icons.push_back(new Icon(*i));
         fonts.push_back(g_GraphicsManager.renderFont(*i,-1));
     }
-    div = (mRect.x2 - mRect.x)/icons.size();
-    currentSelection = icons.size();
-    Vec2i dimensions(div,mRect.y2-mRect.y);
-    for (unsigned int i = 0; i < icons.size(); i++)
+    if (icons.size() != 0)
     {
-        icons[i]->setDimensions(dimensions);
+        div = (mRect.x2 - mRect.x)/icons.size();
+        currentSelection = icons.size();
+        Vec2i dimensions(div,mRect.y2-mRect.y);
+        for (unsigned int i = 0; i < icons.size(); i++)
+        {
+            icons[i]->setDimensions(dimensions);
+        }
     }
 }
 
@@ -33,10 +36,26 @@ SelectionBox::~SelectionBox()
         }
     }
 }
+void SelectionBox::push(const char* icon)
+{
+    icons.push_back(new Icon(icon));
+    fonts.push_back(g_GraphicsManager.renderFont(icon,-1));
+    div = (mRect.x2 - mRect.x)/icons.size();
+    Vec2i dimensions(div,mRect.y2-mRect.y);
+    for (unsigned int i = 0; i < icons.size(); i++)
+    {
+        icons[i]->setDimensions(dimensions);
+    }
+}
 void SelectionBox::changeResolution(Vec2i newResolution)
 {
     mRect.changeResolution(newResolution);
     div = (mRect.x2 - mRect.x)/icons.size();
+    Vec2i dimensions(div,mRect.y2-mRect.y);
+    for (unsigned int i = 0; i < icons.size(); i++)
+    {
+        icons[i]->setDimensions(dimensions);
+    }
 }
 /// This only works horizontally atm
 void SelectionBox::click(Vec2i mouse, unsigned char button)
@@ -70,6 +89,7 @@ void SelectionBox::render()
     }
     if (currentSelection < icons.size())
     {
+        glBindTexture(GL_TEXTURE_2D,0);
         glColor3f(1,0,0);
         glBegin(GL_LINE_LOOP);
         glVertex2i(mRect.x+(currentSelection*div),mRect.y);
@@ -80,7 +100,6 @@ void SelectionBox::render()
         glColor3f(1,1,1);
     }
     glPopMatrix();
-    glBindTexture(GL_TEXTURE_2D,0);
 }
 
 

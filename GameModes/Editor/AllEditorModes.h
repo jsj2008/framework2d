@@ -5,5 +5,6 @@
 #include "GeometrySelector.h"
 #include "ItemSpawner.h"
 #include "JointEditor.h"
+#include "ParallaxEditor.h"
 
 #endif // ALLEDITORMODES_H_INCLUDED

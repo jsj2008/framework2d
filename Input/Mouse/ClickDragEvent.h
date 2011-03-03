@@ -11,7 +11,7 @@ class ClickDragEvent : public ClickEvent
         virtual ~ClickDragEvent();
         virtual void start(unsigned char button)=0;
         ///void mouseMove(Vec2i mouse); Override these instead
-        ///void buttonUp(Vec2i mouse, Vec2i mouse, unsigned char button);
+        ///void buttonUp(Vec2i mouse, unsigned char button);
     protected:
         Vec2i startPos;
     private:
