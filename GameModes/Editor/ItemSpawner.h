@@ -2,24 +2,28 @@
 #define ITEMSPAWNER_H
 
 #include <GameModes/GameMode.h>
-#include <Input/Mouse/ClickReleaseEvent.h>
+#include <Input/Mouse/ClickDragEvent.h>
 #include <vector>
 #include <Factory/CrateDef.h>
-class SelectionBox;
 class FreeCamera;
-class SelectionBox;
+class SliderBar;
+class TextBox;
 
-class ItemSpawner : public GameMode, public ClickReleaseEvent
+class ItemSpawner : public GameMode, public ClickDragEvent
 {
     public:
         ItemSpawner(FreeCamera* camera, const Rect& _Rect);//, SelectionBox* _selectionBox
         virtual ~ItemSpawner();
-        void click(Vec2i mouse, unsigned char button);
+        void start(unsigned char button);
+        void mouseMove(Vec2i mouse);
+        void buttonUp(Vec2i mouse, unsigned char button);
+        void render();
     protected:
     private:
-        SelectionBox* selectionBox;
-        std::vector<CrateDef> crateDefs;
-        void addElement();
+        SliderBar* density;
+        TextBox* textBox;
+        bool dragging;
+        Vec2f topLeft, bottomright;
 };
 
 #endif // ITEMSPAWNER_H

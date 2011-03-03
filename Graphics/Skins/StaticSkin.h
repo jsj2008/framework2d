@@ -7,13 +7,13 @@
 class StaticSkin : public Skin
 {
     public:
-        StaticSkin(int _width, int _height);
+        StaticSkin(float _width, float _height);
         virtual ~StaticSkin();
         void vRender();
         SkinType getType(){return eStaticSkinType;}
     protected:
     private:
-        int width,height;
+        float width,height;
 };
 
 #endif // STATICSKIN_H

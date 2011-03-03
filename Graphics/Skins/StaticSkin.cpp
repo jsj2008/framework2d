@@ -1,7 +1,7 @@
 #include "StaticSkin.h"
 #include <GL/gl.h>
 
-StaticSkin::StaticSkin(int _width, int _height)
+StaticSkin::StaticSkin(float _width, float _height)
 {
     //ctor
     width = _width;
@@ -15,10 +15,8 @@ StaticSkin::~StaticSkin()
 
 void StaticSkin::vRender()
 {
-    glPushMatrix();
-    glScalef(0.001f,0.001f,1);
-    float hw = width*500.f;
-    float hh = height*500.f;
+    float hw = width*0.5f;
+    float hh = height*0.5f;
     glBegin(GL_TRIANGLE_FAN);
     glTexCoord2f(0,0);
     glVertex2f(-hw,-hh);
@@ -29,5 +27,4 @@ void StaticSkin::vRender()
     glTexCoord2f(0,1);
     glVertex2f(-hw,hh);
     glEnd();
-    glPopMatrix();
 }

@@ -38,7 +38,7 @@ void GeometryEditor::click(Vec2i mouse, unsigned char button)
             if (def.sort())
             {
                 def.setMaterial(materialName->getString());
-                g_LevelManager.addPlatform(&def);
+                g_LevelManager.addBody(def);
             }
         }
         def.numVertices = 0;

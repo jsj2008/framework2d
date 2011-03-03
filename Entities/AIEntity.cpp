@@ -24,6 +24,8 @@ AIEntity::~AIEntity()
 void AIEntity::damage()
 {
     ParticleDef def;
+    def.density = 1.0f;
+    def.lifetime = 100;
     def.setMaterial("Spark");
     def.setPosition(mBody->GetPosition());
     g_FactoryList.useFactory(def,eParticleFactory);

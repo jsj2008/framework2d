@@ -3,24 +3,24 @@
 #include <Graphics/Camera/FreeCamera.h>
 #include <Level/LevelManager.h>
 #include <Input/InputState.h>
+#include <Input/Mouse/SliderBar.h>
+#include <Input/Mouse/TextBox.h>
 
 ItemSpawner::ItemSpawner(FreeCamera* camera, const Rect& _Rect)
-:ClickReleaseEvent(_Rect)
-//,crateDefs({CrateDef(4,2,""),CrateDef(1,1,"player")})
+:ClickDragEvent(_Rect)
 {
-    crateDefs.resize(2);
-    crateDefs[0].set(4,2,"");
-    crateDefs[1].set(1,1,"player");
     //ctor
     mInputState = new InputState;
     camera->registerWithInputState(mInputState);
     mCamera = camera;
     Rect rect(0,100,200,200);
-    selectionBox = new SelectionBox(rect,{"GeometrySelector"});
+    density = new SliderBar(Vec2i(0,100),100,"Density 0-30",1.0f);
+    textBox = new TextBox(Vec2i(0,150),"Material");
     Rect fullScreen(0,0,10000,10000);
     mInputState->registerEvent(this);
 
-    mInputState->registerEvent(selectionBox);
+    mInputState->registerEvent(density);
+    mInputState->registerEvent(textBox);
 }
 
 ItemSpawner::~ItemSpawner()
@@ -28,34 +28,73 @@ ItemSpawner::~ItemSpawner()
     //dtor
 }
 
-void ItemSpawner::click(Vec2i mouse, unsigned char button)
+void ItemSpawner::start(unsigned char button)
 {
-    int which = selectionBox->getCurrentSelection();
-    if (which == selectionBox->getNumElements())
+    topLeft = startPos.ScreenToWorldSpace();
+    bottomright = topLeft;
+    dragging = true;
+}
+void ItemSpawner::mouseMove(Vec2i mouse)
+{
+    bottomright = mouse.ScreenToWorldSpace();
+}
+void ItemSpawner::buttonUp(Vec2i mouse, unsigned char button)
+{
+    bottomright = mouse.ScreenToWorldSpace();
+    Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
+    if (dimensions.x > 1.0f && dimensions.y > 1.0f)
     {
-        //addElement();
+        CrateDef def;
+        def.set(dimensions,density->getPosition()*30.0f,textBox->getString());
+        def.setPosition(topLeft + (bottomright - topLeft)*0.5);
+        g_LevelManager.addBody(def);
     }
-    else
+    dragging = false;
+}
+#include <GL/gl.h>
+void ItemSpawner::render()
+{
+    if (dragging)
     {
-        Vec2f worldSpace = mouse.ScreenToWorldSpace();
-        crateDefs[which].setPosition(worldSpace);
-        g_LevelManager.addCrate(&crateDefs[which]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(topLeft.x,topLeft.y);
+        glVertex2f(topLeft.x,bottomright.y);
+        glVertex2f(bottomright.x,bottomright.y);
+        glVertex2f(bottomright.x,topLeft.y);
+        glEnd();
     }
 }
-#include <iostream>
-using namespace std;
-/// Should replace this with a graphical editor at some point FIXME
-void ItemSpawner::addElement()
-{
-    CrateDef def;
-    cout << "Box width?" << endl;
-    cin >> def.width;
 
-    cout << "Box height?" << endl;
-    cin >> def.height;
 
-    cout << "Material name?" << endl;
-    cin >> def.materialName;
 
-    crateDefs.push_back(def);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

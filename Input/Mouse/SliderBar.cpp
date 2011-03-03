@@ -43,6 +43,8 @@ void SliderBar::calculatePosition(int mousePosition)
 #include <GL/gl.h>
 void SliderBar::render()
 {
+    glColor3f(1,1,1);
+    glBindTexture(GL_TEXTURE_2D,0);
     glPushMatrix();
     glLoadIdentity();
     glBegin(GL_LINES);

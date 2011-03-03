@@ -76,6 +76,10 @@ bool InputState::processInput()
                     if (clickEvents[i]->buttonDown(Vec2i(event.button.x,event.button.y),event.button.button))
                     {
                         activeEvent = clickEvents[i];
+                        if (activeEvent != textBox)
+                        {
+                            textBox = NULL;
+                        }
                         break;
                     }
                 }

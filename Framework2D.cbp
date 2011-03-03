@@ -257,6 +257,10 @@
 		<Unit filename="Level\Level.h" />
 		<Unit filename="Level\LevelManager.cpp" />
 		<Unit filename="Level\LevelManager.h" />
+		<Unit filename="Level\ParallaxLayer.cpp" />
+		<Unit filename="Level\ParallaxLayer.h" />
+		<Unit filename="Level\ParallaxSprite.cpp" />
+		<Unit filename="Level\ParallaxSprite.h" />
 		<Unit filename="Physics\ContactListener.cpp" />
 		<Unit filename="Physics\ContactListener.h" />
 		<Unit filename="Physics\PhysicsManager.cpp" />

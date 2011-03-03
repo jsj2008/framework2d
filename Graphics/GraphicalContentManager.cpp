@@ -17,12 +17,16 @@ GraphicalContentManager::MaterialDef::MaterialDef(const char* _materialName, con
     strcpy(textureName,_textureName);
     shaderName[0] = '\0';
 }
-void GraphicalContentManager::MaterialDef::parseMaterialFile()
+bool GraphicalContentManager::MaterialDef::parseMaterialFile()
 {
     std::string fullFileName("Resources/Graphics/Materials/");
     fullFileName.append(materialName);
     fullFileName.append(".txt");
     std::ifstream file(fullFileName.c_str()); /// FIXME passing the string directly gives a linker error. Will probably be fixed in a newer version of g++
+    if (!file.good())
+    {
+        return false;
+    }
     while (file.good())
     {
         std::string input;
@@ -59,6 +63,7 @@ void GraphicalContentManager::MaterialDef::parseMaterialFile()
     fullFileName.replace(fullFileName.end()-4,fullFileName.end(),".mat");
     std::ofstream outfile(fullFileName.c_str(),std::ios::binary); /// FIXME also
     outfile.write((char*)this,sizeof(MaterialDef));
+    return true;
 }
 GraphicalContentManager::GraphicalContentManager()
 {
@@ -80,8 +85,10 @@ MaterialContext* GraphicalContentManager::getMaterial(const char* materialName)
     if (iter == materialMap.end())
     {
         MaterialDef def(materialName);
-        def.parseMaterialFile();
-        material = addMaterial(def);
+        bool success = def.parseMaterialFile();
+        if (success)
+            material = addMaterial(def);
+        else material = &materialMap[""];
     }
     else material = &iter->second;
     material->grab();

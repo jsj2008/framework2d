@@ -22,6 +22,7 @@ Entity* CrateFactory::createEntity(FactoryDef* data)
     Entity* entity = new Crate;
 
     bodyDef.position = def->getPosition();
+    bodyDef.angle = data->rotation;
     shape.SetAsBox(def->width*0.5f,def->height*0.5f);
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);

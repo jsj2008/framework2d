@@ -2,23 +2,21 @@
 #define LEVEL_H
 
 #include <unordered_map>
-#include <Factory/ConvexGeometryDef.h>
-#include <Entities/StaticGeometry.h>
-#include <Factory/CrateDef.h>
+#include <Factory/FactoryList.h>
 class b2Joint;
 class b2JointDef;
 class TextureContext;
+class ParallaxLayer;
 
 class Level
 {
     public:
         Level(const char* _name);
         virtual ~Level();
-        void addPlatform(ConvexGeometryDef* def);
-        void addCrate(CrateDef* def);
+        void addBody(StandardFactoryDef def);
         void addJoint(b2JointDef* def);
         void tempRender();
-        void renderBackground();
+        void renderBackLayers();
         void removeBody(b2Body* body);
         void removeJoint(b2Joint* joint);
     protected:
@@ -26,12 +24,11 @@ class Level
         const char* name;
         void loadLevel();
         void saveLevel();
-        std::unordered_map<b2Body*, ConvexGeometryDef> bodyToGeometryDefTable; /// Maps a body to a defs index
-        std::unordered_map<b2Body*, CrateDef> bodyToCrateDefTable;
+        std::unordered_map<b2Body*, StandardFactoryDef> bodyToDefTable; /// Maps a body to a defs index
         std::unordered_map<b2Joint*, b2JointDef*> jointToDefTable;
-        TextureContext* backgroundTexture;
         Vec2f backgroundScale;
         Vec2f backgroundTransform;
+        std::vector<ParallaxLayer*> parallaxLayers;
 };
 
 #endif // LEVEL_H

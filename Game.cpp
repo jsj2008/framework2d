@@ -35,13 +35,15 @@ void Game::init()
     def.setPosition(Vec2f(0,0));
     def.width = 2;
     def.height = 2;
+    g_LevelManager.loadLevel("default");
+    //g_LevelManager.addBody(def);
     Entity* entity = g_FactoryList.useFactory(def,ePlayerFactory);
+    entity = NULL;
 
-    ((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
+    //((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
     set(NULL,mGameModes[eEditorGameMode]);
 
-    g_LevelManager.loadLevel("default");
 
     g_Timer.unPause();
 }
@@ -78,7 +80,6 @@ void Game::run()
     while (running)
     {
         g_GraphicsManager.beginScene();
-        g_LevelManager.renderBackground();
         if (g_PhysicsManager.update())
         {
             running = g_InputManager.processInput();

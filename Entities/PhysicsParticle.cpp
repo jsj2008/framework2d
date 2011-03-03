@@ -1,8 +1,10 @@
 #include "PhysicsParticle.h"
+#include <Physics/PhysicsManager.h>
 
-PhysicsParticle::PhysicsParticle()
+PhysicsParticle::PhysicsParticle(int _timer)
 {
     //ctor
+    timer = _timer;
 }
 
 PhysicsParticle::~PhysicsParticle()
@@ -12,5 +14,9 @@ PhysicsParticle::~PhysicsParticle()
 
 void PhysicsParticle::update()
 {
-
+    timer--;
+    if (timer == 0)
+    {
+        g_PhysicsManager.destroyBody(mBody);
+    }
 }

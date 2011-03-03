@@ -8,6 +8,7 @@ class ParticleDef : public FactoryDef
 {
     public:
         float density;
+        int lifetime;
     protected:
     private:
 };

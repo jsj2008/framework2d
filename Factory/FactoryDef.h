@@ -17,6 +17,7 @@ class FactoryDef
     public:
         StandardFactories type;
         float xPosition, yPosition;
+        float rotation;
         void setPosition(const Vec2f position);
         const Vec2f getPosition();
         char materialName[32];

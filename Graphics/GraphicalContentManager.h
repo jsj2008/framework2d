@@ -27,7 +27,7 @@ class GraphicalContentManager
             MaterialDef(const char* _materialName);
             MaterialDef(const char* _materialName, const char* _textureName, const char* _shaderName);
             MaterialDef(const char* _materialName, const char* _textureName);
-            void parseMaterialFile();
+            bool parseMaterialFile();
             char materialName[32];
             char textureName[32];
             char shaderName[32];

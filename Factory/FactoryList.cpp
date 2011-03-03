@@ -31,7 +31,10 @@ Factory* FactoryList::getFactory(StandardFactories factory)
 {
     return factories[factory];
 }
-
+StandardFactoryDef::StandardFactoryDef()
+{
+    type = eStandardFactoriesMax;
+}
 StandardFactoryDef::StandardFactoryDef(PlayerDef& def)
 {
     playerDef = def;

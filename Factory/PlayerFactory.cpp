@@ -5,7 +5,7 @@
 #include <AI/PlayerInputBrain.h>
 #include <Factory/CrateDef.h>
 #include <Game.h>
-#include <GameModes/GameMode.h>
+#include <GameModes/PlayMode.h>
 #include <cstring>
 
 PlayerFactory::PlayerFactory()
@@ -33,5 +33,7 @@ Entity* PlayerFactory::createEntity(FactoryDef* data)
 
     entity->mSkin = new StaticSkin(def->width,def->height);
     setMaterial(entity->mSkin,g_GraphicsManager.getMaterial("player"));
+
+    ((PlayMode*)g_Game.getGameMode(ePlayGameMode))->setBody(entity->mBody);
     return entity;
 }

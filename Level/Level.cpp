@@ -4,6 +4,7 @@
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
+#include <Level/ParallaxLayer.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -13,8 +14,6 @@ Level::Level(const char* _name)
     //ctor
     name = _name;
     loadLevel();
-    //backgroundTexture = g_GraphicsManager.getTexture("defaultBackground");
-    //backgroundTexture->grab();
 }
 
 Level::~Level()
@@ -22,15 +21,10 @@ Level::~Level()
     //dtor
     saveLevel();
 }
-void Level::addPlatform(ConvexGeometryDef* def)
+void Level::addBody(StandardFactoryDef def)
 {
-    b2Body* body = g_FactoryList.useFactory(*def,eConvexPolygonFactory)->mBody;
-    bodyToGeometryDefTable[body] = *def;
-}
-void Level::addCrate(CrateDef* def)
-{
-    b2Body* body = g_FactoryList.useFactory(*def,eCrateFactory)->mBody;
-    bodyToCrateDefTable[body] = *def;
+    b2Body* body = g_FactoryList.useFactory(def,def.type)->mBody;
+    bodyToDefTable[body] = def;
 }
 void Level::addJoint(b2JointDef* def)
 {
@@ -87,14 +81,9 @@ void Level::addJoint(b2JointDef* def)
     }
     b2Body* bodyA = def->bodyA;
     b2Body* bodyB = def->bodyB;
-    auto crateIter = bodyToCrateDefTable.find(bodyA);
-    auto geometryIter = bodyToGeometryDefTable.find(bodyB);
-    if (crateIter == bodyToCrateDefTable.end())
-    {
-        crateIter = bodyToCrateDefTable.find(bodyB);
-        geometryIter = bodyToGeometryDefTable.find(bodyA);
-    }
-    if (crateIter != bodyToCrateDefTable.end() && geometryIter != bodyToGeometryDefTable.end())
+    auto crateIter = bodyToDefTable.find(bodyA);
+    auto geometryIter = bodyToDefTable.find(bodyB);
+    if (crateIter != bodyToDefTable.end() && geometryIter != bodyToDefTable.end())
     {
         jointToDefTable[g_PhysicsManager.createJoint(copy)] = copy;
     }
@@ -106,18 +95,10 @@ void Level::addJoint(b2JointDef* def)
     strcpy(filename+strlen("Resources/Levels/")+strlen(name),".lvl")
 void Level::removeBody(b2Body* body)
 {
-    auto result = bodyToGeometryDefTable.find(body);
-    if (result != bodyToGeometryDefTable.end())
+    auto result = bodyToDefTable.find(body);
+    if (result != bodyToDefTable.end())
     {
-        bodyToGeometryDefTable.erase(body);
-    }
-    else
-    {
-        auto result = bodyToCrateDefTable.find(body);
-        if (result != bodyToCrateDefTable.end())
-        {
-            bodyToCrateDefTable.erase(body);
-        }
+        bodyToDefTable.erase(body);
     }
     g_PhysicsManager.destroyBody(body);
 }
@@ -125,6 +106,7 @@ void Level::removeJoint(b2Joint* joint)
 {
     jointToDefTable.erase(joint);
 }
+/*
 #include <GL/gl.h>
 void Level::renderBackground()
 {
@@ -152,7 +134,7 @@ void Level::renderBackground()
     glVertex2i(0,60);
     glEnd();
     glPopMatrix();
-}
+}*/
 #include <vector>
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
@@ -165,28 +147,18 @@ void Level::loadLevel()
         cout << "Error: File does not appear to exist, or maybe this program doesn't have filesystem rights" << filename << endl;
         return;
     }
-    std::vector<ConvexGeometryDef> geometryDefs;
+    std::vector<StandardFactoryDef> bodyDefs;
     unsigned short size;
     file.read((char*)&size,sizeof(unsigned short));
-    geometryDefs.resize(size);
-    file.read((char*)&geometryDefs[0],sizeof(ConvexGeometryDef)*size);
+    bodyDefs.resize(size);
+    file.read((char*)&bodyDefs[0],sizeof(StandardFactoryDef)*size);
     for (unsigned short i = 0; i < size; i++)
     {
-        b2Body* body = g_FactoryList.useFactory(geometryDefs[i],eConvexPolygonFactory)->mBody;
-        bodyToGeometryDefTable[body] = geometryDefs[i];
+        b2Body* body = g_FactoryList.useFactory(bodyDefs[i],bodyDefs[i].type)->mBody;
+        bodyToDefTable[body] = bodyDefs[i];
         readLocations.push_back(body);
     }
 
-    std::vector<CrateDef> crateDefs;
-    file.read((char*)&size,sizeof(unsigned short));
-    crateDefs.resize(size);
-    file.read((char*)&crateDefs[0],sizeof(CrateDef)*size);
-    for (unsigned short i = 0; i < size; i++)
-    {
-        b2Body* body = g_FactoryList.useFactory(crateDefs[i],eCrateFactory)->mBody;
-        bodyToCrateDefTable[body] = crateDefs[i];
-        readLocations.push_back(body);
-    }
     file.read((char*)&size,sizeof(unsigned short));
     for (unsigned short i = 0; i < size; i++)
     {
@@ -227,12 +199,15 @@ void Level::loadLevel()
             }
         }
     }
-    char backgroundName[32];
-    file.read(backgroundName,32);
-    backgroundTexture = g_GraphicsManager.getTexture(backgroundName);
-    backgroundTexture->grab();
-    file.read((char*)&backgroundScale,sizeof(Vec2f));
-    file.read((char*)&backgroundTransform,sizeof(Vec2f));
+    file.read((char*)&size,sizeof(unsigned short));
+    for (unsigned short i = 0; i < size; i++)
+    {
+        parallaxLayers.push_back(new ParallaxLayer(&file));
+    }
+    for (auto i = parallaxLayers.begin(); i != parallaxLayers.end(); i++)
+    {
+        delete *i;
+    }
 }
 void Level::saveLevel()
 {
@@ -246,24 +221,17 @@ void Level::saveLevel()
         cout << "Error: File failed to open for writing, make sure the directory already exists, or maybe this program just doesn't have filesystem rights" << filename << endl;
         throw -1;
     }
-    unsigned short size = bodyToGeometryDefTable.size();
+    unsigned short size = bodyToDefTable.size();
     file.write((const char*)&size,sizeof(unsigned short));
-    for (auto i = bodyToGeometryDefTable.begin(); i != bodyToGeometryDefTable.end(); i++)
+    for (auto i = bodyToDefTable.begin(); i != bodyToDefTable.end(); i++)
     {
-        file.write((const char*)&i->second,sizeof(ConvexGeometryDef));
+        i->second.baseDef.setPosition(i->first->GetPosition());
+        i->second.baseDef.rotation = i->first->GetAngle();
+        file.write((const char*)&i->second,sizeof(StandardFactoryDef));
         writeLocations[i->first] = writeLocation;
         writeLocation++;
     }
 
-    size = bodyToCrateDefTable.size();
-    file.write((const char*)&size,sizeof(unsigned short));
-    for (auto i = bodyToCrateDefTable.begin(); i != bodyToCrateDefTable.end(); i++)
-    {
-        i->second.setPosition(i->first->GetPosition());
-        file.write((const char*)&i->second,sizeof(CrateDef));
-        writeLocations[i->first] = writeLocation;
-        writeLocation++;
-    }
     size = jointToDefTable.size();
     file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
@@ -306,13 +274,18 @@ void Level::saveLevel()
             }
         }
     }
-    char backgroundName[32];
-    strcpy(backgroundName,backgroundTexture->getName());
-    file.write(backgroundName,32);
-    file.write((const char*)&backgroundScale,sizeof(Vec2f));
-    file.write((const char*)&backgroundTransform,sizeof(Vec2f));
-    bodyToCrateDefTable.clear();
-    bodyToGeometryDefTable.clear();
+    size = parallaxLayers.size();
+    file.write((const char*)&size,sizeof(unsigned short));
+    for (unsigned short i = 0; i < size; i++)
+    {
+        parallaxLayers[i]->save(&file);
+    }
+    for (auto i = parallaxLayers.begin(); i != parallaxLayers.end(); i++)
+    {
+        delete *i;
+    }
+    parallaxLayers.clear();
+    bodyToDefTable.clear();
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
     {
         delete i->second;

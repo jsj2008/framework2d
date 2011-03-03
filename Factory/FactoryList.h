@@ -8,12 +8,14 @@ class Factory;
 class Entity;
 union StandardFactoryDef
 {
+    StandardFactoryDef();
     StandardFactoryDef(PlayerDef& def);
     StandardFactoryDef(CrateDef& def);
     StandardFactoryDef(ConvexGeometryDef& def);
     StandardFactoryDef(BubbleDef& def);
     StandardFactoryDef(ParticleDef& def);
     StandardFactories type;
+    FactoryDef baseDef;
     PlayerDef playerDef;
     CrateDef crateDef;
     ConvexGeometryDef convexGeometryDef;
