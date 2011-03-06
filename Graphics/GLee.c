@@ -41,7 +41,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <GL/GLee.h>
+#include <GLee.h>
 
 #if defined(__APPLE__) || defined(__APPLE_CC__)
 	#include <Carbon/Carbon.h>
