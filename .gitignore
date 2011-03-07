@@ -1,7 +1,8 @@
 
 /bin
 /obj
-*.layout
+Framework2D.layout
+Box2D.layout
 *.depend
 *.o
 *.lvl
