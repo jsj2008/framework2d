@@ -2,18 +2,22 @@
 #define DISTANCEJOINTEDITOR_H
 
 #include <GameModes/Editor/Joints/BaseJointEditor.h>
-class SliderBar;
+namespace CEGUI
+{
+    class Slider;
+}
 
 class DistanceJointEditor : public BaseJointEditor
 {
     public:
-        DistanceJointEditor(FreeCamera* _camera, CheckBox* _collide);
+        DistanceJointEditor(FreeCamera* _camera);
         virtual ~DistanceJointEditor();
+        void init();
     protected:
     private:
         void createJoint(b2Body* bodyB, Vec2f& localPointB);
-        SliderBar* dampingRatio;
-        SliderBar* frequencyHz;
+        CEGUI::Slider* dampingRatio;
+        CEGUI::Slider* frequencyHz;
 };
 
 #endif // DISTANCEJOINTEDITOR_H

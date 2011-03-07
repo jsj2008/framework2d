@@ -1,9 +1,7 @@
 #include "BubbleDrawEvent.h"
 #include <Factory/FactoryList.h>
-#include <Input/Mouse/SelectionBox.h>
-
-BubbleDrawEvent::BubbleDrawEvent(const Rect& _Rect, SelectionBox* _selectionBox)
-:ClickDragEvent(_Rect)
+/*
+BubbleDrawEvent::BubbleDrawEvent(SelectionBox* _selectionBox)
 {
     //ctor
     selectionBox = _selectionBox;
@@ -33,3 +31,4 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
         g_FactoryList.useFactory(def, eBubbleFactory);
     }
 }
+*/

@@ -28,7 +28,7 @@ void Game::init()
     g_PhysicsManager.init();
 
     //editorMode = new EditorMode;
-    mGameModes[ePlayGameMode] = new PlayMode;
+    mGameModes[ePlayGameMode] = new PlayMode();
     mGameModes[eEditorGameMode] = new EditorMode;
 
     PlayerDef def;
@@ -42,7 +42,9 @@ void Game::init()
 
     //((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
 
-    set(NULL,mGameModes[eEditorGameMode]);
+    //set(NULL,mGameModes[eEditorGameMode]);
+    CEGUI::EventArgs args;
+    mGameModes[eEditorGameMode]->activate(args);
 
 
     g_Timer.unPause();
@@ -51,7 +53,11 @@ Game::~Game()
 {
     //dtor
 }
-GameMode* Game::getGameMode(GameModes mode)
+InputContext* Game::getGameMode(GameModes mode)
+{
+    return mGameModes[mode];
+}
+/*GameMode* Game::getGameMode(GameModes mode)
 {
     return mGameModes[mode];
 }
@@ -72,7 +78,7 @@ void Game::set(GameMode* root, GameMode* mode)
         gameModeStack.push(mode);
         mode->set();
     }
-}
+}*/
 #include <GL/gl.h>
 void Game::run()
 {

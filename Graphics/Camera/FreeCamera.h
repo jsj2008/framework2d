@@ -3,16 +3,15 @@
 
 #include "Camera.h"
 #include <Input/EventListener.h>
-class InputState;
 
 class FreeCamera : public Camera, public EventListener
 {
     public:
-        FreeCamera(InputState* inputState);
+        FreeCamera();
         virtual ~FreeCamera();
         void updateTransform(Vec2i resolution);
         void trigger(InputActions actions);
-        void registerWithInputState(InputState* inputState);
+        void activate();
     protected:
     private:
         Vec2i position;

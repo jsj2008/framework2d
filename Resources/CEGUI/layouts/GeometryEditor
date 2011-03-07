@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<GUILayout>
+  <Window Type="DefaultGUISheet" Name="GeometryEditor">
+    <Property Name="Text" Value="Geometry editor" />
+
+    <Window Type="TaharezLook/RadioButton" Name="GeometryEditor/TabPaneTop" >
+      <Property Name="ID" Value="0" />
+      <Property Name="Text" Value="Tab pane at top" />
+      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.1,0},{0.45,0},{0.2,0}}" />
+    </Window>
+    <Window Type="TaharezLook/Editbox" Name="GeometryEditor/Textbox">
+      <Property Name="ID" Value="2" />
+      <Property Name="VerticalAlignment" Value="Bottom" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedPosition" Value="{{0,7},{0,-7}}" />
+      <Property Name="UnifiedSize" Value="{{0.75,-21},{0,30}}" />
+      <Property Name="Text" Value="" />
+    </Window>
+    
+  </Window>
+</GUILayout>

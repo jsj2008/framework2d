@@ -2,17 +2,18 @@
 #define EDITORMODE_H
 
 #include "../GameMode.h"
+#include <Input/Mouse/ClickNoEvent.h>
 class InputState;
-class SelectionBox;
+class EditorStateSwitcher;
 
-class EditorMode : public GameMode
+class EditorMode : public GameMode, public ClickNoEvent
 {
     public:
         EditorMode();
         virtual ~EditorMode();
     protected:
     private:
-        SelectionBox* selectionBox;
+        EditorStateSwitcher* selectionBox;
 };
 
 #endif // EDITORMODE_H

@@ -1,7 +1,6 @@
 #include "ClickDragEvent.h"
 
-ClickDragEvent::ClickDragEvent(const Rect& _Rect)
-:ClickEvent(_Rect)
+ClickDragEvent::ClickDragEvent()
 {
     //ctor
 }
@@ -11,13 +10,9 @@ ClickDragEvent::~ClickDragEvent()
     //dtor
 }
 
-bool ClickDragEvent::buttonDown(Vec2i mouse, unsigned char button)
+void ClickDragEvent::buttonDown(Vec2i mouse, unsigned char button)
 {
-    if (mRect.contained(mouse))
-    {
-        startPos = mouse;
-        start(button);
-        return true;
-    }
-    else return false;
+    startPos = mouse;
+    start(button);
+    return true;
 }

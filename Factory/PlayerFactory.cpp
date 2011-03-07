@@ -23,7 +23,7 @@ PlayerFactory::~PlayerFactory()
 Entity* PlayerFactory::createEntity(FactoryDef* data)
 {
     CrateDef* def = (CrateDef*)data;
-    Entity* entity = new AIEntity(new PlayerInputBrain(g_Game.getGameMode(ePlayGameMode)->getInputState()));
+    Entity* entity = new AIEntity(new PlayerInputBrain());
 
     bodyDef.position = def->getPosition();
     shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);

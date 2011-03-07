@@ -1,20 +1,13 @@
 #include "BaseJointEditor.h"
-#include <Input/InputState.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Physics/PhysicsManager.h>
-#include <Input/Mouse/CheckBox.h>
 
-BaseJointEditor::BaseJointEditor(FreeCamera* camera, CheckBox* _collide)
-:ClickReleaseEvent(Rect(0,0,10000,10000))
+BaseJointEditor::BaseJointEditor(FreeCamera* camera)
 {
     //ctor
     mCamera = camera;
-    mInputState = new InputState;
-    camera->registerWithInputState(mInputState);
-    mInputState->registerEvent(this);
+    camera->activate();
     bodyA = NULL;
-    collide = _collide;
-    mInputState->registerEvent(collide);
 }
 
 BaseJointEditor::~BaseJointEditor()
@@ -51,5 +44,5 @@ void BaseJointEditor::click(Vec2i mouse, unsigned char button)
 
 bool BaseJointEditor::collideConnected()
 {
-    return collide->getChecked();
+    return true;
 }

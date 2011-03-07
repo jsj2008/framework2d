@@ -1,8 +1,9 @@
 #include "PlayerInputBrain.h"
 #include <Entities/AIEntity.h>
-#include <Input/InputState.h>
-PlayerInputBrain::PlayerInputBrain(InputState* inputState)
-:EventListener(inputState)
+#include <Game.h>
+#include <GameModes/PlayMode.h>
+PlayerInputBrain::PlayerInputBrain()
+:EventListener()
 {
     //ctor
 }

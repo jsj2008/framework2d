@@ -4,11 +4,11 @@
 #include <Input/Mouse/ClickDragEvent.h>
 #include <Factory/BubbleDef.h>
 class SelectionBox;
-
+/*
 class BubbleDrawEvent : public ClickDragEvent
 {
     public:
-        BubbleDrawEvent(const Rect& _Rect, SelectionBox* _selectionBox);
+        BubbleDrawEvent(SelectionBox* _selectionBox);
         virtual ~BubbleDrawEvent();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
@@ -18,5 +18,5 @@ class BubbleDrawEvent : public ClickDragEvent
         SelectionBox* selectionBox;
         BubbleDef def;
 };
-
+*/
 #endif // BUBBLEDRAWEVENT_H

@@ -10,6 +10,7 @@ class PhysicsCamera : public Camera
         PhysicsCamera(b2Body* _body);
         virtual ~PhysicsCamera();
         void updateTransform(Vec2i resolution);
+        void activate();
     protected:
     private:
         b2Body* body;

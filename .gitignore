@@ -9,3 +9,6 @@
 *.dll
 gmon.out
 gprofout.txt
+CEGUI.log
+Resources/CEGUIbackup/
+*.exe

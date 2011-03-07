@@ -20,6 +20,8 @@
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
 					<Add option="-lSDL_ttf" />
+					<Add option="-lCEGUIBase" />
+					<Add option="-lCEGUIOpenGLRenderer" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -38,6 +40,8 @@
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
 					<Add option="-lSDL_ttf" />
+					<Add option="-lCEGUIBase" />
+					<Add option="-lCEGUIOpenGLRenderer" />
 					<Add library="bin/Release/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -244,26 +248,14 @@
 		<Unit filename="Input/EventListener.h" />
 		<Unit filename="Input/InputManager.cpp" />
 		<Unit filename="Input/InputManager.h" />
-		<Unit filename="Input/InputState.cpp" />
-		<Unit filename="Input/InputState.h" />
-		<Unit filename="Input/Mouse/CheckBox.cpp" />
-		<Unit filename="Input/Mouse/CheckBox.h" />
 		<Unit filename="Input/Mouse/ClickDragEvent.cpp" />
 		<Unit filename="Input/Mouse/ClickDragEvent.h" />
-		<Unit filename="Input/Mouse/ClickEvent.cpp" />
-		<Unit filename="Input/Mouse/ClickEvent.h" />
+		<Unit filename="Input/Mouse/ClickNoEvent.cpp" />
+		<Unit filename="Input/Mouse/ClickNoEvent.h" />
 		<Unit filename="Input/Mouse/ClickReleaseEvent.cpp" />
 		<Unit filename="Input/Mouse/ClickReleaseEvent.h" />
-		<Unit filename="Input/Mouse/SelectionBox.cpp" />
-		<Unit filename="Input/Mouse/SelectionBox.h" />
-		<Unit filename="Input/Mouse/SliderBar.cpp" />
-		<Unit filename="Input/Mouse/SliderBar.h" />
-		<Unit filename="Input/Mouse/TextBox.cpp" />
-		<Unit filename="Input/Mouse/TextBox.h" />
-		<Unit filename="Input/Mouse/TriggerButton.cpp" />
-		<Unit filename="Input/Mouse/TriggerButton.h" />
-		<Unit filename="Input/Mouse/TriggerListener.cpp" />
-		<Unit filename="Input/Mouse/TriggerListener.h" />
+		<Unit filename="Input/Mouse/InputContext.cpp" />
+		<Unit filename="Input/Mouse/InputContext.h" />
 		<Unit filename="Level/Level.cpp" />
 		<Unit filename="Level/Level.h" />
 		<Unit filename="Level/LevelManager.cpp" />

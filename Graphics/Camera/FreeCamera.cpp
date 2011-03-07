@@ -1,21 +1,12 @@
 #include "FreeCamera.h"
-#include <Input/InputState.h>
 #include <Graphics/GraphicsManager.h>
 
-FreeCamera::FreeCamera(InputState* inputState)
-:EventListener(inputState)
+FreeCamera::FreeCamera()
+:EventListener()
 {
     //ctor
-    if (inputState != NULL)
-    {
-        inputState->registerEvent(this,ePlus);
-        inputState->registerEvent(this,eMinus);
-    }
-    else
-    {
-        g_InputManager.registerEvent(this,ePlus);
-        g_InputManager.registerEvent(this,eMinus);
-    }
+    g_InputManager.registerEvent(this,ePlus);
+    g_InputManager.registerEvent(this,eMinus);
     scale = 15.0f;
 }
 
@@ -23,14 +14,14 @@ FreeCamera::~FreeCamera()
 {
     //dtor
 }
-void FreeCamera::registerWithInputState(InputState* inputState)
+void FreeCamera::activate()
 {
-    inputState->registerEvent(this,eUp);
-    inputState->registerEvent(this,eLeft);
-    inputState->registerEvent(this,eDown);
-    inputState->registerEvent(this,eRight);
-    inputState->registerEvent(this,ePlus);
-    inputState->registerEvent(this,eMinus);
+    g_InputManager.registerEvent(this,eUp);
+    g_InputManager.registerEvent(this,eLeft);
+    g_InputManager.registerEvent(this,eDown);
+    g_InputManager.registerEvent(this,eRight);
+    g_InputManager.registerEvent(this,ePlus);
+    g_InputManager.registerEvent(this,eMinus);
 }
 void FreeCamera::updateTransform(Vec2i resolution)
 {

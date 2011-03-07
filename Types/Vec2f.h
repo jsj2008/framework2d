@@ -9,8 +9,8 @@ struct Vec2f
 {
 	Vec2f operator*( float s ) { return Vec2f( x*s, y*s ); }
 	Vec2f operator/( float s ) { return Vec2f( x/s, y/s ); }
-	Vec2f operator+( Vec2f B ) { return Vec2f( x + B.x, y + B.y ); }
-	Vec2f operator-( Vec2f B ) { return Vec2f( x - B.x, y - B.y ); }
+	Vec2f operator+(const Vec2f B ) const{ return Vec2f( x + B.x, y + B.y ); }
+	Vec2f operator-(const Vec2f B ) const{ return Vec2f( x - B.x, y - B.y ); }
 	Vec2f operator-() { return Vec2f( -x, -y ); }
 	float operator*( Vec2f B ) { return x*B.x + y*B.y; }
 	void operator/=( float s ) { x /= s; y /= s; }

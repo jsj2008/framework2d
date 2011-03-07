@@ -1,39 +1,34 @@
 #include "EditorMode.h"
 #include "AllEditorModes.h"
-#include <Input/InputState.h>
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Graphics/Primitives/Icon.h>
+#include <Graphics/GraphicsManager.h>
 #include <Game.h>
 #include "EditorStateSwitcher.h"
 #define NUM_MODES 6
 EditorMode::EditorMode()
 {
     //ctor
-    GameMode* modes[NUM_MODES];
-    mInputState = new InputState;
-    FreeCamera* mFreeCamera = new FreeCamera(mInputState);
+    InputContext* modes[NUM_MODES];
+    FreeCamera* mFreeCamera = new FreeCamera();
     mCamera = mFreeCamera;
-    Rect fullscreen(0,0,10000,10000);
+    g_GraphicsManager.setCamera(mCamera);
 
-    modes[0] = new GeometrySelector(mFreeCamera,fullscreen);
-    modes[1] = new GeometryEditor(mFreeCamera,fullscreen);
-    modes[2] = new ItemSpawner(mFreeCamera,fullscreen);
-    modes[3] = new JointEditor(mFreeCamera,fullscreen);
-    modes[4] = new ParallaxEditor(mFreeCamera,fullscreen);
+    modes[0] = new GeometrySelector(mFreeCamera);
+    modes[1] = new GeometryEditor(mFreeCamera);
+    modes[2] = new ItemSpawner(mFreeCamera);
+    modes[3] = new ParallaxEditor(mFreeCamera);
+    modes[4] = new JointEditor(mFreeCamera);
     modes[5] = g_Game.getGameMode(ePlayGameMode);
 
-    Rect rect(0,0,500,100);
     Vec2i dimensions(500/NUM_MODES,100);
-    selectionBox = new EditorStateSwitcher(rect,{"GeometrySelector","GeometryEditor","ItemSpawner","JointEditor","ParallaxEditor","TestPlay"},this,modes);
+    selectionBox = new EditorStateSwitcher("Editor/TabControl",{"GeometrySelector","GeometryEditor","ItemSpawner","ParallaxEditor","JointEditor","TestPlay"},modes);
 
-    mInputState->registerEvent(selectionBox);
     for (unsigned int i = 0; i < NUM_MODES; i++)
     {
-        modes[i]->registerEvent(selectionBox);
+        modes[i]->init();
     }
-
-    g_InputManager.setInputState(mInputState);
 }
 
 EditorMode::~EditorMode()

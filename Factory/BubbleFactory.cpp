@@ -33,6 +33,7 @@ Entity* BubbleFactory::createEntity(FactoryDef* data)
             entity = new UpwardsGravityBubble;
             break;
         }
+        case Bubble::eBubbleTypesMax:
         default:
         {
             return NULL;

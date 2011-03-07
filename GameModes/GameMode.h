@@ -2,19 +2,15 @@
 #define GAMEMODE_H
 
 class Camera;
-class InputState;
-class ClickEvent;
+class InputContext;
 class GameMode
 {
     public:
         GameMode();
         virtual ~GameMode();
-        virtual void registerEvent(ClickEvent* event);
         void set();
-        InputState* getInputState(){return mInputState;} /// For callback event construction
+        virtual void renderGameMode(){}
     protected:
-        InputState* mInputState;
-        Camera* mCamera;
     private:
 };
 

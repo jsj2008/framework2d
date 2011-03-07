@@ -4,8 +4,19 @@
 #include <vector>
 #include <queue>
 #include <SDL/SDL_events.h>
-#include <Input/InputState.h>
 #include <Types/Vec2i.h>
+enum InputActions
+{
+    eUp,
+    eLeft,
+    eDown,
+    eRight,
+    ePlus, /// Need to make these the scroll wheel
+    eMinus,
+    eInputActionsMax
+};
+
+class InputContext;
 class EventListener;
 class InputGrabber;
 class TextBox;
@@ -18,24 +29,26 @@ extern class InputManager
         void cleanup();
         void changeResolution(const Vec2i newResolution);
         bool processInput();
+        void registerStateSelect(InputContext* state, const char* name);
         void registerEvent(EventListener* event, InputActions action);
         void registerGlobalEvent(EventListener* event, InputActions action); /// These are global controls
-        void setInputState(InputState* _currentState);
-        void activeTextBox(TextBox* _textBox);
         void render();
+        void setActiveEvent(InputContext* _activeEvent);
     protected:
     private:
+        struct ControlStruct
+        {
+            ControlStruct(SDLKey _key){key = _key;event = 0;}
+            ControlStruct(char _key){key = SDLKey(_key);event = 0;}
+            SDLKey key;
+            EventListener* event;
+        };
+        ControlStruct* controls;
+        InputContext* activeEvent;
+        bool currentlyActive;
         InputGrabber* inputGrabber;
-        InputState* currentState;
         Vec2i currentResolution;
         unsigned int* globalEventsSizeWhenSeen;
-        struct InputStateHistory
-        {
-            InputStateHistory(InputState* _state, unsigned int _globalEventsSizeWhenSeen){state = _state; globalEventsSizeWhenSeen = _globalEventsSizeWhenSeen;}
-            InputState* state;
-            unsigned int globalEventsSizeWhenSeen;
-        };
-        std::vector<InputStateHistory> inputStates;
         std::vector<std::pair<EventListener*,InputActions> > globalEvents;
 }g_InputManager;
 

@@ -1,29 +1,41 @@
 #include "PlayMode.h"
 #include <Graphics/Camera/PhysicsCamera.h>
-#include <Input/InputState.h>
 #include <GameModes/BubbleDrawEvent.h>
-#include <Input/Mouse/SelectionBox.h>
 #include <Entities/Bubble.h>
 #include <Graphics/Primitives/Icon.h>
+#include <Factory/FactoryList.h>
 
-PlayMode::PlayMode(b2Body* cameraBody)
+PlayMode::PlayMode()
 {
     //ctor
-    mInputState = new InputState;
-    Rect selectionBoxRect(0,400,300,450);
-    Rect fullScreen(0,0,5000,5000);
-    selectionBox = new SelectionBox(selectionBoxRect,{"defaultBubble","defaultBubble"});
-    mInputState->registerEvent(new BubbleDrawEvent(fullScreen,selectionBox));
-    mInputState->registerEvent(selectionBox);
+    def.setMaterial("defaultBubble");
+    mCamera = NULL;
 }
 
 PlayMode::~PlayMode()
 {
     //dtor
-    delete selectionBox;
 }
 
-void PlayMode::setBody(b2Body* cameraBody)
+void PlayMode::start(unsigned char button)
 {
-    mCamera = new PhysicsCamera(cameraBody);
+
+}
+void PlayMode::mouseMove(Vec2i mouse)
+{
+
+}
+void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
+{
+    def.setPosition(startPos.ScreenToWorldSpace());
+    def.radius = (def.getPosition()-mouse.ScreenToWorldSpace()).Length();
+    def.type = (Bubble::BubbleType)1;
+    if (def.radius != 0.0f)
+    {
+        g_FactoryList.useFactory(def, eBubbleFactory);
+    }
+}
+void PlayMode::setBody(b2Body* body)
+{
+    mCamera = new PhysicsCamera(body);
 }

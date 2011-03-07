@@ -1,35 +1,40 @@
 #include "JointEditor.h"
 #include <Graphics/Camera/FreeCamera.h>
-#include <Input/Mouse/SelectionBox.h>
-#include <Input/Mouse/SliderBar.h>
-#include <Input/Mouse/CheckBox.h>
 #include <GameModes/Editor/EditorStateSwitcher.h>
 #include <GameModes/Editor/Joints/AllJointEditors.h>
 
-JointEditor::JointEditor(FreeCamera* camera, const Rect& _Rect)
+JointEditor::JointEditor(FreeCamera* camera)
 {
     //ctor
     mCamera = camera;
-    mInputState = new InputState;
-    camera->registerWithInputState(mInputState);
-    Rect stateSwitcherRect(0,100,500,200);
-    CheckBox* collide = new CheckBox(Vec2i(0,200),"Collide");
-    modes[0] = new DistanceJointEditor(camera,collide);
-    stateSwitcher = new EditorStateSwitcher(stateSwitcherRect,{"Distance"}, this, modes);
-    registerEvent(stateSwitcher);
-    mInputState->registerEvent(collide);
 }
 
+void JointEditor::init()
+{
+    mCamera->activate();
+    modes[0] = new DistanceJointEditor((FreeCamera*)mCamera);
+    stateSwitcher = new EditorStateSwitcher("JointEditor/TabControl",{"DistanceJoints"}, modes);
+    registerEvent(stateSwitcher);
+
+    for (unsigned int i = 0; i < NUM_JOINT_MODES; i++)
+    {
+        modes[i]->init();
+    }
+}
 JointEditor::~JointEditor()
 {
     //dtor
     delete stateSwitcher;
 }
-void JointEditor::registerEvent(ClickEvent* event)
+void JointEditor::registerEvent(InputContext* event)
 {
-    mInputState->registerEvent(event);
     for (unsigned int i = 0; i < NUM_JOINT_MODES; i++)
     {
-        modes[i]->registerEvent(event);
+        //modes[i]->registerEvent(event);
     }
+}
+bool JointEditor::activate(const CEGUI::EventArgs&)
+{
+    stateSwitcher->eventShow();
+    return true;
 }

@@ -23,3 +23,8 @@ void PhysicsCamera::updateTransform(Vec2i resolution)
     translation.x = -center.x + xView;
     translation.y = -center.y + yView;
 }
+
+void PhysicsCamera::activate()
+{
+    // Do nothing
+}

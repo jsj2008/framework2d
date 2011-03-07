@@ -5,19 +5,23 @@
 #include <Factory/ConvexGeometryDef.h>
 #include <GameModes/GameMode.h>
 class FreeCamera;
-class TextBox;
+namespace CEGUI
+{
+    class Window;
+}
 
 class GeometryEditor : public GameMode, public ClickReleaseEvent
 {
     public:
-        GeometryEditor(FreeCamera* camera, const Rect& _Rect);
+        GeometryEditor(FreeCamera* camera);
         virtual ~GeometryEditor();
+        void init();
         void click(Vec2i mouse, unsigned char button);
         void render();
     protected:
     private:
         ConvexGeometryDef def;
-        TextBox* materialName;
+        CEGUI::Window* materialName;
 };
 
 #endif // GEOMETRYEDITOR_H

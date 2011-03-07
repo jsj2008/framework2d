@@ -25,6 +25,7 @@ bool GraphicalContentManager::MaterialDef::parseMaterialFile()
     std::ifstream file(fullFileName.c_str()); /// FIXME passing the string directly gives a linker error. Will probably be fixed in a newer version of g++
     if (!file.good())
     {
+        std::cout << "Failed to open " << fullFileName << " for reading" << std::endl;
         return false;
     }
     while (file.good())

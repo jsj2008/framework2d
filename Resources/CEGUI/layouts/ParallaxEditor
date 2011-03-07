@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<GUILayout>
+    <Window Type="DefaultGUISheet" Name="ParallaxEditor">
+        <Property Name="Text" Value="Parallax editor" />
+
+        <Window Type="TaharezLook/RadioButton" Name="ParallaxEditor/TabPaneTop" >
+            <Property Name="ID" Value="0" />
+            <Property Name="Text" Value="Tab pane at top" />
+            <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.1,0},{0.45,0},{0.2,0}}" />
+	</Window>
+    </Window>
+</GUILayout>

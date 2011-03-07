@@ -6,12 +6,11 @@
 #include <Types/Vec2f.h>
 class FreeCamera;
 class b2Body;
-class CheckBox;
 
 class BaseJointEditor : public GameMode, public ClickReleaseEvent
 {
     public:
-        BaseJointEditor(FreeCamera* camera, CheckBox* _collide);
+        BaseJointEditor(FreeCamera* camera);
         virtual ~BaseJointEditor();
         void click(Vec2i mouse, unsigned char button);
     protected:
@@ -19,7 +18,6 @@ class BaseJointEditor : public GameMode, public ClickReleaseEvent
         Vec2f localPointA;
         bool collideConnected();
     private:
-        CheckBox* collide;
         virtual void createJoint(b2Body* bodyB, Vec2f& localPointB)=0;
 };
 

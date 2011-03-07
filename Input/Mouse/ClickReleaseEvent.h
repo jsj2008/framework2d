@@ -1,17 +1,17 @@
 #ifndef CLICKRELEASEEVENT_H
 #define CLICKRELEASEEVENT_H
 
-#include "ClickEvent.h"
+#include "InputContext.h"
 
-class ClickReleaseEvent: public ClickEvent
+class ClickReleaseEvent: public InputContext
 {
     public:
-        ClickReleaseEvent(const Rect& _Rect);
+        ClickReleaseEvent();
         virtual ~ClickReleaseEvent();
         virtual void click(Vec2i mouse, unsigned char button)=0;
     protected:
     private:
-        bool buttonDown(Vec2i mouse, unsigned char button);
+        void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
 };

@@ -6,22 +6,26 @@
 #include <vector>
 #include <Factory/CrateDef.h>
 class FreeCamera;
-class SliderBar;
-class TextBox;
+namespace CEGUI
+{
+    class Window;
+    class Slider;
+}
 
 class ItemSpawner : public GameMode, public ClickDragEvent
 {
     public:
-        ItemSpawner(FreeCamera* camera, const Rect& _Rect);//, SelectionBox* _selectionBox
+        ItemSpawner(FreeCamera* camera);
         virtual ~ItemSpawner();
+        void init();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
         void render();
     protected:
     private:
-        SliderBar* density;
-        TextBox* textBox;
+        CEGUI::Window* materialName;
+        CEGUI::Slider* density;
         bool dragging;
         Vec2f topLeft, bottomright;
 };

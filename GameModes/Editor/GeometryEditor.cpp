@@ -1,25 +1,25 @@
 #include "GeometryEditor.h"
 #include <Graphics/GraphicsManager.h>
 #include <Level/LevelManager.h>
-#include <Input/InputState.h>
-#include <Input/Mouse/TextBox.h>
 #include <Graphics/Camera/FreeCamera.h>
+#include <CEGUI/CEGUI.h>
 #include <GL/gl.h>
 
-GeometryEditor::GeometryEditor(FreeCamera* camera, const Rect& _Rect)
-:ClickReleaseEvent(_Rect)
+GeometryEditor::GeometryEditor(FreeCamera* camera)
 {
     //ctor
     def.numVertices = 0;
-    mInputState = new InputState;
-    camera->registerWithInputState(mInputState);
+    camera->activate();
     mCamera = camera;
-    Rect fullScreen(0,0,10000,10000);
-    mInputState->registerEvent(this);
-    materialName = new TextBox(Vec2i(0,100),"Material name");
-    mInputState->registerEvent(materialName);
+    //g_InputManager.registerStateSelect(this,"GeometryEditor");
+    materialName = NULL;
 }
 
+
+void GeometryEditor::init()
+{
+    materialName = CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("GeometryEditor/Textbox");
+}
 GeometryEditor::~GeometryEditor()
 {
     //dtor
@@ -37,7 +37,15 @@ void GeometryEditor::click(Vec2i mouse, unsigned char button)
         {
             if (def.sort())
             {
-                def.setMaterial(materialName->getString());
+                CEGUI::String str = materialName->getText();
+                if (str.size() != 0)
+                {
+                    def.setMaterial(str.c_str());
+                }
+                else
+                {
+                    def.setMaterial("");
+                }
                 g_LevelManager.addBody(def);
             }
         }

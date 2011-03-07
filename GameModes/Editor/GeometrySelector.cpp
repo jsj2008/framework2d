@@ -2,20 +2,17 @@
 #include <Graphics/GraphicsManager.h>
 #include <Level/LevelManager.h>
 #include <Physics/PhysicsManager.h>
-#include <Input/InputState.h>
+#include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Box2D/Common/b2Math.h>
 
-GeometrySelector::GeometrySelector(FreeCamera* camera, const Rect& _Rect)
-:ClickDragEvent(_Rect)
+GeometrySelector::GeometrySelector(FreeCamera* camera)
 {
     //ctor
     mouseJoint = NULL;
-    mInputState = new InputState;
-    camera->registerWithInputState(mInputState);
+    camera->activate();
     mCamera = camera;
-    Rect fullScreen(0,0,10000,10000);
-    mInputState->registerEvent(this);
+    //g_InputManager.registerStateSelect(this,"GeometrySelector");
 }
 
 GeometrySelector::~GeometrySelector()

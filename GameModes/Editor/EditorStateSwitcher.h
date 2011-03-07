@@ -1,19 +1,28 @@
 #ifndef EditorStateSwitcher_H
 #define EditorStateSwitcher_H
 
-#include <Input/Mouse/SelectionBox.h>
+#include <initializer_list>
+#include <vector>
+#include <Input/Mouse/ClickNoEvent.h>
 class GameMode;
+class InputContext;
+namespace CEGUI
+{
+    class TabControl;
+}
 
-class EditorStateSwitcher : public SelectionBox
+class EditorStateSwitcher : public ClickNoEvent
 {
     public:
-        EditorStateSwitcher(const Rect& _Rect, std::initializer_list<const char*> icons, GameMode* _root, GameMode** _states);
+        EditorStateSwitcher(const char* tabControlName, std::initializer_list<const char*> icons, InputContext** _states);
         virtual ~EditorStateSwitcher();
+        void push(const char* name, InputContext* event);
+        void eventShow();
     protected:
     private:
         void selectionTrigger();
-        GameMode** states;
-        GameMode* root;
+        std::vector<InputContext*> states;
+        CEGUI::TabControl* tab;
 };
 
 #endif // EditorStateSwitcher_H

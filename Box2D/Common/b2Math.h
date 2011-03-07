@@ -423,18 +423,6 @@ inline b2Vec2 b2MulT(const b2Mat22& A, const b2Vec2& v)
 	return b2Vec2(b2Dot(v, A.col1), b2Dot(v, A.col2));
 }
 
-/// Add two vectors component-wise.
-inline b2Vec2 operator + (const b2Vec2& a, const b2Vec2& b)
-{
-	return b2Vec2(a.x + b.x, a.y + b.y);
-}
-
-/// Subtract two vectors component-wise.
-inline b2Vec2 operator - (const b2Vec2& a, const b2Vec2& b)
-{
-	return b2Vec2(a.x - b.x, a.y - b.y);
-}
-
 inline b2Vec2 operator * (float32 s, const b2Vec2& a)
 {
 	return b2Vec2(s * a.x, s * a.y);

@@ -10,7 +10,7 @@ class FreeCamera;
 class GeometrySelector : public GameMode, public ClickDragEvent
 {
     public:
-        GeometrySelector(FreeCamera* camera, const Rect& _Rect);
+        GeometrySelector(FreeCamera* camera);
         virtual ~GeometrySelector();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);

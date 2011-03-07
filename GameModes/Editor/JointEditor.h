@@ -2,22 +2,24 @@
 #define JOINTEDITOR_H
 
 #include <GameModes/GameMode.h>
-#include <Input/Mouse/ClickReleaseEvent.h>
+#include <Input/Mouse/ClickNoEvent.h>
 class EditorStateSwitcher;
 class SelectionBox;
 class b2Body;
 class FreeCamera;
 #define NUM_JOINT_MODES 1
 
-class JointEditor : public GameMode
+class JointEditor : public GameMode, public ClickNoEvent
 {
     public:
-        JointEditor(FreeCamera* camera, const Rect& _Rect);
+        JointEditor(FreeCamera* camera);
+        void init();
         virtual ~JointEditor();
-        void registerEvent(ClickEvent* event);
+        void registerEvent(InputContext* event);
+        bool activate(const CEGUI::EventArgs&);
     protected:
     private:
-        GameMode* modes[NUM_JOINT_MODES];
+        InputContext* modes[NUM_JOINT_MODES];
         EditorStateSwitcher* stateSwitcher;
 };
 

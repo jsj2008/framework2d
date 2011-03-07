@@ -1,26 +1,16 @@
 #include "ItemSpawner.h"
-#include <Input/Mouse/SelectionBox.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Level/LevelManager.h>
-#include <Input/InputState.h>
-#include <Input/Mouse/SliderBar.h>
-#include <Input/Mouse/TextBox.h>
+#include <CEGUI/CEGUI.h>
+#include <iostream>
 
-ItemSpawner::ItemSpawner(FreeCamera* camera, const Rect& _Rect)
-:ClickDragEvent(_Rect)
+ItemSpawner::ItemSpawner(FreeCamera* camera)
 {
     //ctor
-    mInputState = new InputState;
-    camera->registerWithInputState(mInputState);
+    camera->activate();
     mCamera = camera;
-    Rect rect(0,100,200,200);
-    density = new SliderBar(Vec2i(0,100),100,"Density 0-30",1.0f);
-    textBox = new TextBox(Vec2i(0,150),"Material");
-    Rect fullScreen(0,0,10000,10000);
-    mInputState->registerEvent(this);
-
-    mInputState->registerEvent(density);
-    mInputState->registerEvent(textBox);
+    density = NULL;
+    materialName = NULL;
 }
 
 ItemSpawner::~ItemSpawner()
@@ -28,6 +18,11 @@ ItemSpawner::~ItemSpawner()
     //dtor
 }
 
+void ItemSpawner::init()
+{
+    density = (CEGUI::Slider*)CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("ItemSpawner/Slider");
+    materialName = CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("ItemSpawner/Textbox");
+}
 void ItemSpawner::start(unsigned char button)
 {
     topLeft = startPos.ScreenToWorldSpace();
@@ -45,7 +40,8 @@ void ItemSpawner::buttonUp(Vec2i mouse, unsigned char button)
     if (dimensions.x > 1.0f && dimensions.y > 1.0f)
     {
         CrateDef def;
-        def.set(dimensions,density->getPosition()*30.0f,textBox->getString());
+        def.set(dimensions,density->getCurrentValue(),materialName->getText().c_str());
+        std::cout << "Density: " << density->getCurrentValue() << std::endl;
         def.setPosition(topLeft + (bottomright - topLeft)*0.5);
         g_LevelManager.addBody(def);
     }

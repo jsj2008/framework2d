@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<GUILayout>
+  <Window Type="DefaultGUISheet" Name="DistanceJoints">
+    <Property Name="Text" Value="Click and select" />
+
+    <Window Type="TaharezLook/RadioButton" Name="DistanceJoints/TabPaneTop" >
+      <Property Name="ID" Value="0" />
+      <Property Name="Text" Value="Tab pane at top" />
+      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.1,0},{0.45,0},{0.2,0}}" />
+    </Window>
+  <Window Type="TaharezLook/Slider" Name="DistanceJoints/Frequency" >
+    <Property Name="CurrentValue" Value="0" />
+    <Property Name="MaximumValue" Value="30" />
+    <Property Name="ClickStepSize" Value="0.01" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0.299415,0},{0.090471,0},{0.355434,0},{0.606802,0}}" />
+  </Window>
+  <Window Type="TaharezLook/Slider" Name="DistanceJoints/Dampingratio" >
+    <Property Name="CurrentValue" Value="0" />
+    <Property Name="MaximumValue" Value="1" />
+    <Property Name="ClickStepSize" Value="0.01" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0.0,0},{0.0,0},{0.2,0},{0.4,0}}" />
+  </Window>
+  </Window>
+</GUILayout>
