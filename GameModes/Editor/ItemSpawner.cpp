@@ -1,96 +1,43 @@
 #include "ItemSpawner.h"
 #include <Graphics/Camera/FreeCamera.h>
-#include <Level/LevelManager.h>
-#include <CEGUI/CEGUI.h>
-#include <iostream>
+#include <GameModes/Editor/EditorStateSwitcher.h>
+#include <GameModes/Editor/CrateSpawner.h>
+#include <GameModes/Editor/AIEntitySpawner.h>
 
 ItemSpawner::ItemSpawner(FreeCamera* camera)
 {
     //ctor
-    camera->activate();
     mCamera = camera;
-    density = NULL;
-    materialName = NULL;
-}
-
-ItemSpawner::~ItemSpawner()
-{
-    //dtor
 }
 
 void ItemSpawner::init()
 {
-    density = (CEGUI::Slider*)CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("ItemSpawner/Slider");
-    materialName = CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("ItemSpawner/Textbox");
-}
-void ItemSpawner::start(unsigned char button)
-{
-    topLeft = startPos.ScreenToWorldSpace();
-    bottomright = topLeft;
-    dragging = true;
-}
-void ItemSpawner::mouseMove(Vec2i mouse)
-{
-    bottomright = mouse.ScreenToWorldSpace();
-}
-void ItemSpawner::buttonUp(Vec2i mouse, unsigned char button)
-{
-    bottomright = mouse.ScreenToWorldSpace();
-    Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
-    if (dimensions.x > 1.0f && dimensions.y > 1.0f)
+    mCamera->activate();
+    modes[0] = new CrateSpawner((FreeCamera*)mCamera);
+    modes[1] = new AIEntitySpawner((FreeCamera*)mCamera);
+    stateSwitcher = new EditorStateSwitcher("ItemSpawner/TabControl",{"CrateSpawner","AIEntitySpawner"}, modes);
+    registerEvent(stateSwitcher);
+
+    for (unsigned int i = 0; i < NUM_ITEM_SPAWNERS; i++)
     {
-        CrateDef def;
-        def.set(dimensions,density->getCurrentValue(),materialName->getText().c_str());
-        std::cout << "Density: " << density->getCurrentValue() << std::endl;
-        def.setPosition(topLeft + (bottomright - topLeft)*0.5);
-        g_LevelManager.addBody(def);
-    }
-    dragging = false;
-}
-#include <GL/gl.h>
-void ItemSpawner::render()
-{
-    if (dragging)
-    {
-        glBegin(GL_LINE_LOOP);
-        glVertex2f(topLeft.x,topLeft.y);
-        glVertex2f(topLeft.x,bottomright.y);
-        glVertex2f(bottomright.x,bottomright.y);
-        glVertex2f(bottomright.x,topLeft.y);
-        glEnd();
+        modes[i]->init();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ItemSpawner::~ItemSpawner()
+{
+    //dtor
+    delete stateSwitcher;
+}
+void ItemSpawner::registerEvent(InputContext* event)
+{
+    for (unsigned int i = 0; i < NUM_ITEM_SPAWNERS; i++)
+    {
+        //modes[i]->registerEvent(event);
+    }
+}
+bool ItemSpawner::activate(const CEGUI::EventArgs&)
+{
+    stateSwitcher->eventShow();
+    g_InputManager.setActiveEvent(this);
+    return true;
+}

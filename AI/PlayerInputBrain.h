@@ -10,6 +10,7 @@ class PlayerInputBrain : public Brain, public EventListener
         PlayerInputBrain();
         virtual ~PlayerInputBrain();
         void trigger(InputActions actions);
+        void activate();
     protected:
     private:
 };

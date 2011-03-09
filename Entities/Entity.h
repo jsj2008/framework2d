@@ -10,6 +10,7 @@ enum EntityType
     eAIEntityType,
     eBubbleEntityType,
     ePhysicsParticleEntityType,
+    eProjectileEntityType,
     eEntityTypeMax,
 };
 class Entity

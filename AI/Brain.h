@@ -15,7 +15,9 @@ class Brain
         void setEntity(AIEntity* _Entity);
         /// Ai callbacks
         void jump();
+        virtual void update(){}
     protected:
+        friend class ShooterGame; /// FIXME
         AIEntity* mEntity;
     private:
 };

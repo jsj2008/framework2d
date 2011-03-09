@@ -17,7 +17,6 @@ bool function(const CEGUI::EventArgs& e)
     return true;
 }
 GraphicsManager::GraphicsManager()
-:mFontRenderer("FreeSans",12)
 {
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);

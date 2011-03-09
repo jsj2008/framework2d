@@ -4,6 +4,9 @@
 #include <Entities/Bubble.h>
 #include <Graphics/Primitives/Icon.h>
 #include <Factory/FactoryList.h>
+#include <Graphics/GraphicsManager.h>
+#include <Input/InputManager.h>
+#include <AI/PlayerInputBrain.h>
 
 PlayMode::PlayMode()
 {
@@ -35,7 +38,22 @@ void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
         g_FactoryList.useFactory(def, eBubbleFactory);
     }
 }
-void PlayMode::setBody(b2Body* body)
+void PlayMode::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
 {
     mCamera = new PhysicsCamera(body);
+    playerBrain = _playerBrain;
 }
+
+bool PlayMode::activate(const CEGUI::EventArgs& args)
+{
+    g_InputManager.setActiveEvent(this);
+    if (mCamera != NULL)
+    {
+        g_GraphicsManager.setCamera(mCamera);
+        mCamera->activate();
+    }
+    assert(playerBrain);
+    playerBrain->activate();
+    return true;
+}
+

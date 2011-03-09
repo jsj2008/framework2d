@@ -114,6 +114,7 @@ bool InputManager::processInput()
             {
                 g_GraphicsManager.resize(Vec2i(event.resize.w,event.resize.h));
                 g_InputManager.changeResolution(Vec2i(event.resize.w,event.resize.h));
+                CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Size(event.resize.w,event.resize.h));
                 break;
             }
             case SDL_MOUSEBUTTONDOWN:

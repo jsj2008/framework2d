@@ -25,6 +25,7 @@ void Level::addBody(StandardFactoryDef def)
 {
     b2Body* body = g_FactoryList.useFactory(def,def.type)->mBody;
     bodyToDefTable[body] = def;
+    std::cout << bodyToDefTable.size() << std::endl;
 }
 void Level::addJoint(b2JointDef* def)
 {

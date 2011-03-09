@@ -13,6 +13,8 @@ PlayerFactory::PlayerFactory()
     //ctor
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;
+    fixtureDef.filter.categoryBits = PhysicsManager::PlayerCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::PlayerCategory);
 }
 
 PlayerFactory::~PlayerFactory()
@@ -23,7 +25,8 @@ PlayerFactory::~PlayerFactory()
 Entity* PlayerFactory::createEntity(FactoryDef* data)
 {
     CrateDef* def = (CrateDef*)data;
-    Entity* entity = new AIEntity(new PlayerInputBrain());
+    PlayerInputBrain* brain = new PlayerInputBrain();
+    Entity* entity = new AIEntity(brain);
 
     bodyDef.position = def->getPosition();
     shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);
@@ -34,6 +37,6 @@ Entity* PlayerFactory::createEntity(FactoryDef* data)
     entity->mSkin = new StaticSkin(def->width,def->height);
     setMaterial(entity->mSkin,g_GraphicsManager.getMaterial("player"));
 
-    ((PlayMode*)g_Game.getGameMode(ePlayGameMode))->setBody(entity->mBody);
+    ((PlayMode*)g_Game.getGameMode(ePlayGameMode))->setBody(entity->mBody,brain);
     return entity;
 }

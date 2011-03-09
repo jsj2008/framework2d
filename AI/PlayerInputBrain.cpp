@@ -13,6 +13,14 @@ PlayerInputBrain::~PlayerInputBrain()
     //dtor
 }
 
+void PlayerInputBrain::activate()
+{
+    g_InputManager.registerEvent(this,eUp);
+    g_InputManager.registerEvent(this,eLeft);
+    g_InputManager.registerEvent(this,eDown);
+    g_InputManager.registerEvent(this,eRight);
+}
+
 void PlayerInputBrain::trigger(InputActions action)
 {
     switch (action)

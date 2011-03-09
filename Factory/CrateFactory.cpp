@@ -9,7 +9,10 @@ CrateFactory::CrateFactory()
 {
     //ctor
     bodyDef.type = b2_dynamicBody;
-    density = 10.0f;
+    fixtureDef.density = 10.0f;
+    fixtureDef.shape = &shapeDef;
+    fixtureDef.filter.categoryBits = PhysicsManager::CrateCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::CrateCategory);
 }
 
 CrateFactory::~CrateFactory()
@@ -23,10 +26,10 @@ Entity* CrateFactory::createEntity(FactoryDef* data)
 
     bodyDef.position = def->getPosition();
     bodyDef.angle = data->rotation;
-    shape.SetAsBox(def->width*0.5f,def->height*0.5f);
+    shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&shape, density);
+    entity->mBody->CreateFixture(&fixtureDef);
 
     entity->mSkin = new StaticSkin(def->width,def->height);
     setMaterial(entity->mSkin,g_GraphicsManager.getMaterial(def->materialName));

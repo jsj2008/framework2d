@@ -19,9 +19,9 @@
 					<Add option="-lSDL" />
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
-					<Add option="-lSDL_ttf" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
+					<Add option="-lglee" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -39,9 +39,9 @@
 					<Add option="-lSDL" />
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
-					<Add option="-lSDL_ttf" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
+					<Add option="-lglee" />
 					<Add library="bin/Release/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -60,7 +60,6 @@
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
-					<Add option="-lSDL_ttf" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -80,7 +79,6 @@
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
-					<Add option="-lSDL_ttf" />
 					<Add library="bin/Release/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -97,11 +95,11 @@
 					<Add directory="E:/Users/Alasdair/Documents/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg" />
 					<Add option="-pg -lgmon" />
 					<Add option="-lSDL" />
 					<Add option="-lopengl32" />
 					<Add option="-lglu32" />
-					<Add option="-lSDL_ttf" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -130,6 +128,8 @@
 		<Unit filename="AI/BrainFactory.h" />
 		<Unit filename="AI/PlayerInputBrain.cpp" />
 		<Unit filename="AI/PlayerInputBrain.h" />
+		<Unit filename="AI/ZombieBrain.cpp" />
+		<Unit filename="AI/ZombieBrain.h" />
 		<Unit filename="Entities/AIEntity.cpp" />
 		<Unit filename="Entities/AIEntity.h" />
 		<Unit filename="Entities/AllEntities.h" />
@@ -146,8 +146,14 @@
 		<Unit filename="Entities/Entity.h" />
 		<Unit filename="Entities/PhysicsParticle.cpp" />
 		<Unit filename="Entities/PhysicsParticle.h" />
+		<Unit filename="Entities/Projectile.cpp" />
+		<Unit filename="Entities/Projectile.h" />
 		<Unit filename="Entities/StaticGeometry.cpp" />
 		<Unit filename="Entities/StaticGeometry.h" />
+		<Unit filename="Factory/AIEntityDef.cpp" />
+		<Unit filename="Factory/AIEntityDef.h" />
+		<Unit filename="Factory/AIEntityFactory.cpp" />
+		<Unit filename="Factory/AIEntityFactory.h" />
 		<Unit filename="Factory/AllFactories.h" />
 		<Unit filename="Factory/AllFactoryDefs.h" />
 		<Unit filename="Factory/BubbleDef.cpp" />
@@ -174,11 +180,19 @@
 		<Unit filename="Factory/ParticleFactory.h" />
 		<Unit filename="Factory/PlayerFactory.cpp" />
 		<Unit filename="Factory/PlayerFactory.h" />
+		<Unit filename="Factory/ProjectileDef.cpp" />
+		<Unit filename="Factory/ProjectileDef.h" />
+		<Unit filename="Factory/ProjectileFactory.cpp" />
+		<Unit filename="Factory/ProjectileFactory.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
 		<Unit filename="GameModes/BubbleDrawEvent.h" />
+		<Unit filename="GameModes/Editor/AIEntitySpawner.cpp" />
+		<Unit filename="GameModes/Editor/AIEntitySpawner.h" />
 		<Unit filename="GameModes/Editor/AllEditorModes.h" />
+		<Unit filename="GameModes/Editor/CrateSpawner.cpp" />
+		<Unit filename="GameModes/Editor/CrateSpawner.h" />
 		<Unit filename="GameModes/Editor/EditorMode.cpp" />
 		<Unit filename="GameModes/Editor/EditorMode.h" />
 		<Unit filename="GameModes/Editor/EditorStateSwitcher.cpp" />
@@ -202,6 +216,8 @@
 		<Unit filename="GameModes/GameMode.h" />
 		<Unit filename="GameModes/PlayMode.cpp" />
 		<Unit filename="GameModes/PlayMode.h" />
+		<Unit filename="GameModes/ShooterGame.cpp" />
+		<Unit filename="GameModes/ShooterGame.h" />
 		<Unit filename="Graphics/Camera/Camera.cpp" />
 		<Unit filename="Graphics/Camera/Camera.h" />
 		<Unit filename="Graphics/Camera/FreeCamera.cpp" />
@@ -218,23 +234,10 @@
 		<Unit filename="Graphics/Contexts/StaticModelContext.h" />
 		<Unit filename="Graphics/Contexts/TextureContext.cpp" />
 		<Unit filename="Graphics/Contexts/TextureContext.h" />
-		<Unit filename="Graphics/FontRenderer.cpp" />
-		<Unit filename="Graphics/FontRenderer.h" />
-		<Unit filename="Graphics/GLee.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="Graphics/GraphicalContentManager.cpp" />
 		<Unit filename="Graphics/GraphicalContentManager.h" />
 		<Unit filename="Graphics/GraphicsManager.cpp" />
 		<Unit filename="Graphics/GraphicsManager.h" />
-		<Unit filename="Graphics/Primitives/FontPrimitive.cpp" />
-		<Unit filename="Graphics/Primitives/FontPrimitive.h" />
-		<Unit filename="Graphics/Primitives/Icon.cpp" />
-		<Unit filename="Graphics/Primitives/Icon.h" />
-		<Unit filename="Graphics/Primitives/Primitive.cpp" />
-		<Unit filename="Graphics/Primitives/Primitive.h" />
-		<Unit filename="Graphics/Primitives/Primitive2D.cpp" />
-		<Unit filename="Graphics/Primitives/Primitive2D.h" />
 		<Unit filename="Graphics/Skins/AllSkins.h" />
 		<Unit filename="Graphics/Skins/BubbleSkin.cpp" />
 		<Unit filename="Graphics/Skins/BubbleSkin.h" />
@@ -264,6 +267,17 @@
 		<Unit filename="Level/ParallaxLayer.h" />
 		<Unit filename="Level/ParallaxSprite.cpp" />
 		<Unit filename="Level/ParallaxSprite.h" />
+		<Unit filename="Physics/CollisionHandlers/AIEntityProjectileCollisionHandler.cpp" />
+		<Unit filename="Physics/CollisionHandlers/AIEntityProjectileCollisionHandler.h" />
+		<Unit filename="Physics/CollisionHandlers/AllCollisionHandlers.h" />
+		<Unit filename="Physics/CollisionHandlers/CollisionHandler.cpp" />
+		<Unit filename="Physics/CollisionHandlers/CollisionHandler.h" />
+		<Unit filename="Physics/CollisionHandlers/NoResponseHandler.cpp" />
+		<Unit filename="Physics/CollisionHandlers/NoResponseHandler.h" />
+		<Unit filename="Physics/CollisionHandlers/StaticGeometryAIEntityCollisionHandler.cpp" />
+		<Unit filename="Physics/CollisionHandlers/StaticGeometryAIEntityCollisionHandler.h" />
+		<Unit filename="Physics/CollisionHandlers/WildcardProjectileCollisionHandler.cpp" />
+		<Unit filename="Physics/CollisionHandlers/WildcardProjectileCollisionHandler.h" />
 		<Unit filename="Physics/ContactListener.cpp" />
 		<Unit filename="Physics/ContactListener.h" />
 		<Unit filename="Physics/PhysicsManager.cpp" />

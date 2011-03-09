@@ -14,8 +14,8 @@ class CrateFactory : public Factory
     protected:
     private:
         b2BodyDef bodyDef;
-        b2PolygonShape shape;
-        float density;
+        b2FixtureDef fixtureDef;
+        b2PolygonShape shapeDef;
 };
 
 #endif // CRATEFACTORY_H

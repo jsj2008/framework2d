@@ -4,8 +4,9 @@
 #include <Physics/PhysicsManager.h>
 #include <Factory/ParticleDef.h>
 #include <Factory/FactoryList.h>
+#include <Factory/ProjectileDef.h>
 #include <cassert>
-#define JUMP_IMPULSE -1.0f*WORLD_GRAVITY
+#define JUMP_IMPULSE -5.0f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain)
 {
@@ -13,13 +14,27 @@ AIEntity::AIEntity(Brain* _Brain)
     mBrain = _Brain;
     mBrain->setEntity(this);
     grounded = false;
-    health = 100;
+    health = 15;
 }
 
 AIEntity::~AIEntity()
 {
     //dtor
     delete mBrain;
+}
+void AIEntity::fireAt(Vec2f targetPosition)
+{
+    Vec2f direction = targetPosition - mBody->GetPosition();
+    direction /= direction.Length();
+    fire(direction);
+}
+void AIEntity::fire(Vec2f targetDirection)
+{
+    ProjectileDef def;
+    Vec2f position = mBody->GetPosition();
+    position += targetDirection*3;
+    def.set("Bullet",1.0f,position,targetDirection*30.0f);
+    g_FactoryList.useFactory(def,eProjectileFactory);
 }
 void AIEntity::damage()
 {
@@ -29,6 +44,8 @@ void AIEntity::damage()
     def.setMaterial("Spark");
     def.setPosition(mBody->GetPosition());
     g_FactoryList.useFactory(def,eParticleFactory);
+
+    health--;
 }
 void AIEntity::update()
 {
@@ -51,11 +68,12 @@ void AIEntity::update()
             break;
         }
     }
-    if (health  < 0)
+#endif
+    mBrain->update();
+    if (health  < 1)
     {
         g_PhysicsManager.destroyBody(mBody);
     }
-#endif
 }
 void AIEntity::jump()
 {

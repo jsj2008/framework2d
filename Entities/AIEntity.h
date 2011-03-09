@@ -15,8 +15,10 @@ class AIEntity : public Entity
         void walkLeft();
         void walkRight();
         void damage();
+        void fireAt(Vec2f targetPosition);
     protected:
     private:
+        void fire(Vec2f targetDirection);
         int health;
         virtual ~AIEntity();
         Brain* mBrain;

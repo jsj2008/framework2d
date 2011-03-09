@@ -6,5 +6,6 @@
 #include "AIEntity.h"
 #include "Bubble.h"
 #include "PhysicsParticle.h"
+#include "Projectile.h"
 
 #endif // ALLENTITIES_H_INCLUDED

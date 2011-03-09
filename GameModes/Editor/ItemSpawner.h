@@ -2,32 +2,25 @@
 #define ITEMSPAWNER_H
 
 #include <GameModes/GameMode.h>
-#include <Input/Mouse/ClickDragEvent.h>
-#include <vector>
-#include <Factory/CrateDef.h>
+#include <Input/Mouse/ClickNoEvent.h>
+class EditorStateSwitcher;
+class SelectionBox;
+class b2Body;
 class FreeCamera;
-namespace CEGUI
-{
-    class Window;
-    class Slider;
-}
+#define NUM_ITEM_SPAWNERS 2
 
-class ItemSpawner : public GameMode, public ClickDragEvent
+class ItemSpawner : public GameMode, public ClickNoEvent
 {
     public:
         ItemSpawner(FreeCamera* camera);
-        virtual ~ItemSpawner();
         void init();
-        void start(unsigned char button);
-        void mouseMove(Vec2i mouse);
-        void buttonUp(Vec2i mouse, unsigned char button);
-        void render();
+        virtual ~ItemSpawner();
+        void registerEvent(InputContext* event);
+        bool activate(const CEGUI::EventArgs&);
     protected:
     private:
-        CEGUI::Window* materialName;
-        CEGUI::Slider* density;
-        bool dragging;
-        Vec2f topLeft, bottomright;
+        InputContext* modes[NUM_ITEM_SPAWNERS];
+        EditorStateSwitcher* stateSwitcher;
 };
 
 #endif // ITEMSPAWNER_H

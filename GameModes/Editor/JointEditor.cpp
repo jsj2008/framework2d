@@ -14,7 +14,6 @@ void JointEditor::init()
     mCamera->activate();
     modes[0] = new DistanceJointEditor((FreeCamera*)mCamera);
     stateSwitcher = new EditorStateSwitcher("JointEditor/TabControl",{"DistanceJoints"}, modes);
-    registerEvent(stateSwitcher);
 
     for (unsigned int i = 0; i < NUM_JOINT_MODES; i++)
     {
@@ -26,15 +25,9 @@ JointEditor::~JointEditor()
     //dtor
     delete stateSwitcher;
 }
-void JointEditor::registerEvent(InputContext* event)
-{
-    for (unsigned int i = 0; i < NUM_JOINT_MODES; i++)
-    {
-        //modes[i]->registerEvent(event);
-    }
-}
 bool JointEditor::activate(const CEGUI::EventArgs&)
 {
     stateSwitcher->eventShow();
+    g_InputManager.setActiveEvent(this);
     return true;
 }

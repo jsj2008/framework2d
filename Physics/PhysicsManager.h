@@ -2,11 +2,12 @@
 #define PHYSICSMANAGER_H
 
 #include <Box2D/Box2D.h>
-#define JUMPING
-
-#define WORLD_GRAVITY 9.8f
 class RenderCallback;
 class ContactListener;
+
+#define BIT(x) (1 << x)
+#define JUMPING
+#define WORLD_GRAVITY 9.8f
 
 extern class PhysicsManager
 {
@@ -27,13 +28,15 @@ extern class PhysicsManager
         b2Body* select(Vec2f& position);
         enum CollisionCategory
         {
-            PlayerCategory = 0x0001,
-            CrateCategory,
-            StaticGeometryCategory,
-            BubbleCategory,
+            PlayerCategory = BIT(0),
+            CrateCategory = BIT(1),
+            StaticGeometryCategory = BIT(2),
+            BubbleCategory = BIT(3),
+            EnemyCategory = BIT(4),
+            ProjectileCategory = BIT(5),
             CollisionCategoriesMax
         };
-        //unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
+        unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
     protected:
     private:
         unsigned short collisionMasks[CollisionCategoriesMax];

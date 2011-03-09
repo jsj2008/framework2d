@@ -26,5 +26,6 @@ void PhysicsCamera::updateTransform(Vec2i resolution)
 
 void PhysicsCamera::activate()
 {
-    // Do nothing
+    /*Entity* entity = (Entity*)body->GetUserData();
+    entity->*/
 }

@@ -5,6 +5,7 @@
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
 #include <GameModes/PlayMode.h>
+#include <GameModes/ShooterGame.h>
 #include <Timer.h>
 #include <GameModes/Editor/EditorMode.h>
 #include <Level/LevelManager.h>
@@ -28,7 +29,7 @@ void Game::init()
     g_PhysicsManager.init();
 
     //editorMode = new EditorMode;
-    mGameModes[ePlayGameMode] = new PlayMode();
+    mGameModes[ePlayGameMode] = new ShooterGame;
     mGameModes[eEditorGameMode] = new EditorMode;
 
     PlayerDef def;
@@ -45,6 +46,7 @@ void Game::init()
     //set(NULL,mGameModes[eEditorGameMode]);
     CEGUI::EventArgs args;
     mGameModes[eEditorGameMode]->activate(args);
+    mGameModes[ePlayGameMode]->activate(args);
 
 
     g_Timer.unPause();
@@ -57,43 +59,19 @@ InputContext* Game::getGameMode(GameModes mode)
 {
     return mGameModes[mode];
 }
-/*GameMode* Game::getGameMode(GameModes mode)
-{
-    return mGameModes[mode];
-}
-void Game::set(GameMode* root, GameMode* mode)
-{
-    GameMode* mTop = gameModeStack.top();
-    while (mTop != root)
-    {
-        gameModeStack.pop();
-        mTop = gameModeStack.top();
-    }
-    if (mode == NULL)
-    {
-        mTop->set();
-    }
-    else
-    {
-        gameModeStack.push(mode);
-        mode->set();
-    }
-}*/
 #include <GL/gl.h>
 void Game::run()
 {
     bool running = true;
     while (running)
     {
-        g_GraphicsManager.beginScene();
         if (g_PhysicsManager.update())
         {
             running = g_InputManager.processInput();
         }
+        g_GraphicsManager.beginScene();
         g_PhysicsManager.render();
-        glColor4f(1,1,1,0.5);
         g_InputManager.render();
-        glColor4f(1,1,1,1);
         g_LevelManager.tempRender();
         SDL_Delay(5);
         g_GraphicsManager.endScene();

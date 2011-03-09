@@ -14,6 +14,8 @@ union StandardFactoryDef
     StandardFactoryDef(ConvexGeometryDef& def);
     StandardFactoryDef(BubbleDef& def);
     StandardFactoryDef(ParticleDef& def);
+    StandardFactoryDef(AIEntityDef& def);
+    StandardFactoryDef(ProjectileDef& def);
     StandardFactories type;
     FactoryDef baseDef;
     PlayerDef playerDef;
@@ -21,6 +23,8 @@ union StandardFactoryDef
     ConvexGeometryDef convexGeometryDef;
     BubbleDef bubbleDef;
     ParticleDef particleDef;
+    AIEntityDef aiEntityDef;
+    ProjectileDef projectileDef;
 };
 
 extern class FactoryList

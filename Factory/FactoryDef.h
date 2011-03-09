@@ -10,6 +10,8 @@ enum StandardFactories : unsigned short
     eCrateFactory,
     eBubbleFactory,
     eParticleFactory,
+    eAIEntityFactory,
+    eProjectileFactory,
     eStandardFactoriesMax
 };
 class FactoryDef

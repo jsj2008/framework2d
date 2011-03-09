@@ -3,9 +3,9 @@
 using namespace std;
 FactoryList g_FactoryList;
 FactoryList::FactoryList()
-:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory, new BubbleFactory, new ParticleFactory})
+:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory, new BubbleFactory, new ParticleFactory, new AIEntityFactory, new ProjectileFactory})
 {
-    assert(factories[eStandardFactoriesMax-1]);
+    assert(factories.size() == eStandardFactoriesMax);
     //ctor
 }
 
@@ -55,8 +55,51 @@ StandardFactoryDef::StandardFactoryDef(BubbleDef& def)
     bubbleDef = def;
     type = eBubbleFactory;
 }
+StandardFactoryDef::StandardFactoryDef(AIEntityDef& def)
+{
+    aiEntityDef = def;
+    type = eAIEntityFactory;
+}
 StandardFactoryDef::StandardFactoryDef(ParticleDef& def)
 {
     particleDef = def;
     type = eParticleFactory;
 }
+StandardFactoryDef::StandardFactoryDef(ProjectileDef& def)
+{
+    projectileDef = def;
+    type = eProjectileFactory;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

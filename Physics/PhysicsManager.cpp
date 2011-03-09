@@ -7,14 +7,15 @@
 #include <Physics/ContactListener.h>
 #include <Level/LevelManager.h>
 PhysicsManager g_PhysicsManager;
-#define MASK(x) (1 << x)
 PhysicsManager::PhysicsManager()
 {
     //ctor
-    collisionMasks[PlayerCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
-    collisionMasks[CrateCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
-    collisionMasks[StaticGeometryCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
-    collisionMasks[BubbleCategory] = MASK(PlayerCategory)&&MASK(CrateCategory)&&MASK(StaticGeometryCategory)&&MASK(BubbleCategory);
+    collisionMasks[PlayerCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+    collisionMasks[CrateCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+    collisionMasks[StaticGeometryCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+    collisionMasks[BubbleCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+    collisionMasks[EnemyCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+    collisionMasks[ProjectileCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
 }
 PhysicsManager::~PhysicsManager()
 {
@@ -107,9 +108,9 @@ void PhysicsManager::updateEntities()
     while (body != NULL)
     {
         Entity* entity = (Entity*)body->GetUserData();
+        body = body->GetNext();
         if (entity != NULL)
             entity->update();
-        body = body->GetNext();
     }
 }
 void PhysicsManager::render()

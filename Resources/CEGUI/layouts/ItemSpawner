@@ -2,22 +2,18 @@
 <GUILayout>
   <Window Type="DefaultGUISheet" Name="ItemSpawner">
     <Property Name="Text" Value="Item spawner" />
-  <Window Type="TaharezLook/Editbox" Name="ItemSpawner/Textbox">
-    <Property Name="ID" Value="2" />
-    <Property Name="VerticalAlignment" Value="Bottom" />
-    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-    <Property Name="UnifiedPosition" Value="{{0,7},{0,-7}}" />
-    <Property Name="UnifiedSize" Value="{{0.75,-21},{0,30}}" />
-    <Property Name="Text" Value="" />
-  </Window>
-  <Window Type="TaharezLook/Slider" Name="ItemSpawner/Slider" >
-    <Property Name="CurrentValue" Value="0" />
-    <Property Name="MaximumValue" Value="30" />
-    <Property Name="ClickStepSize" Value="0.01" />
-    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-    <Property Name="UnifiedAreaRect" Value="{{0.099415,0},{0.090471,0},{0.155434,0},{0.606802,0}}" />
-  </Window>
 
-  
-</Window>
+    <Window Type="TaharezLook/RadioButton" Name="ItemSpawner/TabPaneTop" >
+      <Property Name="ID" Value="0" />
+      <Property Name="Text" Value="Tab pane at top" />
+      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.1,0},{0.45,0},{0.2,0}}" />
+    </Window>
+    <Window Type="TaharezLook/TabControl" Name="ItemSpawner/TabControl" >
+      <Property Name="Tooltip" Value="This is the tab control" />
+      <Property Name="TabHeight" Value="{0,-1}" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="TabPanePosition" Value="Top" />
+      <Property Name="UnifiedAreaRect" Value="{{0,10},{0,10},{1,-10},{1,-10}}" />
+    </Window>
+  </Window>
 </GUILayout>

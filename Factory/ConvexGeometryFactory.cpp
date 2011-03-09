@@ -9,6 +9,8 @@ ConvexGeometryFactory::ConvexGeometryFactory()
 {
     //ctor
     fixtureDef.shape = &shapeDef;
+    fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
+    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 ConvexGeometryFactory::~ConvexGeometryFactory()
