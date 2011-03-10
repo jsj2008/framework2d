@@ -126,6 +126,16 @@
 		<Unit filename="AI/Brain.h" />
 		<Unit filename="AI/BrainFactory.cpp" />
 		<Unit filename="AI/BrainFactory.h" />
+		<Unit filename="AI/Pathfinding/PathFollower.cpp" />
+		<Unit filename="AI/Pathfinding/PathFollower.h" />
+		<Unit filename="AI/Pathfinding/PathGraph.cpp" />
+		<Unit filename="AI/Pathfinding/PathGraph.h" />
+		<Unit filename="AI/Pathfinding/PathNode.cpp" />
+		<Unit filename="AI/Pathfinding/PathNode.h" />
+		<Unit filename="AI/Pathfinding/PathSegment.cpp" />
+		<Unit filename="AI/Pathfinding/PathSegment.h" />
+		<Unit filename="AI/Pathfinding/Pathfinding.cpp" />
+		<Unit filename="AI/Pathfinding/Pathfinding.h" />
 		<Unit filename="AI/PlayerInputBrain.cpp" />
 		<Unit filename="AI/PlayerInputBrain.h" />
 		<Unit filename="AI/ZombieBrain.cpp" />

@@ -157,14 +157,20 @@ public:
 };
 b2Body* PhysicsManager::select(Vec2f& position)
 {
-    b2AABB aabb;
     PhySimpleCallback callback(position);
+    b2AABB aabb;
     aabb.lowerBound = Vec2f(position.x-0.0001f,position.y-0.0001f);
     aabb.upperBound = Vec2f(position.x+0.0001f,position.y+0.0001f);
     mWorld->QueryAABB(&callback,aabb);
     return callback.ret;
 }
-
+void PhysicsManager::AABBQuery(b2QueryCallback* callback, const Vec2f& point)
+{
+    b2AABB aabb;
+    aabb.lowerBound = Vec2f(point.x-0.0001f,point.y-0.0001f);
+    aabb.upperBound = Vec2f(point.x+0.0001f,point.y+0.0001f);
+    mWorld->QueryAABB(callback,aabb);
+}
 
 
 

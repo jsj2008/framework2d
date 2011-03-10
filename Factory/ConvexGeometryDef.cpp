@@ -17,8 +17,6 @@ void ConvexGeometryDef::addPoint(const Vec2f& p)
     numVertices++;
 }
 #define M_PI 3.14159265358979323846
-#include <iostream>
-using namespace std;
 bool ConvexGeometryDef::sort()
 {
     bool alreadySorted = false;

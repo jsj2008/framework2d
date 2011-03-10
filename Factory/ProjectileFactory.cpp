@@ -26,7 +26,7 @@ Entity* ProjectileFactory::createEntity(FactoryDef* data)
     ProjectileDef* def = (ProjectileDef*)data;
     Projectile* projectile = new Projectile;
 
-    bodyDef.position = data->getPosition();
+    bodyDef.position = data->getPosition() + Vec2f(def->radius*0.5,def->radius*0.5);
     bodyDef.linearVelocity = def->getVelocity();
     bodyDef.userData = (void*)projectile;
     shapeDef.m_radius = def->radius;

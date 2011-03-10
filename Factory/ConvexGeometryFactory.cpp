@@ -3,6 +3,7 @@
 #include <Graphics/GraphicsManager.h>
 #include <Entities/StaticGeometry.h>
 #include <Graphics/Skins/ConvexPolygonSkin.h>
+#include <AI/AIManager.h>
 using namespace std;
 
 ConvexGeometryFactory::ConvexGeometryFactory()
@@ -20,6 +21,7 @@ ConvexGeometryFactory::~ConvexGeometryFactory()
 Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
 {
     ConvexGeometryDef* def = (ConvexGeometryDef*)data;
+    g_AIManager.addStaticGeometry((Vec2f*)def->vertices,def->numVertices);
     StaticGeometry* entity = new StaticGeometry;
 
     assert(def->numVertices <= b2_maxPolygonVertices);

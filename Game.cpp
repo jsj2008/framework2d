@@ -11,6 +11,7 @@
 #include <Level/LevelManager.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Factory/BubbleDef.h>
+#include <AI/AIManager.h>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -48,7 +49,7 @@ void Game::init()
     mGameModes[eEditorGameMode]->activate(args);
     mGameModes[ePlayGameMode]->activate(args);
 
-
+    g_AIManager.finalisePathfinding();
     g_Timer.unPause();
 }
 Game::~Game()
@@ -73,6 +74,7 @@ void Game::run()
         g_PhysicsManager.render();
         g_InputManager.render();
         g_LevelManager.tempRender();
+        g_AIManager.tempRender();
         SDL_Delay(5);
         g_GraphicsManager.endScene();
     }

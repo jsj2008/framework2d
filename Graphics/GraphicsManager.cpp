@@ -9,8 +9,6 @@
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
-class mClass{public: bool mMember(const CEGUI::EventArgs&){std::cout << "Jumped" << std::endl;return 1;}};
-mClass mInstance;
 bool function(const CEGUI::EventArgs& e)
 {
     std::cout << "Jumped" << std::endl;
@@ -47,29 +45,15 @@ GraphicsManager::GraphicsManager()
     if (parser->isPropertyPresent("SchemaDefaultResourceGroup"))
         parser->setProperty("SchemaDefaultResourceGroup", "schemas");
 
-
     CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme", "schemes");
     CEGUI::System::getSingleton().setDefaultMouseCursor( "TaharezLook", "MouseArrow" );
 
     CEGUI::Window *myRoot = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorRoot.layout");
     CEGUI::System::getSingleton().setGUISheet( myRoot );
 
-    //CEGUI::TabControl* tab = (CEGUI::TabControl*)myRoot->getChild("Frame/TabControl");
-
-    /*CEGUI::Window *page1 = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("TabPage1.layout");
-    CEGUI::Window *page2 = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("TabPage2.layout");
-    tab->addTab(page1);
-    tab->addTab(page2);*/
-
-    //CEGUI::Window* button = page2->getChild("Page2/Button3");
-    //button->subscribeEvent(CEGUI::TabButton::EventClicked,CEGUI::SubscriberSlot(&mClass::mMember,&mInstance));
-
-
-
-
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
-	glClearColor(1,0,0,1);
+	glClearColor(0,0,0,1);
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glLineWidth(3);

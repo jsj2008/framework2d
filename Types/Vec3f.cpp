@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "Vec3f.h"
-
+#include <Types/Vec2f.h>
+Vec3f::Vec3f(const Vec2f& rhs)
+{
+    *this = Vec3f(rhs.x,rhs.y,0);
+}
 Vec3f::Vec3f(float _x, float _y, float _z)
 :x(_x),y(_y),z(_z)
 {

@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <ostream>
+class Vec2f;
 using std::ostream;
 
 class Vec3f
@@ -11,6 +12,7 @@ public:
 	// Constructors
 	//Vec3f(void);
 	Vec3f(float _x = 0, float _y = 0, float _z = 0);
+	Vec3f(const Vec2f& rhs);
 	//Vec3f(const Vec3f & rhs);
 
 	~Vec3f(void);

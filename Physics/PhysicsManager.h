@@ -37,6 +37,7 @@ extern class PhysicsManager
             CollisionCategoriesMax
         };
         unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
+        void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
     protected:
     private:
         unsigned short collisionMasks[CollisionCategoriesMax];
