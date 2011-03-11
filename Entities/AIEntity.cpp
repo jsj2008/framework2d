@@ -89,14 +89,14 @@ void AIEntity::walkLeft()
 {
     Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(-1,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(-0.2,0), point);
 }
 
 void AIEntity::walkRight()
 {
     Vec2f point(0,0);
     point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(1,0), point);
+    mBody->ApplyLinearImpulse(Vec2f(0.2,0), point);
 }
 
 

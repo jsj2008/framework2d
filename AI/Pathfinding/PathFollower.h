@@ -1,16 +1,34 @@
 #ifndef PATHFOLLOWER_H
 #define PATHFOLLOWER_H
 
-class Vec2f;
+#include <Types/Vec2f.h>
+#include <queue>
+class PathSegment;
 
 class PathFollower
 {
     public:
+        enum Operation
+        {
+            eWalkLeft,
+            eWalkRight,
+            eOperationsMax
+        };
         PathFollower();
         virtual ~PathFollower();
-        void update(const Vec2f& position);
+        Operation update(const Vec2f& position);
     protected:
     private:
+        struct PathInstruction
+        {
+            PathSegment* segment;
+            Operation operation;
+            Vec2f target;
+        };
+        bool loop;
+        std::queue<PathInstruction> instructions;
+        PathSegment* closest;
+        void calculateNewPath();
 };
 
 #endif // PATHFOLLOWER_H

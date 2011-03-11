@@ -36,13 +36,44 @@ bool PathSegment::isDirectlyConnected(PathSegment* neighbour)
     return false;
     //return nodeA->getSegmentB() == neighbour || nodeB->getSegmentA() == neighbour || nodeA->getSegmentA() == neighbour || nodeB->getSegmentB() == neighbour;
 }
-
-void PathSegment::closestPoints(PathSegment* segment, float& t1, float& t2)
+Vec2f GetClosetPoint(Vec2f A, Vec2f B, Vec2f P, bool segmentClamp)
+{
+    Vec2f AP = P - A;
+    Vec2f AB = B - A;
+    float ab2 = AB.x*AB.x + AB.y*AB.y;
+    float ap_ab = AP.x*AB.x + AP.y*AB.y;
+    float t = ap_ab / ab2;
+    if (segmentClamp)
+    {
+        if (t < 0.0f) t = 0.0f;
+        else if (t > 1.0f) t = 1.0f;
+    }
+    Vec2f Closest = A + AB * t;
+    return Closest;
+}
+float PathSegment::closestPoint(const Vec2f& P)
+{
+    Vec2f A = nodeA->getPosition();
+    Vec2f B = nodeB->getPosition();
+    Vec2f AP = P - A;
+    Vec2f AB = B - A;
+    float ab2 = AB.x*AB.x + AB.y*AB.y;
+    float ap_ab = AP.x*AB.x + AP.y*AB.y;
+    float t = ap_ab / ab2;
+    const bool segmentClamp = true;
+    if (segmentClamp)
+    {
+        if (t < 0.0f) t = 0.0f;
+        else if (t > 1.0f) t = 1.0f;
+    }
+    Vec2f Closest = A + AB * t;
+    Vec2f connection = Closest - P;
+    return connection.Length();
+}
+void PathSegment::closestPoints(const Vec2f& p3, const Vec2f& p4, float& t1, float& t2)
 {
     Vec2f p1 = this->getNodeA()->getPosition();
     Vec2f p2 = this->getNodeB()->getPosition();
-    Vec2f p3 = segment->getNodeA()->getPosition();
-    Vec2f p4 = segment->getNodeB()->getPosition();
 
     t1 = (((p4.x - p3.x)*(p1.y - p3.y)) - ((p4.y - p3.y)*(p1.x - p3.x)))/
          (((p4.y - p3.y)*(p2.x - p1.x)) - ((p4.x - p3.x)*(p2.y - p1.y)));

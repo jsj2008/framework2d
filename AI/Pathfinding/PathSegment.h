@@ -23,7 +23,8 @@ class PathSegment
         PathNode* getNodeB(){return nodeB;}
         void setNodeB(PathNode* _nodeB){nodeB = _nodeB;}
         bool isDirectlyConnected(PathSegment* neighbour);
-        void closestPoints(PathSegment* segment, float& t1, float& t2);
+        float closestPoint(const Vec2f& point);
+        void closestPoints(const Vec2f& p3, const Vec2f& p4, float& t1, float& t2);
         void setNodeTypes();
         Type getType(){return type;}
     protected:

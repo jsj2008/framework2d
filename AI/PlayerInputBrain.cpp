@@ -2,10 +2,13 @@
 #include <Entities/AIEntity.h>
 #include <Game.h>
 #include <GameModes/PlayMode.h>
+#include <AI/Pathfinding/PathFollower.h>
+#include <Box2D/Box2D.h>
 PlayerInputBrain::PlayerInputBrain()
 :EventListener()
 {
     //ctor
+    follower = NULL;
 }
 
 PlayerInputBrain::~PlayerInputBrain()
@@ -20,7 +23,22 @@ void PlayerInputBrain::activate()
     g_InputManager.registerEvent(this,eDown);
     g_InputManager.registerEvent(this,eRight);
 }
-
+void PlayerInputBrain::update()
+{
+    if (follower == NULL)
+    {
+        follower = new PathFollower();
+    }
+    PathFollower::Operation operation = follower->update(mEntity->mBody->GetPosition());
+    if (operation == PathFollower::Operation::eWalkLeft)
+    {
+        mEntity->walkLeft();
+    }
+    else
+    {
+        mEntity->walkRight();
+    }
+}
 void PlayerInputBrain::trigger(InputActions action)
 {
     switch (action)

@@ -16,6 +16,7 @@ class PathGraph
         PathSegment* appendSegment(PathSegment* currentSegement, const Vec2f& vertexB);
         PathSegment* connectSegments(PathSegment* segmentA, PathSegment* segmentB);
         void finalise();
+        PathSegment* findClosestPath(const Vec2f& position);
     protected:
     private:
         void deleteNode(PathNode* node);

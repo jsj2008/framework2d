@@ -109,7 +109,7 @@ void PathGraph::finalise()
                     continue;
                 }
                 float t1,t2;
-                a->closestPoints(b,t1,t2);
+                a->closestPoints(b->getNodeA()->getPosition(),b->getNodeB()->getPosition(),t1,t2);
                 if (t1 > 0.0f && t1 < 1.0f && t2 > 0.0f && t2 < 1.0f)
                 {
                     Vec2f start = b->getNodeA()->getPosition();
@@ -180,7 +180,26 @@ PathSegment* PathGraph::separate(PathSegment* segment, float point, PathNode* ne
     addSegment(segmentB);
     return segmentB;
 }
-
+PathSegment* PathGraph::findClosestPath(const Vec2f& position)
+{
+    float smallestT = 1000.0f;
+    PathSegment* closestPath = NULL;
+    for (auto i = segments.begin(); i != segments.end(); i++)
+    {
+        if ((*i)->getType() == PathSegment::eFloor)
+        {
+            float t = (*i)->closestPoint(position);
+            if (t < smallestT)
+            {
+                smallestT = t;
+                closestPath = *i;
+            }
+        }
+    }
+    std::cout << smallestT << endl;
+    assert(closestPath);
+    return closestPath;
+}
 
 
 
