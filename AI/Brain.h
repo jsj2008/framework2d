@@ -4,6 +4,7 @@
 enum BrainType
 {
     ePlayerInputBrainType,
+    eZombieBrainType,
     eBrainTypesMax
 };
 class AIEntity;

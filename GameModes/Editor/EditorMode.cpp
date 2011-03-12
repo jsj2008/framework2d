@@ -2,7 +2,6 @@
 #include "AllEditorModes.h"
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
-#include <Graphics/Primitives/Icon.h>
 #include <Graphics/GraphicsManager.h>
 #include <Game.h>
 #include "EditorStateSwitcher.h"

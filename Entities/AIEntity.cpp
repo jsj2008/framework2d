@@ -12,6 +12,7 @@ AIEntity::AIEntity(Brain* _Brain)
 {
     //ctor
     mBrain = _Brain;
+    wheel = NULL;
     mBrain->setEntity(this);
     grounded = false;
     health = 15;
@@ -87,16 +88,30 @@ void AIEntity::jump()
 }
 void AIEntity::walkLeft()
 {
-    Vec2f point(0,0);
-    point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(-0.2,0), point);
+    if (wheel == NULL)
+    {
+        Vec2f point(0,0);
+        point = mBody->GetWorldCenter();
+        mBody->ApplyLinearImpulse(Vec2f(-0.2,0), point);
+    }
+    else
+    {
+        wheel->SetMotorSpeed(-20.0f);
+    }
 }
 
 void AIEntity::walkRight()
 {
-    Vec2f point(0,0);
-    point = mBody->GetWorldCenter();
-    mBody->ApplyLinearImpulse(Vec2f(0.2,0), point);
+    if (wheel == NULL)
+    {
+        Vec2f point(0,0);
+        point = mBody->GetWorldCenter();
+        mBody->ApplyLinearImpulse(Vec2f(0.2,0), point);
+    }
+    else
+    {
+        wheel->SetMotorSpeed(20.0f);
+    }
 }
 
 

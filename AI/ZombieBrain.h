@@ -2,7 +2,7 @@
 #define ZOMBIEBRAIN_H
 
 #include <AI/Brain.h>
-
+class PathFollower;
 
 class ZombieBrain : public Brain
 {
@@ -12,6 +12,7 @@ class ZombieBrain : public Brain
         void update();
     protected:
     private:
+        PathFollower* follower;
 };
 
 #endif // ZOMBIEBRAIN_H

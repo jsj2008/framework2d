@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include <Box2D/Common/b2Math.h>
 class Brain;
+class b2RevoluteJoint;
 
 class AIEntity : public Entity
 {
@@ -16,8 +17,10 @@ class AIEntity : public Entity
         void walkRight();
         void damage();
         void fireAt(Vec2f targetPosition);
+        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
     protected:
     private:
+        b2RevoluteJoint* wheel;
         void fire(Vec2f targetDirection);
         int health;
         virtual ~AIEntity();

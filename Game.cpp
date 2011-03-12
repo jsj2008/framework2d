@@ -17,9 +17,7 @@
 using namespace std;
 Game g_Game;
 Game::Game()
-///:gameModeStack({NULL}) Compiler segmentation fault? wtf?
 {
-    gameModeStack.push(NULL);
 }
 #include <SDL/SDL_timer.h>
 void Game::init()
@@ -29,22 +27,18 @@ void Game::init()
     g_Timer.pause();
     g_PhysicsManager.init();
 
-    //editorMode = new EditorMode;
     mGameModes[ePlayGameMode] = new ShooterGame;
     mGameModes[eEditorGameMode] = new EditorMode;
 
-    PlayerDef def;
+    AIEntityDef def;
     def.setPosition(Vec2f(0,0));
+    def.setMaterial("player");
     def.width = 2;
     def.height = 2;
+    def.aiType = ePlayerInputBrainType;
     g_LevelManager.loadLevel("default");
-    //g_LevelManager.addBody(def);
-    Entity* entity = g_FactoryList.useFactory(def,ePlayerFactory);
-    entity = NULL;
+    g_FactoryList.useFactory(def,eAIEntityFactory);
 
-    //((PlayMode*)mGameModes[ePlayGameMode])->setBody(entity->mBody);
-
-    //set(NULL,mGameModes[eEditorGameMode]);
     CEGUI::EventArgs args;
     mGameModes[eEditorGameMode]->activate(args);
     mGameModes[ePlayGameMode]->activate(args);

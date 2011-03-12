@@ -5,7 +5,6 @@
 
 enum StandardFactories : unsigned short
 {
-    ePlayerFactory,
     eConvexPolygonFactory,
     eCrateFactory,
     eBubbleFactory,

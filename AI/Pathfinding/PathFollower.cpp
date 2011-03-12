@@ -2,6 +2,7 @@
 #include <AI/AIManager.h>
 #include <AI/Pathfinding/PathSegment.h>
 #include <AI/Pathfinding/PathNode.h>
+#include <Box2D/Box2D.h>
 
 PathFollower::PathFollower()
 {
@@ -14,11 +15,13 @@ PathFollower::~PathFollower()
     //dtor
 }
 
-PathFollower::Operation PathFollower::update(const Vec2f& position)
+PathFollower::Operation PathFollower::update(b2Body* body, PathSegment* newTarget)
 {
+    const Vec2f& position = body->GetPosition();
     PathSegment* newClosest = g_AIManager.findClosestPath(position);
-    if (newClosest != closest)
+    if (newClosest != closest || newTarget != target)
     {
+        target = newTarget;
         closest = newClosest;
         calculateNewPath();
     }
@@ -73,9 +76,6 @@ void PathFollower::calculateNewPath()
     instructions.push(tempInstruction);
     loop = true;
 }
-
-
-
 
 
 

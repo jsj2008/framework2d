@@ -3,7 +3,7 @@
 using namespace std;
 FactoryList g_FactoryList;
 FactoryList::FactoryList()
-:factories({new PlayerFactory, new ConvexGeometryFactory, new CrateFactory, new BubbleFactory, new ParticleFactory, new AIEntityFactory, new ProjectileFactory})
+:factories({new ConvexGeometryFactory, new CrateFactory, new BubbleFactory, new ParticleFactory, new AIEntityFactory, new ProjectileFactory})
 {
     assert(factories.size() == eStandardFactoriesMax);
     //ctor
@@ -34,11 +34,6 @@ Factory* FactoryList::getFactory(StandardFactories factory)
 StandardFactoryDef::StandardFactoryDef()
 {
     type = eStandardFactoriesMax;
-}
-StandardFactoryDef::StandardFactoryDef(PlayerDef& def)
-{
-    playerDef = def;
-    type = ePlayerFactory;
 }
 StandardFactoryDef::StandardFactoryDef(CrateDef& def)
 {

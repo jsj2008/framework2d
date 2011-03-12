@@ -41,14 +41,17 @@ void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impu
     {
         Entity* a = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData();
         Entity* b = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData();
-        if (a->getType() > b->getType())
-        {
-            Entity* c = b;
-            b = a;
-            a = c;
+        if (a != NULL && b != NULL) /// FIXME
+            {
+            if (a->getType() > b->getType())
+            {
+                Entity* c = b;
+                b = a;
+                a = c;
+            }
+            HighVelocityImpact impact(a,b,totalImpulse);
+            highVelocityImpacts.push(impact);
         }
-        HighVelocityImpact impact(a,b,totalImpulse);
-        highVelocityImpacts.push(impact);
     }
 }
 

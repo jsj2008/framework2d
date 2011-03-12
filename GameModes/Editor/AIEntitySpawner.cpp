@@ -6,7 +6,7 @@ AIEntitySpawner::AIEntitySpawner(FreeCamera* camera)
 {
     //ctor
     mCamera = camera;
-    def.set("player",2,2,AIEntityDef::eZombie);
+    def.set("player",2,2,eZombieBrainType);
 }
 
 AIEntitySpawner::~AIEntitySpawner()

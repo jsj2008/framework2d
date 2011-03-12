@@ -15,6 +15,9 @@ bool RenderCallback::ReportFixture(b2Fixture* fixture)
 {
     b2Body* body = fixture->GetBody();
     Entity* entity = (Entity*)body->GetUserData();
-    entity->render();
+    if (entity != NULL)
+    {
+        entity->render();
+    }
     return true;
 }

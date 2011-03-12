@@ -188,8 +188,6 @@
 		<Unit filename="Factory/ParticleDef.h" />
 		<Unit filename="Factory/ParticleFactory.cpp" />
 		<Unit filename="Factory/ParticleFactory.h" />
-		<Unit filename="Factory/PlayerFactory.cpp" />
-		<Unit filename="Factory/PlayerFactory.h" />
 		<Unit filename="Factory/ProjectileDef.cpp" />
 		<Unit filename="Factory/ProjectileDef.h" />
 		<Unit filename="Factory/ProjectileFactory.cpp" />

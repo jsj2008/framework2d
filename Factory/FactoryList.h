@@ -9,7 +9,6 @@ class Entity;
 union StandardFactoryDef
 {
     StandardFactoryDef();
-    StandardFactoryDef(PlayerDef& def);
     StandardFactoryDef(CrateDef& def);
     StandardFactoryDef(ConvexGeometryDef& def);
     StandardFactoryDef(BubbleDef& def);
@@ -18,7 +17,6 @@ union StandardFactoryDef
     StandardFactoryDef(ProjectileDef& def);
     StandardFactories type;
     FactoryDef baseDef;
-    PlayerDef playerDef;
     CrateDef crateDef;
     ConvexGeometryDef convexGeometryDef;
     BubbleDef bubbleDef;

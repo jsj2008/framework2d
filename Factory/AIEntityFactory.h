@@ -13,9 +13,14 @@ class AIEntityFactory : public Factory
         Entity* createEntity(FactoryDef* data);
     protected:
     private:
+    private:
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
+        b2BodyDef wheelBody;
+        b2FixtureDef wheelFixture;
+        b2CircleShape wheelShape;
+        b2RevoluteJointDef jointDef;
 };
 
 #endif // AIENTITYFACTORY_H

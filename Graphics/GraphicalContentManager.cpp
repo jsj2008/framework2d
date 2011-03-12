@@ -5,7 +5,6 @@
 #include <cstring>
 #include <Graphics/Contexts/TextureContext.h>
 #include <Graphics/Contexts/ShaderContext.h>
-#include <Graphics/Primitives/Icon.h>
 GraphicalContentManager::MaterialDef::MaterialDef(const char* _materialName)
 {
     strcpy(materialName,_materialName);

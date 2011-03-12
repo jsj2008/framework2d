@@ -3,6 +3,7 @@
 
 #include <Types/Vec2f.h>
 #include <queue>
+class b2Body;
 class PathSegment;
 
 class PathFollower
@@ -16,7 +17,8 @@ class PathFollower
         };
         PathFollower();
         virtual ~PathFollower();
-        Operation update(const Vec2f& position);
+        Operation update(b2Body* body, PathSegment* newTarget);
+        PathSegment* getCurrentSegment(){return instructions.back().segment;}
     protected:
     private:
         struct PathInstruction
@@ -28,6 +30,7 @@ class PathFollower
         bool loop;
         std::queue<PathInstruction> instructions;
         PathSegment* closest;
+        PathSegment* target;
         void calculateNewPath();
 };
 
