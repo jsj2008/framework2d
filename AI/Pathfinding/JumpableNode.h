@@ -1,7 +1,7 @@
 #ifndef JUMPABLENODE_H
 #define JUMPABLENODE_H
 
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 #include <AI/AIManager.h>
 
 class JumpableNode : public PathNode

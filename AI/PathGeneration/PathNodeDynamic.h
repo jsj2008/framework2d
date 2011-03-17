@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <unordered_map>
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 #include <Types/Vec2f.h>
 class PathSegment;
 class PathNode;

@@ -1,5 +1,5 @@
 #include "WalkableNode.h"
-#include <AI/Paths/PathfindingAlgorithm.h>
+#include <AI/Pathfinding/PathfindingAlgorithm.h>
 
 WalkableNode::WalkableNode(const Vec2f& _position)
 :PathNode(_position)

@@ -1,7 +1,7 @@
 #include "PathGraph.h"
-#include <AI/Pathfinding/PathSegment.h>
-#include <AI/Pathfinding/PathNodeDynamic.h>
-#include <AI/Paths/Paths.h>
+#include <AI/PathGeneration/PathSegment.h>
+#include <AI/PathGeneration/PathNodeDynamic.h>
+#include <AI/Pathfinding/Paths.h>
 
 PathGraph::PathGraph()
 {

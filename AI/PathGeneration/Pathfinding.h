@@ -1,7 +1,7 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
-#include <AI/Pathfinding/PathGraph.h>
+#include <AI/PathGeneration/PathGraph.h>
 class Vec2f;
 
 class Pathfinding

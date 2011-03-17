@@ -1,7 +1,7 @@
 #include "PathFollower.h"
 #include <AI/AIManager.h>
-#include <AI/Pathfinding/PathSegment.h>
-#include <AI/Pathfinding/PathNodeDynamic.h>
+#include <AI/PathGeneration/PathSegment.h>
+#include <AI/PathGeneration/PathNodeDynamic.h>
 #include <Box2D/Box2D.h>
 
 PathFollower::PathFollower()

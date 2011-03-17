@@ -2,7 +2,7 @@
 #define PATHS_H
 
 #include <vector>
-#include <AI/Paths/Node.h>
+#include <AI/Pathfinding/Node.h>
 #include <AI/AIManager.h>
 class PathNode;
 class Vec2f;

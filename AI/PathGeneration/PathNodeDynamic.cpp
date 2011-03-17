@@ -1,5 +1,5 @@
 #include "PathNodeDynamic.h"
-#include <AI/Pathfinding/PathSegment.h>
+#include <AI/PathGeneration/PathSegment.h>
 
 PathNodeDynamic::PathNodeDynamic(const Vec2f& _position)
 :PathNode(_position)
@@ -77,9 +77,9 @@ void PathNodeDynamic::setType(Type _type)
         type = eJumpable;
     }
 }
-#include <AI/Paths/DeadEndNode.h>
-#include <AI/Paths/JumpableNode.h>
-#include <AI/Paths/WalkableNode.h>
+#include <AI/Pathfinding/DeadEndNode.h>
+#include <AI/Pathfinding/JumpableNode.h>
+#include <AI/Pathfinding/WalkableNode.h>
 NodeReference PathNodeDynamic::createNodes(std::unordered_map<PathNodeDynamic*,NodeReference>& createdNodes, std::vector<PathNode*>* nodeList)
 {
     auto me = createdNodes.find(this);

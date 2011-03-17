@@ -3,7 +3,7 @@
 
 #include <stack>
 #include <Types/Vec2f.h>
-#include <AI/Paths/Node.h>
+#include <AI/Pathfinding/Node.h>
 #include <AI/AIManager.h>
 class b2Body;
 class PathNode;

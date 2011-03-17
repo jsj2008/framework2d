@@ -1,7 +1,7 @@
 #ifndef WALKABLENODE_H
 #define WALKABLENODE_H
 
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 
 
 class WalkableNode : public PathNode

@@ -2,8 +2,8 @@
 #define AIMANAGER_H
 
 #include <stack>
-#include <AI/Pathfinding/Pathfinding.h>
-#include <AI/Paths/Node.h>
+#include <AI/PathGeneration/Pathfinding.h>
+#include <AI/Pathfinding/Node.h>
 #include <Types/Vec2f.h>
 class Paths;
 class PathNode;

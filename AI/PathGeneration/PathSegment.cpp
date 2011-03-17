@@ -1,5 +1,5 @@
 #include "PathSegment.h"
-#include <AI/Pathfinding/PathNodeDynamic.h>
+#include <AI/PathGeneration/PathNodeDynamic.h>
 #include <Box2D/Common/b2Math.h>
 
 PathSegment::PathSegment(PathNodeDynamic* _nodeA, PathNodeDynamic* _nodeB)

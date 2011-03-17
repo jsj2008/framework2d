@@ -3,7 +3,7 @@
 #include <Game.h>
 #include <GameModes/GameMode.h>
 #include <Box2D/Box2D.h>
-#include <AI/Paths/Paths.h>
+#include <AI/Pathfinding/Paths.h>
 AIManager g_AIManager;
 AIManager::AIManager()
 {

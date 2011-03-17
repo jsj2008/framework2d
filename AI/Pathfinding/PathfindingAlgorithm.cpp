@@ -1,5 +1,5 @@
 #include "PathfindingAlgorithm.h"
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 #include <cstring>
 
 PathfindingAlgorithm::PathfindingAlgorithm(std::vector<PathNode*>& _nodes, NodeReference _start, NodeReference _target, unsigned int _set)

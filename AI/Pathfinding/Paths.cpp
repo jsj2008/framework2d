@@ -1,7 +1,7 @@
 #include "Paths.h"
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 #include <Types/Vec2f.h>
-#include <AI/Paths/PathfindingAlgorithm.h>
+#include <AI/Pathfinding/PathfindingAlgorithm.h>
 
 Paths::Paths(std::vector<std::vector<PathNode*>*>& _nodes)
 {

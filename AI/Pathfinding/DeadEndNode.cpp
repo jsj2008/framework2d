@@ -1,5 +1,5 @@
 #include "DeadEndNode.h"
-#include <AI/Paths/PathfindingAlgorithm.h>
+#include <AI/Pathfinding/PathfindingAlgorithm.h>
 
 DeadEndNode::DeadEndNode(const Vec2f& _position)
 :PathNode(_position)

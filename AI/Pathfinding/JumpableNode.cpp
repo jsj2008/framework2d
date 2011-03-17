@@ -1,5 +1,5 @@
 #include "JumpableNode.h"
-#include <AI/Paths/PathfindingAlgorithm.h>
+#include <AI/Pathfinding/PathfindingAlgorithm.h>
 
 JumpableNode::JumpableNode(const Vec2f& _position)
 :PathNode(_position)

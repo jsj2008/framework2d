@@ -1,7 +1,7 @@
 #ifndef DEADENDNODE_H
 #define DEADENDNODE_H
 
-#include <AI/Paths/PathNode.h>
+#include <AI/Pathfinding/PathNode.h>
 #include <AI/AIManager.h>
 
 class DeadEndNode : public PathNode
