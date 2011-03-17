@@ -10,6 +10,7 @@ class FreeCamera : public Camera, public EventListener
         FreeCamera();
         virtual ~FreeCamera();
         void updateTransform(Vec2i resolution);
+        void resetInput();
         void trigger(InputActions actions);
         void activate();
     protected:

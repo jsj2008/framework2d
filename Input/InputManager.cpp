@@ -172,6 +172,13 @@ bool InputManager::processInput()
             }
         }
     }
+    for (unsigned int i = 0; i < eInputActionsMax; i++)
+    {
+        if (controls[i].event != NULL)
+        {
+            controls[i].event->resetInput();
+        }
+    }
     for (int i = 0; i < eInputActionsMax; i++)
     {
         if (keys[controls[i].key])

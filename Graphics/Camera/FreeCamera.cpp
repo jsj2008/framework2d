@@ -31,8 +31,10 @@ void FreeCamera::updateTransform(Vec2i resolution)
     translation.x = -(position.x/scale) + xView;
     translation.y = -(position.y/scale) + yView;
 }
-#include <iostream>
-using namespace std;
+void FreeCamera::resetInput()
+{
+
+}
 void FreeCamera::trigger(InputActions action)
 {
     switch (action)

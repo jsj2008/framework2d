@@ -1,6 +1,7 @@
 #include "PathGraph.h"
 #include <AI/Pathfinding/PathSegment.h>
-#include <AI/Pathfinding/PathNode.h>
+#include <AI/Pathfinding/PathNodeDynamic.h>
+#include <AI/Paths/Paths.h>
 
 PathGraph::PathGraph()
 {
@@ -10,12 +11,21 @@ PathGraph::PathGraph()
 PathGraph::~PathGraph()
 {
     //dtor
+    while (!segments.empty())
+    {
+        delete segments.back();
+        segments.pop_back();
+    }
+    for (auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        delete *i;
+    }
 }
 
 PathSegment* PathGraph::addSegment(const Vec2f& vertexA, const Vec2f& vertexB, PathSegment** trueFirst)
 {
-    PathNode* nodeA = new PathNode(vertexA);
-    PathNode* nodeB = new PathNode(vertexB);
+    PathNodeDynamic* nodeA = new PathNodeDynamic(vertexA);
+    PathNodeDynamic* nodeB = new PathNodeDynamic(vertexB);
     PathSegment* segment = new PathSegment(nodeA, nodeB);
 
     nodes.push_back(nodeA);
@@ -27,8 +37,8 @@ PathSegment* PathGraph::addSegment(const Vec2f& vertexA, const Vec2f& vertexB, P
 
 PathSegment* PathGraph::appendSegment(PathSegment* currentSegment, const Vec2f& vertexB)
 {
-    PathNode* nodeA = currentSegment->getNodeB();
-    PathNode* nodeB = new PathNode(vertexB);
+    PathNodeDynamic* nodeA = currentSegment->getNodeB();
+    PathNodeDynamic* nodeB = new PathNodeDynamic(vertexB);
     PathSegment* segment = new PathSegment(nodeA, nodeB);
 
     nodes.push_back(nodeB);
@@ -38,8 +48,8 @@ PathSegment* PathGraph::appendSegment(PathSegment* currentSegment, const Vec2f& 
 
 PathSegment* PathGraph::connectSegments(PathSegment* segmentA, PathSegment* segmentB)
 {
-    PathNode* nodeA = segmentA->getNodeB();
-    PathNode* nodeB = segmentB->getNodeA();
+    PathNodeDynamic* nodeA = segmentA->getNodeB();
+    PathNodeDynamic* nodeB = segmentB->getNodeA();
     PathSegment* segment = new PathSegment(nodeA, nodeB);
 
     PathSegment* ret = addSegment(segment);
@@ -55,15 +65,15 @@ void PathGraph::tempRender()
 }
 #include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
-class PathNodeGeometryCallback : public b2QueryCallback
+class PathNodeDynamicGeometryCallback : public b2QueryCallback
 {
     public:
-        PathNodeGeometryCallback(Vec2f _point)
+        PathNodeDynamicGeometryCallback(Vec2f _point)
         :point(_point)
         {
             numBodies = 0;
         }
-        ~PathNodeGeometryCallback()
+        ~PathNodeDynamicGeometryCallback()
         {
 
         }
@@ -88,9 +98,10 @@ class PathNodeGeometryCallback : public b2QueryCallback
         int numBodies;
         Vec2f point;
 };
+#include <unordered_map>
 #include <iostream>
 using namespace std;
-void PathGraph::finalise()
+Paths* PathGraph::finalise()
 {
     unsigned int size = 0;
     while (segments.size() != size)
@@ -116,7 +127,7 @@ void PathGraph::finalise()
                     Vec2f end = b->getNodeB()->getPosition();
                     Vec2f direction = end-start;
                     Vec2f middle = ((direction)*t2) + start;
-                    PathNode* newNode = new PathNode(middle);
+                    PathNodeDynamic* newNode = new PathNodeDynamic(middle);
                     nodes.push_back(newNode);
                     separate(b,t2, newNode);
                     separate(a,t1, newNode);
@@ -128,11 +139,11 @@ void PathGraph::finalise()
     {
         PathSegment* segment = segments[i];
         Vec2f point = ((segment->getNodeB()->getPosition() - segment->getNodeA()->getPosition())*0.5f)+segment->getNodeA()->getPosition();
-        PathNodeGeometryCallback callback(point);
+        PathNodeDynamicGeometryCallback callback(point);
         g_PhysicsManager.AABBQuery(&callback,point);
         if (callback.contained())
         {
-            PathNode* node = segments[i]->getNodeA();
+            PathNodeDynamic* node = segments[i]->getNodeA();
             if (!node->removeSegment(segments[i]))
             {
                 deleteNode(node);
@@ -146,18 +157,65 @@ void PathGraph::finalise()
             i--;
         }
     }
-    for (unsigned int i = 0; i < nodes.size(); i++)
+    for (auto i = nodes.begin(); i != nodes.end(); i++)
     {
-        nodes[i]->setType();
+        (*i)->setType();
     }
-
+    for (auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        if ((*i)->getType() == PathNodeDynamic::eCliff)
+        {
+            for (auto ii = i+1; ii != nodes.end(); ii++)
+            {
+                if ((*ii)->getType() == PathNodeDynamic::eCliff)
+                {
+                    Vec2f connection = (*ii)->getPosition() - (*i)->getPosition();
+                    float length = connection.Length();
+                    if (length < 1.0f)
+                    {
+                        PathSegment* jumpSegment = new PathSegment(*i,*ii,PathSegment::eTwoWayJump);
+                        (*i)->setType(PathNodeDynamic::eJumpable);
+                        (*ii)->setType(PathNodeDynamic::eJumpable);
+                        segments.push_back(jumpSegment);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    std::unordered_map<PathNodeDynamic*,NodeReference> createdNodes;
+    /*for (auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        PathNode* node = (*i)->createNode();
+        createdNodes[*i] = node;
+        paths.addNode(node);
+    }
+    for (auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        (*i)->resolveLinks(createdNodes);
+    }*/
+    std::vector<std::vector<PathNode*>*> nodeLists;
+    nodeLists.push_back(new std::vector<PathNode*>);
+    for (auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        (*i)->createNodes(createdNodes,nodeLists.back());
+        if (nodeLists.back()->size() != 0)
+        {
+            nodeLists.push_back(new std::vector<PathNode*>);
+        }
+    }
+    delete nodeLists.back();
+    nodeLists.pop_back();
+    std::cout << nodeLists.size() << endl;
+    return new Paths(nodeLists);
 }
-void PathGraph::deleteNode(PathNode* node)
+void PathGraph::deleteNode(PathNodeDynamic* node)
 {
     for (auto i = nodes.begin(); i != nodes.end(); i++)
     {
         if (*i == node)
         {
+            delete *i;
             nodes.erase(i);
             return;
         }
@@ -168,9 +226,9 @@ PathSegment* PathGraph::addSegment(PathSegment* segment)
     segments.push_back(segment);
     return segment;
 }
-PathSegment* PathGraph::separate(PathSegment* segment, float point, PathNode* newNode)
+PathSegment* PathGraph::separate(PathSegment* segment, float point, PathNodeDynamic* newNode)
 {
-    PathNode* nodeB = segment->getNodeB();
+    PathNodeDynamic* nodeB = segment->getNodeB();
     nodeB->removeSegment(segment);
     segment->setNodeB(newNode);
     newNode->addSegment(segment);
@@ -196,7 +254,6 @@ PathSegment* PathGraph::findClosestPath(const Vec2f& position)
             }
         }
     }
-    std::cout << smallestT << endl;
     assert(closestPath);
     return closestPath;
 }

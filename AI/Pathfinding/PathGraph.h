@@ -2,7 +2,8 @@
 #define PATHGRAPH_H
 
 #include <vector>
-class PathNode;
+class Paths;
+class PathNodeDynamic;
 class PathSegment;
 class Vec2f;
 
@@ -15,15 +16,15 @@ class PathGraph
         PathSegment* addSegment(const Vec2f& vertexA, const Vec2f& vertexB, PathSegment** trueFirst);
         PathSegment* appendSegment(PathSegment* currentSegement, const Vec2f& vertexB);
         PathSegment* connectSegments(PathSegment* segmentA, PathSegment* segmentB);
-        void finalise();
+        Paths* finalise();
         PathSegment* findClosestPath(const Vec2f& position);
     protected:
     private:
-        void deleteNode(PathNode* node);
+        void deleteNode(PathNodeDynamic* node);
         PathSegment* addSegment(PathSegment* segment);
-        PathSegment* separate(PathSegment* segment, float point, PathNode* newNode);
+        PathSegment* separate(PathSegment* segment, float point, PathNodeDynamic* newNode);
         std::vector<PathSegment*> segments;
-        std::vector<PathNode*> nodes;
+        std::vector<PathNodeDynamic*> nodes;
 
 };
 

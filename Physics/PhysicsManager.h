@@ -4,6 +4,7 @@
 #include <Box2D/Box2D.h>
 class RenderCallback;
 class ContactListener;
+class DebugDraw;
 
 #define BIT(x) (1 << x)
 #define JUMPING
@@ -38,13 +39,18 @@ extern class PhysicsManager
         };
         unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
         void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
+        int getNextPositiveCollisionGroup(){return usedPositiveCollisionGroups++;}
+        int getNextNegativeCollisionGroup(){return usedNegativeCollisionGroups--;}
     protected:
     private:
+        int usedPositiveCollisionGroups;
+        int usedNegativeCollisionGroups;
         unsigned short collisionMasks[CollisionCategoriesMax];
         void updateEntities();
         b2World* mWorld;
         ContactListener* contactListener;
         RenderCallback* mRenderCallback;
+        DebugDraw* debugDraw;
         unsigned int startTime;
         unsigned int stepsTaken;
 }g_PhysicsManager;

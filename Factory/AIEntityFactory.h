@@ -20,7 +20,13 @@ class AIEntityFactory : public Factory
         b2BodyDef wheelBody;
         b2FixtureDef wheelFixture;
         b2CircleShape wheelShape;
-        b2RevoluteJointDef jointDef;
+        b2RevoluteJointDef wheelJoint;
+
+        b2BodyDef jumpBody;
+        b2FixtureDef jumpFixture;
+        b2PolygonShape jumpShape;
+        Vec2f jumpAxis;
+        b2PrismaticJointDef jumpJoint;
 };
 
 #endif // AIENTITYFACTORY_H

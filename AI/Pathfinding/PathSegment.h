@@ -1,7 +1,7 @@
 #ifndef PATHSEGMENT_H
 #define PATHSEGMENT_H
 
-class PathNode;
+class PathNodeDynamic;
 class Vec2f;
 
 class PathSegment
@@ -11,27 +11,27 @@ class PathSegment
         {
             eFloor,
             eWall,
+            eTwoWayJump,
             eTypesMax
         };
-        PathSegment(PathNode* _nodeA, PathNode* _nodeB);
-        PathSegment(const Vec2f& vertexA, const Vec2f& vertexB);
-        PathSegment(PathSegment* segmentA, const Vec2f& vertexB);
-        PathSegment(PathSegment* segmentA, PathSegment* segmentB);
+        PathSegment(PathNodeDynamic* _nodeA, PathNodeDynamic* _nodeB);
+        PathSegment(PathNodeDynamic* _nodeA, PathNodeDynamic* _nodeB, Type jumpType);
         virtual ~PathSegment();
         void tempRender();
-        PathNode* getNodeA(){return nodeA;}
-        PathNode* getNodeB(){return nodeB;}
-        void setNodeB(PathNode* _nodeB){nodeB = _nodeB;}
+        PathNodeDynamic* getNodeA(){return nodeA;}
+        PathNodeDynamic* getNodeB(){return nodeB;}
+        void setNodeB(PathNodeDynamic* _nodeB){nodeB = _nodeB;}
         bool isDirectlyConnected(PathSegment* neighbour);
         float closestPoint(const Vec2f& point);
         void closestPoints(const Vec2f& p3, const Vec2f& p4, float& t1, float& t2);
         void setNodeTypes();
         Type getType(){return type;}
+        PathNodeDynamic* getOther(PathNodeDynamic* first);
     protected:
     private:
         Type type;
         void determineType(const Vec2f& vertexA, const Vec2f& vertexB);
-        PathNode* nodeA,* nodeB;
+        PathNodeDynamic* nodeA,* nodeB;
 };
 
 #endif // PATHSEGMENT_H

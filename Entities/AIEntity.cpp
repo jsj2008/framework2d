@@ -6,7 +6,7 @@
 #include <Factory/FactoryList.h>
 #include <Factory/ProjectileDef.h>
 #include <cassert>
-#define JUMP_IMPULSE -5.0f*WORLD_GRAVITY
+#define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain)
 {
@@ -50,70 +50,38 @@ void AIEntity::damage()
 }
 void AIEntity::update()
 {
-#ifdef JUMPING
-    for (b2ContactEdge* ce = mBody->GetContactList(); ce; ce = ce->next)
-    {
-        b2Contact* contact = ce->contact;
-        b2WorldManifold manifold;
-        contact->GetWorldManifold(&manifold);
-        float dot = b2Dot(manifold.normal,Vec2f(0,1));
-        if (dot > 0.8f) // Close enough to a floor
-        {
-            grounded = true;
-            groundNormal = manifold.normal;
-            groundNormal.x /= 10.0f;
-            groundNormal.y /= 10.0f;
-            float t = groundNormal.x;
-            groundNormal.x = groundNormal.y;
-            groundNormal.y = -t;
-            break;
-        }
-    }
-#endif
     mBrain->update();
     if (health  < 1)
     {
         g_PhysicsManager.destroyBody(mBody);
     }
+    pogoStick->SetMotorSpeed(-10.0f);
 }
+#include <iostream>
 void AIEntity::jump()
 {
-    if (grounded)
+    /*if (grounded)
     {
         Vec2f point(0,0);
         point = mBody->GetWorldCenter();
         mBody->ApplyLinearImpulse(Vec2f(0.0,JUMP_IMPULSE), point);
         grounded = false;
-    }
+    }*/
+    pogoStick->SetMotorSpeed(100.0f);
+    std::cout << "Jump" << std::endl;
 }
 void AIEntity::walkLeft()
 {
-    if (wheel == NULL)
-    {
-        Vec2f point(0,0);
-        point = mBody->GetWorldCenter();
-        mBody->ApplyLinearImpulse(Vec2f(-0.2,0), point);
-    }
-    else
-    {
-        wheel->SetMotorSpeed(-20.0f);
-    }
+    wheel->SetMotorSpeed(-20.0f);
 }
-
 void AIEntity::walkRight()
 {
-    if (wheel == NULL)
-    {
-        Vec2f point(0,0);
-        point = mBody->GetWorldCenter();
-        mBody->ApplyLinearImpulse(Vec2f(0.2,0), point);
-    }
-    else
-    {
-        wheel->SetMotorSpeed(20.0f);
-    }
+    wheel->SetMotorSpeed(20.0f);
 }
-
+void AIEntity::stopWalking()
+{
+    wheel->SetMotorSpeed(0.0f);
+}
 
 
 

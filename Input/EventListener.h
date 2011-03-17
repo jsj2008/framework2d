@@ -8,6 +8,7 @@ class EventListener
     public:
         EventListener();
         virtual ~EventListener();
+        virtual void resetInput()=0;
         virtual void trigger(InputActions action)=0;
     protected:
     private:

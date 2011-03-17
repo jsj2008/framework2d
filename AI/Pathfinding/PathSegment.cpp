@@ -1,8 +1,8 @@
 #include "PathSegment.h"
-#include <AI/Pathfinding/PathNode.h>
+#include <AI/Pathfinding/PathNodeDynamic.h>
 #include <Box2D/Common/b2Math.h>
 
-PathSegment::PathSegment(PathNode* _nodeA, PathNode* _nodeB)
+PathSegment::PathSegment(PathNodeDynamic* _nodeA, PathNodeDynamic* _nodeB)
 {
     //ctor
     nodeA = _nodeA;
@@ -12,9 +12,31 @@ PathSegment::PathSegment(PathNode* _nodeA, PathNode* _nodeB)
     determineType(nodeA->getPosition(),nodeB->getPosition());
 }
 
+PathSegment::PathSegment(PathNodeDynamic* _nodeA, PathNodeDynamic* _nodeB, Type jumpType)
+{
+    //ctor
+    nodeA = _nodeA;
+    nodeB = _nodeB;
+    nodeA->addSegment(this);
+    nodeB->addSegment(this);
+    type = jumpType;
+}
+
 PathSegment::~PathSegment()
 {
     //dtor
+}
+PathNodeDynamic* PathSegment::getOther(PathNodeDynamic* first)
+{
+    if (first == nodeA)
+    {
+        return nodeB;
+    }
+    else
+    {
+        assert(first == nodeB);
+        return nodeA;
+    }
 }
 void PathSegment::determineType(const Vec2f& vertexA, const Vec2f& vertexB)
 {
@@ -85,8 +107,10 @@ void PathSegment::tempRender()
 {
     if (type == eFloor)
         glColor3f(0,1,0);
-    else
+    else if (type == eWall)
         glColor3f(1,0,0);
+    else
+        glColor3f(1,1,1);
     glBegin(GL_LINES);
     glVertex2f(nodeA->getPosition().x,nodeA->getPosition().y);
     glVertex2f(nodeB->getPosition().x,nodeB->getPosition().y);

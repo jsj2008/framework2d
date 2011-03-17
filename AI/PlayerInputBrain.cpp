@@ -25,7 +25,11 @@ void PlayerInputBrain::activate()
 }
 void PlayerInputBrain::update()
 {
-    g_AIManager.setPlayerSegment(mEntity->mBody);
+    g_AIManager.setPlayerNode(mEntity->mBody);
+}
+void PlayerInputBrain::resetInput()
+{
+    mEntity->stopWalking();
 }
 void PlayerInputBrain::trigger(InputActions action)
 {

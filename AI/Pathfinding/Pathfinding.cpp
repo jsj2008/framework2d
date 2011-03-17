@@ -11,9 +11,9 @@ Pathfinding::~Pathfinding()
 {
     //dtor
 }
-void Pathfinding::finalise()
+Paths* Pathfinding::finalise()
 {
-    pathGraph.finalise();
+    return pathGraph.finalise();
 }
 void Pathfinding::addStaticGeometry(Vec2f* vertices, int numVertices)
 {

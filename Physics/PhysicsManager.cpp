@@ -5,7 +5,10 @@
 #include <Graphics/GraphicsManager.h>
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
+#include <Physics/DebugDraw.h>
 #include <Level/LevelManager.h>
+#define DEBUG_DRAW
+
 PhysicsManager g_PhysicsManager;
 PhysicsManager::PhysicsManager()
 {
@@ -16,6 +19,9 @@ PhysicsManager::PhysicsManager()
     collisionMasks[BubbleCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
     collisionMasks[EnemyCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
     collisionMasks[ProjectileCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
+
+    usedPositiveCollisionGroups = 1;
+    usedNegativeCollisionGroups = -1;
 }
 PhysicsManager::~PhysicsManager()
 {
@@ -26,6 +32,10 @@ void PhysicsManager::init()
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
     mRenderCallback = new RenderCallback;
     contactListener = new ContactListener;
+#ifdef DEBUG_DRAW
+    debugDraw = new DebugDraw;
+    mWorld->SetDebugDraw(debugDraw);
+#endif
     mWorld->SetContactListener(contactListener);
     stepsTaken = 0;
     startTime = g_Timer.getTicks();
@@ -125,6 +135,9 @@ void PhysicsManager::render()
     float y2 = y + ((float)resolution.y / g_GraphicsManager.getPixelsPerMeter());
     aabb.upperBound = Vec2f(x2,y2);
     mWorld->QueryAABB(mRenderCallback,aabb);
+#ifdef DEBUG_DRAW
+    mWorld->DrawDebugData();
+#endif
 
     /*aabb.lowerBound = Vec2f(g_GraphicsManager.getView().ScreenToWorldSpace());
     x2 = aabb.lowerBound.x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());

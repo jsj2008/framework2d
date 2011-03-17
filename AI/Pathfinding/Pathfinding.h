@@ -10,7 +10,7 @@ class Pathfinding
         Pathfinding();
         virtual ~Pathfinding();
         void addStaticGeometry(Vec2f* vertices, int numVertices);
-        void finalise();
+        Paths* finalise();
         void tempRender(){pathGraph.tempRender();}
         PathSegment* findClosestPath(const Vec2f& position){return pathGraph.findClosestPath(position);}
     protected:
