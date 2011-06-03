@@ -21,7 +21,6 @@
 					<Add option="-lGLU" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
-					<Add option="-lglee" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -41,7 +40,6 @@
 					<Add option="-lGLU" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
-					<Add option="-lglee" />
 					<Add library="bin/Release/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -126,6 +124,8 @@
 		<Unit filename="AI/Brain.h" />
 		<Unit filename="AI/BrainFactory.cpp" />
 		<Unit filename="AI/BrainFactory.h" />
+		<Unit filename="AI/CharacterController.cpp" />
+		<Unit filename="AI/CharacterController.h" />
 		<Unit filename="AI/PathGeneration/PathGraph.cpp" />
 		<Unit filename="AI/PathGeneration/PathGraph.h" />
 		<Unit filename="AI/PathGeneration/PathNodeDynamic.cpp" />

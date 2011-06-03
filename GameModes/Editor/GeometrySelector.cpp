@@ -5,6 +5,7 @@
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Box2D/Common/b2Math.h>
+#include <Entities/AIEntity.h>
 
 GeometrySelector::GeometrySelector(FreeCamera* camera)
 {
@@ -31,12 +32,19 @@ void GeometrySelector::start(unsigned char button)
     else
     {
         Vec2f point = startPos.ScreenToWorldSpace();
-        b2Body* body = g_PhysicsManager.select(point);
+        b2Body* body = g_PhysicsManager.select(point, NULL);
         if (body != NULL)
         {
             if (button == 1)
             {
                 mouseJoint = g_PhysicsManager.createJoint(body,point);
+                // This is code to prevent the attached body from dying
+                AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)body->GetUserData());
+                if (entity != NULL)
+                {
+                    bodyHealth = entity->health;
+                    entity->health = pow(2,31);
+                }
             }
             else if (button == 3)
             {
@@ -75,6 +83,9 @@ void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
 {
     if (mouseJoint != NULL)
     {
+        AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)(mouseJoint->GetBodyB()->GetUserData()));
+        if (entity != NULL)
+            entity->health = bodyHealth;
         g_PhysicsManager.deleteJoint(mouseJoint);
         mouseJoint = NULL;
     }
@@ -108,7 +119,6 @@ void GeometrySelector::drawMouseJoints()
         glVertex2f(position.x,position.y);
     }
 }
-
 
 
 

@@ -1,6 +1,6 @@
 #include "ConvexGeometryDef.h"
 
-Vec2f& ConvexGeometryDef::getVertex(unsigned int i)
+Vec2f& ConvexGeometryDef::getVertex(int i)
 {
     float* f = &vertices[i*2];
     Vec2f* vec = (Vec2f*)f;
@@ -9,10 +9,11 @@ Vec2f& ConvexGeometryDef::getVertex(unsigned int i)
 void ConvexGeometryDef::addPoint(const Vec2f& p)
 {
     assert(numVertices != b2_maxPolygonVertices);
-    if (!((getVertex(numVertices-1)-p).LengthSquared() > b2_epsilon * b2_epsilon))
+    /// WTF was this code?? Maybe I was drunk
+    /*if (!((getVertex(numVertices-1)-p).LengthSquared() > b2_epsilon * b2_epsilon))
     {
         return; /// Discard polygon
-    }
+    }*/
     getVertex(numVertices) = p;
     numVertices++;
 }

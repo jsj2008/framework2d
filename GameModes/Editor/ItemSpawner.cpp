@@ -30,10 +30,6 @@ ItemSpawner::~ItemSpawner()
 }
 void ItemSpawner::registerEvent(InputContext* event)
 {
-    for (unsigned int i = 0; i < NUM_ITEM_SPAWNERS; i++)
-    {
-        //modes[i]->registerEvent(event);
-    }
 }
 bool ItemSpawner::activate(const CEGUI::EventArgs&)
 {

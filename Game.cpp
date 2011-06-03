@@ -12,6 +12,7 @@
 #include <Graphics/Camera/FreeCamera.h>
 #include <Factory/BubbleDef.h>
 #include <AI/AIManager.h>
+#include <AI/CharacterController.h>
 #include <cstring>
 #include <iostream>
 using namespace std;

@@ -2,10 +2,9 @@
 #define AIENTITY_H
 
 #include "Entity.h"
+#include <AI/CharacterController.h>
 #include <Box2D/Common/b2Math.h>
 class Brain;
-class b2RevoluteJoint;
-class b2PrismaticJoint;
 
 class AIEntity : public Entity
 {
@@ -19,18 +18,16 @@ class AIEntity : public Entity
         void stopWalking();
         void damage();
         void fireAt(Vec2f targetPosition);
-        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
-        void setJump(b2PrismaticJoint* _jump){pogoStick = _jump;}
+        void setWheel(b2RevoluteJoint* _wheel){controller.setWheel(_wheel);}
     protected:
     private:
-        b2RevoluteJoint* wheel;
-        b2PrismaticJoint* pogoStick;
+        friend class CharacterController;
+        friend class GeometrySelector; /// This is so it can prevent it from dying, should probably get a better way to do this FIXME
         void fire(Vec2f targetDirection);
         int health;
         virtual ~AIEntity();
         Brain* mBrain;
-        bool grounded;
-        Vec2f groundNormal;
+        CharacterController controller;
 };
 
 #endif // AIENTITY_H

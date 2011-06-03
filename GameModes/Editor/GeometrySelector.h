@@ -19,6 +19,7 @@ class GeometrySelector : public GameMode, public ClickDragEvent
     protected:
     private:
         b2MouseJoint* mouseJoint;
+        unsigned int bodyHealth;
         std::unordered_set<b2MouseJoint*> activeMouseJoints;
         void drawMouseJoints();
 };

@@ -9,7 +9,7 @@ class ConvexGeometryDef : public FactoryDef
     public:
         unsigned char numVertices;
         float vertices[b2_maxPolygonVertices*2];
-        Vec2f& getVertex(unsigned int i);
+        Vec2f& getVertex(int i);
         void addPoint(const Vec2f& p);
         bool sort();
 };

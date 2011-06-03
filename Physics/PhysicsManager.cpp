@@ -7,6 +7,7 @@
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
 #include <Level/LevelManager.h>
+#include <stack>
 #define DEBUG_DRAW
 
 PhysicsManager g_PhysicsManager;
@@ -60,13 +61,22 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 {
     return mWorld->CreateJoint(def);
 }
+#include <iostream>
+using namespace std;
 void PhysicsManager::destroyBody(b2Body* body)
 {
-    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != NULL;)
+    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != NULL; )
     {
         b2Joint* joint = jointEdge->joint;
-        jointEdge = jointEdge->next;
+        if (joint->GetBodyB() == NULL)
+        {
+            return;
+        }
+        b2Body* other = joint->GetBodyA();
+        if (other == body) body = joint->GetBodyB();
         deleteJoint(joint);
+        mWorld->DestroyBody(other);
+        jointEdge = body->GetJointList();
     }
     Entity* entity = (Entity*)body->GetUserData();
     delete entity;
@@ -147,30 +157,35 @@ void PhysicsManager::render()
 class PhySimpleCallback : public b2QueryCallback
 {
 public:
-    PhySimpleCallback(Vec2f& _position)
+    PhySimpleCallback(Vec2f& _position, void* _ignore)
     {
         ret = NULL;
         position = _position;
+        ignore = _ignore;
     }
     bool ReportFixture(b2Fixture* fixture)
     {
         if (fixture->TestPoint(position))
         {
-            ret = fixture->GetBody();
-            if (ret->GetType() != b2_dynamicBody)
+            if (fixture->GetBody()->GetUserData() != ignore)
             {
-                return true; /// Continue the search, we prefer dynamic bodies
+                ret = fixture->GetBody();
+                if (ret->GetType() != b2_dynamicBody)
+                {
+                    return true; /// Continue the search, we prefer dynamic bodies
+                }
+                else return false;
             }
-            else return false;
         }
         else return true;
     }
     b2Body* ret;
     Vec2f position;
+    void* ignore;
 };
-b2Body* PhysicsManager::select(Vec2f& position)
+b2Body* PhysicsManager::select(Vec2f& position, void* ignore)
 {
-    PhySimpleCallback callback(position);
+    PhySimpleCallback callback(position, ignore);
     b2AABB aabb;
     aabb.lowerBound = Vec2f(position.x-0.0001f,position.y-0.0001f);
     aabb.upperBound = Vec2f(position.x+0.0001f,position.y+0.0001f);

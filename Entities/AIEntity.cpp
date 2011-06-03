@@ -1,6 +1,5 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
-#include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
 #include <Factory/ParticleDef.h>
 #include <Factory/FactoryList.h>
@@ -9,13 +8,12 @@
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain)
+:controller(this)
 {
     //ctor
     mBrain = _Brain;
-    wheel = NULL;
     mBrain->setEntity(this);
-    grounded = false;
-    health = 15;
+    health = 2;
 }
 
 AIEntity::~AIEntity()
@@ -55,32 +53,23 @@ void AIEntity::update()
     {
         g_PhysicsManager.destroyBody(mBody);
     }
-    pogoStick->SetMotorSpeed(-10.0f);
+    controller.update();
 }
-#include <iostream>
 void AIEntity::jump()
 {
-    /*if (grounded)
-    {
-        Vec2f point(0,0);
-        point = mBody->GetWorldCenter();
-        mBody->ApplyLinearImpulse(Vec2f(0.0,JUMP_IMPULSE), point);
-        grounded = false;
-    }*/
-    pogoStick->SetMotorSpeed(100.0f);
-    std::cout << "Jump" << std::endl;
+    controller.jump();
 }
 void AIEntity::walkLeft()
 {
-    wheel->SetMotorSpeed(-20.0f);
+    controller.walkLeft();
 }
 void AIEntity::walkRight()
 {
-    wheel->SetMotorSpeed(20.0f);
+    controller.walkRight();
 }
 void AIEntity::stopWalking()
 {
-    wheel->SetMotorSpeed(0.0f);
+    controller.stopWalking();
 }
 
 

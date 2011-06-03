@@ -26,7 +26,7 @@ extern class PhysicsManager
         void deleteJoint(b2Joint* joint);
         bool update();
         void render();
-        b2Body* select(Vec2f& position);
+        b2Body* select(Vec2f& position, void* _ignore = (void*)0xBAADF00D);
         enum CollisionCategory
         {
             PlayerCategory = BIT(0),
