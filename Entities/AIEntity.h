@@ -5,6 +5,7 @@
 #include <AI/CharacterController.h>
 #include <Box2D/Common/b2Math.h>
 class Brain;
+class Weapon;
 
 class AIEntity : public Entity
 {
@@ -28,6 +29,7 @@ class AIEntity : public Entity
         virtual ~AIEntity();
         Brain* mBrain;
         CharacterController controller;
+        Weapon* weapon;
 };
 
 #endif // AIENTITY_H

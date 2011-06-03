@@ -32,7 +32,7 @@ void Game::init()
     mGameModes[eEditorGameMode] = new EditorMode;
 
     AIEntityDef def;
-    def.setPosition(Vec2f(0,0));
+    def.setPosition(Vec2f(0,-20));
     def.setMaterial("player");
     def.width = 2;
     def.height = 2;

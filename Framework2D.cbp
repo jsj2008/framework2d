@@ -175,6 +175,8 @@
 		<Unit filename="Entities/Projectile.h" />
 		<Unit filename="Entities/StaticGeometry.cpp" />
 		<Unit filename="Entities/StaticGeometry.h" />
+		<Unit filename="Entities/Weapons/Weapon.cpp" />
+		<Unit filename="Entities/Weapons/Weapon.h" />
 		<Unit filename="Factory/AIEntityDef.cpp" />
 		<Unit filename="Factory/AIEntityDef.h" />
 		<Unit filename="Factory/AIEntityFactory.cpp" />
