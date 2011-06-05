@@ -1,5 +1,5 @@
 #include "Game.h"
-#include <Factory/FactoryList.h>
+#include <Factory/FactoryDefList.h>
 #include <Factory/CrateDef.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/PhysicsManager.h>
@@ -13,6 +13,8 @@
 #include <Factory/BubbleDef.h>
 #include <AI/AIManager.h>
 #include <AI/CharacterController.h>
+#include <SharedContent/ContentManager.h>
+#include <SharedContent/WeaponContent.h>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -26,25 +28,21 @@ void Game::init()
     //ctor
     g_Timer.init();
     g_Timer.pause();
+    g_ContentManager.addSharedContent(new WeaponContent("pistol"));
     g_PhysicsManager.init();
 
     mGameModes[ePlayGameMode] = new ShooterGame;
     mGameModes[eEditorGameMode] = new EditorMode;
 
-    AIEntityDef def;
-    def.setPosition(Vec2f(0,-20));
-    def.setMaterial("player");
-    def.width = 2;
-    def.height = 2;
-    def.aiType = ePlayerInputBrainType;
     g_LevelManager.loadLevel("default");
-    g_FactoryList.useFactory(def,eAIEntityFactory);
+    g_FactoryDefList.useFactoryDef(0);
 
     CEGUI::EventArgs args;
     mGameModes[eEditorGameMode]->activate(args);
     mGameModes[ePlayGameMode]->activate(args);
 
     g_AIManager.finalisePathfinding();
+
     g_Timer.unPause();
 }
 Game::~Game()

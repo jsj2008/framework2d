@@ -10,7 +10,7 @@ class Weapon;
 class AIEntity : public Entity
 {
     public:
-        AIEntity(Brain* _Brain);
+        AIEntity(Brain* _Brain, Weapon* _weapon);
         EntityType getType(){return eAIEntityType;}
         void update();
         void jump();

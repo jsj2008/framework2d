@@ -24,7 +24,7 @@ Entity* CrateFactory::createEntity(FactoryDef* data)
     CrateDef* def = (CrateDef*)data;
     Entity* entity = new Crate;
 
-    bodyDef.position = def->getPosition();
+    bodyDef.position = def->position;
     bodyDef.angle = data->rotation;
     shapeDef.SetAsBox(def->width*0.5f,def->height*0.5f);
     bodyDef.userData = (void*)entity;

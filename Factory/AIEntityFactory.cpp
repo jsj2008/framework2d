@@ -6,6 +6,8 @@
 #include <Physics/PhysicsManager.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <Graphics/GraphicsManager.h>
+#include <SharedContent/ContentManager.h>
+#include <Entities/Weapons/Weapon.h>
 #include <Game.h>
 #include <GameModes/PlayMode.h>
 #include <iostream>
@@ -63,22 +65,22 @@ Entity* AIEntityFactory::createEntity(FactoryDef* data)
         }
     }
     Vec2f anchorPoint(def->width*0.1f,def->height*0.33f);
-    anchorPoint += def->getPosition(); //entity->mBody->GetPosition();
+    anchorPoint += def->position; //entity->mBody->GetPosition();
 
 
-    AIEntity* entity = new AIEntity(brain);
+    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(def->weapon)));
     int collisionGroup = g_PhysicsManager.getNextNegativeCollisionGroup();
     fixtureDef.filter.groupIndex = collisionGroup;
     wheelFixture.filter.groupIndex = collisionGroup;
 
-    bodyDef.position = def->getPosition();
+    bodyDef.position = def->position;
     bodyDef.position.x += def->width*0.1f;
     shapeDef.SetAsBox(def->width*0.4f,def->height*0.33f);
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    wheelBody.position = def->getPosition();
+    wheelBody.position = def->position;
     wheelBody.position += Vec2f(def->width*0.1f,def->height*0.33f);
     b2Body* wheel = g_PhysicsManager.createBody(&wheelBody);
     wheel->CreateFixture(&wheelFixture);

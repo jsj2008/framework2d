@@ -7,11 +7,20 @@
 class ProjectileDef : public FactoryDef
 {
     public:
-        void set(const char* _materialName, float _radius, const Vec2f position, const Vec2f velocity);
-        void setVelocity(const Vec2f velocity);
-        const Vec2f getVelocity();
+        ProjectileDef();
+        ProjectileDef(const char* _materialName, float _radius, const Vec2f& _position, const Vec2f& _velocity);
         float radius;
-        float xVelocity, yVelocity;
+        Vec2f velocity;
+
+        short damage;
+        /// Explosion parameters
+        bool explosion;
+        float explosionRadius;
+        float explosionTime;
+        /// Expiry parameters
+        float expiryTime;
+        float maximumImpact;
+        float proximity;
     protected:
     private:
 };

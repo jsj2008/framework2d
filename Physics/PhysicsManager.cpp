@@ -7,6 +7,7 @@
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
 #include <Level/LevelManager.h>
+#include <Timer.h>
 #include <stack>
 #define DEBUG_DRAW
 
@@ -119,6 +120,7 @@ bool PhysicsManager::update()
         updateEntities();
         stepsTaken++;
         ret = true;
+        g_Timer.tick();
     }
     return ret;
 }

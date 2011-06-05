@@ -3,10 +3,10 @@
 #include <Graphics/Camera/FreeCamera.h>
 
 AIEntitySpawner::AIEntitySpawner(FreeCamera* camera)
+:def("player",2,2,eZombieBrainType,"pistol")
 {
     //ctor
     mCamera = camera;
-    def.set("player",2,2,eZombieBrainType);
 }
 
 AIEntitySpawner::~AIEntitySpawner()
@@ -16,6 +16,6 @@ AIEntitySpawner::~AIEntitySpawner()
 
 void AIEntitySpawner::click(Vec2i mouse, unsigned char button)
 {
-    def.setPosition(mouse.ScreenToWorldSpace());
+    def.position = mouse.ScreenToWorldSpace();
     g_LevelManager.addBody(def);
 }

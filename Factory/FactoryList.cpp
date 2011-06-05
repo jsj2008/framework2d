@@ -16,7 +16,6 @@ FactoryList::~FactoryList()
 
 Entity* FactoryList::useFactory(StandardFactoryDef def, StandardFactories factoryType)
 {
-    assert(factoryType == def.type);
     Factory* factory = getFactory(def.type);
     return factory->createEntity(&def.crateDef);
 }

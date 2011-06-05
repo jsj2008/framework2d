@@ -17,7 +17,7 @@ struct Vec2f
 	bool operator==( Vec2f B ) { return x == B.x && y == B.y; }
 	bool operator!=( Vec2f B ) { return x != B.x || y != B.y; }
 
-	Vec2f() {}
+	Vec2f() {x=y=0.0f;}
 
 	/// Construct using coordinates.
 	Vec2f(float32 x, float32 y) : x(x), y(y) {}

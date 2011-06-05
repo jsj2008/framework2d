@@ -28,7 +28,7 @@ Entity* ConvexGeometryFactory::createEntity(FactoryDef* data)
 
     shapeDef.Set(&def->getVertex(0),def->numVertices);
 
-    bodyDef.position = def->getPosition();
+    bodyDef.position = def->position;
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);

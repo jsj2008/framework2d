@@ -21,7 +21,7 @@ Entity* ParticleFactory::createEntity(FactoryDef* def)
     ParticleDef* data = (ParticleDef*)def;
     Entity* entity = new PhysicsParticle(data->lifetime);
 
-    bodyDef.position = def->getPosition();
+    bodyDef.position = def->position;
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&shape, data->density);

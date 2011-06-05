@@ -7,9 +7,10 @@
 class AIEntityDef : public FactoryDef
 {
     public:
-        void set(const char* _materialName, float _width, float _height, BrainType _aiType);
+        AIEntityDef(const char* _materialName, float _width, float _height, BrainType _aiType, const char* _weapon);
         float width, height;
         BrainType aiType;
+        char weapon[16];
     protected:
     private:
 };

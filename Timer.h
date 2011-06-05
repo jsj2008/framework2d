@@ -9,10 +9,13 @@ extern class Timer
         void pause();
         void unPause();
         unsigned int getTicks();
+        unsigned int getFrame();
+        void tick();
     protected:
     private:
         unsigned int startTime;
         unsigned int pauseTime;
+        unsigned int frame;
         bool currentlyPaused;
 }g_Timer;
 

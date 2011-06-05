@@ -30,11 +30,11 @@ extern class FactoryList
     public:
         FactoryList();
         virtual ~FactoryList();
-        Entity* useFactory(StandardFactoryDef def, StandardFactories factoryType);
-        //Entity* useFactory(FactoryDef* def, StandardFactories factory);
-        Factory* getFactory(StandardFactories factory);
     protected:
     private:
+        friend class FactoryDefList;
+        Entity* useFactory(StandardFactoryDef def, StandardFactories factoryType); /// FIXME i removed this unused parameter in another branch
+        Factory* getFactory(StandardFactories factory);
         std::vector<Factory*> factories;
 }g_FactoryList;
 

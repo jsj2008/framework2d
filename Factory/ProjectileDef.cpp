@@ -1,20 +1,13 @@
 #include "ProjectileDef.h"
 
-void ProjectileDef::set(const char* _materialName, float _radius, const Vec2f position, const Vec2f velocity)
+ProjectileDef::ProjectileDef()
+{
+
+}
+ProjectileDef::ProjectileDef(const char* _materialName, float _radius, const Vec2f& _position, const Vec2f& _velocity)
 {
     setMaterial(_materialName);
     radius = _radius;
-    setPosition(position);
-    setVelocity(velocity);
-}
-
-void ProjectileDef::setVelocity(const Vec2f velocity)
-{
-    xVelocity = velocity.x;
-    yVelocity = velocity.y;
-}
-
-const Vec2f ProjectileDef::getVelocity()
-{
-    return Vec2f(xVelocity,yVelocity);
+    position = _position;
+    velocity = _velocity;
 }

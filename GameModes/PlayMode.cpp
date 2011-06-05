@@ -27,14 +27,16 @@ void PlayMode::mouseMove(Vec2i mouse)
 {
 
 }
+#include <iostream> // FIXME
 void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
 {
-    def.setPosition(startPos.ScreenToWorldSpace());
-    def.radius = (def.getPosition()-mouse.ScreenToWorldSpace()).Length();
+    def.position = startPos.ScreenToWorldSpace();
+    def.radius = (def.position-mouse.ScreenToWorldSpace()).Length();
     def.type = (Bubble::BubbleType)1;
     if (def.radius != 0.0f)
     {
-        g_FactoryList.useFactory(def, eBubbleFactory);
+        //g_FactoryList.useFactory(def, eBubbleFactory);
+        std::cout << "Bubbles disabled __FILE__ __LINE__\n";
     }
 }
 void PlayMode::setBody(b2Body* body, PlayerInputBrain* _playerBrain)

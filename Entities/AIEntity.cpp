@@ -4,14 +4,16 @@
 #include <Factory/ParticleDef.h>
 #include <Factory/FactoryList.h>
 #include <Factory/ProjectileDef.h>
+#include <Entities/Weapons/Weapon.h>
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
-AIEntity::AIEntity(Brain* _Brain)
+AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon)
 :controller(this)
 {
     //ctor
     mBrain = _Brain;
+    weapon = _weapon;
     mBrain->setEntity(this);
     health = 2;
 }
@@ -29,20 +31,21 @@ void AIEntity::fireAt(Vec2f targetPosition)
 }
 void AIEntity::fire(Vec2f targetDirection)
 {
-    ProjectileDef def;
+    /*ProjectileDef def;
     Vec2f position = mBody->GetPosition();
     position += targetDirection*3;
     def.set("Bullet",1.0f,position,targetDirection*30.0f);
-    g_FactoryList.useFactory(def,eProjectileFactory);
+    g_FactoryList.useFactory(def,eProjectileFactory);*/
+    weapon->fire(mBody->GetPosition(),targetDirection);
 }
 void AIEntity::damage()
 {
-    ParticleDef def;
+    /*ParticleDef def;
     def.density = 1.0f;
     def.lifetime = 100;
     def.setMaterial("Spark");
-    def.setPosition(mBody->GetPosition());
-    g_FactoryList.useFactory(def,eParticleFactory);
+    def.position = mBody->GetPosition();
+    g_FactoryList.useFactory(def,eParticleFactory);*/
 
     health--;
 }

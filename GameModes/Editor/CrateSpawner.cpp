@@ -42,7 +42,7 @@ void CrateSpawner::buttonUp(Vec2i mouse, unsigned char button)
         CrateDef def;
         def.set(dimensions,density->getCurrentValue(),materialName->getText().c_str());
         std::cout << "Density: " << density->getCurrentValue() << std::endl;
-        def.setPosition(topLeft + (bottomright - topLeft)*0.5);
+        def.position = topLeft + (bottomright - topLeft)*0.5;
         g_LevelManager.addBody(def);
     }
     dragging = false;

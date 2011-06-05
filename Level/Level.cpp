@@ -1,6 +1,6 @@
 #include "Level.h"
 #include <Factory/ConvexGeometryDef.h>
-#include <Factory/FactoryList.h>
+#include <Factory/FactoryDefList.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
@@ -23,7 +23,7 @@ Level::~Level()
 }
 void Level::addBody(StandardFactoryDef def)
 {
-    b2Body* body = g_FactoryList.useFactory(def,def.type)->mBody;
+    b2Body* body = g_FactoryDefList.singleUse(def)->mBody;
     bodyToDefTable[body] = def;
     std::cout << bodyToDefTable.size() << std::endl;
 }
@@ -155,7 +155,7 @@ void Level::loadLevel()
     file.read((char*)&bodyDefs[0],sizeof(StandardFactoryDef)*size);
     for (unsigned short i = 0; i < size; i++)
     {
-        b2Body* body = g_FactoryList.useFactory(bodyDefs[i],bodyDefs[i].type)->mBody;
+        b2Body* body = g_FactoryDefList.singleUse(bodyDefs[i])->mBody;
         bodyToDefTable[body] = bodyDefs[i];
         readLocations.push_back(body);
     }
@@ -226,7 +226,7 @@ void Level::saveLevel()
     file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = bodyToDefTable.begin(); i != bodyToDefTable.end(); i++)
     {
-        i->second.baseDef.setPosition(i->first->GetPosition());
+        i->second.baseDef.position = i->first->GetPosition();
         i->second.baseDef.rotation = i->first->GetAngle();
         file.write((const char*)&i->second,sizeof(StandardFactoryDef));
         writeLocations[i->first] = writeLocation;

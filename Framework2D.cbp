@@ -199,6 +199,8 @@
 		<Unit filename="Factory/Factory.h" />
 		<Unit filename="Factory/FactoryDef.cpp" />
 		<Unit filename="Factory/FactoryDef.h" />
+		<Unit filename="Factory/FactoryDefList.cpp" />
+		<Unit filename="Factory/FactoryDefList.h" />
 		<Unit filename="Factory/FactoryList.cpp" />
 		<Unit filename="Factory/FactoryList.h" />
 		<Unit filename="Factory/ParticleDef.cpp" />
@@ -311,6 +313,12 @@
 		<Unit filename="Physics/PhysicsManager.h" />
 		<Unit filename="Physics/RenderCallback.cpp" />
 		<Unit filename="Physics/RenderCallback.h" />
+		<Unit filename="SharedContent/ContentManager.cpp" />
+		<Unit filename="SharedContent/ContentManager.h" />
+		<Unit filename="SharedContent/SharedContent.cpp" />
+		<Unit filename="SharedContent/SharedContent.h" />
+		<Unit filename="SharedContent/WeaponContent.cpp" />
+		<Unit filename="SharedContent/WeaponContent.h" />
 		<Unit filename="Timer.cpp" />
 		<Unit filename="Timer.h" />
 		<Unit filename="Types/Doubles.h" />

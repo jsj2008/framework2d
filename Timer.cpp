@@ -5,6 +5,7 @@ void Timer::init()
 {
     startTime = SDL_GetTicks();
     currentlyPaused = false;
+    frame = 0;
 }
 void Timer::pause()
 {
@@ -26,4 +27,12 @@ unsigned int Timer::getTicks()
         unsigned int ticks = SDL_GetTicks();
         return ticks - startTime;
     }
+}
+unsigned int Timer::getFrame()
+{
+    return frame;
+}
+void Timer::tick()
+{
+    frame++;
 }
