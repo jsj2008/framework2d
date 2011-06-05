@@ -2,17 +2,20 @@
 #define LEVEL_H
 
 #include <unordered_map>
+#include <string>
 #include <Factory/FactoryList.h>
 class b2Joint;
 class b2JointDef;
 class TextureContext;
 class ParallaxLayer;
+class FactoryParameters;
 
 class Level
 {
     public:
         Level(const char* _name);
         virtual ~Level();
+        void addBody(const std::string& factory, FactoryParameters* parameters);
         void addBody(StandardFactoryDef def);
         void addJoint(b2JointDef* def);
         void tempRender();

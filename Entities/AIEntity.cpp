@@ -1,9 +1,8 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
 #include <Physics/PhysicsManager.h>
-#include <Factory/ParticleDef.h>
-#include <Factory/FactoryList.h>
-#include <Factory/ProjectileDef.h>
+#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Weapons/Weapon.h>
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
@@ -46,7 +45,8 @@ void AIEntity::damage()
     def.setMaterial("Spark");
     def.position = mBody->GetPosition();
     g_FactoryList.useFactory(def,eParticleFactory);*/
-
+    FactoryParameters parameters({{"",mBody->GetPosition()}});
+    g_AbstractFactoryList.useFactory("spark",&parameters);
     health--;
 }
 void AIEntity::update()

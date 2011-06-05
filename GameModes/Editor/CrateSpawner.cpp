@@ -1,5 +1,7 @@
 #include "CrateSpawner.h"
 #include <Graphics/Camera/FreeCamera.h>
+#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/FactoryParameters.h>
 #include <Level/LevelManager.h>
 #include <CEGUI/CEGUI.h>
 #include <iostream>
@@ -39,11 +41,14 @@ void CrateSpawner::buttonUp(Vec2i mouse, unsigned char button)
     Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
     if (dimensions.x > 1.0f && dimensions.y > 1.0f)
     {
-        CrateDef def;
+        /*CrateDef def;
         def.set(dimensions,density->getCurrentValue(),materialName->getText().c_str());
         std::cout << "Density: " << density->getCurrentValue() << std::endl;
         def.position = topLeft + (bottomright - topLeft)*0.5;
-        g_LevelManager.addBody(def);
+        g_LevelManager.addBody(def);*/
+        Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
+        FactoryParameters params({{"",pos}});
+        g_LevelManager.addBody("crate", &params);
     }
     dragging = false;
 }

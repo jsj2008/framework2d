@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <Factory/FactoryDefList.h>
-#include <Factory/CrateDef.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>

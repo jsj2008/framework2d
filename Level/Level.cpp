@@ -4,6 +4,7 @@
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
+#include <AbstractFactory/AbstractFactoryList.h>
 #include <Level/ParallaxLayer.h>
 #include <cstring>
 #include <iostream>
@@ -26,6 +27,10 @@ void Level::addBody(StandardFactoryDef def)
     b2Body* body = g_FactoryDefList.singleUse(def)->mBody;
     bodyToDefTable[body] = def;
     std::cout << bodyToDefTable.size() << std::endl;
+}
+void Level::addBody(const std::string& factory, FactoryParameters* parameters)
+{
+    b2Body* body = g_AbstractFactoryList.useFactory("crate", parameters)->mBody;
 }
 void Level::addJoint(b2JointDef* def)
 {

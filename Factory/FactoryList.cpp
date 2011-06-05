@@ -3,7 +3,7 @@
 using namespace std;
 FactoryList g_FactoryList;
 FactoryList::FactoryList()
-:factories({new ConvexGeometryFactory, new CrateFactory, new BubbleFactory, new ParticleFactory, new AIEntityFactory, new ProjectileFactory})
+:factories({new ConvexGeometryFactory, new BubbleFactory, new AIEntityFactory})
 {
     assert(factories.size() == eStandardFactoriesMax);
     //ctor
@@ -17,7 +17,7 @@ FactoryList::~FactoryList()
 Entity* FactoryList::useFactory(StandardFactoryDef def, StandardFactories factoryType)
 {
     Factory* factory = getFactory(def.type);
-    return factory->createEntity(&def.crateDef);
+    return factory->createEntity(&def.baseDef);
 }
 
 /*Entity* FactoryList::useFactory(FactoryDef* data, StandardFactories factoryNum)
@@ -34,11 +34,6 @@ StandardFactoryDef::StandardFactoryDef()
 {
     type = eStandardFactoriesMax;
 }
-StandardFactoryDef::StandardFactoryDef(CrateDef& def)
-{
-    crateDef = def;
-    type = eCrateFactory;
-}
 StandardFactoryDef::StandardFactoryDef(ConvexGeometryDef& def)
 {
     convexGeometryDef = def;
@@ -54,26 +49,6 @@ StandardFactoryDef::StandardFactoryDef(AIEntityDef& def)
     aiEntityDef = def;
     type = eAIEntityFactory;
 }
-StandardFactoryDef::StandardFactoryDef(ParticleDef& def)
-{
-    particleDef = def;
-    type = eParticleFactory;
-}
-StandardFactoryDef::StandardFactoryDef(ProjectileDef& def)
-{
-    projectileDef = def;
-    type = eProjectileFactory;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 

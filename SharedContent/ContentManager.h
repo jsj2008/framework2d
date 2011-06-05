@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <SharedContent/SharedContent.h>
-
+typedef std::string ContentIndex;
 
 extern class ContentManager
 {
@@ -12,7 +12,7 @@ extern class ContentManager
         ContentManager();
         virtual ~ContentManager();
         template <typename T>
-        const ContentHandler<T> getContent(const std::string& name)const;
+        const ContentHandler<T> getContent(const ContentIndex& name)const;
         void addSharedContent(SharedContent* content);
     protected:
     private:
@@ -22,7 +22,7 @@ extern class ContentManager
 #endif // CONTENTMANAGER_H
 
 template <typename T>
-const ContentHandler<T> ContentManager::getContent(const std::string& name)const
+const ContentHandler<T> ContentManager::getContent(const ContentIndex& name)const
 {
     SharedContent* content = contentMap[name];
 #ifdef _DEBUG

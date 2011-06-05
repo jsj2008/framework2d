@@ -9,7 +9,7 @@ SharedContent::SharedContent(const char* _name)
     {
         size_t len = strlen(_name);
         assert(len < MAX_CONTENT_NAME);
-        memcpy(name,_name,len);
+        memcpy(name,_name,len+1);
         referenceCount = 0;
     }
     else

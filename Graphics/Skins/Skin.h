@@ -21,6 +21,7 @@ class Skin
     protected:
     private:
         friend class Factory;
+        friend class AbstractFactory;
         MaterialContext* material;
 };
 

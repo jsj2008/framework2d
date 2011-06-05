@@ -2,7 +2,7 @@
 #define WEAPONCONTENT_H
 
 #include <SharedContent/SharedContent.h>
-#include <Factory/ProjectileDef.h>
+#include <string>
 class Vec2f;
 
 class WeaponContent: public SharedContent
@@ -18,7 +18,7 @@ class WeaponContent: public SharedContent
         void vGrab();
         void vRelease();
 
-        ProjectileDef def;
+        std::string projectile;
         unsigned short numberOfProjectiles;
         float maximumSpread; /// Angle
         unsigned short reloadFrames;

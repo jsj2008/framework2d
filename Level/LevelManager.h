@@ -3,16 +3,18 @@
 
 #include <vector>
 #include <unordered_map>
+#include <string>
 #include <Factory/ConvexGeometryDef.h>
 #include <Entities/StaticGeometry.h>
-#include <Factory/CrateDef.h>
 #include <Level/Level.h>
+class FactoryParameters;
 
 extern class LevelManager
 {
     public:
         LevelManager();
         virtual ~LevelManager();
+        void addBody(const std::string& factory, FactoryParameters* parameters){level->addBody(factory,parameters);}
         void addBody(StandardFactoryDef def){level->addBody(def);}
         void addJoint(b2JointDef* def){level->addJoint(def);}
         void removeBody(b2Body* body){level->removeBody(body);}

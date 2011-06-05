@@ -11,6 +11,7 @@ enum EntityType
     eBubbleEntityType,
     ePhysicsParticleEntityType,
     eProjectileEntityType,
+    eExplosionEntityType,
     eEntityTypeMax,
 };
 class Entity
@@ -20,9 +21,9 @@ class Entity
         virtual void render();
         virtual void update()=0;
         virtual EntityType getType()=0;
+        virtual void damage(){}
         b2Body* mBody;
         Skin* mSkin;
-        virtual void damage(){}
     protected:
         friend class PhysicsManager; // Just want to assert nobody else can delete these
         virtual ~Entity();

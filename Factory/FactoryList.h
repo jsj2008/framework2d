@@ -9,20 +9,14 @@ class Entity;
 union StandardFactoryDef
 {
     StandardFactoryDef();
-    StandardFactoryDef(CrateDef& def);
     StandardFactoryDef(ConvexGeometryDef& def);
     StandardFactoryDef(BubbleDef& def);
-    StandardFactoryDef(ParticleDef& def);
     StandardFactoryDef(AIEntityDef& def);
-    StandardFactoryDef(ProjectileDef& def);
     StandardFactories type;
     FactoryDef baseDef;
-    CrateDef crateDef;
     ConvexGeometryDef convexGeometryDef;
     BubbleDef bubbleDef;
-    ParticleDef particleDef;
     AIEntityDef aiEntityDef;
-    ProjectileDef projectileDef;
 };
 
 extern class FactoryList

@@ -2,12 +2,12 @@
 #define PROJECTILE_H
 
 #include <Entities/Entity.h>
-
+#include <string>
 
 class Projectile : public Entity
 {
     public:
-        Projectile();
+        Projectile(const std::string& _explosion, Skin* _skin);
         virtual ~Projectile();
         void update();
         EntityType getType(){return eProjectileEntityType;}
@@ -16,6 +16,7 @@ class Projectile : public Entity
     protected:
     private:
         bool alive;
+        std::string explosion;
 };
 
 #endif // PROJECTILE_H

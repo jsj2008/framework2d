@@ -1,0 +1,8 @@
+ExplosionFactory explosion
+{
+  float damage 0.0
+  string material defaultBubble
+  float force 2.0
+  float time 10.0
+  float radius 2.0
+}

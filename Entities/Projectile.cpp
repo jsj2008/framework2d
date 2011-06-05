@@ -1,10 +1,15 @@
 #include "Projectile.h"
 #include <Physics/PhysicsManager.h>
+#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/FactoryParameters.h>
+#include <Box2D/Box2D.h>
 
-Projectile::Projectile()
+Projectile::Projectile(const std::string& _explosion, Skin* _skin)
 {
     //ctor
     alive = true;
+    explosion = _explosion;
+    mSkin = _skin;
 }
 
 Projectile::~Projectile()
@@ -16,9 +21,10 @@ void Projectile::update()
 {
     if (!alive)
     {
+        FactoryParameters parameters({{"",mBody->GetPosition()}});
+        g_AbstractFactoryList.useFactory(explosion,&parameters);
         g_PhysicsManager.destroyBody(mBody);
     }
-
 }
 
 void Projectile::hitWall()

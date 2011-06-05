@@ -4,7 +4,6 @@
 #include <GameModes/GameMode.h>
 #include <Input/Mouse/ClickDragEvent.h>
 #include <vector>
-#include <Factory/CrateDef.h>
 class FreeCamera;
 namespace CEGUI
 {
