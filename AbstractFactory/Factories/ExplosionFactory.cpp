@@ -8,13 +8,13 @@
 ExplosionFactory::ExplosionFactory(FactoryLoader* loader)
 {
     //ctor
-    material = loader->getString("material","defaultBubble");
-    damage = loader->getFloat("damage",0.0f);
-    force = loader->getFloat("force",2.0f);
-    time = loader->getFloat("time",10.0f);
+    material = loader->get<std::string>("material","defaultBubble");
+    damage = loader->get<float>("damage",0.0f);
+    force = loader->get<float>("force",2.0f);
+    time = loader->get<float>("time",10.0f);
     fixtureDef.isSensor = true;
     fixtureDef.shape = &shapeDef;
-    shapeDef.m_radius = loader->getFloat("radius",2.0f);
+    shapeDef.m_radius = loader->get<float>("radius",2.0f);
 }
 
 ExplosionFactory::~ExplosionFactory()

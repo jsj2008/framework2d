@@ -3,15 +3,15 @@
 #include <Entities/Projectile.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <Physics/PhysicsManager.h>
+#include <AbstractFactory/FactoryLoader.h>
 
-ProjectileFactory::ProjectileFactory()
+ProjectileFactory::ProjectileFactory(FactoryLoader* loader)
 {
     //ctor
-    velocity = Vec2f(0,5);
-    expiryTime = 10.0f;
-    radius = 1.0f;
-    explosion = "explosion";
-    material = "Bullet";
+    expiryTime = loader->get<float>("expiryTime",10.0f);
+    radius = loader->get<float>("radius",1.0f);
+    explosion = loader->get<std::string>("explosion","explosion");
+    material = loader->get<std::string>("material","Bullet");
 
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;

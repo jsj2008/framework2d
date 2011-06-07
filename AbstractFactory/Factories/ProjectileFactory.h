@@ -3,11 +3,12 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 #include <Box2D/Box2D.h>
+class FactoryLoader;
 
 class ProjectileFactory : public AbstractFactory
 {
     public:
-        ProjectileFactory();
+        ProjectileFactory(FactoryLoader* loader);
         virtual ~ProjectileFactory();
         Entity* useFactory(FactoryParameters* parameters);
     protected:
@@ -18,7 +19,6 @@ class ProjectileFactory : public AbstractFactory
 
         std::string material;
         float radius;
-        Vec2f velocity;
 
         short damage;
         std::string explosion;

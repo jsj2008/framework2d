@@ -6,3 +6,14 @@ ExplosionFactory explosion
   float time 10.0
   float radius 2.0
 }
+
+ProjectileFactory grenade
+{
+  string gay bum
+}
+
+ParticleFactory spark
+{
+  float penis 0.0
+  int lifetime 60
+}

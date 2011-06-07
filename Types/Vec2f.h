@@ -3,6 +3,8 @@
 
 #include <math.h>
 #include <Box2D/Common/b2Settings.h>
+#include <istream>
+#include <ostream>
 bool b2IsValid(float32 x);
 #define b2Vec2 Vec2f
 struct Vec2f
@@ -94,6 +96,8 @@ struct Vec2f
 	{
 		return b2IsValid(x) && b2IsValid(y);
 	}
+    friend std::ostream& operator<< (std::ostream &out, Vec2f &vec);
+    friend std::istream& operator>> (std::istream &in, Vec2f &vec);
 
 	float32 x, y;
 };

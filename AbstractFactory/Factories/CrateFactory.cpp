@@ -5,6 +5,7 @@
 #include <Graphics/Skins/StaticSkin.h>
 
 CrateFactory::CrateFactory(const std::string& _materialName, float density)
+:AbstractFactory()
 {
     //ctor
     materialName = _materialName;

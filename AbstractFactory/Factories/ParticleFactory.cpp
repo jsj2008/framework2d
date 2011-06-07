@@ -4,13 +4,14 @@
 #include <Physics/PhysicsManager.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <Graphics/GraphicsManager.h>
+#include <AbstractFactory/FactoryLoader.h>
 
-ParticleFactory::ParticleFactory(float _density, int _lifetime)
+ParticleFactory::ParticleFactory(FactoryLoader* loader)
 {
     //ctor
-    density = _density;
-    lifetime = _lifetime;
-    materialName = "Spark";
+    density = loader->get<float>("density",1.0f);
+    lifetime = loader->get<int>("lifetime",60); /// FIXME needs ints
+    materialName = loader->get<std::string>("materialName","Spark");
     bodyDef.type = b2_dynamicBody;
 
 }

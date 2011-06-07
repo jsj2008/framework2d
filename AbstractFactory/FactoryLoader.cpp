@@ -1,148 +1,84 @@
 #include "FactoryLoader.h"
 #include <Log/Log.h>
+using namespace FactoryLoaderPrivate;
 
 FactoryLoader::FactoryLoader(const char* filename)
 :file(filename)
 {
     //ctor
+    types["int"] = new TemplateType<int>;
+    types["float"] = new TemplateType<float>;
+    types["string"] = new TemplateType<std::string>;
+    types["Vec2f"] = new TemplateType<Vec2f>;
 }
 
 FactoryLoader::~FactoryLoader()
 {
     //dtor
+    for (auto i = types.begin(); i != types.end(); i++)
+    {
+        delete i->second;
+    }
 }
-void FactoryLoader::syntaxError(const std::string& type, const std::string& name, const std::string& message)
+void FactoryLoader::syntaxError(const std::string& message)
 {
     g_Log.error("In class " + name + " of type " + type + ": " + message);
 }
-
-const std::pair<std::string,std::string> FactoryLoader::next()
+void FactoryLoader::warning(const std::string& message)
 {
-    std::string type;
-    std::string name;
+    g_Log.warning(message);
+}
+
+bool FactoryLoader::next()
+{
     file >> type;
     file >> name;
     std::string token;
     file >> token;
-    if (token != "{")
+    if (token[0] != '{')
     {
-        syntaxError(type, name, "Syntax error, '{' expected, " + token + " read instead");
+        if (!file.good()) return false;
+        syntaxError("Syntax error, '{' expected, " + token + " read instead");
     }
     while (file.good())
     {
         file >> token;
-        std::string variableName;
-        file >> variableName;
-        if (token == "float")
+        if (token[0] == '}')
         {
-            float value;
-            file >> value;
-            addFloat(variableName,value);
-        }
-        else if (token == "Vec2f")
-        {
-            float x;
-            file >> x;
-            float y;
-            file >> y;
-            addVec2f(variableName,Vec2f(x,y));
-        }
-        else if (token == "string")
-        {
-            file >> token;
-            addString(variableName,token);
-        }
-        else if (token == "}")
-        {
-            break;
+            return true;
         }
         else
         {
-            g_Log.error("Syntax error, expected either \"float\", \"Vec2f\" or \"string\"");
+            if (types.find(token) == types.end())
+            {
+                syntaxError("Type " + token + " not defined");
+            }
+            std::string variableName;
+            file >> variableName;
+            if (values.find(variableName) != values.end())
+            {
+                warning("Variable " + variableName + " already defined, redefining");
+            }
+            values[variableName] = types[token]->instance(&file);
         }
     }
-    return {type,name};
+    return false;
 }
 
 void FactoryLoader::end()
 {
-    for (auto i = floatValues.begin(); i != floatValues.end(); i++)
+    for (auto i = values.begin(); i != values.end(); i++)
     {
-        g_Log.warning("Float " + i->first + " defined but not used");
+        g_Log.warning(i->second->name() + " " + i->first + " defined but not used");
+        delete i->second;
     }
-    floatValues.clear();
-    for (auto i = stringValues.begin(); i != stringValues.end(); i++)
-    {
-        g_Log.warning("String " + i->first + " defined but not used");
-    }
-    stringValues.clear();
+    values.clear();
 }
-float FactoryLoader::getFloat(const std::string& name, float normal)
+
+/*template <typename T>
+void FactoryLoader::addType(const std::string& name)
 {
-    auto value = floatValues.find(name);
-    if (value == floatValues.end())
-    {
-        g_Log.warning("float value \"" + name + "\" not defined, defaulting");
-        return normal;
-    }
-    else
-    {
-        float ret = value->second;
-        floatValues.erase(value);
-        return ret;
-    }
+    assert(types.find(name) == types.end());
+    types[name] = new TemplateType<T>;
 }
-const Vec2f FactoryLoader::getVec2f(const std::string& name, const Vec2f& normal)
-{
-    auto value = floatValues.find(name + "x");
-    if (value == floatValues.end())
-    {
-        g_Log.warning("Vec2f value \"" + name + "\" not defined exist, defaulting");
-        return normal;
-    }
-    else
-    {
-        float x = value->second;
-        floatValues.erase(value);
-        value = floatValues.find(name + "y");
-        float y = value->second;
-        floatValues.erase(value);
-        return Vec2f(x,y);
-    }
-}
-const std::string FactoryLoader::getString(const std::string& name, const std::string& normal)
-{
-    auto value = stringValues.find(name);
-    if (value == stringValues.end())
-    {
-        g_Log.warning("string value \"" + name + "\" not defined exist, defaulting");
-        return normal;
-    }
-    else
-    {
-        std::string ret = value->second;
-        stringValues.erase(value);
-        return ret;
-    }
-}
-void FactoryLoader::addFloat(const std::string& name, float value)
-{
-    if (floatValues.find(name) != floatValues.end())
-    {
-        g_Log.warning("Float value \"" + name + "\" already defined, rewriting");
-    }
-    floatValues[name] = value;
-}
-void FactoryLoader::addVec2f(const std::string& name, const Vec2f& value)
-{
-    addFloat(name + "x", value.x);
-    addFloat(name + "y", value.y);
-}
-void FactoryLoader::addString(const std::string& name, const std::string& value)
-{
-    if (stringValues.find(name) != stringValues.end())
-    {
-        g_Log.warning("String value \"" + name + "\" already defined, rewriting");
-    }
-    stringValues[name] = value;
-}
+*/

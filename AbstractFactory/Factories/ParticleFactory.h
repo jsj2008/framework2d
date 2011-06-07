@@ -2,12 +2,12 @@
 #define PARTICLEFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-
+class FactoryLoader;
 
 class ParticleFactory : public AbstractFactory
 {
     public:
-        ParticleFactory(float _density, int _lifetime);
+        ParticleFactory(FactoryLoader* loader);
         virtual ~ParticleFactory();
         Entity* useFactory(FactoryParameters* parameters);
     protected:

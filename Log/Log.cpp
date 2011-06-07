@@ -14,9 +14,10 @@ Log::~Log()
 }
 void Log::warning(const std::string& message)
 {
-    cout << "Warning" << message << endl;
+    cout << "Warning " << message << endl;
 }
 void Log::error(const std::string& message)
 {
-    cout << "Error" << message << endl;
+    cout << "Error " << message << endl;
+    throw -1;
 }

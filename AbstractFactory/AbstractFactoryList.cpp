@@ -7,28 +7,28 @@
 #include <cassert>
 AbstractFactoryList g_AbstractFactoryList;
 
+class FactoryCreator
+{
+    public:
+        virtual AbstractFactory* createFactory(FactoryLoader* loader)=0;
+};
+
 AbstractFactoryList::AbstractFactoryList()
 {
     //ctor
     registerFactoryType<ExplosionFactory>("ExplosionFactory");
+    registerFactoryType<ProjectileFactory>("ProjectileFactory");
+    registerFactoryType<ParticleFactory>("ParticleFactory");
+    //registerFactoryType<CrateFactory>("CrateFactory");
     FactoryLoader loader("Resources/Factories.txt");
-    loader.next();
-    addFactory("explosion", new ExplosionFactory(&loader));
-    loader.end();
-    addFactory("grenade", new ProjectileFactory);
-    addFactory("spark", new ParticleFactory(1.0f,60));
+    while (loader.next())
+    {
+        assert(factories.find(loader.getName()) == factories.end());
+        factories[loader.getName()] = factoryCreators[loader.getType()]->createFactory(&loader);
+        loader.end();
+    }
     addFactory("crate", new CrateFactory("player",1.0f));
 }
-/*
-    std::ifstream file;
-    file.open("explosion");
-    addFactory("explosion", new ExplosionFactory(&file));
-    file.open("grenade");
-    addFactory("grenade", new ProjectileFactory(&file));
-    file.open("spark");
-    addFactory("spark", new ParticleFactory(&file));//(1.0f,60));
-    file.open("crate");
-    addFactory("crate", new CrateFactory(&file));//("player",1.0f));*/
 
 AbstractFactoryList::~AbstractFactoryList()
 {
@@ -37,8 +37,6 @@ AbstractFactoryList::~AbstractFactoryList()
 
 void AbstractFactoryList::addFactory(AbstractFactoryReference name, AbstractFactory* factory)
 {
-    assert(factories.find(name) == factories.end());
-    factories[name] = factory;
 }
 
 Entity* AbstractFactoryList::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
@@ -46,11 +44,6 @@ Entity* AbstractFactoryList::useFactory(AbstractFactoryReference factory, Factor
     return factories[factory]->useFactory(parameters);
 }
 
-class FactoryCreator
-{
-    public:
-        virtual AbstractFactory* createFactory(FactoryLoader* loader)=0;
-};
 template <typename T>
 class TemplateFactoryCreator : public FactoryCreator
 {
