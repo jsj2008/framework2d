@@ -2,7 +2,6 @@
 #define GEOMETRYEDITOR_H
 
 #include <Input/Mouse/ClickReleaseEvent.h>
-#include <Factory/ConvexGeometryDef.h>
 #include <GameModes/GameMode.h>
 class FreeCamera;
 namespace CEGUI
@@ -20,8 +19,9 @@ class GeometryEditor : public GameMode, public ClickReleaseEvent
         void render();
     protected:
     private:
-        ConvexGeometryDef def;
+        std::vector<Vec2f> points;
         CEGUI::Window* materialName;
+        bool sort();
 };
 
 #endif // GEOMETRYEDITOR_H

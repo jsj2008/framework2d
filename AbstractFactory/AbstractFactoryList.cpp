@@ -3,6 +3,7 @@
 #include <AbstractFactory/Factories/ProjectileFactory.h>
 #include <AbstractFactory/Factories/ParticleFactory.h>
 #include <AbstractFactory/Factories/CrateFactory.h>
+#include <AbstractFactory/Factories/LevelGeometryFactory.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <cassert>
 AbstractFactoryList g_AbstractFactoryList;
@@ -20,6 +21,7 @@ AbstractFactoryList::AbstractFactoryList()
     registerFactoryType<ProjectileFactory>("ProjectileFactory");
     registerFactoryType<ParticleFactory>("ParticleFactory");
     registerFactoryType<CrateFactory>("CrateFactory");
+    registerFactoryType<LevelGeometryFactory>("LevelGeometryFactory");
     FactoryLoader loader("Resources/Factories.txt");
     while (loader.next())
     {

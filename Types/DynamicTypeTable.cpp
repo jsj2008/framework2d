@@ -1,6 +1,32 @@
 #include "DynamicTypeTable.h"
 #include <fstream>
+#include <vector>
 #include <Types/Vec2f.h>
+
+template <typename T>
+std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements)
+{
+    unsigned short size = elements.size();
+    out << size << ' ';
+    for (unsigned short i = 0; i < size; i++)
+    {
+        T element = elements[i];
+        out << element << ' ';
+    }
+}
+template <typename T>
+std::istream& operator>> (std::istream &in, std::vector<T> &elements)
+{
+    unsigned short size;
+    in >> size;
+    elements.reserve(size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        T element;
+        in >> element;
+        elements.push_back(element);
+    }
+}
 
 DynamicTypeTable::DynamicTypeTable()
 {
@@ -8,6 +34,7 @@ DynamicTypeTable::DynamicTypeTable()
     registerType<float>("float");
     registerType<std::string>("string");
     registerType<Vec2f>("Vec2f");
+    registerType<std::vector<Vec2f>>("Vec2fArray");
 }
 template <typename T>
 void DynamicTypeTable::registerType(const TypeIndex& name)

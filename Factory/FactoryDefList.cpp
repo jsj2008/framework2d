@@ -16,11 +16,11 @@ FactoryDefList::~FactoryDefList()
 
 Entity* FactoryDefList::singleUse(StandardFactoryDef def)
 {
-    return g_FactoryList.useFactory(def,eConvexPolygonFactory);
+    return g_FactoryList.useFactory(def,eStandardFactoriesMax);
 }
 Entity* FactoryDefList::useFactoryDef(unsigned int def)
 {
-    return g_FactoryList.useFactory(factoryDefs[def],eConvexPolygonFactory);
+    return g_FactoryList.useFactory(factoryDefs[def],eStandardFactoriesMax);
 }
 Entity* FactoryDefList::useFactoryDef(unsigned int def, const Vec2f& position)
 {

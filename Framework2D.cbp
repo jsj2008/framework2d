@@ -165,6 +165,8 @@
 		<Unit filename="AbstractFactory/Factories/CrateFactory.h" />
 		<Unit filename="AbstractFactory/Factories/ExplosionFactory.cpp" />
 		<Unit filename="AbstractFactory/Factories/ExplosionFactory.h" />
+		<Unit filename="AbstractFactory/Factories/LevelGeometryFactory.cpp" />
+		<Unit filename="AbstractFactory/Factories/LevelGeometryFactory.h" />
 		<Unit filename="AbstractFactory/Factories/ParticleFactory.cpp" />
 		<Unit filename="AbstractFactory/Factories/ParticleFactory.h" />
 		<Unit filename="AbstractFactory/Factories/ProjectileFactory.cpp" />
@@ -207,10 +209,6 @@
 		<Unit filename="Factory/BubbleDef.h" />
 		<Unit filename="Factory/BubbleFactory.cpp" />
 		<Unit filename="Factory/BubbleFactory.h" />
-		<Unit filename="Factory/ConvexGeometryDef.cpp" />
-		<Unit filename="Factory/ConvexGeometryDef.h" />
-		<Unit filename="Factory/ConvexGeometryFactory.cpp" />
-		<Unit filename="Factory/ConvexGeometryFactory.h" />
 		<Unit filename="Factory/Factory.cpp" />
 		<Unit filename="Factory/Factory.h" />
 		<Unit filename="Factory/FactoryDef.cpp" />

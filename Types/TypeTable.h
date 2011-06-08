@@ -8,7 +8,9 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include <cassert>
+#include <Types/Vec2f.h>
 #include <Log/Log.h>
 
 class TypeTable
@@ -65,6 +67,10 @@ class TypeTable
         };
 };
 
+template <typename T>
+std::istream& operator>> (std::istream &in, std::vector<T> &elements);
+template <typename T>
+std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
 
 template <typename T>
 void TypeTable::addValue(const ValueIndex& name, const T& value)

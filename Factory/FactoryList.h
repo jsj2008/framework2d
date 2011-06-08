@@ -9,12 +9,10 @@ class Entity;
 union StandardFactoryDef
 {
     StandardFactoryDef();
-    StandardFactoryDef(ConvexGeometryDef& def);
     StandardFactoryDef(BubbleDef& def);
     StandardFactoryDef(AIEntityDef& def);
     StandardFactories type;
     FactoryDef baseDef;
-    ConvexGeometryDef convexGeometryDef;
     BubbleDef bubbleDef;
     AIEntityDef aiEntityDef;
 };

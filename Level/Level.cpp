@@ -1,5 +1,4 @@
 #include "Level.h"
-#include <Factory/ConvexGeometryDef.h>
 #include <Factory/FactoryDefList.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>

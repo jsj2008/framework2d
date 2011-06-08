@@ -4,7 +4,6 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include <Factory/ConvexGeometryDef.h>
 #include <Entities/StaticGeometry.h>
 #include <Level/Level.h>
 class FactoryParameters;

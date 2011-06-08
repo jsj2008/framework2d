@@ -5,7 +5,6 @@
 
 enum StandardFactories : unsigned short
 {
-    eConvexPolygonFactory,
     eBubbleFactory,
     eAIEntityFactory,
     eStandardFactoriesMax
