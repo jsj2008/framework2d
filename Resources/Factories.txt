@@ -25,3 +25,11 @@ CrateFactory crate
 LevelGeometryFactory levelGeometry
 {
 }
+
+SuctionBubble suctionBubble
+{
+}
+
+UpwardsGravityBubble upwardsGravityBubble
+{
+}

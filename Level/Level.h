@@ -5,6 +5,7 @@
 #include <string>
 #include <Factory/FactoryList.h>
 #include <AbstractFactory/FactoryParameters.h>
+class b2Body;
 class b2Joint;
 class b2JointDef;
 class TextureContext;

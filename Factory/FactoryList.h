@@ -9,11 +9,9 @@ class Entity;
 union StandardFactoryDef
 {
     StandardFactoryDef();
-    StandardFactoryDef(BubbleDef& def);
     StandardFactoryDef(AIEntityDef& def);
     StandardFactories type;
     FactoryDef baseDef;
-    BubbleDef bubbleDef;
     AIEntityDef aiEntityDef;
 };
 

@@ -2,9 +2,8 @@
 #define BUBBLEDRAWEVENT_H
 
 #include <Input/Mouse/ClickDragEvent.h>
-#include <Factory/BubbleDef.h>
 class SelectionBox;
-/*
+
 class BubbleDrawEvent : public ClickDragEvent
 {
     public:
@@ -16,7 +15,6 @@ class BubbleDrawEvent : public ClickDragEvent
     protected:
     private:
         SelectionBox* selectionBox;
-        BubbleDef def;
 };
-*/
+
 #endif // BUBBLEDRAWEVENT_H

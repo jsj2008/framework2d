@@ -3,7 +3,7 @@
 using namespace std;
 FactoryList g_FactoryList;
 FactoryList::FactoryList()
-:factories({new BubbleFactory, new AIEntityFactory})
+:factories({new AIEntityFactory})
 {
     assert(factories.size() == eStandardFactoriesMax);
     //ctor
@@ -33,11 +33,6 @@ Factory* FactoryList::getFactory(StandardFactories factory)
 StandardFactoryDef::StandardFactoryDef()
 {
     type = eStandardFactoriesMax;
-}
-StandardFactoryDef::StandardFactoryDef(BubbleDef& def)
-{
-    bubbleDef = def;
-    type = eBubbleFactory;
 }
 StandardFactoryDef::StandardFactoryDef(AIEntityDef& def)
 {

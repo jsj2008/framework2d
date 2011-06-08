@@ -6,11 +6,13 @@
 #include <Graphics/GraphicsManager.h>
 #include <Input/InputManager.h>
 #include <AI/PlayerInputBrain.h>
+#include <AbstractFactory/FactoryParameters.h>
+#include <AbstractFactory/AbstractFactoryList.h>
 
 PlayMode::PlayMode()
 {
     //ctor
-    def.setMaterial("defaultBubble");
+    type = Bubble::eSuctionBubbleType;
     mCamera = NULL;
 }
 
@@ -27,16 +29,36 @@ void PlayMode::mouseMove(Vec2i mouse)
 {
 
 }
-#include <iostream> // FIXME
 void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
 {
-    def.position = startPos.ScreenToWorldSpace();
-    def.radius = (def.position-mouse.ScreenToWorldSpace()).Length();
-    def.type = (Bubble::BubbleType)1;
-    if (def.radius != 0.0f)
+    Vec2f position = startPos.ScreenToWorldSpace();
+    float radius = (position-mouse.ScreenToWorldSpace()).Length();
+    if (radius != 0.0f)
     {
-        //g_FactoryList.useFactory(def, eBubbleFactory);
-        std::cout << "Bubbles disabled __FILE__ __LINE__\n";
+        FactoryParameters parameters;
+        parameters.add<Vec2f>("position",position);
+        parameters.add<float>("radius",radius);
+        parameters.add<std::string>("materialName","defaultBubble");
+        std::string factory;
+        switch (type)
+        {
+            case Bubble::eSuctionBubbleType:
+            {
+                factory = "suctionBubble";
+                break;
+            }
+            case Bubble::eUpwardsGravityBubbleType:
+            {
+                factory = "upwardsGravityBubble";
+                break;
+            }
+            case Bubble::eBubbleTypesMax:
+            default:
+            {
+                throw -1;
+            }
+        }
+        g_AbstractFactoryList.useFactory(factory,&parameters);
     }
 }
 void PlayMode::setBody(b2Body* body, PlayerInputBrain* _playerBrain)

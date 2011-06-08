@@ -8,7 +8,6 @@
 ShooterGame::ShooterGame()
 {
     //ctor
-    def.setMaterial("defaultBubble");
     mCamera = NULL;
 }
 

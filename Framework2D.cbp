@@ -161,6 +161,8 @@
 		<Unit filename="AbstractFactory/AbstractFactory.h" />
 		<Unit filename="AbstractFactory/AbstractFactoryList.cpp" />
 		<Unit filename="AbstractFactory/AbstractFactoryList.h" />
+		<Unit filename="AbstractFactory/Factories/BubbleFactory.cpp" />
+		<Unit filename="AbstractFactory/Factories/BubbleFactory.h" />
 		<Unit filename="AbstractFactory/Factories/CrateFactory.cpp" />
 		<Unit filename="AbstractFactory/Factories/CrateFactory.h" />
 		<Unit filename="AbstractFactory/Factories/ExplosionFactory.cpp" />
@@ -205,10 +207,6 @@
 		<Unit filename="Factory/AIEntityFactory.h" />
 		<Unit filename="Factory/AllFactories.h" />
 		<Unit filename="Factory/AllFactoryDefs.h" />
-		<Unit filename="Factory/BubbleDef.cpp" />
-		<Unit filename="Factory/BubbleDef.h" />
-		<Unit filename="Factory/BubbleFactory.cpp" />
-		<Unit filename="Factory/BubbleFactory.h" />
 		<Unit filename="Factory/Factory.cpp" />
 		<Unit filename="Factory/Factory.h" />
 		<Unit filename="Factory/FactoryDef.cpp" />

@@ -9,7 +9,6 @@
 #include <GameModes/Editor/EditorMode.h>
 #include <Level/LevelManager.h>
 #include <Graphics/Camera/FreeCamera.h>
-#include <Factory/BubbleDef.h>
 #include <AI/AIManager.h>
 #include <AI/CharacterController.h>
 #include <SharedContent/ContentManager.h>
@@ -30,7 +29,7 @@ void Game::init()
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
     g_PhysicsManager.init();
 
-    mGameModes[ePlayGameMode] = new ShooterGame;
+    mGameModes[ePlayGameMode] = new PlayMode;
     mGameModes[eEditorGameMode] = new EditorMode;
 
     g_LevelManager.loadLevel("default");

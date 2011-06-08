@@ -4,6 +4,8 @@
 #include <AbstractFactory/Factories/ParticleFactory.h>
 #include <AbstractFactory/Factories/CrateFactory.h>
 #include <AbstractFactory/Factories/LevelGeometryFactory.h>
+#include <AbstractFactory/Factories/BubbleFactory.h>
+#include <Entities/Bubbles/AllBubbles.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <cassert>
 AbstractFactoryList g_AbstractFactoryList;
@@ -22,6 +24,8 @@ AbstractFactoryList::AbstractFactoryList()
     registerFactoryType<ParticleFactory>("ParticleFactory");
     registerFactoryType<CrateFactory>("CrateFactory");
     registerFactoryType<LevelGeometryFactory>("LevelGeometryFactory");
+    registerFactoryType<BubbleFactory<SuctionBubble>>("SuctionBubble");
+    registerFactoryType<BubbleFactory<UpwardsGravityBubble>>("UpwardsGravityBubble");
     FactoryLoader loader("Resources/Factories.txt");
     while (loader.next())
     {

@@ -5,6 +5,8 @@
 #include <Graphics/Contexts/TextureContext.h>
 #include <AbstractFactory/AbstractFactoryList.h>
 #include <Level/ParallaxLayer.h>
+#include <Box2D/Box2D.h>
+#include <Entities/Entity.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>

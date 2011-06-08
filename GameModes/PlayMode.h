@@ -3,7 +3,7 @@
 
 #include "GameMode.h"
 #include <Input/Mouse/ClickDragEvent.h>
-#include <Factory/BubbleDef.h>
+#include <Entities/Bubble.h>
 class b2Body;
 class PlayerInputBrain;
 
@@ -19,7 +19,7 @@ class PlayMode : public ClickDragEvent, public GameMode
         bool activate(const CEGUI::EventArgs&);
     protected:
     private:
-        BubbleDef def;
+        Bubble::BubbleType type;
         PlayerInputBrain* playerBrain;
 };
 
