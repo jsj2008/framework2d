@@ -14,7 +14,6 @@ extern class LevelManager
         LevelManager();
         virtual ~LevelManager();
         void addBody(const std::string& factory, FactoryParameters* parameters){level->addBody(factory,parameters);}
-        void addBody(StandardFactoryDef def){level->addBody(def);}
         void addJoint(b2JointDef* def){level->addJoint(def);}
         void removeBody(b2Body* body){level->removeBody(body);}
         void renderBackLayers(){level->renderBackLayers();}

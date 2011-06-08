@@ -1,6 +1,0 @@
-#ifndef ALLFACTORIES_H_INCLUDED
-#define ALLFACTORIES_H_INCLUDED
-
-#include "AIEntityFactory.h"
-
-#endif // ALLFACTORIES_H_INCLUDED

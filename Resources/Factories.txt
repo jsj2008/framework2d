@@ -26,6 +26,17 @@ LevelGeometryFactory levelGeometry
 {
 }
 
+AIEntityFactory player
+{
+  int aiType 0
+}
+
+AIEntityFactory zombie
+{
+  int aiType 1
+  
+}
+
 SuctionBubble suctionBubble
 {
 }

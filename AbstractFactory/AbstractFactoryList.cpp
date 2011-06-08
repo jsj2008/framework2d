@@ -4,6 +4,7 @@
 #include <AbstractFactory/Factories/ParticleFactory.h>
 #include <AbstractFactory/Factories/CrateFactory.h>
 #include <AbstractFactory/Factories/LevelGeometryFactory.h>
+#include <AbstractFactory/Factories/AIEntityFactory.h>
 #include <AbstractFactory/Factories/BubbleFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
 #include <AbstractFactory/FactoryLoader.h>
@@ -24,6 +25,7 @@ AbstractFactoryList::AbstractFactoryList()
     registerFactoryType<ParticleFactory>("ParticleFactory");
     registerFactoryType<CrateFactory>("CrateFactory");
     registerFactoryType<LevelGeometryFactory>("LevelGeometryFactory");
+    registerFactoryType<AIEntityFactory>("AIEntityFactory");
     registerFactoryType<BubbleFactory<SuctionBubble>>("SuctionBubble");
     registerFactoryType<BubbleFactory<UpwardsGravityBubble>>("UpwardsGravityBubble");
     FactoryLoader loader("Resources/Factories.txt");
@@ -33,7 +35,6 @@ AbstractFactoryList::AbstractFactoryList()
         factories[loader.getName()] = factoryCreators[loader.getType()]->createFactory(&loader);
         loader.end();
     }
-    //addFactory("crate", new CrateFactory("player",1.0f));
 }
 
 AbstractFactoryList::~AbstractFactoryList()
@@ -47,7 +48,17 @@ void AbstractFactoryList::addFactory(AbstractFactoryReference name, AbstractFact
 
 Entity* AbstractFactoryList::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
 {
-    return factories[factory]->useFactory(parameters);
+    if (parameters == NULL)
+    {
+        FactoryParameters params;
+        params.add<Vec2f>("dickhole",Vec2f(0,0));
+        return factories[factory]->useFactory(&params);
+        params.clear();
+    }
+    else
+    {
+        return factories[factory]->useFactory(parameters);
+    }
 }
 
 template <typename T>

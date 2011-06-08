@@ -1,5 +1,4 @@
 #include "AIEntityFactory.h"
-#include <Factory/AIEntityDef.h>
 #include <Entities/AIEntity.h>
 #include <AI/ZombieBrain.h>
 #include <AI/PlayerInputBrain.h>
@@ -11,10 +10,17 @@
 #include <Game.h>
 #include <GameModes/PlayMode.h>
 #include <iostream>
+#include <AbstractFactory/FactoryParameters.h>
+#include <AbstractFactory/FactoryLoader.h>
 
-AIEntityFactory::AIEntityFactory()
+AIEntityFactory::AIEntityFactory(FactoryLoader* loader)
 {
     //ctor
+    aiType = loader->get<int>("aiType",ePlayerInputBrainType);
+    dimensions = loader->get<Vec2f>("dimensions",Vec2f(2,2));
+    weapon = loader->get<std::string>("weapon","pistol");
+    materialName = loader->get<std::string>("materialName","player");
+
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
     fixtureDef.shape = &shapeDef;
@@ -41,11 +47,10 @@ AIEntityFactory::~AIEntityFactory()
     //dtor
 }
 
-Entity* AIEntityFactory::createEntity(FactoryDef* data)
+Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
-    AIEntityDef* def = (AIEntityDef*)data;
     Brain* brain;
-    switch (def->aiType)
+    switch (aiType)
     {
         case ePlayerInputBrainType:
         {
@@ -64,63 +69,36 @@ Entity* AIEntityFactory::createEntity(FactoryDef* data)
             throw -1;
         }
     }
-    Vec2f anchorPoint(def->width*0.1f,def->height*0.33f);
-    anchorPoint += def->position; //entity->mBody->GetPosition();
+    Vec2f position = parameters->get<Vec2f>("position",Vec2f(0,0));
+    Vec2f anchorPoint(dimensions.x*0.1f,dimensions.y*0.33f);
+    anchorPoint += position;
 
-
-    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(def->weapon)));
+    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)));
     int collisionGroup = g_PhysicsManager.getNextNegativeCollisionGroup();
     fixtureDef.filter.groupIndex = collisionGroup;
     wheelFixture.filter.groupIndex = collisionGroup;
 
-    bodyDef.position = def->position;
-    bodyDef.position.x += def->width*0.1f;
-    shapeDef.SetAsBox(def->width*0.4f,def->height*0.33f);
+    bodyDef.position = position;
+    bodyDef.position.x += dimensions.x*0.1f;
+    shapeDef.SetAsBox(dimensions.x*0.4f,dimensions.y*0.33f);
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    wheelBody.position = def->position;
-    wheelBody.position += Vec2f(def->width*0.1f,def->height*0.33f);
+    wheelBody.position = position;
+    wheelBody.position += Vec2f(dimensions.x*0.1f,dimensions.y*0.33f);
     b2Body* wheel = g_PhysicsManager.createBody(&wheelBody);
     wheel->CreateFixture(&wheelFixture);
 
     wheelJoint.Initialize(entity->mBody,wheel,anchorPoint);
     entity->setWheel((b2RevoluteJoint*)g_PhysicsManager.createJoint(&wheelJoint));
 
-    entity->mSkin = new StaticSkin(def->width,def->height);
-    setMaterial(entity->mSkin,g_GraphicsManager.getMaterial(data->materialName));
+    entity->mSkin = new StaticSkin(dimensions.x,dimensions.y);
+    setMaterial(entity->mSkin,materialName);
 
-    if (def->aiType == ePlayerInputBrainType)
+    if (aiType == ePlayerInputBrainType)
     {
         ((PlayMode*)g_Game.getGameMode(ePlayGameMode))->setBody(entity->mBody,(PlayerInputBrain*)brain);
     }
     return entity;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

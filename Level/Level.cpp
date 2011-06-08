@@ -1,5 +1,4 @@
 #include "Level.h"
-#include <Factory/FactoryDefList.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
@@ -22,12 +21,6 @@ Level::~Level()
 {
     //dtor
     saveLevel();
-}
-void Level::addBody(StandardFactoryDef def)
-{
-    b2Body* body = g_FactoryDefList.singleUse(def)->mBody;
-    bodyToDefTable[body] = def;
-    std::cout << bodyToDefTable.size() << std::endl;
 }
 void Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
@@ -89,9 +82,9 @@ void Level::addJoint(b2JointDef* def)
     }
     b2Body* bodyA = def->bodyA;
     b2Body* bodyB = def->bodyB;
-    auto crateIter = bodyToDefTable.find(bodyA);
-    auto geometryIter = bodyToDefTable.find(bodyB);
-    if (crateIter != bodyToDefTable.end() && geometryIter != bodyToDefTable.end())
+    auto crateIter = table.find(bodyA);
+    auto geometryIter = table.find(bodyB);
+    if (crateIter != table.end() && geometryIter != table.end())
     {
         jointToDefTable[g_PhysicsManager.createJoint(copy)] = copy;
     }
@@ -103,10 +96,10 @@ void Level::addJoint(b2JointDef* def)
     strcpy(filename+strlen("Resources/Levels/")+strlen(name),".lvl")
 void Level::removeBody(b2Body* body)
 {
-    auto result = bodyToDefTable.find(body);
-    if (result != bodyToDefTable.end())
+    auto result = table.find(body);
+    if (result != table.end())
     {
-        bodyToDefTable.erase(body);
+        table.erase(body);
     }
     g_PhysicsManager.destroyBody(body);
 }
@@ -118,79 +111,10 @@ void Level::removeJoint(b2Joint* joint)
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
 {
-    CREATE_FILE_NAME;
-    std::vector<b2Body*> readLocations;
-    ifstream file(filename,ios::binary);
-    if(!file.is_open())
-    {
-        cout << "Error: File does not appear to exist, or maybe this program doesn't have filesystem rights" << filename << endl;
-        return;
-    }
-    std::vector<StandardFactoryDef> bodyDefs;
-    unsigned short size;
-    file.read((char*)&size,sizeof(unsigned short));
-    bodyDefs.resize(size);
-    file.read((char*)&bodyDefs[0],sizeof(StandardFactoryDef)*size);
-    for (unsigned short i = 0; i < size; i++)
-    {
-        b2Body* body = g_FactoryDefList.singleUse(bodyDefs[i])->mBody;
-        bodyToDefTable[body] = bodyDefs[i];
-        readLocations.push_back(body);
-    }
-
-    file.read((char*)&size,sizeof(unsigned short));
-    for (unsigned short i = 0; i < size; i++)
-    {
-        unsigned short bodyA, bodyB;
-        file.read((char*)&(bodyA),sizeof(unsigned short));
-        file.read((char*)&(bodyB),sizeof(unsigned short));
-        b2JointType type;
-        file.read((char*)&(type),sizeof(b2JointType));
-        switch (type)
-        {
-            case e_distanceJoint:
-            {
-                Vec2f worldAnchorA;
-                Vec2f worldAnchorB;
-                file.read((char*)&(worldAnchorA),sizeof(Vec2f));
-                file.read((char*)&(worldAnchorB),sizeof(Vec2f));
-                b2DistanceJointDef def;
-                def.Initialize(readLocations[bodyA],readLocations[bodyB],worldAnchorA, worldAnchorB);
-                file.read((char*)&(def.collideConnected),sizeof(bool));
-                file.read((char*)&(def.frequencyHz),sizeof(float));
-                file.read((char*)&(def.dampingRatio),sizeof(float));
-                addJoint(&def);
-                break;
-            }
-            case e_revoluteJoint:
-            case e_prismaticJoint:
-            case e_pulleyJoint:
-            case e_gearJoint:
-            case e_lineJoint:
-            case e_weldJoint:
-            case e_frictionJoint:
-            case e_unknownJoint:
-            case e_mouseJoint:
-            default:
-            {
-                cout << "Invalid joint to load" << endl;
-                throw -1;
-            }
-        }
-    }
-    file.read((char*)&size,sizeof(unsigned short));
-    for (unsigned short i = 0; i < size; i++)
-    {
-        parallaxLayers.push_back(new ParallaxLayer(&file));
-    }
-    for (auto i = parallaxLayers.begin(); i != parallaxLayers.end(); i++)
-    {
-        delete *i;
-    }
-    file.close();
+    ifstream file;
     file.open("Level.txt");
+    unsigned short size;
     file >> size;
-    //file.read((char*)&size,sizeof(unsigned short));
     for (unsigned short i = 0; i < size; i++)
     {
         std::string factory;
@@ -203,105 +127,11 @@ void Level::loadLevel()
 }
 void Level::saveLevel()
 {
-    std::unordered_map<b2Body*, unsigned short> writeLocations;
-    unsigned short writeLocation = 0;
-    CREATE_FILE_NAME;
     ofstream file;
-    file.open(filename,ios::binary);
-    if(!file.is_open())
-    {
-        cout << "Error: File failed to open for writing, make sure the directory already exists, or maybe this program just doesn't have filesystem rights" << filename << endl;
-        throw -1;
-    }
-    unsigned short size = bodyToDefTable.size();
-    file.write((const char*)&size,sizeof(unsigned short));
-    for (auto i = bodyToDefTable.begin(); i != bodyToDefTable.end(); i++)
-    {
-        i->second.baseDef.position = i->first->GetPosition();
-        i->second.baseDef.rotation = i->first->GetAngle();
-        file.write((const char*)&i->second,sizeof(StandardFactoryDef));
-        writeLocations[i->first] = writeLocation;
-        writeLocation++;
-    }
-
-    size = jointToDefTable.size();
-    file.write((const char*)&size,sizeof(unsigned short));
-    for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
-    {
-        b2JointType type = i->first->GetType();
-        if (type != e_distanceJoint) continue;
-        auto bodyA = writeLocations.find(i->first->GetBodyA());
-        auto bodyB = writeLocations.find(i->first->GetBodyB());
-        if (bodyA == writeLocations.end() || bodyB == writeLocations.end()) continue;
-        file.write((const char*)&(bodyA->second),sizeof(unsigned short));
-        file.write((const char*)&(bodyB->second),sizeof(unsigned short));
-        file.write((const char*)&(type),sizeof(b2JointType));
-        switch (type)
-        {
-            case e_distanceJoint:
-            {
-                Vec2f worldAnchorA = i->first->GetAnchorA();
-                Vec2f worldAnchorB = i->first->GetAnchorB();
-                file.write((const char*)&(worldAnchorA),sizeof(Vec2f));
-                file.write((const char*)&(worldAnchorB),sizeof(Vec2f));
-                b2DistanceJointDef* distanceCast = (b2DistanceJointDef*)i->second;
-                file.write((const char*)&(distanceCast->collideConnected),sizeof(bool));
-                file.write((const char*)&(distanceCast->frequencyHz),sizeof(float));
-                file.write((const char*)&(distanceCast->dampingRatio),sizeof(float));
-                break;
-            }
-            case e_revoluteJoint:
-            case e_prismaticJoint:
-            case e_pulleyJoint:
-            case e_gearJoint:
-            case e_lineJoint:
-            case e_weldJoint:
-            case e_frictionJoint:
-            case e_unknownJoint:
-            case e_mouseJoint:
-            default:
-            {
-                cout << "Invalid joint to save" << endl;
-                throw -1;
-            }
-        }
-    }
-    size = parallaxLayers.size();
-    file.write((const char*)&size,sizeof(unsigned short));
-    for (unsigned short i = 0; i < size; i++)
-    {
-        parallaxLayers[i]->save(&file);
-    }
-    for (auto i = parallaxLayers.begin(); i != parallaxLayers.end(); i++)
-    {
-        delete *i;
-    }
-    parallaxLayers.clear();
-    bodyToDefTable.clear();
-    for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)
-    {
-        delete i->second;
-    }
-    jointToDefTable.clear();
-    /**
-    file.read((char*)&size,sizeof(unsigned short));
-    for (unsigned short i = 0; i < size; i++)
-    {
-        std::string name;
-        file >> name;
-        FactoryParameters params;
-        file >> params;
-        params.clear();
-        b2Body* body = g_AbstractFactoryList.useFactory(name, &params)->mBody;
-        table[body] = {name,params};
-    }
-    */
-    file.close();
     file.open("Level.txt");
-    size = table.size();
+    unsigned short size = table.size();
     file << size;
     file << ' ';
-    //file.write((const char*)&size,sizeof(unsigned short));
     for (auto i = table.begin(); i != table.end() ;i++)
     {
         std::string factory = i->second.first;
@@ -360,7 +190,6 @@ unsigned int getJointDefSize(b2JointType type)
     return 0;
 }
 #include <GL/gl.h>
-#include <Types/Vec2i.h>
 void Level::tempRender()
 {
     glColor3f(0,1,0);
@@ -369,7 +198,6 @@ void Level::tempRender()
     {
         b2Joint* joint = i->first;
         Vec2f point = joint->GetAnchorA();
-        //point.worldToScreenSpace();
         glVertex2f(point.x,point.y);
         point = joint->GetAnchorB();
         glVertex2f(point.x,point.y);

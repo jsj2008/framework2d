@@ -1,5 +1,4 @@
 #include "WeaponContent.h"
-#include <Factory/FactoryDefList.h>
 #include <AbstractFactory/AbstractFactoryList.h>
 #include <AbstractFactory/FactoryParameters.h>
 

@@ -18,7 +18,7 @@ class TypeTable
     public:
         typedef std::string ValueIndex;
         TypeTable(){}
-        virtual ~TypeTable(){}
+        virtual ~TypeTable();
 
     template <typename T>
         void addValue(const ValueIndex& name, const T& value);

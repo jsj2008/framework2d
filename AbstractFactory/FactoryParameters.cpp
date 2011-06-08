@@ -18,16 +18,12 @@ FactoryParameters::~FactoryParameters()
     //dtor
 }
 
-using namespace std;
-/*ostream& operator<< (ostream &out, const FactoryParameters &params)
-{
-    return out;
-}*/
-
 void FactoryParameters::clear()
 {
     table.clear();
 }
+
+using namespace std;
 istream& operator>> (istream &in, FactoryParameters &params)
 {
     unsigned short size;
@@ -42,7 +38,6 @@ istream& operator>> (istream &in, FactoryParameters &params)
     }
     return in;
 }
-
 ostream& operator<< (ostream &out, const FactoryParameters & params)
 {
     out << params.table;

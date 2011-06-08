@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <Factory/FactoryDefList.h>
 #include <Graphics/GraphicsManager.h>
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
@@ -13,6 +12,7 @@
 #include <AI/CharacterController.h>
 #include <SharedContent/ContentManager.h>
 #include <SharedContent/WeaponContent.h>
+#include <AbstractFactory/AbstractFactoryList.h>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -33,7 +33,7 @@ void Game::init()
     mGameModes[eEditorGameMode] = new EditorMode;
 
     g_LevelManager.loadLevel("default");
-    g_FactoryDefList.useFactoryDef(0);
+    g_AbstractFactoryList.useFactory("player",NULL);
 
     CEGUI::EventArgs args;
     mGameModes[eEditorGameMode]->activate(args);
