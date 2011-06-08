@@ -25,7 +25,7 @@ Entity* ParticleFactory::useFactory(FactoryParameters* parameters)
     //PositionParameters* params = (PositionParameters*)parameters;
     Entity* entity = new PhysicsParticle(lifetime);
 
-    bodyDef.position = parameters->getVec2f("");//params->position;
+    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));//params->position;
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&shape, density);

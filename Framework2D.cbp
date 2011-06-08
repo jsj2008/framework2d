@@ -13,6 +13,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++0x" />
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
@@ -32,6 +33,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++0x" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -330,6 +332,8 @@
 		<Unit filename="Timer.cpp" />
 		<Unit filename="Timer.h" />
 		<Unit filename="Types/Doubles.h" />
+		<Unit filename="Types/DynamicTypeTable.cpp" />
+		<Unit filename="Types/DynamicTypeTable.h" />
 		<Unit filename="Types/FastVector.h" />
 		<Unit filename="Types/List.h" />
 		<Unit filename="Types/Mat3x3f.cpp" />
@@ -339,6 +343,8 @@
 		<Unit filename="Types/MyQueue.h" />
 		<Unit filename="Types/MyStack.h" />
 		<Unit filename="Types/MyVector.h" />
+		<Unit filename="Types/TypeTable.cpp" />
+		<Unit filename="Types/TypeTable.h" />
 		<Unit filename="Types/Vec2f.cpp" />
 		<Unit filename="Types/Vec2f.h" />
 		<Unit filename="Types/Vec2i.cpp" />

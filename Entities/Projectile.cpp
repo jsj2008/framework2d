@@ -21,7 +21,7 @@ void Projectile::update()
 {
     if (!alive)
     {
-        FactoryParameters parameters({{"",mBody->GetPosition()}});
+        FactoryParameters parameters({{"position",mBody->GetPosition()}});
         g_AbstractFactoryList.useFactory(explosion,&parameters);
         g_PhysicsManager.destroyBody(mBody);
     }

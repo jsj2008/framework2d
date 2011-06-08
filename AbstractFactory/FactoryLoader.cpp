@@ -6,19 +6,15 @@ FactoryLoader::FactoryLoader(const char* filename)
 :file(filename)
 {
     //ctor
-    types["int"] = new TemplateType<int>;
-    types["float"] = new TemplateType<float>;
-    types["string"] = new TemplateType<std::string>;
-    types["Vec2f"] = new TemplateType<Vec2f>;
 }
 
 FactoryLoader::~FactoryLoader()
 {
     //dtor
-    for (auto i = types.begin(); i != types.end(); i++)
+    /*for (auto i = types.begin(); i != types.end(); i++)
     {
         delete i->second;
-    }
+    }*/
 }
 void FactoryLoader::syntaxError(const std::string& message)
 {
@@ -49,17 +45,18 @@ bool FactoryLoader::next()
         }
         else
         {
-            if (types.find(token) == types.end())
+            std::string variableName;
+            file >> variableName;
+            /*if (types.find(token) == types.end())
             {
                 syntaxError("Type " + token + " not defined");
             }
-            std::string variableName;
-            file >> variableName;
             if (values.find(variableName) != values.end())
             {
                 warning("Variable " + variableName + " already defined, redefining");
             }
-            values[variableName] = types[token]->instance(&file);
+            values[variableName] = types[token]->instance(&file);*/
+            mvalues.addDynamicValue(token,variableName,&file);
         }
     }
     return false;
@@ -67,12 +64,12 @@ bool FactoryLoader::next()
 
 void FactoryLoader::end()
 {
-    for (auto i = values.begin(); i != values.end(); i++)
+    /*for (auto i = values.begin(); i != values.end(); i++)
     {
         g_Log.warning(i->second->name() + " " + i->first + " defined but not used");
         delete i->second;
     }
-    values.clear();
+    values.clear();*/
 }
 
 /*template <typename T>

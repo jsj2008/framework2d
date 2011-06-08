@@ -17,3 +17,7 @@ ParticleFactory spark
   float penis 0.0
   int lifetime 60
 }
+
+CrateFactory crate
+{
+}

@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include <string>
 #include <Factory/FactoryList.h>
+#include <AbstractFactory/FactoryParameters.h>
 class b2Joint;
 class b2JointDef;
 class TextureContext;
 class ParallaxLayer;
-class FactoryParameters;
 
 class Level
 {
@@ -32,6 +32,8 @@ class Level
         Vec2f backgroundScale;
         Vec2f backgroundTransform;
         std::vector<ParallaxLayer*> parallaxLayers;
+
+        std::unordered_map<b2Body*, std::pair<std::string,FactoryParameters> > table;
 };
 
 #endif // LEVEL_H

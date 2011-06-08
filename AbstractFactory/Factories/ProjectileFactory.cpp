@@ -26,8 +26,8 @@ ProjectileFactory::~ProjectileFactory()
 Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
 {
     //PositionVelocityParameters* params = (PositionVelocityParameters*)parameters;
-    bodyDef.position = parameters->getVec2f("");// params->position;
-    bodyDef.linearVelocity = parameters->getVec2f("v");//params->velocity;
+    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));// params->position;
+    bodyDef.linearVelocity = parameters->get<Vec2f>("v",Vec2f(1,0));//params->velocity;
     Entity* entity = new Projectile(explosion, new StaticSkin(radius,radius));
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);

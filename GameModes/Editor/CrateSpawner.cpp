@@ -47,7 +47,13 @@ void CrateSpawner::buttonUp(Vec2i mouse, unsigned char button)
         def.position = topLeft + (bottomright - topLeft)*0.5;
         g_LevelManager.addBody(def);*/
         Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
-        FactoryParameters params({{"",pos}});
+        FactoryParameters params({{"position",pos},{"dimensions",dimensions}});
+        g_LevelManager.addBody("crate", &params);
+    }
+    else
+    {
+        Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
+        FactoryParameters params({{"position",pos}});
         g_LevelManager.addBody("crate", &params);
     }
     dragging = false;

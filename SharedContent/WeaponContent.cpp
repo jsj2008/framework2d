@@ -38,6 +38,6 @@ void WeaponContent::fire(const Vec2f& source, const Vec2f& direction)
     Vec2f position = source;
     position += direction*3;
     //PositionVelocityParameters parameters(position,direction*100);
-    FactoryParameters parameters({{"",position},{"v",direction*100}});
+    FactoryParameters parameters({{"position",position},{"v",direction*100}});
     g_AbstractFactoryList.useFactory(projectile,&parameters);
 }

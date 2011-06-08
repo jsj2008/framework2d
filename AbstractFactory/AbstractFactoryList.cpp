@@ -19,7 +19,7 @@ AbstractFactoryList::AbstractFactoryList()
     registerFactoryType<ExplosionFactory>("ExplosionFactory");
     registerFactoryType<ProjectileFactory>("ProjectileFactory");
     registerFactoryType<ParticleFactory>("ParticleFactory");
-    //registerFactoryType<CrateFactory>("CrateFactory");
+    registerFactoryType<CrateFactory>("CrateFactory");
     FactoryLoader loader("Resources/Factories.txt");
     while (loader.next())
     {
@@ -27,7 +27,7 @@ AbstractFactoryList::AbstractFactoryList()
         factories[loader.getName()] = factoryCreators[loader.getType()]->createFactory(&loader);
         loader.end();
     }
-    addFactory("crate", new CrateFactory("player",1.0f));
+    //addFactory("crate", new CrateFactory("player",1.0f));
 }
 
 AbstractFactoryList::~AbstractFactoryList()

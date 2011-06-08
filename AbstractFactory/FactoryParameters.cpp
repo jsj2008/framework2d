@@ -4,19 +4,12 @@ FactoryParameters::FactoryParameters()
 {
     //ctor
 }
-/*FactoryParameters::FactoryParameters(std::initializer_list<std::pair<std::string,float>> list)
-{
-    for (auto i = list.begin(); i != list.end(); i++)
-    {
-        parameters.insert(*i);
-    }
-}*/
+
 FactoryParameters::FactoryParameters(std::initializer_list<std::pair<std::string,Vec2f>> list)
 {
     for (auto i = list.begin(); i != list.end(); i++)
     {
-        parameters.insert({i->first+"x",i->second.x});
-        parameters.insert({i->first+"y",i->second.y});
+        add(i->first,i->second);
     }
 }
 
@@ -25,12 +18,34 @@ FactoryParameters::~FactoryParameters()
     //dtor
 }
 
-/*float FactoryParameters::getFloat(const std::string& name)
+using namespace std;
+/*ostream& operator<< (ostream &out, const FactoryParameters &params)
 {
-    return parameters[name];
+    return out;
 }*/
 
-const Vec2f FactoryParameters::getVec2f(const std::string& name)
+void FactoryParameters::clear()
 {
-    return Vec2f(parameters[name+"x"],parameters[name+"y"]);
+    table.clear();
+}
+istream& operator>> (istream &in, FactoryParameters &params)
+{
+    unsigned short size;
+    in >> size;
+    for (unsigned short i = 0; i < size; i++)
+    {
+        std::string type;
+        in >> type;
+        std::string name;
+        in >> name;
+        params.table.addDynamicValue(type, name, &in);
+    }
+    return in;
+}
+
+ostream& operator<< (ostream &out, const FactoryParameters & params)
+{
+    out << params.table;
+    out << '\n';
+    return out;
 }

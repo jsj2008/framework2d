@@ -45,7 +45,7 @@ void AIEntity::damage()
     def.setMaterial("Spark");
     def.position = mBody->GetPosition();
     g_FactoryList.useFactory(def,eParticleFactory);*/
-    FactoryParameters parameters({{"",mBody->GetPosition()}});
+    FactoryParameters parameters({{"position",mBody->GetPosition()}});
     g_AbstractFactoryList.useFactory("spark",&parameters);
     health--;
 }

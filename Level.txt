@@ -1,0 +1,4 @@
+3 crate 2 Vec2f position 6.93333 -1.86667 Vec2f dimensions 2.26667 1.33333 
+ crate 2 Vec2f dimensions 2.86667 3.66667 Vec2f position 1.76667 -7.43333 
+ crate 2 Vec2f dimensions 2 5.2 Vec2f position 6.53333 -5.26667 
+ 

@@ -43,7 +43,7 @@ void GeometrySelector::start(unsigned char button)
                 if (entity != NULL)
                 {
                     bodyHealth = entity->health;
-                    entity->health = pow(2,31);
+                    entity->health = pow(2,30);
                 }
             }
             else if (button == 3)

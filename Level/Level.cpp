@@ -30,7 +30,8 @@ void Level::addBody(StandardFactoryDef def)
 }
 void Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
-    b2Body* body = g_AbstractFactoryList.useFactory("crate", parameters)->mBody;
+    b2Body* body = g_AbstractFactoryList.useFactory(factory, parameters)->mBody;
+    table[body] = {factory,*parameters};
 }
 void Level::addJoint(b2JointDef* def)
 {
@@ -112,35 +113,6 @@ void Level::removeJoint(b2Joint* joint)
 {
     jointToDefTable.erase(joint);
 }
-/*
-#include <GL/gl.h>
-void Level::renderBackground()
-{
-    backgroundTexture->bind();
-    glPushMatrix();
-    backgroundScale = Vec2f(1.5,1.5);
-    backgroundTransform = Vec2f(2,2);
-    Vec2f cameraTransform = g_GraphicsManager.getCameraTranslation();
-
-    glTranslatef(-cameraTransform.x*0.5,-cameraTransform.y*0.5,-10000);
-    glScalef(backgroundScale.x,backgroundScale.y,1);
-    glTranslatef(backgroundTransform.x,backgroundTransform.y,-10000);
-
-    glBegin(GL_QUADS);
-    glTexCoord2f(0,0);
-    glVertex2i(0,0);
-
-    glTexCoord2f(1,0);
-    glVertex2i(80,0);
-
-    glTexCoord2f(1,1);
-    glVertex2i(80,60);
-
-    glTexCoord2f(0,1);
-    glVertex2i(0,60);
-    glEnd();
-    glPopMatrix();
-}*/
 #include <vector>
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
@@ -213,6 +185,19 @@ void Level::loadLevel()
     for (auto i = parallaxLayers.begin(); i != parallaxLayers.end(); i++)
     {
         delete *i;
+    }
+    file.close();
+    file.open("Level.txt");
+    file >> size;
+    //file.read((char*)&size,sizeof(unsigned short));
+    for (unsigned short i = 0; i < size; i++)
+    {
+        std::string factory;
+        file >> factory;
+        FactoryParameters params;
+        file >> params;
+        b2Body* body = g_AbstractFactoryList.useFactory(factory, &params)->mBody;
+        table[body] = {factory,params};
     }
 }
 void Level::saveLevel()
@@ -297,6 +282,34 @@ void Level::saveLevel()
         delete i->second;
     }
     jointToDefTable.clear();
+    /**
+    file.read((char*)&size,sizeof(unsigned short));
+    for (unsigned short i = 0; i < size; i++)
+    {
+        std::string name;
+        file >> name;
+        FactoryParameters params;
+        file >> params;
+        params.clear();
+        b2Body* body = g_AbstractFactoryList.useFactory(name, &params)->mBody;
+        table[body] = {name,params};
+    }
+    */
+    file.close();
+    file.open("Level.txt");
+    size = table.size();
+    file << size;
+    file << ' ';
+    //file.write((const char*)&size,sizeof(unsigned short));
+    for (auto i = table.begin(); i != table.end() ;i++)
+    {
+        std::string factory = i->second.first;
+        file << factory;
+        file << ' ';
+        FactoryParameters params = i->second.second;
+        file << params;
+        file << ' ';
+    }
 }
 unsigned int getJointDefSize(b2JointType type)
 {
