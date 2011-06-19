@@ -4,12 +4,16 @@
 #include <AbstractFactory/AbstractFactory.h>
 class FactoryLoader;
 
-class CrateFactory : public AbstractFactory
+class CrateFactory : public AbstractFactory<Entity, CrateFactory>
 {
     public:
         CrateFactory(FactoryLoader* loader);
         virtual ~CrateFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return "CrateFactory";
+        }
     protected:
         Vec2f dimensions;
         b2FixtureDef fixtureDef;

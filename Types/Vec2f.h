@@ -16,6 +16,7 @@ struct Vec2f
 	Vec2f operator-() { return Vec2f( -x, -y ); }
 	float operator*( Vec2f B ) { return x*B.x + y*B.y; }
 	void operator/=( float s ) { x /= s; y /= s; }
+	void operator/=( Vec2f B ) { x /= B.x; y /= B.y; }
 	bool operator==( Vec2f B ) { return x == B.x && y == B.y; }
 	bool operator!=( Vec2f B ) { return x != B.x || y != B.y; }
 

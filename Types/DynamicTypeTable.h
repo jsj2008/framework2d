@@ -9,6 +9,7 @@ class DynamicTypeTable : public TypeTable
 {
     public:
         DynamicTypeTable();
+        //DynamicTypeTable(const DynamicTypeTable& rhs);
         typedef std::string TypeIndex;
 
         // Don't use these unless neccessary, use the functions in the base class unless you're reading from file or something
@@ -29,6 +30,7 @@ class DynamicTypeTable : public TypeTable
                 Type(){}
                 virtual ~Type(){}
                 virtual Value* instance()=0;
+                virtual Type* clone()=0;
         };
         template <typename T>
         class TemplateType : public Type
@@ -36,6 +38,7 @@ class DynamicTypeTable : public TypeTable
             public:
                 TemplateType(){}
                 Value* instance(){return new TemplateValue<T>;}
+                Type* clone(){return new TemplateType<T>;}
         };
         std::unordered_map<std::string,std::string> typeInfoMap;
 };

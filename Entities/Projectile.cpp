@@ -1,6 +1,6 @@
 #include "Projectile.h"
 #include <Physics/PhysicsManager.h>
-#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Box2D/Box2D.h>
 
@@ -22,7 +22,7 @@ void Projectile::update()
     if (!alive)
     {
         FactoryParameters parameters({{"position",mBody->GetPosition()}});
-        g_AbstractFactoryList.useFactory(explosion,&parameters);
+        g_AbstractFactories.useFactory(explosion,&parameters);
         g_PhysicsManager.destroyBody(mBody);
     }
 }

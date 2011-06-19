@@ -5,13 +5,18 @@
 #include <AbstractFactory/AbstractFactory.h>
 #include <Box2D/Box2D.h>
 class FactoryLoader;
+class Entity;
 
-class ExplosionFactory : public AbstractFactory
+class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
 {
     public:
         ExplosionFactory(FactoryLoader* loader);
         virtual ~ExplosionFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return "ExplosionFactory";
+        }
     protected:
     private:
         std::string material;

@@ -3,6 +3,18 @@
 #include <vector>
 #include <Types/Vec2f.h>
 
+// FIXME should put this in
+/*DynamicTypeTable::DynamicTypeTable(const DynamicTypeTable& rhs)
+{
+    for (auto i = rhs.values.begin(); i != rhs.values.end(); i++)
+    {
+        values[i->first] = i->second->clone();
+    }
+    for (auto i = rhs.typeInfoMap.begin(); i != rhs.typeInfoMap.end(); i++)
+    {
+        typeInfoMap[i->first] = i->second;
+    }
+}*/
 template <typename T>
 std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements)
 {

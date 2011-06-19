@@ -12,6 +12,8 @@ enum EntityType
     ePhysicsParticleEntityType,
     eProjectileEntityType,
     eExplosionEntityType,
+    eTileMapEntityType,
+    eTileEntityType,
     eEntityTypeMax,
 };
 class Entity

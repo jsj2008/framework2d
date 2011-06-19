@@ -5,12 +5,16 @@
 #include <Box2D/Box2D.h>
 class FactoryLoader;
 
-class ProjectileFactory : public AbstractFactory
+class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
 {
     public:
         ProjectileFactory(FactoryLoader* loader);
         virtual ~ProjectileFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return "ProjectileFactory";
+        }
     protected:
     private:
         b2BodyDef bodyDef;

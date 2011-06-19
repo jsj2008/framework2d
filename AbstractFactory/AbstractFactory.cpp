@@ -1,16 +1,4 @@
 #include "AbstractFactory.h"
-#include <Graphics/GraphicsManager.h>
+template<typename Product, class DerivedType>
+char AbstractFactory<Product, DerivedType>::registration = g_AbstractFactories.registerFactoryType<DerivedType>(DerivedType::getName());
 
-AbstractFactory::AbstractFactory()
-{
-    //ctor
-}
-
-AbstractFactory::~AbstractFactory()
-{
-    //dtor
-}
-void AbstractFactory::setMaterial(class Skin* skin,const std::string& materialName)
-{
-    skin->material = g_GraphicsManager.getMaterial(materialName.c_str());
-}

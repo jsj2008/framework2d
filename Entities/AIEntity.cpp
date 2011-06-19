@@ -1,7 +1,7 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
 #include <Physics/PhysicsManager.h>
-#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Weapons/Weapon.h>
 #include <cassert>
@@ -46,7 +46,7 @@ void AIEntity::damage()
     def.position = mBody->GetPosition();
     g_FactoryList.useFactory(def,eParticleFactory);*/
     FactoryParameters parameters({{"position",mBody->GetPosition()}});
-    g_AbstractFactoryList.useFactory("spark",&parameters);
+    g_AbstractFactories.useFactory("spark",&parameters);
     health--;
 }
 void AIEntity::update()

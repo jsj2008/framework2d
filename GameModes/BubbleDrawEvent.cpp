@@ -1,6 +1,6 @@
 #include "BubbleDrawEvent.h"
 #include <AbstractFactory/FactoryParameters.h>
-#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/AbstractFactories.h>
 
 BubbleDrawEvent::BubbleDrawEvent(SelectionBox* _selectionBox)
 {
@@ -32,7 +32,7 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
         parameters.add<float>("radius",radius);
         parameters.add<std::string>("materialName","defaultBubble");
         //def.type = (Bubble::BubbleType)selectionBox->getCurrentSelection();
-        g_AbstractFactoryList.useFactory("suctionBubble",&parameters);
+        g_AbstractFactories.useFactory("suctionBubble",&parameters);
     }
 }
 

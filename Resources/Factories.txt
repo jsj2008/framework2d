@@ -7,6 +7,17 @@ ExplosionFactory explosion
   float radius 2.0
 }
 
+TileMapFactory tiles
+{
+ Vec2f tileSize 3 3
+ Vec2f offset 0 0
+}
+
+TileFactory tile
+{
+ Vec2f size 3 3
+}
+
 ProjectileFactory grenade
 {
   string gay bum
@@ -29,6 +40,7 @@ LevelGeometryFactory levelGeometry
 AIEntityFactory player
 {
   int aiType 0
+  Vec2f dimensions 2 2
 }
 
 AIEntityFactory zombie

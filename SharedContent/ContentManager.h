@@ -12,7 +12,7 @@ extern class ContentManager
         ContentManager();
         virtual ~ContentManager();
         template <typename T>
-        const ContentHandler<T> getContent(const ContentIndex& name)const;
+        const ContentHandler<T> getContent(const ContentIndex& name);
         void addSharedContent(SharedContent* content);
     protected:
     private:
@@ -22,7 +22,7 @@ extern class ContentManager
 #endif // CONTENTMANAGER_H
 
 template <typename T>
-const ContentHandler<T> ContentManager::getContent(const ContentIndex& name)const
+const ContentHandler<T> ContentManager::getContent(const ContentIndex& name)
 {
     SharedContent* content = contentMap[name];
 #ifdef _DEBUG

@@ -157,8 +157,6 @@
 		<Unit filename="AI/PlayerInputBrain.h" />
 		<Unit filename="AI/ZombieBrain.cpp" />
 		<Unit filename="AI/ZombieBrain.h" />
-		<Unit filename="AbstractFactory/AbstractFactories.cpp" />
-		<Unit filename="AbstractFactory/AbstractFactories.h" />
 		<Unit filename="AbstractFactory/AbstractFactory.cpp" />
 		<Unit filename="AbstractFactory/AbstractFactory.h" />
 		<Unit filename="AbstractFactory/AbstractFactoryList.cpp" />

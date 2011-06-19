@@ -19,6 +19,7 @@ class Brain
         virtual void update(){}
     protected:
         friend class ShooterGame; /// FIXME
+        friend class CarneGame; /// FIXME
         AIEntity* mEntity;
     private:
 };

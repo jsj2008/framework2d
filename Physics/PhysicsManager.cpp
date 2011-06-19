@@ -179,7 +179,7 @@ public:
                 else return false;
             }
         }
-        else return true;
+        return true;
     }
     b2Body* ret;
     Vec2f position;

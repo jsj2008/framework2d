@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="AI/AIManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="693" topLine="0" />
+	</File>
+	<File name="AI/AIManager.h" open="0" top="0" tabpos="5">
+		<Cursor position="173" topLine="0" />
+	</File>
+	<File name="AI/Brain.h" open="0" top="0" tabpos="0">
+		<Cursor position="429" topLine="0" />
+	</File>
+	<File name="AI/CharacterController.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="451" topLine="0" />
+	</File>
+	<File name="AI/CharacterController.h" open="0" top="0" tabpos="0">
+		<Cursor position="588" topLine="0" />
+	</File>
+	<File name="AI/PathGeneration/PathGraph.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5003" topLine="143" />
+	</File>
+	<File name="AI/PathGeneration/PathGraph.h" open="0" top="0" tabpos="0">
+		<Cursor position="875" topLine="0" />
+	</File>
+	<File name="AI/PathGeneration/PathNodeDynamic.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1788" topLine="71" />
+	</File>
+	<File name="AI/Pathfinding/Node.h" open="0" top="0" tabpos="0">
+		<Cursor position="65" topLine="0" />
+	</File>
+	<File name="AI/Pathfinding/PathFollower.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="682" topLine="3" />
+	</File>
+	<File name="AI/Pathfinding/PathFollower.h" open="0" top="0" tabpos="4">
+		<Cursor position="498" topLine="0" />
+	</File>
+	<File name="AI/Pathfinding/PathNode.h" open="0" top="0" tabpos="0">
+		<Cursor position="102" topLine="0" />
+	</File>
+	<File name="AI/Pathfinding/PathfindingAlgorithm.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="1050" topLine="0" />
+	</File>
+	<File name="AI/Pathfinding/PathfindingAlgorithm.h" open="0" top="0" tabpos="0">
+		<Cursor position="1339" topLine="5" />
+	</File>
+	<File name="AI/Pathfinding/Paths.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="645" topLine="1" />
+	</File>
+	<File name="AI/Pathfinding/WalkableNode.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="220" topLine="0" />
+	</File>
+	<File name="AI/PlayerInputBrain.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="590" topLine="0" />
+	</File>
+	<File name="AI/ZombieBrain.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="409" topLine="12" />
+	</File>
+	<File name="AbstractFactory/AbstractFactory.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="28" topLine="0" />
+	</File>
+	<File name="AbstractFactory/AbstractFactory.h" open="0" top="0" tabpos="6">
+		<Cursor position="587" topLine="0" />
+	</File>
+	<File name="AbstractFactory/AbstractFactoryList.cpp" open="0" top="0" tabpos="18">
+		<Cursor position="2468" topLine="24" />
+	</File>
+	<File name="AbstractFactory/AbstractFactoryList.h" open="0" top="0" tabpos="9">
+		<Cursor position="196" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/AIEntityFactory.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1531" topLine="18" />
+	</File>
+	<File name="AbstractFactory/Factories/AIEntityFactory.h" open="0" top="0" tabpos="14">
+		<Cursor position="436" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/BubbleFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="28" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/BubbleFactory.h" open="0" top="0" tabpos="17">
+		<Cursor position="201" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/CrateFactory.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="1351" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/CrateFactory.h" open="0" top="0" tabpos="12">
+		<Cursor position="170" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ExplosionFactory.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="837" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ExplosionFactory.h" open="0" top="0" tabpos="8">
+		<Cursor position="170" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/LevelGeometryFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="621" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/LevelGeometryFactory.h" open="0" top="0" tabpos="13">
+		<Cursor position="193" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ParticleFactory.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="101" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ParticleFactory.h" open="0" top="0" tabpos="11">
+		<Cursor position="394" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ProjectileFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="919" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/ProjectileFactory.h" open="0" top="0" tabpos="10">
+		<Cursor position="211" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/TileFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1278" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/TileFactory.h" open="0" top="0" tabpos="15">
+		<Cursor position="92" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/TileMapFactory.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="596" topLine="0" />
+	</File>
+	<File name="AbstractFactory/Factories/TileMapFactory.h" open="0" top="0" tabpos="16">
+		<Cursor position="177" topLine="0" />
+	</File>
+	<File name="AbstractFactory/FactoryLoader.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1746" topLine="26" />
+	</File>
+	<File name="AbstractFactory/FactoryLoader.h" open="0" top="0" tabpos="1">
+		<Cursor position="959" topLine="0" />
+	</File>
+	<File name="AbstractFactory/FactoryParameters.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="757" topLine="0" />
+	</File>
+	<File name="AbstractFactory/FactoryParameters.h" open="0" top="0" tabpos="5">
+		<Cursor position="166" topLine="0" />
+	</File>
+	<File name="Entities/AIEntity.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="1284" topLine="20" />
+	</File>
+	<File name="Entities/AIEntity.h" open="0" top="0" tabpos="2">
+		<Cursor position="832" topLine="0" />
+	</File>
+	<File name="Entities/Bubble.h" open="0" top="0" tabpos="0">
+		<Cursor position="317" topLine="0" />
+	</File>
+	<File name="Entities/Crate.h" open="0" top="0" tabpos="0">
+		<Cursor position="122" topLine="0" />
+	</File>
+	<File name="Entities/Entity.cpp" open="0" top="0" tabpos="19">
+		<Cursor position="14" topLine="0" />
+	</File>
+	<File name="Entities/Entity.h" open="0" top="0" tabpos="0">
+		<Cursor position="475" topLine="0" />
+	</File>
+	<File name="Entities/Explosion.h" open="0" top="0" tabpos="0">
+		<Cursor position="251" topLine="0" />
+	</File>
+	<File name="Entities/PhysicsParticle.h" open="0" top="0" tabpos="0">
+		<Cursor position="343" topLine="0" />
+	</File>
+	<File name="Entities/Projectile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="481" topLine="0" />
+	</File>
+	<File name="Entities/Projectile.h" open="0" top="0" tabpos="0">
+		<Cursor position="266" topLine="0" />
+	</File>
+	<File name="Entities/Tile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="114" topLine="0" />
+	</File>
+	<File name="Entities/Tile.h" open="0" top="0" tabpos="0">
+		<Cursor position="151" topLine="0" />
+	</File>
+	<File name="Entities/TileMap.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="921" topLine="9" />
+	</File>
+	<File name="Entities/TileMap.h" open="0" top="0" tabpos="4">
+		<Cursor position="633" topLine="0" />
+	</File>
+	<File name="Entities/Weapons/Weapon.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="451" topLine="0" />
+	</File>
+	<File name="Entities/Weapons/Weapon.h" open="0" top="0" tabpos="5">
+		<Cursor position="392" topLine="0" />
+	</File>
+	<File name="Game.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="884" topLine="9" />
+	</File>
+	<File name="Game.h" open="0" top="0" tabpos="0">
+		<Cursor position="415" topLine="0" />
+	</File>
+	<File name="GameModes/BubbleDrawEvent.cpp" open="0" top="0" tabpos="13">
+		<Cursor position="28" topLine="0" />
+	</File>
+	<File name="GameModes/BubbleDrawEvent.h" open="0" top="0" tabpos="0">
+		<Cursor position="92" topLine="0" />
+	</File>
+	<File name="GameModes/CarneGame.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="933" topLine="0" />
+	</File>
+	<File name="GameModes/CarneGame.h" open="0" top="0" tabpos="0">
+		<Cursor position="19" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/AIEntitySpawner.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="513" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/AIEntitySpawner.h" open="0" top="0" tabpos="9">
+		<Cursor position="98" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/CrateSpawner.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="992" topLine="7" />
+	</File>
+	<File name="GameModes/Editor/CrateSpawner.h" open="1" top="0" tabpos="3">
+		<Cursor position="213" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/EditorMode.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="567" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/EditorMode.h" open="1" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/EditorStateSwitcher.h" open="1" top="0" tabpos="2">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/GeometryEditor.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="385" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/GeometryEditor.h" open="0" top="0" tabpos="0">
+		<Cursor position="223" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/GeometrySelector.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2280" topLine="51" />
+	</File>
+	<File name="GameModes/Editor/GeometrySelector.h" open="0" top="0" tabpos="0">
+		<Cursor position="605" topLine="0" />
+	</File>
+	<File name="GameModes/Editor/ItemSpawner.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="821" topLine="0" />
+	</File>
+	<File name="GameModes/GameMode.h" open="0" top="0" tabpos="0">
+		<Cursor position="264" topLine="0" />
+	</File>
+	<File name="GameModes/PlayMode.cpp" open="0" top="0" tabpos="14">
+		<Cursor position="132" topLine="0" />
+	</File>
+	<File name="GameModes/PlayMode.h" open="0" top="0" tabpos="0">
+		<Cursor position="601" topLine="0" />
+	</File>
+	<File name="GameModes/ShooterGame.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="246" topLine="0" />
+	</File>
+	<File name="GameModes/ShooterGame.h" open="0" top="0" tabpos="0">
+		<Cursor position="45" topLine="0" />
+	</File>
+	<File name="Graphics/Contexts/GraphicalContext.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="29" topLine="0" />
+	</File>
+	<File name="Graphics/Contexts/GraphicalContext.h" open="0" top="0" tabpos="0">
+		<Cursor position="106" topLine="0" />
+	</File>
+	<File name="Graphics/Contexts/TextureContext.h" open="0" top="0" tabpos="0">
+		<Cursor position="134" topLine="0" />
+	</File>
+	<File name="Graphics/GraphicalContentManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="719" topLine="0" />
+	</File>
+	<File name="Graphics/GraphicsManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3482" topLine="75" />
+	</File>
+	<File name="Graphics/GraphicsManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="990" topLine="0" />
+	</File>
+	<File name="Graphics/Skins/ConvexPolygonSkin.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="441" topLine="0" />
+	</File>
+	<File name="Graphics/Skins/Skin.h" open="0" top="0" tabpos="20">
+		<Cursor position="126" topLine="0" />
+	</File>
+	<File name="Graphics/Skins/StaticSkin.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="279" topLine="0" />
+	</File>
+	<File name="Graphics/Skins/StaticSkin.h" open="0" top="0" tabpos="0">
+		<Cursor position="63" topLine="0" />
+	</File>
+	<File name="Graphics/Sprites/Sprite.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="118" topLine="0" />
+	</File>
+	<File name="Graphics/Sprites/Sprite.h" open="0" top="0" tabpos="0">
+		<Cursor position="97" topLine="0" />
+	</File>
+	<File name="Graphics/Sprites/SpriteList.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="429" topLine="0" />
+	</File>
+	<File name="Graphics/Sprites/SpriteList.h" open="0" top="0" tabpos="0">
+		<Cursor position="291" topLine="0" />
+	</File>
+	<File name="Input/InputManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5809" topLine="0" />
+	</File>
+	<File name="Input/Mouse/InputContext.h" open="0" top="0" tabpos="0">
+		<Cursor position="47" topLine="0" />
+	</File>
+	<File name="Level/Level.cpp" open="0" top="0" tabpos="15">
+		<Cursor position="647" topLine="0" />
+	</File>
+	<File name="Level/Level.h" open="0" top="0" tabpos="12">
+		<Cursor position="75" topLine="0" />
+	</File>
+	<File name="Level/LevelManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="146" topLine="0" />
+	</File>
+	<File name="Level/LevelManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="293" topLine="0" />
+	</File>
+	<File name="Log/Log.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="328" topLine="0" />
+	</File>
+	<File name="Log/Log.h" open="0" top="0" tabpos="0">
+		<Cursor position="381" topLine="0" />
+	</File>
+	<File name="Physics/ContactListener.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1022" topLine="0" />
+	</File>
+	<File name="Physics/PhysicsManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5907" topLine="83" />
+	</File>
+	<File name="Physics/PhysicsManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="869" topLine="3" />
+	</File>
+	<File name="SharedContent/ContentManager.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="400" topLine="0" />
+	</File>
+	<File name="SharedContent/ContentManager.h" open="0" top="0" tabpos="6">
+		<Cursor position="696" topLine="0" />
+	</File>
+	<File name="SharedContent/SharedContent.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="323" topLine="0" />
+	</File>
+	<File name="SharedContent/SharedContent.h" open="0" top="0" tabpos="0">
+		<Cursor position="686" topLine="1" />
+	</File>
+	<File name="SharedContent/WeaponContent.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="455" topLine="0" />
+	</File>
+	<File name="SharedContent/WeaponContent.h" open="0" top="0" tabpos="1">
+		<Cursor position="126" topLine="0" />
+	</File>
+	<File name="Timer.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="633" topLine="0" />
+	</File>
+	<File name="Timer.h" open="0" top="0" tabpos="0">
+		<Cursor position="339" topLine="0" />
+	</File>
+	<File name="Types/DynamicTypeTable.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="120" topLine="0" />
+	</File>
+	<File name="Types/DynamicTypeTable.h" open="0" top="0" tabpos="6">
+		<Cursor position="224" topLine="0" />
+	</File>
+	<File name="Types/List.h" open="0" top="0" tabpos="0">
+		<Cursor position="112" topLine="0" />
+	</File>
+	<File name="Types/TypeTable.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="186" topLine="0" />
+	</File>
+	<File name="Types/TypeTable.h" open="0" top="0" tabpos="7">
+		<Cursor position="368" topLine="12" />
+	</File>
+	<File name="Types/Vec2f.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="361" topLine="0" />
+	</File>
+	<File name="Types/Vec2f.h" open="0" top="0" tabpos="0">
+		<Cursor position="654" topLine="0" />
+	</File>
+	<File name="Types/Vec2i.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="282" topLine="0" />
+	</File>
+	<File name="Types/Vec2i.h" open="0" top="0" tabpos="0">
+		<Cursor position="76" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

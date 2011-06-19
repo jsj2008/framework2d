@@ -17,6 +17,20 @@ AIEntityFactory::AIEntityFactory(FactoryLoader* loader)
 {
     //ctor
     aiType = loader->get<int>("aiType",ePlayerInputBrainType);
+    switch (aiType)
+    {
+        case ePlayerInputBrainType:
+        case eZombieBrainType:
+        {
+            break;
+        }
+        case eBrainTypesMax:
+        default:
+        {
+            std::cout << "Invalid ai entity type" << std::endl;
+            throw -1;
+        }
+    }
     dimensions = loader->get<Vec2f>("dimensions",Vec2f(2,2));
     weapon = loader->get<std::string>("weapon","pistol");
     materialName = loader->get<std::string>("materialName","player");
@@ -61,12 +75,6 @@ Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
         {
             brain = new ZombieBrain;
             break;
-        }
-        case eBrainTypesMax:
-        default:
-        {
-            std::cout << "Invalid ai entity type" << std::endl;
-            throw -1;
         }
     }
     Vec2f position = parameters->get<Vec2f>("position",Vec2f(0,0));

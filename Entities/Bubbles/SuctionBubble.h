@@ -10,6 +10,10 @@ class SuctionBubble : public Bubble
         SuctionBubble();
         virtual ~SuctionBubble();
         BubbleType getBubbleType(){return eSuctionBubbleType;}
+        static std::string name()
+        {
+            return "SuctionBubble";
+        }
     protected:
     private:
         void affectBody(b2Body* body, Vec2f directionTo);

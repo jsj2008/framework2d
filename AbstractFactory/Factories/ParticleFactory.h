@@ -4,12 +4,16 @@
 #include <AbstractFactory/AbstractFactory.h>
 class FactoryLoader;
 
-class ParticleFactory : public AbstractFactory
+class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
 {
     public:
         ParticleFactory(FactoryLoader* loader);
         virtual ~ParticleFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return "ParticleFactory";
+        }
     protected:
     private:
         float density;

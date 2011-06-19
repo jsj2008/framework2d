@@ -1,3 +1,5 @@
-2 levelGeometry 1 Vec2fArray points 5 -14.2667 9.6  11.8 9.06667  23.7333 13.6667  9.66667 20.8  -16 19.6  
+4 tiles 0 
+ levelGeometry 1 Vec2fArray points 5 20.5333 10.8667  13.4 11.6  -9.46667 8.93333  -10.2667 3.86667  14.6 4.33333  
+ levelGeometry 1 Vec2fArray points 4 2.4 4.06667  4.4 1.8  6.13333 1.6  7.53333 4.13333  
  zombie 1 Vec2f position 5.2 1.53333 
  

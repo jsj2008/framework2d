@@ -6,6 +6,7 @@
 #include <cassert>
 #include <iostream>
 #include <Graphics/Skins/AllSkins.h>
+#include <Graphics/Sprites/SpriteList.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
@@ -61,6 +62,7 @@ GraphicsManager::GraphicsManager()
     glColor4f(1,1,1,1);
 
     mCamera = 0;
+    spriteList = new SpriteList();
 }
 
 GraphicsManager::~GraphicsManager()
@@ -117,5 +119,12 @@ float GraphicsManager::getPixelsPerMeter()
 {
     return mCamera->getPixelsPerMeter();
 }
-
+void GraphicsManager::addSprite(Sprite* _sprite)
+{
+    spriteList->addSprite(_sprite);
+}
+void GraphicsManager::deleteSprite(Sprite* _sprite)
+{
+    spriteList->deleteSprite(_sprite);
+}
 

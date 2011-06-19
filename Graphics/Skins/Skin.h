@@ -3,6 +3,7 @@
 
 class b2Body;
 class MaterialContext;
+class Entity;
 enum SkinType
 {
     eStaticSkinType,
@@ -18,11 +19,9 @@ class Skin
         void render(b2Body* body);
         virtual void vRender()=0;
         virtual SkinType getType()=0;
+        MaterialContext* material; // FIXME make this private once the entity factory is a concrete type
     protected:
     private:
-        friend class Factory;
-        friend class AbstractFactory;
-        MaterialContext* material;
 };
 
 #endif // SKIN_H

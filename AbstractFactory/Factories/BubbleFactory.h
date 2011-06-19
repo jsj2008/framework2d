@@ -5,14 +5,19 @@
 class FactoryLoader;
 
 template <typename Bubble>
-class BubbleFactory : public AbstractFactory
+class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
 {
     public:
         BubbleFactory(FactoryLoader* loader);
         virtual ~BubbleFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return Bubble::name() + "Factory";
+        }
     protected:
     private:
+        b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
 };

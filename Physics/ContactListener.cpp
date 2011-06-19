@@ -8,7 +8,7 @@ ContactListener::ContactListener()
     //ctor
     memset(handlers,0,sizeof(CollisionHandler*)*eEntityTypeMax*eEntityTypeMax);
     CollisionHandler* noResponseHandler = new NoResponseHandler;
-    for (unsigned int i = 0; i < eProjectileEntityType; i++)
+    for (unsigned int i = 0; i < eEntityTypeMax; i++)
     {
         for (unsigned int ii = i; ii < eEntityTypeMax; ii++)
         {

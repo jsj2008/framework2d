@@ -8,6 +8,8 @@ class Camera;
 #include <Box2D/Common/b2Settings.h>
 #include <Graphics/Camera/Camera.h>
 class Icon;
+class Sprite;
+class SpriteList;
 
 extern class GraphicsManager
 {
@@ -24,8 +26,11 @@ extern class GraphicsManager
         void setCamera(Camera* _camera){mCamera = _camera;}
         MaterialContext* getMaterial(const char* material){return mContentManager.getMaterial(material);}
         TextureContext* getTexture(const char* texture){return mContentManager.getTexture(texture);}
+        void addSprite(Sprite* _sprite);
+        void deleteSprite(Sprite* _sprite);
     protected:
     private:
+        SpriteList* spriteList;
         Camera* mCamera;
         Vec2i resolution;
         GraphicalContentManager mContentManager;

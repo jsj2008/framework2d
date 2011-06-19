@@ -68,8 +68,8 @@ void FactoryLoader::end()
     {
         g_Log.warning(i->second->name() + " " + i->first + " defined but not used");
         delete i->second;
-    }
-    values.clear();*/
+    } FIXME do this*/
+    mvalues.clear();
 }
 
 /*template <typename T>

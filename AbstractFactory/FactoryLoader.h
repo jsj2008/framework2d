@@ -35,7 +35,7 @@ class FactoryLoader
         std::string type, name;
         void syntaxError(const std::string& message);
         void warning(const std::string& message);
-        DynamicTypeTable mvalues; // FIXME use this instead
+        DynamicTypeTable mvalues;
 };
 
 #include <typeinfo>

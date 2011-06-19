@@ -10,6 +10,10 @@ class UpwardsGravityBubble : public Bubble
         UpwardsGravityBubble();
         virtual ~UpwardsGravityBubble();
         BubbleType getBubbleType(){return eUpwardsGravityBubbleType;}
+        static std::string name()
+        {
+            return "UpwardsGravityBubble";
+        }
     protected:
     private:
         void affectBody(b2Body* body, Vec2f directionTo);

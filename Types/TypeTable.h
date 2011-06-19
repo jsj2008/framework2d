@@ -18,6 +18,7 @@ class TypeTable
     public:
         typedef std::string ValueIndex;
         TypeTable(){}
+        //TypeTable(const TypeTable& rhs);
         virtual ~TypeTable();
 
     template <typename T>
@@ -50,6 +51,7 @@ class TypeTable
                 virtual void set(std::istream* parseSource)=0;
                 virtual void output(std::ostream* parseDestination)=0;
                 virtual std::string getTypeId()=0;
+                virtual Value* clone()=0;
         };
         template <typename T>
         class TemplateValue : public Value
@@ -62,6 +64,7 @@ class TypeTable
                 void output(std::ostream* parseDestination){(*parseDestination) << value;}
                 const T& get(){return value;}
                 std::string getTypeId(){return (typeid(T).name());}
+                Value* clone(){return new TemplateValue<T>(value);}
             private:
                 T value;
         };
@@ -75,7 +78,10 @@ std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
 template <typename T>
 void TypeTable::addValue(const ValueIndex& name, const T& value)
 {
-    assert(values.find(name) == values.end());
+    if(values.find(name) != values.end())
+    {
+        delete values[name];
+    }
     values[name] = new TemplateValue<T>(value);
 }
 

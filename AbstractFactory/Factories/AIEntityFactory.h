@@ -4,12 +4,16 @@
 #include <AbstractFactory/AbstractFactory.h>
 class FactoryLoader;
 
-class AIEntityFactory : public AbstractFactory
+class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
 {
     public:
         AIEntityFactory(FactoryLoader* loader);
         virtual ~AIEntityFactory();
         Entity* useFactory(FactoryParameters* parameters);
+        static std::string name()
+        {
+            return "AIEntityFactory";
+        }
     protected:
     private:
         b2FixtureDef fixtureDef;

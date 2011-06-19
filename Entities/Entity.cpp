@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <Graphics/Skins/Skin.h>
+#include <AbstractFactory/AbstractFactories.h>
 
 Entity::Entity()
 {

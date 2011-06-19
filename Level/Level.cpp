@@ -2,7 +2,7 @@
 #include <Physics/PhysicsManager.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
-#include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/AbstractFactories.h>
 #include <Level/ParallaxLayer.h>
 #include <Box2D/Box2D.h>
 #include <Entities/Entity.h>
@@ -24,7 +24,7 @@ Level::~Level()
 }
 void Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
-    b2Body* body = g_AbstractFactoryList.useFactory(factory, parameters)->mBody;
+    b2Body* body = g_AbstractFactories.useFactory(factory, parameters)->mBody;
     table[body] = {factory,*parameters};
 }
 void Level::addJoint(b2JointDef* def)
@@ -121,7 +121,7 @@ void Level::loadLevel()
         file >> factory;
         FactoryParameters params;
         file >> params;
-        b2Body* body = g_AbstractFactoryList.useFactory(factory, &params)->mBody;
+        b2Body* body = g_AbstractFactories.useFactory(factory, &params)->mBody;
         table[body] = {factory,params};
     }
 }
