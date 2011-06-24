@@ -3,7 +3,6 @@
 
 class b2Body;
 class MaterialContext;
-class Entity;
 enum SkinType
 {
     eStaticSkinType,

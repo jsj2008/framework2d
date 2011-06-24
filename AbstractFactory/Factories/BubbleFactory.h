@@ -1,7 +1,9 @@
 #ifndef BUBBLEFACTORY_H
 #define BUBBLEFACTORY_H
 
+#include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 template <typename Bubble>

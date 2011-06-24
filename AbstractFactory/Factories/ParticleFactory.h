@@ -1,7 +1,9 @@
 #ifndef PARTICLEFACTORY_H
 #define PARTICLEFACTORY_H
 
+#include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
@@ -20,6 +22,7 @@ class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
         int lifetime;
         std::string materialName;
 
+        b2BodyDef bodyDef;
         b2CircleShape shape;
 };
 

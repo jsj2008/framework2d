@@ -1,7 +1,9 @@
 #ifndef LEVELGEOMETRYFACTORY_H
 #define LEVELGEOMETRYFACTORY_H
 
+#include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory>
@@ -16,6 +18,7 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         }
     protected:
     private:
+        b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
 

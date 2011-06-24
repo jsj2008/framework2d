@@ -1,7 +1,9 @@
 #ifndef AIENTITYFACTORY_H
 #define AIENTITYFACTORY_H
 
+#include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
@@ -16,15 +18,6 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
         }
     protected:
     private:
-        b2FixtureDef fixtureDef;
-        b2PolygonShape shapeDef;
-        b2BodyDef wheelBody;
-        b2FixtureDef wheelFixture;
-        b2CircleShape wheelShape;
-        b2RevoluteJointDef wheelJoint;
-
-        int aiType;
-        Vec2f dimensions;
         std::string weapon;
         std::string materialName;
 };

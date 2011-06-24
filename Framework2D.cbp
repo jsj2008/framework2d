@@ -126,6 +126,9 @@
 		<Unit filename="AI/Brain.h" />
 		<Unit filename="AI/BrainFactory.cpp" />
 		<Unit filename="AI/BrainFactory.h" />
+		<Unit filename="AI/BrainFactory/AllBrainFactories.h" />
+		<Unit filename="AI/BrainFactory/PlayerInputBrainFactory.cpp" />
+		<Unit filename="AI/BrainFactory/PlayerInputBrainFactory.h" />
 		<Unit filename="AI/CharacterController.cpp" />
 		<Unit filename="AI/CharacterController.h" />
 		<Unit filename="AI/PathGeneration/PathGraph.cpp" />
@@ -269,6 +272,8 @@
 		<Unit filename="Graphics/GraphicalContentManager.h" />
 		<Unit filename="Graphics/GraphicsManager.cpp" />
 		<Unit filename="Graphics/GraphicsManager.h" />
+		<Unit filename="Graphics/SkinFactory/StaticSkinFactory.cpp" />
+		<Unit filename="Graphics/SkinFactory/StaticSkinFactory.h" />
 		<Unit filename="Graphics/Skins/AllSkins.h" />
 		<Unit filename="Graphics/Skins/BubbleSkin.cpp" />
 		<Unit filename="Graphics/Skins/BubbleSkin.h" />
@@ -319,6 +324,8 @@
 		<Unit filename="Physics/ContactListener.h" />
 		<Unit filename="Physics/DebugDraw.cpp" />
 		<Unit filename="Physics/DebugDraw.h" />
+		<Unit filename="Physics/Factories/CharacterBodyFactory.cpp" />
+		<Unit filename="Physics/Factories/CharacterBodyFactory.h" />
 		<Unit filename="Physics/PhysicsManager.cpp" />
 		<Unit filename="Physics/PhysicsManager.h" />
 		<Unit filename="Physics/RenderCallback.cpp" />
@@ -343,6 +350,8 @@
 		<Unit filename="Types/MyQueue.h" />
 		<Unit filename="Types/MyStack.h" />
 		<Unit filename="Types/MyVector.h" />
+		<Unit filename="Types/Traversable.cpp" />
+		<Unit filename="Types/Traversable.h" />
 		<Unit filename="Types/TypeTable.cpp" />
 		<Unit filename="Types/TypeTable.h" />
 		<Unit filename="Types/Vec2f.cpp" />

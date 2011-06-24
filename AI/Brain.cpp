@@ -1,6 +1,5 @@
 #include "Brain.h"
 #include <cassert>
-#define NULL 0
 Brain::Brain()
 {
     //ctor

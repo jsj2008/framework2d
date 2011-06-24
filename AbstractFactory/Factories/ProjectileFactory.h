@@ -3,6 +3,7 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 #include <Box2D/Box2D.h>
+class Entity;
 class FactoryLoader;
 
 class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>

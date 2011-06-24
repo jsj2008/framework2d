@@ -24,7 +24,11 @@
 #include <AbstractFactory/Factories/TileFactory.h>
 #include <AbstractFactory/Factories/TileMapFactory.h>
 #include <AbstractFactory/Factories/BubbleFactory.h>
+#include <Graphics/SkinFactory/StaticSkinFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
+#include <Physics/Factories/CharacterBodyFactory.h>
+
+#include <AI/BrainFactory/AllBrainFactories.h>
 
 #include <cstring>
 #include <iostream>
@@ -39,17 +43,27 @@ void Game::init()
     //ctor
     g_Timer.init();
     g_Timer.pause();
-    g_AbstractFactories.registerFactoryType<ExplosionFactory>(ExplosionFactory::name());
-    g_AbstractFactories.registerFactoryType<ProjectileFactory>(ProjectileFactory::name());
-    g_AbstractFactories.registerFactoryType<ParticleFactory>(ParticleFactory::name());
-    g_AbstractFactories.registerFactoryType<CrateFactory>("CrateFactory");
-    g_AbstractFactories.registerFactoryType< LevelGeometryFactory>("LevelGeometryFactory");
-    g_AbstractFactories.registerFactoryType<AIEntityFactory>("AIEntityFactory");
-    g_AbstractFactories.registerFactoryType<TileMapFactory>("TileMapFactory");
-    g_AbstractFactories.registerFactoryType<TileFactory>("TileFactory");
-    g_AbstractFactories.registerFactoryType<BubbleFactory<SuctionBubble>>("SuctionBubble");
-    g_AbstractFactories.registerFactoryType<BubbleFactory<UpwardsGravityBubble>>("UpwardsGravityBubble");
-    g_AbstractFactories.init();
+    /*AbstractFactories::registerFactoryType<Entity, ExplosionFactory>();
+    AbstractFactories::registerFactoryType<Entity, ProjectileFactory>();
+    AbstractFactories::registerFactoryType<Entity, ParticleFactory>();
+    AbstractFactories::registerFactoryType<Entity, CrateFactory>();
+    AbstractFactories::registerFactoryType<Entity,  LevelGeometryFactory>();
+    AbstractFactories::registerFactoryType<Entity, AIEntityFactory>();
+    AbstractFactories::registerFactoryType<Entity, TileMapFactory>();
+    AbstractFactories::registerFactoryType<Entity, TileFactory>();*/
+    AbstractFactories::registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
+    AbstractFactories::registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
+
+    /*AbstractFactories::registerFactoryType<Skin, StaticSkinFactory>();
+
+    AbstractFactories::registerFactoryType<b2Body, CharacterBodyFactory>();
+
+    AbstractFactories::registerFactoryType<Brain, PlayerInputBrainFactory>();*/
+
+    AbstractFactories::init();
+    //AbstractFactories::getSingleton().getFactoryList<Brain>().init();
+    //AbstractFactories::getSingleton().getFactoryList<Skin>().init();
+    //AbstractFactories::getSingleton().getFactoryList<b2Body>().init();
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
     g_PhysicsManager.init();
@@ -59,7 +73,7 @@ void Game::init()
 
     g_LevelManager.loadLevel("default");
     FactoryParameters params;
-    g_AbstractFactories.useFactory("player",&params);
+    AbstractFactories::useFactory<Entity>("player",&params);
     //g_LevelManager.addBody("tiles",&params);
 
     CEGUI::EventArgs args;

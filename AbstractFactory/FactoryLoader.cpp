@@ -25,6 +25,10 @@ void FactoryLoader::warning(const std::string& message)
     g_Log.warning(message);
 }
 
+bool FactoryLoader::isValid()
+{
+    return file.good();
+}
 bool FactoryLoader::next()
 {
     file >> type;

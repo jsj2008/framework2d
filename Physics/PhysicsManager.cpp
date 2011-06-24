@@ -113,8 +113,8 @@ bool PhysicsManager::update()
     while (stepsToTake > stepsTaken)
     {
         float timestep = 1.0f / 60.0f;
-        int32 velocityIterations = 6;
-        int32 positionIterations = 2;
+        int32 velocityIterations = 8;
+        int32 positionIterations = 6;
         mWorld->Step(timestep, velocityIterations, positionIterations);
         contactListener->process();
         updateEntities();

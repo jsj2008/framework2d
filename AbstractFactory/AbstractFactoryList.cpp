@@ -1,25 +1,9 @@
 #include "AbstractFactoryList.h"
-#include <AbstractFactory/FactoryLoader.h>
-#include <cassert>
-AbstractFactoryList<Entity> g_AbstractFactoryList;
 
-
-template <typename Product>
-AbstractFactoryList<Product>::AbstractFactoryList()
+AbstractFactoryListBase::AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& productName)
 {
-    //ctor
-    /*FactoryLoader loader("Resources/Factories.txt");
-    while (loader.next())
-    {
-        assert(factories.find(loader.getName()) == factories.end());
-        factories[loader.getName()] = factoryCreators[loader.getType()]->createFactory(&loader);
-        loader.end();
-    }*/
+    (*factoryLists)[productName] = this;
 }
-
-template <typename Product>
-AbstractFactoryList<Product>::~AbstractFactoryList()
+AbstractFactoryListBase::~AbstractFactoryListBase()
 {
-    //dtor
 }
-

@@ -49,10 +49,10 @@ AIEntityFactory zombie
   
 }
 
-SuctionBubble suctionBubble
+SuctionBubbleFactory suctionBubble
 {
 }
 
-UpwardsGravityBubble upwardsGravityBubble
+UpwardsGravityBubbleFactory upwardsGravityBubble
 {
 }

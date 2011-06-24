@@ -47,6 +47,7 @@ DynamicTypeTable::DynamicTypeTable()
     registerType<std::string>("string");
     registerType<Vec2f>("Vec2f");
     registerType<std::vector<Vec2f>>("Vec2fArray");
+    registerType<void*>("userData");
 }
 template <typename T>
 void DynamicTypeTable::registerType(const TypeIndex& name)

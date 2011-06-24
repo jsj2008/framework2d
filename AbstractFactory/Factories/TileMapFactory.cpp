@@ -29,7 +29,7 @@ Entity* TileMapFactory::useFactory(FactoryParameters* params)
     for (unsigned int i = 0; i < solidTiles.size(); i++)
     {
         parameters.add("position",Vec2f(solidTiles[i].x*tileSize.x,solidTiles[i].y*tileSize.y));
-        entity->tiles[solidTiles[i].x][solidTiles[i].y] = (Tile*)(g_AbstractFactories.useFactory(tileType,&parameters));
+        entity->tiles[solidTiles[i].x][solidTiles[i].y] = (Tile*)(AbstractFactories::useFactory<Entity>(tileType,&parameters));
     }
     g_TileMap = entity;
     return entity;

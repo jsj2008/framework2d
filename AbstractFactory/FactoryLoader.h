@@ -20,6 +20,7 @@ class FactoryLoader
     public:
         FactoryLoader(const char* filename);
         virtual ~FactoryLoader();
+        bool isValid();
         bool next();
         void end();
         const std::string& getType(){return type;}

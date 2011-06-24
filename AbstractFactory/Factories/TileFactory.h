@@ -1,7 +1,9 @@
 #ifndef TILEFACTORY_H
 #define TILEFACTORY_H
 
+#include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 class TileFactory : public AbstractFactory<Entity, TileFactory>
@@ -16,6 +18,7 @@ class TileFactory : public AbstractFactory<Entity, TileFactory>
         }
     protected:
     private:
+        b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
 

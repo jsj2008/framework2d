@@ -2,6 +2,7 @@
 #define TILEMAPFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
+class Entity;
 class FactoryLoader;
 
 class TileMapFactory : public AbstractFactory<Entity, TileMapFactory>

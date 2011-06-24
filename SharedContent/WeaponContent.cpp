@@ -1,6 +1,7 @@
 #include "WeaponContent.h"
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Entities/Entity.h>
 
 WeaponContent::WeaponContent(const char* _name)
 :SharedContent(_name)
@@ -38,5 +39,5 @@ void WeaponContent::fire(const Vec2f& source, const Vec2f& direction)
     position += direction*3;
     //PositionVelocityParameters parameters(position,direction*100);
     FactoryParameters parameters({{"position",position},{"v",direction*100}});
-    g_AbstractFactories.useFactory(projectile,&parameters);
+    AbstractFactories::useFactory<Entity>(projectile,&parameters);
 }

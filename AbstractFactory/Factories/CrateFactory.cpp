@@ -9,7 +9,6 @@ CrateFactory::CrateFactory(FactoryLoader* loader)
 :AbstractFactory()
 {
     //ctor
-    materialName = loader->get<std::string>("materialName","player");
     dimensions = Vec2f(2,2);
     bodyDef.type = b2_dynamicBody;
     fixtureDef.density = loader->get<float>("density",1.0f);
@@ -41,7 +40,6 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new StaticSkin(dimensions.x,dimensions.y);
-    setMaterial(entity->mSkin,materialName);
+    entity->mSkin = AbstractFactories::useFactory<Skin>("StaticSkinFactory",parameters);
     return entity;
 }

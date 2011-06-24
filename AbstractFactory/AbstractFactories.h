@@ -2,47 +2,52 @@
 #define ABSTRACTFACTORIES_H
 
 #include <string>
+#include <vector>
+#include <unordered_map>
 typedef std::string AbstractFactoryReference;
 template <typename Product>
 class AbstractFactoryList;
-class Entity;
 class FactoryParameters;
 
 class AbstractFactories
 {
     public:
         template <typename Product>
-        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = NULL);
+        static Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = NULL);
 
         template <typename Product, typename Factory>
-        char registerFactoryType(const std::string& name);
+        static void registerFactoryType();
 
         template <typename Product>
-        void initFactoryList()
-        {
-            getFactoryList<Product>().init();
-        }
+        static void nameProduct(const std::string& name);
 
-        static AbstractFactories& getSingleton()
-        {
-            static AbstractFactories factories;
-            return factories;
-        }
         template <typename Product>
-        AbstractFactoryList<Product>& getFactoryList()
-        {
-            static AbstractFactoryList<Product> factoryList;
-            return factoryList;
-        }
+        static void init();
+        static void init();
     protected:
     private:
+        template <typename Product>
+        static AbstractFactoryList<Product>& getFactoryList()
+        {
+            static AbstractFactoryList<Product> factoryList(getFactoryListList());
+            return factoryList;
+        }
         AbstractFactories();
-        virtual ~AbstractFactories();
-        /*template <typename Product>
-        AbstractFactoryList<Product>& getFactoryList();*/
+        ~AbstractFactories();
+        static std::unordered_map<std::string, class AbstractFactoryListBase*>* getFactoryListList()
+        {
+            static std::unordered_map<std::string, class AbstractFactoryListBase*> factoryLists;
+            return &factoryLists;
+        }
 };
-#define g_AbstractFactories AbstractFactories::getSingleton().getFactoryList<Entity>()
+#define g_AbstractFactories AbstractFactories::getFactoryList<Entity>()
 #include <AbstractFactory/AbstractFactoryList.h>
+
+template <typename Product>
+void AbstractFactories::init()
+{
+    getFactoryList<Product>().init();
+}
 
 template <typename Product>
 Product* AbstractFactories::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
@@ -51,11 +56,14 @@ Product* AbstractFactories::useFactory(AbstractFactoryReference factory, Factory
 }
 
 template <typename Product, typename Factory>
-char AbstractFactories::registerFactoryType(const std::string& name)
+void AbstractFactories::registerFactoryType()
 {
-    AbstractFactoryList<Product> list = getFactoryList<Product>();
-    list.registerFactoryType<Factory>(name);
-    return 0;
+    getFactoryList<Product>().registerFactoryType<Factory>(Factory::name());
+}
+template <typename Product>
+void AbstractFactories::nameProduct(const std::string& name)
+{
+    (*getFactoryListList())[name] = &getFactoryList<Product>();
 }
 
 #endif // ABSTRACTFACTORIES_H

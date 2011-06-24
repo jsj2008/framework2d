@@ -57,7 +57,7 @@ void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
                 throw -1;
             }
         }
-        g_AbstractFactories.useFactory(factory,&parameters);
+        AbstractFactories::useFactory<Entity>(factory,&parameters);
     }
 }
 void PlayMode::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
