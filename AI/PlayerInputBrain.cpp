@@ -8,7 +8,7 @@ PlayerInputBrain::PlayerInputBrain()
 :EventListener()
 {
     //ctor
-    follower = NULL;
+    follower = nullptr;
 }
 
 PlayerInputBrain::~PlayerInputBrain()

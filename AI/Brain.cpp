@@ -3,7 +3,7 @@
 Brain::Brain()
 {
     //ctor
-    mEntity = NULL;
+    mEntity = nullptr;
 }
 
 Brain::~Brain()
@@ -13,6 +13,6 @@ Brain::~Brain()
 
 void Brain::setEntity(AIEntity* _Entity)
 {
-    assert(mEntity == NULL);
+    assert(mEntity == nullptr);
     mEntity = _Entity;
 }

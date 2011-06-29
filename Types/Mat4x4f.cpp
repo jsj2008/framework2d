@@ -8,7 +8,7 @@ const Mat4x4f Mat4x4f::IDENTITY(1.0f,0.0f,0.0f,0.0f,
 									0.0f,0.0f,1.0f,0.0f,
 									0.0f,0.0f,0.0f,1.0f);
 
-const Mat4x4f Mat4x4f::NULLMATRIX(0.0f,0.0f,0.0f,0.0f,
+const Mat4x4f Mat4x4f::nullptrMATRIX(0.0f,0.0f,0.0f,0.0f,
 									  0.0f,0.0f,0.0f,0.0f,
 									  0.0f,0.0f,0.0f,0.0f,
 									  0.0f,0.0f,0.0f,0.0f);
@@ -162,7 +162,7 @@ float* Mat4x4f::asSingleArray()
 }
 void Mat4x4f::DumpMat4x4f(char * s)
 {
-	if(s != NULL)printf("\n%s\n",s);
+	if(s != nullptr)printf("\n%s\n",s);
 	else printf("\n");
 	printf("%f %f %f %f\n",   elem[0][0], elem[0][1], elem[0][2], elem[0][3]);
 	printf("%f %f %f %f\n",   elem[1][0], elem[1][1], elem[1][2], elem[1][3]);

@@ -12,12 +12,16 @@ Log::~Log()
 {
     //dtor
 }
-void Log::warning(const std::string& message)
+void Log::warning(const std::string& _message)
 {
-    cout << "Warning " << message << endl;
+    cout << "Warning " << _message << endl;
 }
-void Log::error(const std::string& message)
+void Log::error(const std::string& _message)
 {
-    cout << "Error " << message << endl;
+    cout << "Error " << _message << endl;
     throw -1;
+}
+void Log::message(const std::string& _message)
+{
+    cout << "Message " << _message << endl;
 }

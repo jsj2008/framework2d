@@ -1,5 +1,7 @@
 #include "CharacterBodyFactory.h"
 #include <Physics/PhysicsManager.h>
+#include <AbstractFactory/FactoryLoader.h>
+#include <AbstractFactory/FactoryParameters.h>
 
 CharacterBodyFactory::CharacterBodyFactory(FactoryLoader* loader)
 {
@@ -14,7 +16,7 @@ CharacterBodyFactory::CharacterBodyFactory(FactoryLoader* loader)
     fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::EnemyCategory);
 
     wheelBody.type = b2_dynamicBody;
-    wheelBody.userData = NULL;
+    wheelBody.userData = nullptr;
     wheelFixture.shape = &wheelShape;
     wheelFixture.density = 1.0f;
     wheelFixture.friction = 50.0f;
@@ -45,7 +47,7 @@ b2Body* CharacterBodyFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position = position;
     bodyDef.position.x += dimensions.x*0.1f;
     shapeDef.SetAsBox(dimensions.x*0.4f,dimensions.y*0.33f);
-    bodyDef.userData = parameters->get<void*>("userData",NULL);
+    bodyDef.userData = parameters->get<void*>("userData",nullptr);
     b2Body* body = g_PhysicsManager.createBody(&bodyDef);
     body->CreateFixture(&fixtureDef);
 

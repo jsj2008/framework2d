@@ -6,7 +6,7 @@ class SharedContent
 {
     public:
         /// These are the reference counting functions
-        const char* const getName(){return name;}
+        const char* getName(){return name;}
     protected:
         SharedContent(const char* _name);
         virtual ~SharedContent();

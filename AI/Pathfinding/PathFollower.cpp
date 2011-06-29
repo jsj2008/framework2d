@@ -7,7 +7,7 @@
 PathFollower::PathFollower()
 {
     //ctor
-    closest = Node(NULL,0);
+    closest = Node(0,0);
 }
 
 PathFollower::~PathFollower()

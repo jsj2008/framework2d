@@ -2,6 +2,7 @@
 #define STATICSKINFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
+class FactoryLoader;
 
 class StaticSkinFactory : public AbstractFactory<Skin, StaticSkinFactory>
 {

@@ -156,7 +156,7 @@ struct b2Vec3
 	b2Vec3() {}
 
 	/// Construct using coordinates.
-	b2Vec3(float32 x, float32 y, float32 z) : x(x), y(y), z(z) {}
+	b2Vec3(float32 _x, float32 _y, float32 _z) : x(_x), y(_y), z(_z) {}
 
 	/// Set this vector to all zeros.
 	void SetZero() { x = 0.0f; y = 0.0f; z = 0.0f; }
@@ -330,7 +330,7 @@ struct b2Transform
 	b2Transform() {}
 
 	/// Initialize using a position vector and a rotation matrix.
-	b2Transform(const b2Vec2& position, const b2Mat22& R) : position(position), R(R) {}
+	b2Transform(const b2Vec2& _position, const b2Mat22& _R) : position(_position), R(_R) {}
 
 	/// Set this to the identity transform.
 	void SetIdentity()

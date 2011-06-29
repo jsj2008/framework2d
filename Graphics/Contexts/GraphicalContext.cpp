@@ -4,7 +4,7 @@
 
 GraphicalContext::GraphicalContext(const char* _name)
 {
-    if (_name != NULL)
+    if (_name != nullptr)
     {
         strcpy(name,_name);
         referenceCount = 0;

@@ -27,13 +27,13 @@ StaticModelContext::StaticModelContext(const char* _name)
 {
     referenceCount = 0;
 	m_numMeshes = 0;
-	m_pMeshes = NULL;
+	m_pMeshes = nullptr;
 	m_numMaterials = 0;
-	m_pMaterials = NULL;
+	m_pMaterials = nullptr;
 	m_numTriangles = 0;
-	m_pTriangles = NULL;
+	m_pTriangles = nullptr;
 	m_numVertices = 0;
-	m_pVertices = NULL;
+	m_pVertices = nullptr;
 }
 
 StaticModelContext::~StaticModelContext()
@@ -203,10 +203,10 @@ bool StaticModelContext::loadModelData( const char *filename )
 		pPtr += sizeof( byte );	// flags
 		pPtr += 32;				// name
 
-		word nTriangles = *( word* )pPtr;
+		word _nTriangles = *( word* )pPtr;
 		pPtr += sizeof( word );
-		int *pTriangleIndices = new int[nTriangles];
-		for ( int j = 0; j < nTriangles; j++ )
+		int *pTriangleIndices = new int[_nTriangles];
+		for ( int j = 0; j < _nTriangles; j++ )
 		{
 			pTriangleIndices[j] = *( word* )pPtr;
 			pPtr += sizeof( word );
@@ -216,7 +216,7 @@ bool StaticModelContext::loadModelData( const char *filename )
 		pPtr += sizeof( char );
 
 		m_pMeshes[i].m_materialIndex = materialIndex;
-		m_pMeshes[i].m_numTriangles = nTriangles;
+		m_pMeshes[i].m_numTriangles = _nTriangles;
 		m_pMeshes[i].m_pTriangleIndices = pTriangleIndices;
 	}
 
@@ -247,31 +247,31 @@ void StaticModelContext::destroyContent()
 		delete[] m_pMeshes[i].m_pTriangleIndices;
 
 	m_numMeshes = 0;
-	if ( m_pMeshes != NULL )
+	if ( m_pMeshes != nullptr )
 	{
 		delete[] m_pMeshes;
-		m_pMeshes = NULL;
+		m_pMeshes = nullptr;
 	}
 
 	m_numMaterials = 0;
-	if ( m_pMaterials != NULL )
+	if ( m_pMaterials != nullptr )
 	{
 		delete[] m_pMaterials;
-		m_pMaterials = NULL;
+		m_pMaterials = nullptr;
 	}
 
 	m_numTriangles = 0;
-	if ( m_pTriangles != NULL )
+	if ( m_pTriangles != nullptr )
 	{
 		delete[] m_pTriangles;
-		m_pTriangles = NULL;
+		m_pTriangles = nullptr;
 	}
 
 	m_numVertices = 0;
-	if ( m_pVertices != NULL )
+	if ( m_pVertices != nullptr )
 	{
 		delete[] m_pVertices;
-		m_pVertices = NULL;
+		m_pVertices = nullptr;
 	}
 }
 void StaticModelContext::draw()

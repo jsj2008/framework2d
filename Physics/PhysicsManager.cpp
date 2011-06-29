@@ -45,7 +45,7 @@ void PhysicsManager::init()
 void PhysicsManager::clear()
 {
     b2Body* body = mWorld->GetBodyList();
-    while (body != NULL)
+    while (body != nullptr)
     {
         Entity* entity = (Entity*)body->GetUserData();
         delete entity;
@@ -66,10 +66,10 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 using namespace std;
 void PhysicsManager::destroyBody(b2Body* body)
 {
-    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != NULL; )
+    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != nullptr; )
     {
         b2Joint* joint = jointEdge->joint;
-        if (joint->GetBodyB() == NULL)
+        if (joint->GetBodyB() == nullptr)
         {
             return;
         }
@@ -85,8 +85,8 @@ void PhysicsManager::destroyBody(b2Body* body)
 }
 b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 {
-    static b2Body* groundBody = NULL;
-    if (groundBody == NULL)
+    static b2Body* groundBody = nullptr;
+    if (groundBody == nullptr)
     {
         b2BodyDef bodyDef;
         groundBody = mWorld->CreateBody(&bodyDef);
@@ -127,11 +127,11 @@ bool PhysicsManager::update()
 void PhysicsManager::updateEntities()
 {
     b2Body* body = mWorld->GetBodyList();
-    while (body != NULL)
+    while (body != nullptr)
     {
         Entity* entity = (Entity*)body->GetUserData();
         body = body->GetNext();
-        if (entity != NULL)
+        if (entity != nullptr)
             entity->update();
     }
 }
@@ -161,7 +161,7 @@ class PhySimpleCallback : public b2QueryCallback
 public:
     PhySimpleCallback(Vec2f& _position, void* _ignore)
     {
-        ret = NULL;
+        ret = nullptr;
         position = _position;
         ignore = _ignore;
     }

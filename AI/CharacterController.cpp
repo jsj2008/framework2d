@@ -12,7 +12,7 @@ CharacterController::CharacterController(AIEntity* _entity)
 {
     //ctor
     entity = _entity;
-    wheel = NULL;
+    wheel = nullptr;
     airbourneCounter = 0;
     jumpCounter = 0;
 }
@@ -46,12 +46,12 @@ void CharacterController::jump()
 void CharacterController::update()
 {
     bool colliding;
-    if (wheel->GetBodyB()->GetContactList() == NULL)
+    if (wheel->GetBodyB()->GetContactList() == nullptr)
     {
         colliding = false;
     }
     else
-    for (b2ContactEdge* edge = wheel->GetBodyB()->GetContactList(); edge != NULL; edge = edge->next)
+    for (b2ContactEdge* edge = wheel->GetBodyB()->GetContactList(); edge != nullptr; edge = edge->next)
     {
         b2Contact* contact = edge->contact;
         if (contact->IsTouching())

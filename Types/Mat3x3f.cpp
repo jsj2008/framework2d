@@ -7,7 +7,7 @@ const Mat3x3f Mat3x3f::IDENTITY(1.0f,0.0f,0.0f,
 									0.0f,1.0f,0.0f,
 									0.0f,0.0f,1.0f);
 
-const Mat3x3f Mat3x3f::NULLMATRIX(0.0f,0.0f,0.0f,
+const Mat3x3f Mat3x3f::nullptrMATRIX(0.0f,0.0f,0.0f,
 									  0.0f,0.0f,0.0f,
 									  0.0f,0.0f,0.0f);
 
@@ -104,7 +104,7 @@ float* Mat3x3f::asSingleArray()
 }
 void Mat3x3f::DumpMat3x3f(char * s)
 {
-	if(s != NULL)printf("\n%s\n",s);
+	if(s != nullptr)printf("\n%s\n",s);
 	else printf("\n");
 	printf("%f %f %f\n",   elem[0][0], elem[0][1], elem[0][2]);
 	printf("%f %f %f\n",   elem[1][0], elem[1][1], elem[1][2]);

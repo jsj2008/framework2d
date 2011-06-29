@@ -41,7 +41,7 @@ void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impu
     {
         Entity* a = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData();
         Entity* b = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData();
-        if (a != NULL && b != NULL) /// FIXME
+        if (a != nullptr && b != nullptr) /// FIXME
             {
             if (a->getType() > b->getType())
             {

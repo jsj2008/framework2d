@@ -5,7 +5,7 @@
 
 SharedContent::SharedContent(const char* _name)
 {
-    if (_name != NULL)
+    if (_name != nullptr)
     {
         size_t len = strlen(_name);
         assert(len < MAX_CONTENT_NAME);

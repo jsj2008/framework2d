@@ -1,8 +1,5 @@
 #ifndef MYSTACK_H // Why not
 #define MYSTACK_H
-#ifndef NULL
-#define NULL 0
-#endif
 
 template <typename T>
 class MyStack
@@ -38,7 +35,7 @@ private:
 template <typename T>
 MyStack<T>::MyStack()
 {
-	items = NULL;
+	items = nullptr;
 	resize(1);
 	deleteContents = true;
 }
@@ -50,7 +47,7 @@ MyStack<T>::MyStack(const MyStack & rhs)
 		//Error("cpy constructor: target should probably have delete contents off", ef_NonFatal);
 	}
 	//items = rhs.items;
-	items = NULL;
+	items = nullptr;
 	resize(rhs.MaxMyStack);
 	memcpy(items,rhs.items,sizeof(T)*MaxMyStack);
 	Top = rhs.Top;
@@ -60,21 +57,21 @@ MyStack<T>::MyStack(const MyStack & rhs)
 template <typename T>
 MyStack<T>::~MyStack()
 {
-	if (deleteContents && items != NULL)
+	if (deleteContents && items != nullptr)
 	{
 		delete[] items;
-		items = NULL;
+		items = nullptr;
 	}
 }
 
 template <typename T>
-void MyStack<T>::resize(int size)
+void MyStack<T>::resize(int _size)
 {
-	if (items != NULL)
+	if (items != nullptr)
 	{
 		delete[] items;
 	}
-	MaxMyStack = size;
+	MaxMyStack = _size;
 	Top = EmptyMyStack = -1;
 	items = new T[MaxMyStack];
 }

@@ -11,7 +11,7 @@ GeometryEditor::GeometryEditor(FreeCamera* camera)
     camera->activate();
     mCamera = camera;
     //g_InputManager.registerStateSelect(this,"GeometryEditor");
-    materialName = NULL;
+    materialName = nullptr;
 }
 
 

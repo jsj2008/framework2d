@@ -1,11 +1,9 @@
 #include "Traversable.h"
-#ifndef NULL
-#define NULL 0
-#endif
+
 Traversable::Traversable()
 {
     //ctor
-    next = NULL;
+    next = nullptr;
 }
 
 Traversable::~Traversable()
@@ -25,7 +23,7 @@ void Traversable::traverse(Traversable** prevNext)
         }
         else
         {
-            *prevNext = NULL;
+            *prevNext = nullptr;
             delete this;
         }
     }

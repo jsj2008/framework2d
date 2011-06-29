@@ -58,6 +58,7 @@ bool PathSegment::isDirectlyConnected(PathSegment* neighbour)
     return false;
     //return nodeA->getSegmentB() == neighbour || nodeB->getSegmentA() == neighbour || nodeA->getSegmentA() == neighbour || nodeB->getSegmentB() == neighbour;
 }
+Vec2f GetClosetPoint(Vec2f A, Vec2f B, Vec2f P, bool segmentClamp);
 Vec2f GetClosetPoint(Vec2f A, Vec2f B, Vec2f P, bool segmentClamp)
 {
     Vec2f AP = P - A;

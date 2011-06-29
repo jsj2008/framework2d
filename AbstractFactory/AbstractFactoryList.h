@@ -9,13 +9,20 @@ class FactoryCreator;
 template <typename Product>
 class AbstractFactoryBase;
 class FactoryParameters;
+class UntypedAbstractFactory;
+#include <Events/EventHandler.h>
+#include <Events/Events/FactoryEvent.h>
+template <typename Product>
+const std::string EvaluateTypeName();
 
 class AbstractFactoryListBase
 {
     public:
-        AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& productName);
+        AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& _productName);
         virtual ~AbstractFactoryListBase();
         virtual void init()=0;
+        virtual void print(std::ostream* stream)=0;
+        virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
     protected:
     private:
 };
@@ -29,31 +36,38 @@ class AbstractFactoryList: private AbstractFactoryListBase
         virtual ~AbstractFactoryList();
         template <typename Factory>
         void registerFactoryType(const std::string& name);
-        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = NULL);
-        const std::string getProductName();
+        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
+        AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory){return factories[factory];}
+        UntypedAbstractFactory* getUntypedFactory(const std::string& name);
+        void registerListener(EventsListener* listener){handler.registerListener(listener);}
+        const std::string& getProductName()
+        {
+            return productName();
+        }
+        void setProductName(const std::string& _productName)
+        {
+            productName() = _productName;
+        }
+        void print(std::ostream* stream);
     protected:
     private:
-        const std::string& productName();
+        std::string& productName()
+        {
+            static std::string name = EvaluateTypeName<Product>();
+            return name;
+        }
         std::unordered_map<std::string,FactoryCreator<Product>*> factoryCreators;
         std::unordered_map<AbstractFactoryReference,AbstractFactoryBase<Product>*> factories;
+        EventHandler handler;
 };
 
-#include <AbstractFactory/FactoryParameters.h>
-#include <AbstractFactory/AbstractFactory.h>
-#include <AbstractFactory/FactoryLoader.h>
 
-template <typename Product>
-Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
-{
-    if (parameters == NULL)
-    {
-        static FactoryParameters params;
-        //params.clear();
-        return factories[factory]->use(&params);
-    }
-    return factories[factory]->use(parameters);
-}
-class FactoryLoader;
+/** Implementation
+*
+*
+*/
+
+#include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
 template <typename Product>
 class FactoryCreator
 {
@@ -74,13 +88,37 @@ void AbstractFactoryList<Product>::registerFactoryType(const std::string& name)
 {
     auto creator = new TemplateFactoryCreator<Product, Factory>;
     factoryCreators[name] = creator;
-    static FactoryLoader emptyConfig(NULL);
+    static TextFileFactoryLoader emptyConfig(nullptr);
     factories[name] = creator->createFactory(&emptyConfig);
+}
+
+
+#include <AbstractFactory/FactoryParameters.h>
+#include <AbstractFactory/AbstractFactory.h>
+#include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
+
+template <typename Product>
+Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
+{
+    Product* product;
+    if (parameters == nullptr)
+    {
+        static FactoryParameters params;
+        //params.clear();
+        product = factories[factory]->use(&params);
+    }
+    else
+    {
+        product = factories[factory]->use(parameters);
+    }
+    FactoryEvent<Product> event(product);
+    handler.trigger(&event);
+    return product;
 }
 template <typename Product>
 void AbstractFactoryList<Product>::init()
 {
-    FactoryLoader loader(("Resources/" + getProductName() + "Factories.txt").c_str());
+    TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.txt").c_str());
     while (loader.next())
     {
         assert(factories.find(loader.getName()) == factories.end());
@@ -89,8 +127,14 @@ void AbstractFactoryList<Product>::init()
     }
 }
 template <typename Product>
+UntypedAbstractFactory* AbstractFactoryList<Product>::getUntypedFactory(const std::string& name)
+{
+    return new UntypedAbstractFactoryImplementation<Product>(factories[name]);
+}
+
+template <typename Product>
 AbstractFactoryList<Product>::AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists)
-:AbstractFactoryListBase(factoryLists, getProductName())
+:AbstractFactoryListBase(factoryLists, productName())
 {
     //ctor
 }
@@ -101,64 +145,15 @@ AbstractFactoryList<Product>::~AbstractFactoryList()
     //dtor
 }
 
-#include <cxxabi.h>
-
-template <typename Type>
-std::string demangle()
-{
-    const std::type_info  &ti = typeid(Type);
-    char* realname;
-    int status;
-    realname = abi::__cxa_demangle(ti.name(), 0, 0, &status);
-    std::string ret(realname);
-    free(realname);
-    return ret;
-}
-#define HAS_MEM_FUNC(func, name)                                        \
-    template<typename T, typename Sign>                                 \
-    struct name {                                                       \
-        typedef char yes[1];                                            \
-        typedef char no [2];                                            \
-        template <typename U, U> struct type_check;                     \
-        template <typename _1> static yes &chk(type_check<Sign, &_1::func> *); \
-        template <typename   > static no  &chk(...);                    \
-        static bool const value = sizeof(chk<T>(0)) == sizeof(yes);     \
-    }
-
-
-template<bool C, typename T = void>
-struct enable_if {
-  typedef T type;
-};
-
-template<typename T>
-struct enable_if<false, T> { };
-
-HAS_MEM_FUNC(name, has_to_string);
-
-template<typename T>
-typename enable_if<has_to_string<T, std::string(T::*)()>::value, std::string>::type doSomething(T * t)
-{
-   /* something when T has name ... */
-   return T::name();
-}
-
-template<typename T>
-typename enable_if<!has_to_string<T, std::string(T::*)()>::value, std::string>::type doSomething()
-{
-   /* something when T doesnt have name ... */
-   return demangle<T>();
-}
-
-/*AbstractFactoryListBase::AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& productName)
-{
-    (*factoryLists)[productName] = this;
-}*/
-
+void privatePrint(std::ostream* stream, const std::string& factoryType, const std::string& factoryInstance, const std::string& productName, const std::string& realProductName);
 template <typename Product>
-const std::string AbstractFactoryList<Product>::getProductName()
+void AbstractFactoryList<Product>::print(std::ostream* stream)
 {
-    return doSomething<Product>();
+    for (auto i = factories.begin(); i != factories.end(); i++)
+    {
+        privatePrint(stream, i->second->getName(), i->first, productName(), EvaluateTypeName<Product>());
+    }
 }
+#include <AbstractFactory/EvaluateTypeName.h>
 
 #endif // ABSTRACTFACTORYLIST_H

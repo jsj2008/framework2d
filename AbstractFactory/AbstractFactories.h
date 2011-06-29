@@ -7,30 +7,42 @@
 typedef std::string AbstractFactoryReference;
 template <typename Product>
 class AbstractFactoryList;
+template <typename Product>
+class AbstractFactoryBase;
 class FactoryParameters;
+class UntypedAbstractFactory;
 
 class AbstractFactories
 {
     public:
         template <typename Product>
-        static Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = NULL);
+        static Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
 
         template <typename Product, typename Factory>
         static void registerFactoryType();
 
         template <typename Product>
-        static void nameProduct(const std::string& name);
+        static void renameProduct(const std::string& name);
 
         template <typename Product>
+        static AbstractFactoryBase<Product>* getFactory(const std::string& name);
+
+        /// For this function, considering storing all untyped factories in one list refernced by one parameter,
+        /// if I start to use it enough. These are inefficient to create and use, but it will take a little more
+        /// time and memory to maintain a list of all factories
+        static UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
+
         static void init();
-        static void init();
+
+        static void print(std::ostream* stream);
+
     protected:
     private:
         template <typename Product>
-        static AbstractFactoryList<Product>& getFactoryList()
+        static AbstractFactoryList<Product>* getFactoryList()
         {
             static AbstractFactoryList<Product> factoryList(getFactoryListList());
-            return factoryList;
+            return &factoryList;
         }
         AbstractFactories();
         ~AbstractFactories();
@@ -40,30 +52,38 @@ class AbstractFactories
             return &factoryLists;
         }
 };
-#define g_AbstractFactories AbstractFactories::getFactoryList<Entity>()
-#include <AbstractFactory/AbstractFactoryList.h>
 
-template <typename Product>
-void AbstractFactories::init()
-{
-    getFactoryList<Product>().init();
-}
+/** Implementation
+*
+*
+*/
+
+
+#include <AbstractFactory/AbstractFactoryList.h>
 
 template <typename Product>
 Product* AbstractFactories::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
 {
-    return getFactoryList<Product>().useFactory(factory,parameters);
+    return getFactoryList<Product>()->useFactory(factory,parameters);
+}
+template <typename Product>
+AbstractFactoryBase<Product>* AbstractFactories::getFactory(const std::string& name)
+{
+    return getFactoryList<Product>()->getFactory(name);
 }
 
 template <typename Product, typename Factory>
 void AbstractFactories::registerFactoryType()
 {
-    getFactoryList<Product>().registerFactoryType<Factory>(Factory::name());
+    getFactoryList<Product>()->registerFactoryType<Factory>(Factory::name());
 }
 template <typename Product>
-void AbstractFactories::nameProduct(const std::string& name)
+void AbstractFactories::renameProduct(const std::string& name)
 {
-    (*getFactoryListList())[name] = &getFactoryList<Product>();
+    AbstractFactoryList<Product>* list = getFactoryList<Product>();
+    (*getFactoryListList())[name] = list;
+    getFactoryListList()->erase(list->getProductName());
+    list->setProductName(name);
 }
 
 #endif // ABSTRACTFACTORIES_H

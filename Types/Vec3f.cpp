@@ -97,6 +97,6 @@ void Vec3f::NormaliseSelf()
 }
 void Vec3f::DumpVec3f(char * s)
 {
-	if(s != NULL)printf("\n%f %f %f %s\n\n", x, y, z, s);
+	if(s != nullptr)printf("\n%f %f %f %s\n\n", x, y, z, s);
 	else printf("\n%f %f %f\n\n", x, y, z);
 }

@@ -17,7 +17,7 @@ Paths::~Paths()
 Node Paths::findClosestNode(const Vec2f& position)
 {
     float shortestDistance = 1000.0f;
-    Node closestNode(NULL,0);
+    Node closestNode(0,0);
     for (auto i = nodes.begin(); i != nodes.end(); i++)
     {
         for (auto ii = (*i)->begin(); ii != (*i)->end(); ii++)

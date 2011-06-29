@@ -1,8 +1,6 @@
 #ifndef MYVECTOR_H_INCLUDED
 #define MYVECTOR_H_INCLUDED
-#ifndef NULL
-#define NULL 0
-#endif
+
 #include <stack>
 /// This class supports a delete function that just sets the variable 'active' to false, which needs to be asserted during looping. Its a way of deleting that keeps the contents in their original places.
 /// It is likely to be faster too. It stores a list of inactive elements and pushing inserts the new element in one of these, returning the location it was put into
@@ -41,7 +39,7 @@ private:
 template <typename T>
 MyVector<T>::MyVector(int size)
 {
-	items = NULL;
+	items = nullptr;
 	resize(size);
 	deleteContents = true;
 }
@@ -53,7 +51,7 @@ MyVector<T>::MyVector(const MyVector & rhs)
 		//Error("cpy constructor: target should probably have delete contents off", ef_NonFatal);
 	}
 	//items = rhs.items;
-	items = NULL;
+	items = nullptr;
 	resize(rhs.MaxMyVector);
 	memcpy(items,rhs.items,sizeof(T)*MaxMyVector);
 	Top = rhs.Top;
@@ -63,17 +61,17 @@ MyVector<T>::MyVector(const MyVector & rhs)
 template <typename T>
 MyVector<T>::~MyVector()
 {
-	if (deleteContents && items != NULL)
+	if (deleteContents && items != nullptr)
 	{
 		delete[] items;
-		items = NULL;
+		items = nullptr;
 	}
 }
 
 template <typename T>
 void MyVector<T>::resize(int size)
 {
-	if (items != NULL)
+	if (items != nullptr)
 	{
 		delete[] items;
 	}

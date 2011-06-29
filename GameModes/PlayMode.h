@@ -15,7 +15,8 @@ class PlayMode : public ClickDragEvent, public GameMode
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
-        void setBody(b2Body* body, PlayerInputBrain* _playerBrain);
+        void setCamera(Camera* _camera);
+        void setPlayerBrain(PlayerInputBrain* _brain);
         bool activate(const CEGUI::EventArgs&);
     protected:
     private:

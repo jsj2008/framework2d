@@ -10,8 +10,8 @@ using namespace std;
 InputManager::InputManager()
 {
     //ctor
-    activeEvent = NULL;
-    inputGrabber = NULL;
+    activeEvent = nullptr;
+    inputGrabber = nullptr;
     controls = new ControlStruct[eInputActionsMax]{'w','a','s','d',SDLK_KP_PLUS,SDLK_KP_MINUS};
     currentlyActive = false;
 }
@@ -38,6 +38,7 @@ void InputManager::setActiveEvent(InputContext* _activeEvent)
 {
     activeEvent = _activeEvent;
 }
+void handle_mouse_down(Uint8 button);
 void handle_mouse_down(Uint8 button)
 {
 switch ( button )
@@ -62,6 +63,7 @@ switch ( button )
         break;
     }
 }
+void handle_mouse_up(Uint8 button);
 void handle_mouse_up(Uint8 button)
 	{
 	switch ( button )
@@ -80,7 +82,7 @@ void handle_mouse_up(Uint8 button)
 bool InputManager::processInput()
 {
     controls[eLeft].key = (SDLKey)'a'; /// wtf? no idea why this is neccessary
-    Uint8* keys = SDL_GetKeyState(NULL);
+    Uint8* keys = SDL_GetKeyState(nullptr);
     bool returnValue = true;
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -93,7 +95,7 @@ bool InputManager::processInput()
                 {
                     if (controls[i].key == event.key.keysym.sym)
                     {
-                        if (controls[i].event != NULL)
+                        if (controls[i].event != nullptr)
                         {
                             controls[i].event->trigger(InputActions(i));
                         }
@@ -128,7 +130,7 @@ bool InputManager::processInput()
                     isHit = hitChild->isHit(mousePoint);
                 else
                     isHit = false;
-                if (activeEvent != NULL && !isHit)
+                if (activeEvent != nullptr && !isHit)
                 {
                     activeEvent->buttonDown(Vec2i(event.button.x,event.button.y),event.button.button);
                     currentlyActive = true;
@@ -141,7 +143,7 @@ bool InputManager::processInput()
                                   static_cast<float>(event.motion.x),
                                   static_cast<float>(event.motion.y));
 
-                if (activeEvent != NULL && currentlyActive)
+                if (activeEvent != nullptr && currentlyActive)
                 {
                     activeEvent->mouseMove(Vec2i(event.motion.x,event.motion.y));
                 }
@@ -158,7 +160,7 @@ bool InputManager::processInput()
                 {
                     keys[SDLK_KP_MINUS] = 1;
                 }
-                if (activeEvent != NULL && currentlyActive)
+                if (activeEvent != nullptr && currentlyActive)
                 {
                     activeEvent->buttonUp(Vec2i(event.button.x,event.button.y),event.button.button);
                     currentlyActive = false;
@@ -174,7 +176,7 @@ bool InputManager::processInput()
     }
     for (unsigned int i = 0; i < eInputActionsMax; i++)
     {
-        if (controls[i].event != NULL)
+        if (controls[i].event != nullptr)
         {
             controls[i].event->resetInput();
         }
@@ -183,7 +185,7 @@ bool InputManager::processInput()
     {
         if (keys[controls[i].key])
         {
-            if (controls[i].event != NULL)
+            if (controls[i].event != nullptr)
             {
                 controls[i].event->trigger((InputActions)i);
             }

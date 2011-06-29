@@ -1,9 +1,6 @@
 #ifndef GRAPHICALCONTEXT_H
 #define GRAPHICALCONTEXT_H
 
-#ifndef NULL
-#define NULL 0
-#endif
 #define MAX_NAME 32
 class GraphicalContext
 {

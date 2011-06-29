@@ -3,6 +3,7 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 #include <Box2D/Box2D.h>
+class FactoryLoader;
 
 class CharacterBodyFactory : public AbstractFactory<b2Body, CharacterBodyFactory>
 {

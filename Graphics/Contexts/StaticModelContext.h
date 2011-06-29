@@ -20,7 +20,7 @@ class TextureContext;
 class StaticModelContext: public GraphicalContext
 {
 	public:
-		StaticModelContext(const char* _name = NULL);
+		StaticModelContext(const char* _name = nullptr);
 		virtual ~StaticModelContext();
 		void draw();
 		void load();

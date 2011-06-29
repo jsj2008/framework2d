@@ -6,7 +6,7 @@
 Skin::Skin()
 {
     //ctor
-    material = NULL;
+    material = nullptr;
 }
 
 Skin::~Skin()

@@ -8,7 +8,7 @@ AIManager g_AIManager;
 AIManager::AIManager()
 {
     //ctor
-    playerNode = Node(NULL,0);
+    playerNode = Node(0,0);
     pathfinding = new Pathfinding;
 }
 

@@ -13,7 +13,7 @@ EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initia
 
     CEGUI::Window* guiSheet = CEGUI::System::getSingleton().getGUISheet();
     tab = (CEGUI::TabControl*)guiSheet->getChildRecursive(tabControlName);
-    if (tab == NULL)
+    if (tab == nullptr)
     {
         std::cout << "Failed to find CEGUI window " << tabControlName << std::endl;
     }

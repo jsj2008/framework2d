@@ -89,7 +89,7 @@ NodeReference PathNodeDynamic::createNodes(std::unordered_map<PathNodeDynamic*,N
         {
             case eWall:
             {
-                return NULL;
+                return 0;
             }
             case eCliff:
             {
@@ -167,6 +167,8 @@ NodeReference PathNodeDynamic::createNodes(std::unordered_map<PathNodeDynamic*,N
                 ret->setNeighbours(target,previous,jumpDirection);
                 return nodeList->size()-1;
             }
+            case eCorner:
+            case eTypesMax:
             default:
             {
                 throw -1;
@@ -200,6 +202,16 @@ void PathNodeDynamic::tempRender()
         {
             glColor3f(1,1,1);
             break;
+        }
+        case eCorner:
+        {
+            glColor3f(1,0,1);
+            break;
+        }
+        case eTypesMax:
+        default:
+        {
+            throw -1;
         }
     }
     glVertex2f(getPosition().x,getPosition().y);

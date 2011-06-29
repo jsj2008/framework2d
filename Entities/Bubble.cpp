@@ -15,7 +15,7 @@ void Bubble::update()
 {
     b2Fixture* myFixture = mBody->GetFixtureList();
     Vec2f myPosition = mBody->GetWorldCenter();
-    for (b2ContactEdge* ce = mBody->GetContactList(); ce != NULL; ce = ce->next)
+    for (b2ContactEdge* ce = mBody->GetContactList(); ce != nullptr; ce = ce->next)
     {
         b2Contact* c = ce->contact;
         b2Fixture* fixture = c->GetFixtureA();

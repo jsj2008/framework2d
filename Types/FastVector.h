@@ -1,8 +1,5 @@
 #ifndef FASTVECTOR_H_INCLUDED
 #define FASTVECTOR_H_INCLUDED
-#ifndef NULL
-#define NULL 0
-#endif
 #include <stack>
 #include <cstring>
 #include <cstdlib>
@@ -37,7 +34,7 @@ private:
 template <typename T>
 FastVector<T>::FastVector(unsigned int size)
 {
-	items = NULL;
+	items = nullptr;
 	Top = -1;
 	resize(size);
 }
@@ -49,7 +46,7 @@ FastVector<T>::FastVector(const FastVector & rhs)
 		//Error("cpy constructor: target should probably have delete contents off", ef_NonFatal);
 	}
 	//items = rhs.items;
-	items = NULL;
+	items = nullptr;
 	resize(rhs.MaxFastVector);
 	memcpy(items,rhs.items,sizeof(T)*MaxFastVector);
 	Top = rhs.Top;
@@ -58,10 +55,10 @@ FastVector<T>::FastVector(const FastVector & rhs)
 template <typename T>
 FastVector<T>::~FastVector()
 {
-	if (items != NULL)
+	if (items != nullptr)
 	{
 		delete[] items;
-		items = NULL;
+		items = nullptr;
 	}
 }
 
@@ -70,7 +67,7 @@ void FastVector<T>::resize(unsigned int size)
 {
     const unsigned int sizeofT = sizeof(T);
     T* newItems = (T*)malloc(sizeofT*size);
-	if (items != NULL)
+	if (items != nullptr)
 	{
 	    memcpy(newItems,items,sizeof(T)*MaxFastVector);
 		delete[] items;

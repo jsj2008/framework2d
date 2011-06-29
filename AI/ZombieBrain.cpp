@@ -53,6 +53,7 @@ void ZombieBrain::update()
             PRINT(cout << "jump right\n";)
             break;
         }
+        case AIManager::Operation::eOperationsMax:
         default:
             throw -1;
     }

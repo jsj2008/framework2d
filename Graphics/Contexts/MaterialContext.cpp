@@ -5,10 +5,10 @@
 MaterialContext::MaterialContext(const char* _name)
 :GraphicalContext(_name)
 {
-    mTextureContext = NULL;
+    mTextureContext = nullptr;
 }
 MaterialContext::MaterialContext(TextureContext* _TextureContext)
-:GraphicalContext(NULL)
+:GraphicalContext(nullptr)
 {
     //ctor
     mTextureContext = _TextureContext;

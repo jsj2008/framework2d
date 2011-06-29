@@ -82,7 +82,6 @@ void Game::init()
 
     g_AIManager.finalisePathfinding();
 
-
     g_Timer.unPause();
 }
 Game::~Game()

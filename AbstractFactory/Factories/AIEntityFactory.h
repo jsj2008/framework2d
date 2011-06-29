@@ -5,6 +5,9 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
+class b2Body;
+class Brain;
+class Skin;
 
 class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
 {
@@ -19,6 +22,9 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
     protected:
     private:
         std::string weapon;
+        AbstractFactoryBase<b2Body>* bodyFactory;
+        AbstractFactoryBase<Brain>* brainFactory;
+        AbstractFactoryBase<Skin>* skinFactory;
         std::string materialName;
 };
 

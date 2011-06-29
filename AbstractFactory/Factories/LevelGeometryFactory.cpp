@@ -23,7 +23,7 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
 {
     std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{});
 
-    g_AIManager.addStaticGeometry(&points[0],points.size());
+    //g_AIManager.addStaticGeometry(&points[0],points.size());
     StaticGeometry* entity = new StaticGeometry;
 
     assert(points.size() <= b2_maxPolygonVertices);

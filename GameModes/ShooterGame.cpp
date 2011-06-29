@@ -8,7 +8,7 @@
 ShooterGame::ShooterGame()
 {
     //ctor
-    mCamera = NULL;
+    mCamera = nullptr;
 }
 
 ShooterGame::~ShooterGame()
@@ -32,7 +32,7 @@ void ShooterGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
 bool ShooterGame::activate(const CEGUI::EventArgs& args)
 {
     g_InputManager.setActiveEvent(this);
-    if (mCamera != NULL)
+    if (mCamera != nullptr)
     {
         g_GraphicsManager.setCamera(mCamera);
         mCamera->activate();

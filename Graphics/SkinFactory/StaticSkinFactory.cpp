@@ -1,5 +1,7 @@
 #include "StaticSkinFactory.h"
 #include <Graphics/Skins/StaticSkin.h>
+#include <AbstractFactory/FactoryLoader.h>
+#include <AbstractFactory/FactoryParameters.h>
 
 StaticSkinFactory::StaticSkinFactory(FactoryLoader* _loader)
 {

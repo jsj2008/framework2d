@@ -16,7 +16,7 @@ TileMapFactory::~TileMapFactory()
 {
     //dtor
 }
-TileMap* g_TileMap = NULL;
+TileMap* g_TileMap = nullptr;
 Entity* TileMapFactory::useFactory(FactoryParameters* params)
 {
     Vec2i dimensions = params->get<Vec2i>("dimensions",Vec2i(100,100));

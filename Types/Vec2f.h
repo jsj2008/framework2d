@@ -9,12 +9,12 @@ bool b2IsValid(float32 x);
 #define b2Vec2 Vec2f
 struct Vec2f
 {
-	Vec2f operator*( float s ) { return Vec2f( x*s, y*s ); }
-	Vec2f operator/( float s ) { return Vec2f( x/s, y/s ); }
+	Vec2f operator*( float s ) const{ return Vec2f( x*s, y*s ); }
+	Vec2f operator/( float s ) const{ return Vec2f( x/s, y/s ); }
 	Vec2f operator+(const Vec2f B ) const{ return Vec2f( x + B.x, y + B.y ); }
 	Vec2f operator-(const Vec2f B ) const{ return Vec2f( x - B.x, y - B.y ); }
 	Vec2f operator-() { return Vec2f( -x, -y ); }
-	float operator*( Vec2f B ) { return x*B.x + y*B.y; }
+	float operator*( Vec2f B ) const{ return x*B.x + y*B.y; }
 	void operator/=( float s ) { x /= s; y /= s; }
 	void operator/=( Vec2f B ) { x /= B.x; y /= B.y; }
 	bool operator==( Vec2f B ) { return x == B.x && y == B.y; }
@@ -23,7 +23,7 @@ struct Vec2f
 	Vec2f() {x=y=0.0f;}
 
 	/// Construct using coordinates.
-	Vec2f(float32 x, float32 y) : x(x), y(y) {}
+	Vec2f(float32 _x, float32 _y) : x(_x), y(_y) {}
 
 	/// Set this vector to all zeros.
 	void SetZero() { x = 0.0f; y = 0.0f; }

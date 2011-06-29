@@ -65,10 +65,10 @@ void TileMap::destroy(Vec2f position, Vec2f direction)
 bool TileMap::destroy(Vec2i tile)
 {
     if (tile.x < dimensions.x && tile.y < dimensions.y && tile.x >= 0 && tile.y >= 0)
-    if (tiles[tile.x][tile.y] != NULL)
+    if (tiles[tile.x][tile.y] != nullptr)
     {
         g_PhysicsManager.destroyBody(tiles[tile.x][tile.y]->mBody);
-        tiles[tile.x][tile.y] = NULL;
+        tiles[tile.x][tile.y] = nullptr;
         return true;
     }
     return false;

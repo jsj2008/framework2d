@@ -3,27 +3,35 @@
 
 #include <string>
 #include <istream>
+#include <Graphics/GraphicsManager.h> /// FIXME
 class FactoryParameters;
+class EventHandler;
 
 template <typename Product>
 class AbstractFactoryBase
 {
     public:
-        AbstractFactoryBase(const std::string* const _name);
+        AbstractFactoryBase(const std::string _name);
         virtual ~AbstractFactoryBase();
         Product* use(FactoryParameters* paramters);
+        const std::string& getName(){return name;}
     protected:
-        virtual Product* useFactory(FactoryParameters* parameters)=0;
-        const std::string* const name;
+        virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
+        const std::string name;
         void setMaterial(class Skin* skin,const std::string& materialName);
     private:
+        EventHandler* getProductTypeEventHandler()
+        {
+            static EventHandler eventHandler;
+            return &eventHandler;
+        }
 };
 template <typename Product, typename DerivedType>
 class Registrar
 {
     public:
         Registrar();
-        void check(){}
+        void check()const{}
 };
 template <typename Product, typename DerivedType>
 class AbstractFactory: public AbstractFactoryBase<Product>
@@ -32,17 +40,26 @@ class AbstractFactory: public AbstractFactoryBase<Product>
         AbstractFactory();
         ~AbstractFactory();
     private:
+        Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;
+        EventHandler* getFactoryTypeEventHandler()
+        {
+            static EventHandler eventHandler;
+            return &eventHandler;
+        }
 };
 
-#include <AbstractFactory/AbstractFactories.h>
-/*template<typename Product, class DerivedType>
-AbstractFactory<Product, DerivedType>::Registrar AbstractFactory<Product, DerivedType>::registration = g_AbstractFactories.registerFactoryType<DerivedType>(DerivedType::getName());
+/** Implementation
+*
+*
 */
-#include <Graphics/GraphicsManager.h>
+
+
+
+#include <AbstractFactory/AbstractFactories.h>
 
 template <typename Product>
-AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string* const _name)
+AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string _name)
 :name(_name)
 {
     //ctor
@@ -57,7 +74,10 @@ AbstractFactoryBase<Product>::~AbstractFactoryBase()
 template <typename Product>
 Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
 {
-    return useFactory(parameters);
+    Product* product = privateUseFactory(parameters);
+    FactoryEvent<Product> event(product);
+    getProductTypeEventHandler()->trigger(&event);
+    return product;
 }
 
 template <typename Product>
@@ -68,7 +88,7 @@ void AbstractFactoryBase<Product>::setMaterial(class Skin* skin,const std::strin
 
 template <typename Product, typename DerivedType>
 AbstractFactory<Product, DerivedType>::AbstractFactory()
-:AbstractFactoryBase<Product>(&DerivedType::name())
+:AbstractFactoryBase<Product>(DerivedType::name())
 {
     registrar.check();
 }
@@ -77,15 +97,20 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 {
 
 }
+template <typename Product, typename DerivedType>
+Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
+{
+    Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
+    FactoryEvent<Product> event(product);
+    getFactoryTypeEventHandler()->trigger(&event);
+    return product;
+}
 
 template <typename Product, typename DerivedType>
 const Registrar<Product, DerivedType> AbstractFactory<Product, DerivedType>::registrar;
-#include <AbstractFactory/AbstractFactories.h>
-#include <iostream>
 template <typename Product, typename DerivedType>
 Registrar<Product, DerivedType>::Registrar()
 {
     AbstractFactories::registerFactoryType<Product, DerivedType>();
 }
-
 #endif // ABSTRACTFACTORY_H

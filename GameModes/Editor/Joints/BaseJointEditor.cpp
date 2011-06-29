@@ -7,7 +7,7 @@ BaseJointEditor::BaseJointEditor(FreeCamera* camera)
     //ctor
     mCamera = camera;
     camera->activate();
-    bodyA = NULL;
+    bodyA = nullptr;
 }
 
 BaseJointEditor::~BaseJointEditor()
@@ -19,9 +19,9 @@ void BaseJointEditor::click(Vec2i mouse, unsigned char button)
 {
     Vec2f point = mouse.ScreenToWorldSpace();
     b2Body* body = g_PhysicsManager.select(point);
-    if (body != NULL)
+    if (body != nullptr)
     {
-        if (bodyA == NULL)
+        if (bodyA == nullptr)
         {
             bodyA = body;
             localPointA = body->GetLocalPoint(point);
@@ -36,7 +36,7 @@ void BaseJointEditor::click(Vec2i mouse, unsigned char button)
             {
                 Vec2f localPointB = body->GetLocalPoint(point);
                 createJoint(body,localPointB);
-                bodyA = NULL;
+                bodyA = nullptr;
             }
         }
     }

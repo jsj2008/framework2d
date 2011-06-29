@@ -1,5 +1,5 @@
 #include "ShaderContext.h"
-#define NULL 0
+#define nullptr 0
 
 ShaderContext::ShaderContext(const char* _name)
 :GraphicalContext(_name)

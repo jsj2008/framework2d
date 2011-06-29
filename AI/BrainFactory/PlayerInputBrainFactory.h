@@ -2,6 +2,7 @@
 #define PLAYERINPUTBRAINFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
+class FactoryLoader;
 class Brain;
 
 class PlayerInputBrainFactory : public AbstractFactory <Brain, PlayerInputBrainFactory>

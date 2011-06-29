@@ -10,7 +10,7 @@
 GeometrySelector::GeometrySelector(FreeCamera* camera)
 {
     //ctor
-    mouseJoint = NULL;
+    mouseJoint = nullptr;
     camera->activate();
     mCamera = camera;
     //g_InputManager.registerStateSelect(this,"GeometrySelector");
@@ -23,24 +23,24 @@ GeometrySelector::~GeometrySelector()
 
 void GeometrySelector::start(unsigned char button)
 {
-    if (mouseJoint != NULL)
+    if (mouseJoint != nullptr)
     {
         mouseMove(startPos);
         activeMouseJoints.insert(mouseJoint);
-        mouseJoint = NULL;
+        mouseJoint = nullptr;
     }
     else
     {
         Vec2f point = startPos.ScreenToWorldSpace();
-        b2Body* body = g_PhysicsManager.select(point, NULL);
-        if (body != NULL)
+        b2Body* body = g_PhysicsManager.select(point, nullptr);
+        if (body != nullptr)
         {
             if (button == 1)
             {
                 mouseJoint = g_PhysicsManager.createJoint(body,point);
                 // This is code to prevent the attached body from dying
                 AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)body->GetUserData());
-                if (entity != NULL)
+                if (entity != nullptr)
                 {
                     bodyHealth = entity->health;
                     entity->health = pow(2,30);
@@ -49,7 +49,7 @@ void GeometrySelector::start(unsigned char button)
             else if (button == 3)
             {
                 bool mouseJointRemoved = false;
-                for (b2JointEdge* edge = body->GetJointList(); edge != NULL;)
+                for (b2JointEdge* edge = body->GetJointList(); edge != nullptr;)
                 {
                     b2Joint* joint = edge->joint;
                     edge = edge->next;
@@ -71,7 +71,7 @@ void GeometrySelector::start(unsigned char button)
 }
 void GeometrySelector::mouseMove(Vec2i mouse)
 {
-    if (mouseJoint != NULL)
+    if (mouseJoint != nullptr)
     {
         Vec2f point = mouse.ScreenToWorldSpace();
         mouseJoint->SetTarget(point);
@@ -81,13 +81,13 @@ void GeometrySelector::mouseMove(Vec2i mouse)
 }
 void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
 {
-    if (mouseJoint != NULL)
+    if (mouseJoint != nullptr)
     {
         AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)(mouseJoint->GetBodyB()->GetUserData()));
-        if (entity != NULL)
+        if (entity != nullptr)
             entity->health = bodyHealth;
         g_PhysicsManager.deleteJoint(mouseJoint);
-        mouseJoint = NULL;
+        mouseJoint = nullptr;
     }
 }
 #include <GL/gl.h>
@@ -111,7 +111,7 @@ void GeometrySelector::drawMouseJoints()
         position = (*i)->GetAnchorB();
         glVertex2f(position.x,position.y);
     }
-    if (mouseJoint != NULL)
+    if (mouseJoint != nullptr)
     {
         Vec2f position = mouseJoint->GetAnchorA();
         glVertex2f(position.x,position.y);

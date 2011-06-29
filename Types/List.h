@@ -41,7 +41,7 @@ class Iterator
 template<typename T>
 List<T>::List()
 {
-    myFront = myBack = NULL;
+    myFront = myBack = nullptr;
     mySize = 0;
 }
 template<typename T>

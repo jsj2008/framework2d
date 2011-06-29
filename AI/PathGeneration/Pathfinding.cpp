@@ -17,7 +17,7 @@ Paths* Pathfinding::finalise()
 }
 void Pathfinding::addStaticGeometry(Vec2f* vertices, int numVertices)
 {
-    PathSegment* trueFirstSegment = NULL;
+    PathSegment* trueFirstSegment = nullptr;
     PathSegment* firstSegment = pathGraph.addSegment(vertices[0],vertices[1], &trueFirstSegment);
     PathSegment* currentSegment = firstSegment;
     for (int i = 2; i < numVertices; i++)

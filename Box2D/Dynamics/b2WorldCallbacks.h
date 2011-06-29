@@ -156,7 +156,7 @@ public:
 struct b2Color
 {
 	b2Color() {}
-	b2Color(float32 r, float32 g, float32 b) : r(r), g(g), b(b) {}
+	b2Color(float32 _r, float32 _g, float32 _b) : r(_r), g(_g), b(_b) {}
 	void Set(float32 ri, float32 gi, float32 bi) { r = ri; g = gi; b = bi; }
 	float32 r, g, b;
 };
@@ -184,7 +184,7 @@ public:
 
 	/// Get the drawing flags.
 	uint32 GetFlags() const;
-	
+
 	/// Append flags to the current flags.
 	void AppendFlags(uint32 flags);
 
@@ -199,10 +199,10 @@ public:
 
 	/// Draw a circle.
 	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) = 0;
-	
+
 	/// Draw a solid circle.
 	virtual void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) = 0;
-	
+
 	/// Draw a line segment.
 	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) = 0;
 

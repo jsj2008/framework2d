@@ -9,6 +9,7 @@
 #include <Entities/Weapons/Weapon.h>
 #include <Game.h>
 #include <GameModes/PlayMode.h>
+#include <Graphics/Camera/PhysicsCamera.h>
 #include <iostream>
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/FactoryLoader.h>
@@ -18,6 +19,9 @@ AIEntityFactory::AIEntityFactory(FactoryLoader* loader)
     //ctor
     weapon = loader->get<std::string>("weapon","pistol");
     materialName = loader->get<std::string>("materialName","player");
+    bodyFactory = AbstractFactories::getFactory<b2Body>("CharacterBodyFactory");
+    skinFactory = AbstractFactories::getFactory<Skin>("StaticSkinFactory");
+    brainFactory = AbstractFactories::getFactory<Brain>("PlayerInputBrainFactory");
 }
 
 AIEntityFactory::~AIEntityFactory()
@@ -27,19 +31,19 @@ AIEntityFactory::~AIEntityFactory()
 
 Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
-    Brain* brain = AbstractFactories::useFactory<Brain>("PlayerInputBrainFactory", parameters);
+    Brain* brain = brainFactory->use(parameters);
     AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)));
 
     parameters->add<void*>("userData",entity);
 
-    entity->mBody = AbstractFactories::useFactory<b2Body>("CharacterBodyFactory",parameters);
-    entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",NULL));
+    entity->mBody = bodyFactory->use(parameters);
+    entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",nullptr));
 
-    entity->mSkin = AbstractFactories::useFactory<Skin>("StaticSkinFactory",parameters);
+    entity->mSkin = skinFactory->use(parameters);
 
     //if (aiType == ePlayerInputBrainType) FIXME
     {
-        ((PlayMode*)g_Game.getGameMode(ePlayGameMode))->setBody(entity->mBody,(PlayerInputBrain*)brain);
+        static_cast<PlayMode*>(g_Game.getGameMode(ePlayGameMode))->setCamera(new PhysicsCamera(entity->mBody));
     }
     return entity;
 }

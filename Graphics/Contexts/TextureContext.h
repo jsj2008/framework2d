@@ -6,7 +6,7 @@
 class TextureContext: public GraphicalContext
 {
     public:
-        TextureContext(const char* _textureName = NULL);
+        TextureContext(const char* _textureName = nullptr);
         virtual ~TextureContext();
         void assertDelete();
         void bind();

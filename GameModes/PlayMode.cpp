@@ -12,7 +12,8 @@ PlayMode::PlayMode()
 {
     //ctor
     type = Bubble::eSuctionBubbleType;
-    mCamera = NULL;
+    mCamera = nullptr;
+    playerBrain = nullptr;
 }
 
 PlayMode::~PlayMode()
@@ -60,16 +61,19 @@ void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
         AbstractFactories::useFactory<Entity>(factory,&parameters);
     }
 }
-void PlayMode::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
+void PlayMode::setCamera(Camera* _camera)
 {
-    mCamera = new PhysicsCamera(body);
+    mCamera = _camera;
+}
+void PlayMode::setPlayerBrain(PlayerInputBrain* _playerBrain)
+{
     playerBrain = _playerBrain;
 }
 
 bool PlayMode::activate(const CEGUI::EventArgs& args)
 {
     g_InputManager.setActiveEvent(this);
-    if (mCamera != NULL)
+    if (mCamera != nullptr)
     {
         g_GraphicsManager.setCamera(mCamera);
         mCamera->activate();

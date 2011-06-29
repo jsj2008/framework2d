@@ -30,7 +30,7 @@ class MyQueue
 template <typename T>
 MyQueue<T>::MyQueue()
 {
-	items = NULL;
+	items = nullptr;
 	myFront = 0;
 	mySize = 0;
 	myBack = 0;
@@ -40,7 +40,7 @@ MyQueue<T>::MyQueue()
 template <typename T>
 MyQueue<T>::MyQueue(unsigned int _capacity)
 {
-	items = NULL;
+	items = nullptr;
 	myFront = 0;
 	mySize = 0;
 	myBack = 0;
@@ -132,7 +132,7 @@ template <typename T>
 void MyQueue<T>::resize(unsigned int _capacity)
 {
     T* newItems = new T[_capacity];
-    if (items != NULL)
+    if (items != nullptr)
     {
         if (myFront > myBack) // Split into two ranges
         {

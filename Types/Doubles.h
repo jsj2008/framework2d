@@ -48,7 +48,7 @@ Variable& Doubles<HashKey, Variable>::get(HashKey j)
 	unsigned int location = (find(j));
 	if (location == items[index].size())
 	{
-		return NULL;
+		return nullptr;
 	}
 	else
 	{
@@ -59,7 +59,7 @@ Variable& Doubles<HashKey, Variable>::get(HashKey j)
 template <typename HashKey, typename Variable>
 Doubles<HashKey, Variable>::Doubles(unsigned int HashSize)
 {
-	items = NULL;
+	items = nullptr;
 	hashSize = HashSize;
 	items = new std::vector<element>[hashSize];
 }

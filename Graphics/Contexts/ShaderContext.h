@@ -6,7 +6,7 @@
 class ShaderContext: public GraphicalContext
 {
     public:
-        ShaderContext(const char* _name = NULL);
+        ShaderContext(const char* _name = nullptr);
         virtual ~ShaderContext();
     protected:
     private:

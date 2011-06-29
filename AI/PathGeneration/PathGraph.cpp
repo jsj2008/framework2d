@@ -241,7 +241,7 @@ PathSegment* PathGraph::separate(PathSegment* segment, float point, PathNodeDyna
 PathSegment* PathGraph::findClosestPath(const Vec2f& position)
 {
     float smallestT = 1000.0f;
-    PathSegment* closestPath = NULL;
+    PathSegment* closestPath = nullptr;
     for (auto i = segments.begin(); i != segments.end(); i++)
     {
         if ((*i)->getType() == PathSegment::eFloor)

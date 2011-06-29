@@ -20,7 +20,7 @@ public:
 	void Translation(float X, float Y);
 	void Rotation(float fAngle);// anticlockwise
 
-	void DumpMat3x3f(char * s = NULL);
+	void DumpMat3x3f(char * s = nullptr);
 
 	inline float &operator()( unsigned int Row, unsigned int Column )
 	{ return elem[Row][Column]; }
@@ -30,7 +30,7 @@ public:
 
 	float elem[3][3];
 	static const Mat3x3f IDENTITY;
-	static const Mat3x3f NULLMATRIX;
+	static const Mat3x3f nullptrMATRIX;
 };
 
 Mat3x3f operator * ( const Mat3x3f & M1,

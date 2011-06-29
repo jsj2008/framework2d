@@ -10,6 +10,7 @@
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
+bool function(const CEGUI::EventArgs& e);
 bool function(const CEGUI::EventArgs& e)
 {
     std::cout << "Jumped" << std::endl;
@@ -102,7 +103,7 @@ void GraphicsManager::resize(Vec2i newResolution)
 {
     resolution = newResolution;
     SDL_Surface* screen = SDL_SetVideoMode(resolution.x, resolution.y, 0, SDL_OPENGL|SDL_RESIZABLE|SDL_DOUBLEBUF);
-        assert(screen != NULL);
+        assert(screen != nullptr);
 
     glViewport(0,0,resolution.x,resolution.y);
     glMatrixMode (GL_PROJECTION);

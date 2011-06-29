@@ -24,7 +24,7 @@ public:
 	void RotationY(float fAngle);
 	void RotationZ(float fAngle);
 
-	void DumpMat4x4f(char * s = NULL);
+	void DumpMat4x4f(char * s = nullptr);
 
 	void LookAt(const Vec3f & vFrom,
 				const Vec3f & vTo,
@@ -38,7 +38,7 @@ public:
 
 	float elem[4][4];
 	static const Mat4x4f IDENTITY;
-	static const Mat4x4f NULLMATRIX;
+	static const Mat4x4f nullptrMATRIX;
 };
 
 Mat4x4f operator * ( const Mat4x4f & M1,

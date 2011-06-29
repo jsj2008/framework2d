@@ -11,8 +11,8 @@ CrateSpawner::CrateSpawner(FreeCamera* camera)
     //ctor
     camera->activate();
     mCamera = camera;
-    density = NULL;
-    materialName = NULL;
+    density = nullptr;
+    materialName = nullptr;
 }
 
 CrateSpawner::~CrateSpawner()
