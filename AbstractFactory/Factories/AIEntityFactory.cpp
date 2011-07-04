@@ -41,9 +41,5 @@ Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 
     entity->mSkin = skinFactory->use(parameters);
 
-    //if (aiType == ePlayerInputBrainType) FIXME
-    {
-        static_cast<PlayMode*>(g_Game.getGameMode(ePlayGameMode))->setCamera(new PhysicsCamera(entity->mBody));
-    }
     return entity;
 }

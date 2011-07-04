@@ -39,7 +39,7 @@ class AbstractFactoryList: private AbstractFactoryListBase
         Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
         AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory){return factories[factory];}
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
-        void registerListener(EventsListener* listener){handler.registerListener(listener);}
+        void registerListener(EventsListener* listener){AbstractFactoryBase<Product>::productTypeEventHandler.registerListener(listener);}
         const std::string& getProductName()
         {
             return productName();
@@ -58,7 +58,6 @@ class AbstractFactoryList: private AbstractFactoryListBase
         }
         std::unordered_map<std::string,FactoryCreator<Product>*> factoryCreators;
         std::unordered_map<AbstractFactoryReference,AbstractFactoryBase<Product>*> factories;
-        EventHandler handler;
 };
 
 
@@ -105,14 +104,14 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
     {
         static FactoryParameters params;
         //params.clear();
+        assert(factories[factory]);
         product = factories[factory]->use(&params);
     }
     else
     {
+        assert(factories[factory]);
         product = factories[factory]->use(parameters);
     }
-    FactoryEvent<Product> event(product);
-    handler.trigger(&event);
     return product;
 }
 template <typename Product>

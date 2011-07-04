@@ -29,6 +29,8 @@ struct Vec2i { //Simple vector class
 	const Vec2f ScreenToWorldSpace() const;
 	void worldToScreenSpace(Vec2f world);
 
+    friend std::ostream& operator<< (std::ostream &out, Vec2i &vec);
+    friend std::istream& operator>> (std::istream &in, Vec2i &vec);
 };
 
 #endif // VEC2I_H

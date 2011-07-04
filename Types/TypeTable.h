@@ -1,11 +1,6 @@
 #ifndef TYPETABLE_H
 #define TYPETABLE_H
 
-#define GCC_EXTENSION_DEMANGLER
-#ifdef GCC_EXTENSION_DEMANGLER
-#include <cxxabi.h>
-#endif
-
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -18,9 +13,10 @@
 template <typename T>
 std::string& name()
 {
-    static std::string name = demangle<T>();
+    static std::string name = EvaluateTypeName<T>();
     return name;
 }
+
 class TypeTable
 {
     protected:
@@ -29,7 +25,7 @@ class TypeTable
         typedef std::string ValueIndex;
         typedef std::string TypeIndex;
 
-        TypeTable();
+        TypeTable(bool logUndefined = false);
         //TypeTable(const TypeTable& rhs);
         virtual ~TypeTable();
 
@@ -102,6 +98,13 @@ class TypeTable
             private:
                 T value;
         };
+        template <typename T>
+        class AutomaticRegister
+        {
+            public:
+                AutomaticRegister();
+                void check();
+        };
         class Type
         {
             public:
@@ -114,16 +117,17 @@ class TypeTable
         class TemplateType : public Type
         {
             public:
-                TemplateType(){}
+                TemplateType(){staticRegister.check();}
                 Value* instance(){return new TemplateValue<T>();}
                 Type* clone(){return new TemplateType<T>();}
             private:
+                static AutomaticRegister<T> staticRegister;
         };
 
         static std::unordered_map<TypeIndex,Type*> types;
-        static std::unordered_map<std::string,std::string> typeInfoMap;
-        static std::unordered_map<std::string,std::string> realToAliasNameMap;
         std::unordered_map<TypeIndex, std::stack<UntypedValue*>> untypedValues;
+        bool logUndefined;
+        std::unordered_map<ValueIndex, Value*> undefinedLog;
     private:
     template <typename T>
         void registerType(const TypeIndex& name);
@@ -165,45 +169,53 @@ const T& TypeTable::getValue(const ValueIndex& name)
 }
 
 template <typename T>
-const T& TypeTable::getValue(const ValueIndex& name, const T& _default)
+const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
 {
-    if (values.find(name) == values.end())
+    if (values.find(_name) == values.end())
     {
-#ifdef GCC_EXTENSION_DEMANGLER
-        char* demangledName = abi::__cxa_demangle(typeid(T).name(),0,0,nullptr);
-        g_Log.warning(std::string(demangledName) + " value \"" + name + "\" not defined, defaulting");
-        free(demangledName);
-#else
-        g_Log.warning(std::string(typeid(T).name()) + " value \"" + name + "\" not defined, defaulting");
-#endif
+        if (logUndefined)
+        {
+            if (undefinedLog.find(_name) == undefinedLog.end())
+                undefinedLog[_name] = new TemplateValue<T>(_default);
+        }
+        else
+        {
+            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
+        }
         return _default;
     }
-    Value* value = values[name];
+    Value* value = values[_name];
     assert(dynamic_cast<TemplateValue<T>*>(value));
     TemplateValue<T>* typedValue = (TemplateValue<T>*)value;
     return typedValue->get();
 }
 
 template <typename T>
-const T TypeTable::popValue(const ValueIndex& name, const T& _default)
+const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
 {
-    if (values.find(name) == values.end())
+    if (values.find(_name) == values.end())
     {
-#ifdef GCC_EXTENSION_DEMANGLER
-        char* demangledName = abi::__cxa_demangle(typeid(T).name(),0,0,nullptr);
-        g_Log.warning(std::string(demangledName) + " value \"" + name + "\" not defined, defaulting");
-        free(demangledName);
-#else
-        g_Log.warning(std::string(typeid(T).name()) + " value \"" + name + "\" not defined, defaulting");
-#endif
+        g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
         return _default;
     }
-    Value* value = values[name];
+    Value* value = values[_name];
     assert(dynamic_cast<TemplateValue<T>*>(value));
     TemplateValue<T>* typedValue = (TemplateValue<T>*)value;
     T ret = typedValue->get();
     delete typedValue;
-    values.erase(name);
+    values.erase(_name);
     return ret;
 }
+template <typename T>
+TypeTable::AutomaticRegister<T>::AutomaticRegister()
+{
+    delete types[name<T>()];
+    types[name<T>()] = new TemplateType<T>();
+}
+template <typename T>
+void TypeTable::AutomaticRegister<T>::check()
+{
+}
+template <typename T>
+TypeTable::AutomaticRegister<T> TypeTable::TemplateType<T>::staticRegister;
 #endif // TYPETABLE_H

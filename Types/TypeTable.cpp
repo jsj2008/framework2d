@@ -1,8 +1,7 @@
 #include "TypeTable.h"
 #include <Log/Log.h>
+#include <Types/Vec2i.h>
 #include <sstream>
-#include <AbstractFactory/EvaluateTypeName.h>
-
 TypeTable::~TypeTable()
 {
     /// FIXME for some reason this breaks things
@@ -14,10 +13,10 @@ TypeTable::~TypeTable()
 }
 void TypeTable::removeValue(const ValueIndex& name)
 {
-    assert(values.find(name) != values.end());
-    Value* value = values[name];
-    delete value;
-    values.erase(name);
+    auto iter = values.find(name);
+    assert(iter != values.end());
+    delete iter->second;
+    values.erase(iter);
 }
 
 void TypeTable::clear()
@@ -30,7 +29,6 @@ void TypeTable::clear()
     values.clear();
 }
 
-#include <Types/Vec2f.h>
 
 // FIXME should put this in
 /*TypeTable::TypeTable(const TypeTable& rhs)
@@ -71,24 +69,36 @@ std::istream& operator>> (std::istream &in, std::vector<T> &elements)
     return in;
 }
 
-TypeTable::TypeTable()
+TypeTable::TypeTable(bool _logUndefined)
 {
-    registerType<int>("int");
-    registerType<float>("float");
+    logUndefined = _logUndefined;
+    //registerType<int>("int");
+    //registerType<float>("float");
     registerType<std::string>("string");
     registerType<Vec2f>("Vec2f");
     registerType<std::vector<Vec2f>>("Vec2fArray");
+    registerType<std::vector<Vec2i>>("Vec2iArray");
     registerType<void*>("userData");
 }
 template <typename T>
 void TypeTable::registerType(const TypeIndex& _name)
 {
-    delete types[_name];
-    types[_name] = new TemplateType<T>();
+    //std::string oldName = EvaluateTypeName<T>();
+    if (name<T>() != _name)
+    {
+        TemplateType<T>* oldType = static_cast<TemplateType<T>*>(types[name<T>()]);
+        if (oldType != nullptr)
+        {
+            assert(dynamic_cast<TemplateType<T>*>(types[name<T>()]));
+            types[_name] = oldType; /// Its still in the old location too
+        }
+        else
+        {
+            types[_name] = new TemplateType<T>();
+        }
+        name<T>() = _name;
+    }
     auto iter = untypedValues.find(_name);
-    typeInfoMap[_name] = demangle<T>();
-    realToAliasNameMap[demangle<T>()] = _name;
-    name<T>() = _name;
     if (iter != untypedValues.end())
     {
         while (!iter->second.empty())
@@ -131,7 +141,6 @@ ostream& operator<< (ostream &out, const TypeTable &table)
     for (auto i = table.values.begin(); i != table.values.end(); i++)
     {
         std::string typeId = i->second->getTypeId();
-        std::string type = TypeTable::typeInfoMap[typeId]; /// This is where the problem is I think, wrong type goes out, so it reads in to the untyped table
         out << typeId << ' ';
         std::string name = i->first;
         out << name << ' ';
@@ -178,16 +187,15 @@ TypeTable::Value* TypeTable::UntypedValue::instance()
     value->set(&stream);
     return value;
 }
+/*template <typename T>
+TypeTable::AutomaticRegister<T>::AutomaticRegister()
+{
+
+}*/
 std::unordered_map<TypeTable::TypeIndex,TypeTable::Type*> TypeTable::types;
-std::unordered_map<std::string,std::string> TypeTable::typeInfoMap;
-std::unordered_map<std::string,std::string> TypeTable::realToAliasNameMap;
 
 
-
-
-
-
-
+//#include <AbstractFactory/EvaluateTypeName.h>
 
 
 

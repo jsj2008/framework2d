@@ -35,6 +35,7 @@ struct IfTest
 template<typename T>
 struct IfTest<false, T>
 {
+  typedef T type;
 };
 
 template<typename T, typename Sign>
@@ -69,11 +70,11 @@ into the class declaration");
    return name;
 }
 
-
 template <typename Product>
 const std::string EvaluateTypeName()
 {
-    return getName<Product>();
+    //return getName<Product>();
+    return demangle<Product>();
 }
 
 

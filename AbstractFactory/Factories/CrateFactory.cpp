@@ -26,12 +26,9 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
 {
     //PositionParameters* params = (PositionParameters*)parameters;
     Vec2f position(parameters->get<Vec2f>("position", Vec2f(0,0)));
-    Vec2f readDimensions = parameters->get<Vec2f>("dimensions",dimensions);
-    if (readDimensions != Vec2f(0,0))
-    {
-        dimensions = readDimensions;
-        shapeDef.SetAsBox(dimensions.x*0.5f,dimensions.y*0.5f);
-    }
+    dimensions = parameters->get<Vec2f>("dimensions",dimensions);
+
+    shapeDef.SetAsBox(dimensions.x*0.5f,dimensions.y*0.5f);
     Entity* entity = new Crate;
 
     bodyDef.position = position;

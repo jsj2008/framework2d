@@ -73,7 +73,7 @@ void Game::init()
 
     g_LevelManager.loadLevel("default");
     FactoryParameters params;
-    AbstractFactories::useFactory<Entity>("player",&params);
+    AbstractFactories::useFactory<Camera>("BodyCameraFactory",&params);
     //g_LevelManager.addBody("tiles",&params);
 
     CEGUI::EventArgs args;

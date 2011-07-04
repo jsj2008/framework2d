@@ -16,3 +16,16 @@ void Vec2i::worldToScreenSpace(Vec2f world)
     *this = Vec2i(world.x,world.y);
     *this -= g_GraphicsManager.getView();
 }
+using namespace std;
+std::ostream& operator<< (ostream &out, Vec2i &vec)
+{
+    out << vec.x << " " << vec.y << " ";
+    return out;
+}
+
+istream& operator>> (istream &in, Vec2i &vec)
+{
+    in >> vec.x;
+    in >> vec.y;
+    return in;
+}

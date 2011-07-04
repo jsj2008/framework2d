@@ -1,4 +1,4 @@
-3 zombie 3 Vec2f position 3 16.4 userData userData 0x2de36b0userData joint 0x2de4b00
- zombie 3 Vec2f position -1.86667 -16.6667 userData userData 0x2de3950userData joint 0x2de49c0
+3 zombie 3 Vec2f position -1.86667 -16.6667 userData userData 0x1efe330userData joint 0x1eff7f0
+ zombie 3 Vec2f position 3 16.4 userData userData 0x1efe150userData joint 0x1eff6b0
  levelGeometry 1 Vec2fArray points 4 -4.86667 13.3333  17.8667 14.4667  18.2667 21.9333  -6.86667 22.9333  
  

@@ -11,6 +11,7 @@ template <typename Product>
 class AbstractFactoryBase;
 class FactoryParameters;
 class UntypedAbstractFactory;
+class EventsListener;
 
 class AbstractFactories
 {
@@ -35,6 +36,9 @@ class AbstractFactories
         static void init();
 
         static void print(std::ostream* stream);
+
+        template <typename Product>
+        static void registerListener(EventsListener* listener){getFactoryList<Product>()->registerListener(listener);}
 
     protected:
     private:
