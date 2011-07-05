@@ -1,11 +1,13 @@
 #include "FactoryParameters.h"
 
-FactoryParameters::FactoryParameters()
+FactoryParameters::FactoryParameters(bool logUndefined)
+:table(logUndefined)
 {
     //ctor
 }
 
 FactoryParameters::FactoryParameters(std::initializer_list<std::pair<std::string,Vec2f>> list)
+:table(false)
 {
     for (auto i = list.begin(); i != list.end(); i++)
     {
@@ -22,6 +24,11 @@ void FactoryParameters::clear()
 {
     table.clear();
 }
+std::vector<std::string> FactoryParameters::getUndefinedLog()
+{
+    return table.getUndefinedLog();
+}
+
 
 using namespace std;
 istream& operator>> (istream &in, FactoryParameters &params)

@@ -9,7 +9,7 @@
 class FactoryParameters
 {
     public:
-        FactoryParameters();
+        FactoryParameters(bool logUndefined = false);
         //FactoryParameters(std::initializer_list<std::pair<std::string,float>> list);
         FactoryParameters(std::initializer_list<std::pair<std::string,Vec2f>> list);
         ~FactoryParameters();
@@ -18,6 +18,8 @@ class FactoryParameters
         void add(const std::string& name, const Type& value);
         template <typename Type>
         Type get(const std::string& name, const Type& _default);
+
+        std::vector<std::string> getUndefinedLog();
 
         void clear();
 

@@ -3,6 +3,7 @@
 using namespace FactoryLoaderPrivate;
 
 FactoryLoader::FactoryLoader()
+:mvalues(false)
 {
     //ctor
 }

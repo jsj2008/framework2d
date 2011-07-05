@@ -7,7 +7,6 @@ StaticSkinFactory::StaticSkinFactory(FactoryLoader* _loader)
 {
     //ctor
     materialName = _loader->get<std::string>("materialName","player");
-    dimensions = _loader->get<Vec2f>("dimensions",Vec2f(2,2));
 }
 
 StaticSkinFactory::~StaticSkinFactory()
@@ -17,7 +16,7 @@ StaticSkinFactory::~StaticSkinFactory()
 
 Skin* StaticSkinFactory::useFactory(FactoryParameters* parameters)
 {
-    dimensions = parameters->get("dimensions", dimensions);
+    Vec2f dimensions = parameters->get("dimensions", Vec2f(2,2));
     Skin* skin = new StaticSkin(dimensions.x,dimensions.y);
     setMaterial(skin,materialName);
     return skin;

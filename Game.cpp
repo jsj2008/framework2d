@@ -43,38 +43,22 @@ void Game::init()
     //ctor
     g_Timer.init();
     g_Timer.pause();
-    /*AbstractFactories::registerFactoryType<Entity, ExplosionFactory>();
-    AbstractFactories::registerFactoryType<Entity, ProjectileFactory>();
-    AbstractFactories::registerFactoryType<Entity, ParticleFactory>();
-    AbstractFactories::registerFactoryType<Entity, CrateFactory>();
-    AbstractFactories::registerFactoryType<Entity,  LevelGeometryFactory>();
-    AbstractFactories::registerFactoryType<Entity, AIEntityFactory>();
-    AbstractFactories::registerFactoryType<Entity, TileMapFactory>();
-    AbstractFactories::registerFactoryType<Entity, TileFactory>();*/
+
     AbstractFactories::registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
     AbstractFactories::registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
-
-    /*AbstractFactories::registerFactoryType<Skin, StaticSkinFactory>();
-
-    AbstractFactories::registerFactoryType<b2Body, CharacterBodyFactory>();
-
-    AbstractFactories::registerFactoryType<Brain, PlayerInputBrainFactory>();*/
-
     AbstractFactories::init();
-    //AbstractFactories::getSingleton().getFactoryList<Brain>().init();
-    //AbstractFactories::getSingleton().getFactoryList<Skin>().init();
-    //AbstractFactories::getSingleton().getFactoryList<b2Body>().init();
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
     g_PhysicsManager.init();
 
     mGameModes[ePlayGameMode] = new ShooterGame;
-    mGameModes[eEditorGameMode] = new EditorMode;
 
     g_LevelManager.loadLevel("default");
     FactoryParameters params;
     AbstractFactories::useFactory<Camera>("BodyCameraFactory",&params);
     //g_LevelManager.addBody("tiles",&params);
+
+    mGameModes[eEditorGameMode] = new EditorMode;
 
     CEGUI::EventArgs args;
     mGameModes[eEditorGameMode]->activate(args);

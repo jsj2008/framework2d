@@ -6,5 +6,6 @@
 #include "ItemSpawner.h"
 #include "JointEditor.h"
 #include "ParallaxEditor.h"
+#include "DynamicEditor.h"
 
 #endif // ALLEDITORMODES_H_INCLUDED

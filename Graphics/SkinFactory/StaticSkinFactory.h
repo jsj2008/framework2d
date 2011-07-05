@@ -17,7 +17,6 @@ class StaticSkinFactory : public AbstractFactory<Skin, StaticSkinFactory>
     protected:
     private:
         std::string materialName;
-        Vec2f dimensions;
 };
 
 #endif // STATICSKINFACTORY_H

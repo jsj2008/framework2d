@@ -108,6 +108,8 @@ bool PhysicsManager::update()
 {
     unsigned int currentTime = g_Timer.getTicks();
     unsigned int totalTimePassed = currentTime - startTime;
+    if (currentTime < startTime) /// FIXME
+        totalTimePassed = 0;
     unsigned int stepsToTake = totalTimePassed*60.0f/1000.0f;
     bool ret = false;
     while (stepsToTake > stepsTaken)

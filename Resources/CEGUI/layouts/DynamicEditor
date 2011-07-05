@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<GUILayout>
+  <Window Type="DefaultGUISheet" Name="DynamicEditor">
+    <Property Name="Text" Value="Dynamic editor" />
+
+    
+  </Window>
+</GUILayout>

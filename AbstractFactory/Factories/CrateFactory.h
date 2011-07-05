@@ -17,7 +17,6 @@ class CrateFactory : public AbstractFactory<Entity, CrateFactory>
             return "CrateFactory";
         }
     protected:
-        Vec2f dimensions;
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;

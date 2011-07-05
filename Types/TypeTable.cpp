@@ -187,6 +187,18 @@ TypeTable::Value* TypeTable::UntypedValue::instance()
     value->set(&stream);
     return value;
 }
+
+
+std::vector<std::string> TypeTable::getUndefinedLog()
+{
+    assert(logUndefined);
+    std::vector<std::string> ret;
+    for (auto i = undefinedLog.begin(); i != undefinedLog.end(); i++)
+    {
+        ret.push_back(i->first);
+    }
+    return ret;
+}
 /*template <typename T>
 TypeTable::AutomaticRegister<T>::AutomaticRegister()
 {
