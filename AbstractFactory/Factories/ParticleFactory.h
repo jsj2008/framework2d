@@ -9,8 +9,9 @@ class FactoryLoader;
 class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
 {
     public:
-        ParticleFactory(FactoryLoader* loader);
+        ParticleFactory();
         virtual ~ParticleFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {

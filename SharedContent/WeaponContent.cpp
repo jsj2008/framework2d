@@ -39,5 +39,5 @@ void WeaponContent::fire(const Vec2f& source, const Vec2f& direction)
     position += direction*3;
     //PositionVelocityParameters parameters(position,direction*100);
     FactoryParameters parameters({{"position",position},{"v",direction*100}});
-    AbstractFactories::useFactory<Entity>(projectile,&parameters);
+    AbstractFactories::global().useFactory<Entity>(projectile,&parameters);
 }

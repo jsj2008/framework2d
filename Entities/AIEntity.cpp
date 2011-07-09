@@ -7,7 +7,7 @@
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
-AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon)
+AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory)
 :controller(this)
 {
     //ctor
@@ -15,6 +15,7 @@ AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon)
     weapon = _weapon;
     mBrain->setEntity(this);
     health = 2;
+    damageSprayFactory = _damageSprayFactory;
 }
 
 AIEntity::~AIEntity()
@@ -46,7 +47,7 @@ void AIEntity::damage()
     def.position = mBody->GetPosition();
     g_FactoryList.useFactory(def,eParticleFactory);*/
     FactoryParameters parameters({{"position",mBody->GetPosition()}});
-    AbstractFactories::useFactory<Entity>("spark",&parameters);
+    damageSprayFactory->use(&parameters);
     health--;
 }
 void AIEntity::update()

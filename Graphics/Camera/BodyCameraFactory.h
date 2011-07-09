@@ -8,8 +8,9 @@ class FactoryParameters;
 class BodyCameraFactory : public AbstractFactory<Camera, BodyCameraFactory>, EventsListener
 {
     public:
-        BodyCameraFactory(FactoryLoader* _loader);
+        BodyCameraFactory();
         virtual ~BodyCameraFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Camera* useFactory(FactoryParameters* params);
         bool trigger(Event* event);
         static std::string name()

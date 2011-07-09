@@ -5,11 +5,10 @@
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
 
-CrateFactory::CrateFactory(FactoryLoader* loader)
+CrateFactory::CrateFactory()
 {
     //ctor
     bodyDef.type = b2_dynamicBody;
-    fixtureDef.density = loader->get<float>("density",1.0f);
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::CrateCategory;
     fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::CrateCategory);
@@ -20,6 +19,11 @@ CrateFactory::~CrateFactory()
     //dtor
 }
 
+void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+    fixtureDef.density = loader->get<float>("density",1.0f);
+    skinFactory = factories->getFactory<Skin>("StaticSkinFactory");
+}
 Entity* CrateFactory::useFactory(FactoryParameters* parameters)
 {
     //PositionParameters* params = (PositionParameters*)parameters;
@@ -35,6 +39,6 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);
     entity->mBody->CreateFixture(&fixtureDef);
 
-    entity->mSkin = AbstractFactories::useFactory<Skin>("StaticSkinFactory",parameters);
+    entity->mSkin = skinFactory->use(parameters);
     return entity;
 }

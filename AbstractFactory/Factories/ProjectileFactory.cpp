@@ -5,17 +5,19 @@
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
-ProjectileFactory::ProjectileFactory(FactoryLoader* loader)
+ProjectileFactory::ProjectileFactory()
+{
+    bodyDef.type = b2_dynamicBody;
+    fixtureDef.shape = &shapeDef;
+}
+void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     expiryTime = loader->get<float>("expiryTime",10.0f);
     radius = loader->get<float>("radius",1.0f);
+    shapeDef.m_radius = radius; /// FIXME just spotted this
     explosion = loader->get<std::string>("explosion","explosion");
     material = loader->get<std::string>("material","Bullet");
-
-    bodyDef.type = b2_dynamicBody;
-    fixtureDef.shape = &shapeDef;
-    shapeDef.m_radius = radius;
 }
 
 ProjectileFactory::~ProjectileFactory()

@@ -252,8 +252,14 @@
 		<Unit filename="GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragVariable.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragVariable.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/TextEditBox.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/TextEditBox.h" />
 		<Unit filename="GameModes/Editor/EditorMode.cpp" />
 		<Unit filename="GameModes/Editor/EditorMode.h" />
 		<Unit filename="GameModes/Editor/EditorStateSwitcher.cpp" />

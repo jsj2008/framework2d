@@ -2,8 +2,8 @@
 #include <Log/Log.h>
 using namespace FactoryLoaderPrivate;
 
-FactoryLoader::FactoryLoader()
-:mvalues(false)
+FactoryLoader::FactoryLoader(bool logUndefined)
+:mvalues(logUndefined)
 {
     //ctor
 }

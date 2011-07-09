@@ -11,6 +11,7 @@ class DynamicEditorVariable
         DynamicEditorVariable();
         void initEditorVariable(DynamicEditor* _editor, FactoryParameters* _params);
         virtual ~DynamicEditorVariable();
+        virtual void finish()=0;
     protected:
         DynamicEditor* editor;
         FactoryParameters* params;

@@ -3,7 +3,11 @@
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-CharacterBodyFactory::CharacterBodyFactory(FactoryLoader* loader)
+CharacterBodyFactory::CharacterBodyFactory()
+{
+
+}
+void CharacterBodyFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     dimensions = loader->get<Vec2f>("dimensions",Vec2f(2,2));

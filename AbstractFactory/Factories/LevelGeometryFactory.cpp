@@ -6,12 +6,15 @@
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-LevelGeometryFactory::LevelGeometryFactory(FactoryLoader* loader)
+LevelGeometryFactory::LevelGeometryFactory()
 {
     //ctor
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
     fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
+}
+void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
 }
 
 LevelGeometryFactory::~LevelGeometryFactory()

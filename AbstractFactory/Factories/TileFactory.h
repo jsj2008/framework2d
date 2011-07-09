@@ -9,8 +9,9 @@ class FactoryLoader;
 class TileFactory : public AbstractFactory<Entity, TileFactory>
 {
     public:
-        TileFactory(FactoryLoader* loader);
+        TileFactory();
         virtual ~TileFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {

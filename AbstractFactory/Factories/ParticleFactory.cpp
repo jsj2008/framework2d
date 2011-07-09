@@ -6,13 +6,16 @@
 #include <Graphics/GraphicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
-ParticleFactory::ParticleFactory(FactoryLoader* loader)
+ParticleFactory::ParticleFactory()
+{
+    bodyDef.type = b2_dynamicBody;
+}
+void ParticleFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     density = loader->get<float>("density",1.0f);
     lifetime = loader->get<int>("lifetime",60); /// FIXME needs ints
     materialName = loader->get<std::string>("materialName","Spark");
-    bodyDef.type = b2_dynamicBody;
 
 }
 

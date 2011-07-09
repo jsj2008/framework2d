@@ -12,8 +12,9 @@ class Skin;
 class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
 {
     public:
-        AIEntityFactory(FactoryLoader* loader);
+        AIEntityFactory();
         virtual ~AIEntityFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {
@@ -26,6 +27,7 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
         AbstractFactoryBase<Brain>* brainFactory;
         AbstractFactoryBase<Skin>* skinFactory;
         std::string materialName;
+        AbstractFactoryBase<Entity>* damageSprayFactory;
 };
 
 #endif // AIENTITYFACTORY_H

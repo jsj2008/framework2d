@@ -6,11 +6,13 @@
 #include <Box2D/Common/b2Math.h>
 class Brain;
 class Weapon;
+template <typename Product>
+class AbstractFactoryBase;
 
 class AIEntity : public Entity
 {
     public:
-        AIEntity(Brain* _Brain, Weapon* _weapon);
+        AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory);
         EntityType getType(){return eAIEntityType;}
         void update();
         void jump();
@@ -30,6 +32,7 @@ class AIEntity : public Entity
         Brain* mBrain;
         CharacterController controller;
         Weapon* weapon;
+        AbstractFactoryBase<Entity>* damageSprayFactory;
 };
 
 #endif // AIENTITY_H

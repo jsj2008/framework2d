@@ -6,6 +6,10 @@ ExplosionFactory explosion
   float time 10.0
   float radius 2.0
 }
+TileFactory tile
+{
+ Vec2f size 3 3
+}
 
 TileMapFactory tiles
 {
@@ -13,10 +17,6 @@ TileMapFactory tiles
  Vec2f offset 0 0
 }
 
-TileFactory tile
-{
- Vec2f size 3 3
-}
 
 ProjectileFactory grenade
 {

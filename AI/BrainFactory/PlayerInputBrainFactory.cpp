@@ -3,7 +3,7 @@
 #include <GameModes/PlayMode.h>
 #include <Game.h>
 
-PlayerInputBrainFactory::PlayerInputBrainFactory(FactoryLoader* _loader)
+PlayerInputBrainFactory::PlayerInputBrainFactory()
 {
     //ctor
 }
@@ -11,6 +11,11 @@ PlayerInputBrainFactory::PlayerInputBrainFactory(FactoryLoader* _loader)
 PlayerInputBrainFactory::~PlayerInputBrainFactory()
 {
     //dtor
+}
+
+void PlayerInputBrainFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+
 }
 
 Brain* PlayerInputBrainFactory::useFactory(FactoryParameters* parameters)

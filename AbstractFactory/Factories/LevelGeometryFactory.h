@@ -9,8 +9,9 @@ class FactoryLoader;
 class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory>
 {
     public:
-        LevelGeometryFactory(FactoryLoader* loader);
+        LevelGeometryFactory();
         virtual ~LevelGeometryFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {

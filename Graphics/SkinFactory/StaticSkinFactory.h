@@ -7,8 +7,9 @@ class FactoryLoader;
 class StaticSkinFactory : public AbstractFactory<Skin, StaticSkinFactory>
 {
     public:
-        StaticSkinFactory(FactoryLoader* _loader);
+        StaticSkinFactory();
         virtual ~StaticSkinFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         static std::string name()
         {
             return "StaticSkinFactory";

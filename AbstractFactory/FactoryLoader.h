@@ -18,7 +18,7 @@ namespace FactoryLoaderPrivate
 class FactoryLoader
 {
     public:
-        FactoryLoader();
+        FactoryLoader(bool logUndefined = false);
         virtual ~FactoryLoader();
         virtual bool isValid()=0;
         virtual bool next()=0;

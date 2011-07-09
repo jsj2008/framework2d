@@ -33,7 +33,7 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
         parameters.add<float>("radius",radius);
         parameters.add<std::string>("materialName","defaultBubble");
         //def.type = (Bubble::BubbleType)selectionBox->getCurrentSelection();
-        AbstractFactories::useFactory<Entity>("suctionBubble",&parameters);
+        AbstractFactories::global().useFactory<Entity>("suctionBubble",&parameters);
     }
 }
 

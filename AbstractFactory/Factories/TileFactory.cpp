@@ -7,18 +7,17 @@
 #include <AbstractFactory/FactoryLoader.h>
 #include <Types/Vec2i.h>
 
-TileFactory::TileFactory(FactoryLoader* loader)
+TileFactory::TileFactory()
 {
-    //ctor
-    materialName = loader->get<std::string>("materialName","player");
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
     fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
-
+}
+void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+    //ctor
+    materialName = loader->get<std::string>("materialName","player");
     size = loader->get<Vec2f>("size",Vec2f(1,1));
-
-    //fixtureDef.filter.categoryBits = PhysicsManager::CrateCategory;
-    //fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::CrateCategory);
 }
 
 TileFactory::~TileFactory()

@@ -44,9 +44,9 @@ void Game::init()
     g_Timer.init();
     g_Timer.pause();
 
-    AbstractFactories::registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
-    AbstractFactories::registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
-    AbstractFactories::init();
+    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
+    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
+    AbstractFactories::global().init();
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
     g_PhysicsManager.init();
@@ -55,7 +55,7 @@ void Game::init()
 
     g_LevelManager.loadLevel("default");
     FactoryParameters params;
-    AbstractFactories::useFactory<Camera>("BodyCameraFactory",&params);
+    AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params);
     //g_LevelManager.addBody("tiles",&params);
 
     mGameModes[eEditorGameMode] = new EditorMode;

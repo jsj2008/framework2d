@@ -14,6 +14,7 @@ class BoxDragVariable : public DynamicEditorMode
         void buttonUp(Vec2i mouse, unsigned char button);
         void render();
     protected:
+        void finish();
     private:
         bool dragging;
         Vec2i startPos;

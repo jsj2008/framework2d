@@ -197,7 +197,15 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
 {
     if (values.find(_name) == values.end())
     {
-        g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
+        if (logUndefined)
+        {
+            if (undefinedLog.find(_name) == undefinedLog.end())
+                undefinedLog[_name] = new TemplateValue<T>(_default);
+        }
+        else
+        {
+            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
+        }
         return _default;
     }
     Value* value = values[_name];

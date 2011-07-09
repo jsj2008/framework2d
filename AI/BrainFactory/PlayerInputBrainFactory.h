@@ -8,8 +8,9 @@ class Brain;
 class PlayerInputBrainFactory : public AbstractFactory <Brain, PlayerInputBrainFactory>
 {
     public:
-        PlayerInputBrainFactory(FactoryLoader* loader);
+        PlayerInputBrainFactory();
         virtual ~PlayerInputBrainFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         static std::string name()
         {
             return "PlayerInputBrainFactory";

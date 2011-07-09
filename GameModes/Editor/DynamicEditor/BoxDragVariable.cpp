@@ -28,12 +28,16 @@ void BoxDragVariable::buttonUp(Vec2i mouse, unsigned char button)
     Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
     if (dimensions.x > 1.0f && dimensions.y > 1.0f)
     {
-        Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
-        params->add("position",pos);
-        params->add("dimensions",dimensions);
-        finish();
+        create();
     }
     dragging = false;
+}
+void BoxDragVariable::finish()
+{
+    Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
+    Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
+    params->add("position",pos);
+    params->add("dimensions",dimensions);
 }
 #include <GL/gl.h>
 void BoxDragVariable::render()

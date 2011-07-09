@@ -3,8 +3,13 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/TileMap.h>
+#include <Entities/Tile.h>
 
-TileMapFactory::TileMapFactory(FactoryLoader* loader)
+TileMapFactory::TileMapFactory()
+{
+
+}
+void TileMapFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     tileType = loader->get<std::string>("tileType", "tile");
@@ -29,7 +34,7 @@ Entity* TileMapFactory::useFactory(FactoryParameters* params)
     for (unsigned int i = 0; i < solidTiles.size(); i++)
     {
         parameters.add("position",Vec2f(solidTiles[i].x*tileSize.x,solidTiles[i].y*tileSize.y));
-        entity->tiles[solidTiles[i].x][solidTiles[i].y] = (Tile*)(AbstractFactories::useFactory<Entity>(tileType,&parameters));
+        entity->tiles[solidTiles[i].x][solidTiles[i].y] = static_cast<Tile*>(AbstractFactories::global().useFactory<Entity>(tileType, &parameters));
     }
     g_TileMap = entity;
     return entity;

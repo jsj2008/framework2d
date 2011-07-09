@@ -8,8 +8,9 @@ class FactoryLoader;
 class CharacterBodyFactory : public AbstractFactory<b2Body, CharacterBodyFactory>
 {
     public:
-        CharacterBodyFactory(FactoryLoader* loader);
+        CharacterBodyFactory();
         virtual ~CharacterBodyFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         b2Body* useFactory(FactoryParameters* params);
         static std::string name()
         {

@@ -33,12 +33,24 @@ class DynamicEditor : public GameMode, public InputContext
             public:
                 DynamicEditorMode* createMode(){return new mode();}
         };
+
+        class VariableFactory
+        {
+            public:
+                virtual DynamicEditorVariable* createVariable()=0;
+        };
+        template <typename mode>
+        class DerivedVariableFactory : public VariableFactory
+        {
+            public:
+                DynamicEditorVariable* createVariable(){return new mode();}
+        };
         static std::vector<
             std::pair<
                 std::vector<std::string>,
                 ModeFactory*>
             > editorModes;
-        static std::unordered_map<std::string,DynamicEditorVariable*> editorVariables;
+        static std::unordered_map<std::string,VariableFactory*> editorVariables;
 };
 
 #endif // DYNAMICEDITOR_H

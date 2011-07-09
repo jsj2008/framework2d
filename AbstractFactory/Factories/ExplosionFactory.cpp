@@ -5,15 +5,18 @@
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
-ExplosionFactory::ExplosionFactory(FactoryLoader* loader)
+ExplosionFactory::ExplosionFactory()
+{
+    fixtureDef.isSensor = true;
+    fixtureDef.shape = &shapeDef;
+}
+void ExplosionFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     material = loader->get<std::string>("material","defaultBubble");
     damage = loader->get<float>("damage",0.0f);
     force = loader->get<float>("force",2.0f);
     time = loader->get<float>("time",10.0f);
-    fixtureDef.isSensor = true;
-    fixtureDef.shape = &shapeDef;
     shapeDef.m_radius = loader->get<float>("radius",2.0f);
 }
 

@@ -14,14 +14,19 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/FactoryLoader.h>
 
-AIEntityFactory::AIEntityFactory(FactoryLoader* loader)
+AIEntityFactory::AIEntityFactory()
+{
+
+}
+void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     weapon = loader->get<std::string>("weapon","pistol");
     materialName = loader->get<std::string>("materialName","player");
-    bodyFactory = AbstractFactories::getFactory<b2Body>("CharacterBodyFactory");
-    skinFactory = AbstractFactories::getFactory<Skin>("StaticSkinFactory");
-    brainFactory = AbstractFactories::getFactory<Brain>("PlayerInputBrainFactory");
+    bodyFactory = factories->getFactory<b2Body>("CharacterBodyFactory");
+    skinFactory = factories->getFactory<Skin>("StaticSkinFactory");
+    brainFactory = factories->getFactory<Brain>("PlayerInputBrainFactory");
+    //damageSprayFactory = factories->getFactory<Entity>(loader->get<std::string>("damageSpray","spark"));
 }
 
 AIEntityFactory::~AIEntityFactory()
@@ -31,8 +36,9 @@ AIEntityFactory::~AIEntityFactory()
 
 Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
+    damageSprayFactory = AbstractFactories::global().getFactory<Entity>("spark");
     Brain* brain = brainFactory->use(parameters);
-    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)));
+    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory);
 
     parameters->add<void*>("userData",entity);
 

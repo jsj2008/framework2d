@@ -2,5 +2,6 @@
 #define ALLDYNAMICEDITORVARIABLETYPES_H_INCLUDED
 
 #include "BoxDragVariable.h"
+#include "TextEditBox.h"
 
 #endif // ALLDYNAMICEDITORVARIABLETYPES_H_INCLUDED

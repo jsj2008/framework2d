@@ -10,8 +10,9 @@ template <typename Bubble>
 class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
 {
     public:
-        BubbleFactory(FactoryLoader* loader);
+        BubbleFactory();
         virtual ~BubbleFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {
@@ -31,7 +32,7 @@ class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
 #include <Graphics/Skins/BubbleSkin.h>
 
 template <typename Bubble>
-BubbleFactory<Bubble>::BubbleFactory(FactoryLoader* loader)
+BubbleFactory<Bubble>::BubbleFactory()
 {
     //ctor
     fixtureDef.isSensor = true;
@@ -42,6 +43,10 @@ template <typename Bubble>
 BubbleFactory<Bubble>::~BubbleFactory()
 {
     //dtor
+}
+template <typename Bubble>
+void BubbleFactory<Bubble>::init(FactoryLoader* loader, AbstractFactories* factories)
+{
 }
 
 template <typename Bubble>

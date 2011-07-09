@@ -24,7 +24,7 @@ Level::~Level()
 }
 void Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
-    b2Body* body = AbstractFactories::useFactory<Entity>(factory, parameters)->mBody;
+    b2Body* body = AbstractFactories::global().useFactory<Entity>(factory, parameters)->mBody;
     table[body] = {factory,*parameters};
 }
 void Level::addJoint(b2JointDef* def)
@@ -121,7 +121,7 @@ void Level::loadLevel()
         file >> factory;
         FactoryParameters params;
         file >> params;
-        b2Body* body = AbstractFactories::useFactory<Entity>(factory, &params)->mBody;
+        b2Body* body = AbstractFactories::global().useFactory<Entity>(factory, &params)->mBody;
         table[body] = {factory,params};
     }
 }

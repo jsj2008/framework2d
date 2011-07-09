@@ -58,7 +58,7 @@ void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
                 throw -1;
             }
         }
-        AbstractFactories::useFactory<Entity>(factory,&parameters);
+        AbstractFactories::global().useFactory<Entity>(factory,&parameters);
     }
 }
 void PlayMode::setCamera(Camera* _camera)

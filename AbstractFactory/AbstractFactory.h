@@ -6,9 +6,12 @@
 #include <Graphics/GraphicsManager.h> /// FIXME
 class FactoryParameters;
 class EventHandler;
+class FactoryLoader;
 template <typename Product>
 class AbstractFactoryList;
 class EventsListener;
+class AbstractFactories;
+
 
 template <typename Product>
 class AbstractFactoryBase
@@ -16,6 +19,7 @@ class AbstractFactoryBase
     public:
         AbstractFactoryBase(const std::string _name);
         virtual ~AbstractFactoryBase();
+        virtual void init(FactoryLoader* loader, AbstractFactories* factories)=0;
         Product* use(FactoryParameters* paramters);
         const std::string& getName(){return nameCache;}
         void registerListener(EventsListener* listener);
@@ -40,6 +44,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
     public:
         AbstractFactory();
         ~AbstractFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
     private:
         Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;
@@ -104,6 +109,12 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 
 }
 template <typename Product, typename DerivedType>
+void AbstractFactory<Product, DerivedType>::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+    static_cast<DerivedType*>(this)->init(loader, factories);
+}
+
+template <typename Product, typename DerivedType>
 Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
 {
     Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
@@ -117,7 +128,7 @@ const Registrar<Product, DerivedType> AbstractFactory<Product, DerivedType>::reg
 template <typename Product, typename DerivedType>
 Registrar<Product, DerivedType>::Registrar()
 {
-    AbstractFactories::registerFactoryType<Product, DerivedType>();
+    AbstractFactories::global().registerFactoryType<Product, DerivedType>();
 }
 template <typename Product>
 EventHandler AbstractFactoryBase<Product>::productTypeEventHandler;

@@ -4,10 +4,13 @@
 #include <GameModes/PlayMode.h>
 #include <Game.h>
 
-BodyCameraFactory::BodyCameraFactory(FactoryLoader* _loader)
+BodyCameraFactory::BodyCameraFactory()
 {
     //ctor
-    factoryName = _loader->get<std::string>("factoryName", "player");
+}
+void BodyCameraFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+    factoryName = loader->get<std::string>("factoryName", "player");
 }
 
 BodyCameraFactory::~BodyCameraFactory()
@@ -18,8 +21,8 @@ BodyCameraFactory::~BodyCameraFactory()
 Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
 {
     body = nullptr;
-    AbstractFactories::registerListener<b2Body>(this);
-    AbstractFactoryBase<Entity>* entityFactory = AbstractFactories::getFactory<Entity>(factoryName);
+    AbstractFactories::global().registerListener<b2Body>(this);
+    AbstractFactoryBase<Entity>* entityFactory = AbstractFactories::global().getFactory<Entity>(factoryName);
     entityFactory->use(params);
     Camera* camera = new PhysicsCamera(body);
     static_cast<PlayMode*>(g_Game.getGameMode(ePlayGameMode))->setCamera(camera);

@@ -10,8 +10,9 @@ class Entity;
 class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
 {
     public:
-        ExplosionFactory(FactoryLoader* loader);
+        ExplosionFactory();
         virtual ~ExplosionFactory();
+        void init(FactoryLoader* loader, AbstractFactories* factories);
         Entity* useFactory(FactoryParameters* parameters);
         static std::string name()
         {

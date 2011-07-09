@@ -13,7 +13,7 @@ class DynamicEditorMode : public InputContext, public DynamicEditorVariable
         /// Called during initialisation also
         void addVariable(DynamicEditorVariable* _variable){variables.push_back(_variable);}
     protected:
-        void finish();
+        void create();
     private:
         std::vector<DynamicEditorVariable*> variables;
         std::string name;

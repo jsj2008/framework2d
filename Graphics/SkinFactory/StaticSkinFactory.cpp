@@ -3,7 +3,11 @@
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-StaticSkinFactory::StaticSkinFactory(FactoryLoader* _loader)
+StaticSkinFactory::StaticSkinFactory()
+{
+
+}
+void StaticSkinFactory::init(FactoryLoader* _loader, AbstractFactories* factories)
 {
     //ctor
     materialName = _loader->get<std::string>("materialName","player");

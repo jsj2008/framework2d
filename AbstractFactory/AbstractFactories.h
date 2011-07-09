@@ -17,28 +17,34 @@ class AbstractFactories
 {
     public:
         template <typename Product>
-        static Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
+        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
 
         template <typename Product, typename Factory>
-        static void registerFactoryType();
+        void registerFactoryType();
 
         template <typename Product>
-        static void renameProduct(const std::string& name);
+        void renameProduct(const std::string& name);
 
         template <typename Product>
-        static AbstractFactoryBase<Product>* getFactory(const std::string& name);
+        AbstractFactoryBase<Product>* getFactory(const std::string& name);
 
         /// For this function, considering storing all untyped factories in one list refernced by one parameter,
         /// if I start to use it enough. These are inefficient to create and use, but it will take a little more
         /// time and memory to maintain a list of all factories
-        static UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
+        UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
 
-        static void init();
+        void init();
 
-        static void print(std::ostream* stream);
+        void print(std::ostream* stream);
 
         template <typename Product>
-        static void registerListener(EventsListener* listener){getFactoryList<Product>()->registerListener(listener);}
+        void registerListener(EventsListener* listener){getFactoryList<Product>()->registerListener(listener);}
+
+        static AbstractFactories& global() /// Its not actually a singleton
+        {
+            static AbstractFactories factories;
+            return factories;
+        }
 
     protected:
     private:
@@ -79,7 +85,7 @@ AbstractFactoryBase<Product>* AbstractFactories::getFactory(const std::string& n
 template <typename Product, typename Factory>
 void AbstractFactories::registerFactoryType()
 {
-    getFactoryList<Product>()->registerFactoryType<Factory>(Factory::name());
+    getFactoryList<Product>()->registerFactoryType<Factory>(Factory::name(), this);
 }
 template <typename Product>
 void AbstractFactories::renameProduct(const std::string& name)
