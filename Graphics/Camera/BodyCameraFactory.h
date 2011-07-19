@@ -3,16 +3,17 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 #include <Events/EventListener.h>
+#include <Events/Events/FactoryEvent.h>
 class Camera;
 class FactoryParameters;
-class BodyCameraFactory : public AbstractFactory<Camera, BodyCameraFactory>, EventsListener
+class BodyCameraFactory : public AbstractFactory<Camera, BodyCameraFactory>, EventsListener<FactoryEvent<b2Body>>
 {
     public:
         BodyCameraFactory();
         virtual ~BodyCameraFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
         Camera* useFactory(FactoryParameters* params);
-        bool trigger(Event* event);
+        bool trigger(FactoryEvent<b2Body>* event);
         static std::string name()
         {
             return "BodyCameraFactory";

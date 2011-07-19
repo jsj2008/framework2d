@@ -21,7 +21,7 @@ BodyCameraFactory::~BodyCameraFactory()
 Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
 {
     body = nullptr;
-    AbstractFactories::global().registerListener<b2Body>(this);
+    Events::global().registerListener(this);
     AbstractFactoryBase<Entity>* entityFactory = AbstractFactories::global().getFactory<Entity>(factoryName);
     entityFactory->use(params);
     Camera* camera = new PhysicsCamera(body);
@@ -29,7 +29,7 @@ Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
     return camera;
 }
 
-bool BodyCameraFactory::trigger(Event* _event)
+bool BodyCameraFactory::trigger(FactoryEvent<b2Body>* _event)
 {
     FactoryEvent<b2Body>* event = static_cast<FactoryEvent<b2Body>*>(_event);
     body = event->get();

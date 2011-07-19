@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<GUILayout>
+    <Window Type="DefaultGUISheet" Name="Tab">
+        <Property Name="Text" Value="Error, set the text property" />
+    </Window>
+</GUILayout>

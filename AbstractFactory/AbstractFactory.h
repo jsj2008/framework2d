@@ -5,10 +5,10 @@
 #include <istream>
 #include <Graphics/GraphicsManager.h> /// FIXME
 class FactoryParameters;
-class EventHandler;
 class FactoryLoader;
 template <typename Product>
 class AbstractFactoryList;
+template <typename DerivedEvent>
 class EventsListener;
 class AbstractFactories;
 
@@ -22,14 +22,11 @@ class AbstractFactoryBase
         virtual void init(FactoryLoader* loader, AbstractFactories* factories)=0;
         Product* use(FactoryParameters* paramters);
         const std::string& getName(){return nameCache;}
-        void registerListener(EventsListener* listener);
     protected:
         virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
         const std::string nameCache;
         void setMaterial(class Skin* skin,const std::string& materialName);
     private:
-        friend class AbstractFactoryList<Product>;
-        static EventHandler productTypeEventHandler;
 };
 template <typename Product, typename DerivedType>
 class Registrar
@@ -48,11 +45,6 @@ class AbstractFactory: public AbstractFactoryBase<Product>
     private:
         Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;
-        EventHandler* getFactoryTypeEventHandler()
-        {
-            static EventHandler eventHandler;
-            return &eventHandler;
-        }
 };
 
 /** Implementation
@@ -63,7 +55,8 @@ class AbstractFactory: public AbstractFactoryBase<Product>
 
 
 #include <AbstractFactory/AbstractFactories.h>
-#include <Events/EventHandler.h>
+#include <Events/Events.h>
+#include <Events/Events/FactoryInstanceEvent.h>
 
 template <typename Product>
 AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string _name)
@@ -82,14 +75,9 @@ template <typename Product>
 Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
 {
     Product* product = privateUseFactory(parameters);
-    FactoryEvent<Product> event(product);
-    productTypeEventHandler.trigger(&event);
+    FactoryEvent<Product> untypedEvent(product);
+    Events::global().triggerEvent(&untypedEvent);
     return product;
-}
-template <typename Product>
-void AbstractFactoryBase<Product>::registerListener(EventsListener* listener)
-{
-    productTypeEventHandler.registerListener(listener);
 }
 template <typename Product>
 void AbstractFactoryBase<Product>::setMaterial(class Skin* skin,const std::string& materialName)
@@ -118,8 +106,10 @@ template <typename Product, typename DerivedType>
 Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
 {
     Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
-    FactoryEvent<Product> event(product);
-    getFactoryTypeEventHandler()->trigger(&event);
+    FactoryTypeEvent<Product, DerivedType> typeEvent(product);
+    Events::global().triggerEvent(&typeEvent);
+    FactoryInstanceEvent<Product, DerivedType> instanceEvent(product, "error this is stupid");
+    Events::global().triggerEvent(&typeEvent);
     return product;
 }
 
@@ -130,7 +120,5 @@ Registrar<Product, DerivedType>::Registrar()
 {
     AbstractFactories::global().registerFactoryType<Product, DerivedType>();
 }
-template <typename Product>
-EventHandler AbstractFactoryBase<Product>::productTypeEventHandler;
 
 #endif // ABSTRACTFACTORY_H

@@ -11,7 +11,6 @@ class AbstractFactoryBase;
 class FactoryParameters;
 class UntypedAbstractFactory;
 class AbstractFactories;
-#include <Events/EventHandler.h>
 #include <Events/Events/FactoryEvent.h>
 template <typename Product>
 const std::string EvaluateTypeName();
@@ -38,9 +37,8 @@ class AbstractFactoryList: private AbstractFactoryListBase
         template <typename Factory>
         void registerFactoryType(const std::string& name, AbstractFactories* factories);
         Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
-        AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory){return factories.find(factory)->second;}
+        AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory);
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
-        void registerListener(EventsListener* listener){AbstractFactoryBase<Product>::productTypeEventHandler.registerListener(listener);}
         const std::string& getProductName()
         {
             return productName();
@@ -90,13 +88,22 @@ void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, 
     factoryCreators[name] = creator;
     AbstractFactoryBase<Product>* factory = creator->createFactory();
     factories[name] = factory;
-    //factory->init(&emptyConfig, _factories);
 }
 
 
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactory.h>
 #include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
+#include <Events/Events/FactoryGetEvent.h>
+#include <Events/Events.h>
+
+template <typename Product>
+AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference factory)
+{
+    FactoryGetEvent event(factory);
+    Events::global().triggerEvent(&event);
+    return factories.find(factory)->second;
+}
 
 template <typename Product>
 Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
@@ -105,7 +112,6 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
     if (parameters == nullptr)
     {
         static FactoryParameters params;
-        //params.clear();
         assert(factories[factory]);
         product = factories[factory]->use(&params);
     }

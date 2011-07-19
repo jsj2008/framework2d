@@ -1,19 +1,15 @@
 #include "DynamicEditorVariable.h"
-#include <GameModes/Editor/DynamicEditor.h>
+#include <GameModes/Editor/DynamicEditor/DynamicEditorMode.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-DynamicEditorVariable::DynamicEditorVariable()
+DynamicEditorVariable::DynamicEditorVariable(DynamicEditorMode* _editor, FactoryParameters* _params)
 {
     //ctor
+    editor = _editor;
+    params = _params;
 }
 
 DynamicEditorVariable::~DynamicEditorVariable()
 {
     //dtor
-}
-
-void DynamicEditorVariable::initEditorVariable(DynamicEditor* _editor, FactoryParameters* _params)
-{
-    editor = _editor;
-    params = _params;
 }

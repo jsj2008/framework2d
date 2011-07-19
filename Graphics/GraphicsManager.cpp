@@ -7,6 +7,7 @@
 #include <iostream>
 #include <Graphics/Skins/AllSkins.h>
 #include <Graphics/Sprites/SpriteList.h>
+#include <Log/GameConsole.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
@@ -16,6 +17,7 @@ bool function(const CEGUI::EventArgs& e)
     std::cout << "Jumped" << std::endl;
     return true;
 }
+GameConsole* g_Console; /// FIXME
 GraphicsManager::GraphicsManager()
 {
     //ctor
@@ -50,8 +52,12 @@ GraphicsManager::GraphicsManager()
     CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme", "schemes");
     CEGUI::System::getSingleton().setDefaultMouseCursor( "TaharezLook", "MouseArrow" );
 
-    CEGUI::Window *myRoot = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorRoot.layout");
-    CEGUI::System::getSingleton().setGUISheet( myRoot );
+    CEGUI::Window* myRoot = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow");
+    CEGUI::System::getSingleton().setGUISheet(myRoot);
+    CEGUI::Window *myWindow = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorRoot.layout");
+    CEGUI::System::getSingleton().getGUISheet()->addChildWindow(myWindow);
+
+    g_Console = new GameConsole();
 
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);

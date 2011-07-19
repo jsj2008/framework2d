@@ -2,18 +2,17 @@
 #define DYNAMICEDITORVARIABLE_H
 
 #include <string>
-class DynamicEditor;
+class DynamicEditorMode;
 class FactoryParameters;
 
 class DynamicEditorVariable
 {
     public:
-        DynamicEditorVariable();
-        void initEditorVariable(DynamicEditor* _editor, FactoryParameters* _params);
+        DynamicEditorVariable(DynamicEditorMode* _editor, FactoryParameters* _params);
         virtual ~DynamicEditorVariable();
         virtual void finish()=0;
     protected:
-        DynamicEditor* editor;
+        DynamicEditorMode* editor;
         FactoryParameters* params;
     private:
 };

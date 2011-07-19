@@ -1,7 +1,8 @@
 #include "BoxDragVariable.h"
 #include <AbstractFactory/FactoryParameters.h>
 
-BoxDragVariable::BoxDragVariable()
+BoxDragVariable::BoxDragVariable(DynamicEditorMode* _editor, FactoryParameters* _params)
+:DynamicEditorMode(_editor,_params)
 {
     //ctor
 }

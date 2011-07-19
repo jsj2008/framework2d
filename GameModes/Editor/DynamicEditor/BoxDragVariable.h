@@ -7,7 +7,7 @@
 class BoxDragVariable : public DynamicEditorMode
 {
     public:
-        BoxDragVariable();
+        BoxDragVariable(DynamicEditorMode* _editor, FactoryParameters* _params);
         virtual ~BoxDragVariable();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);

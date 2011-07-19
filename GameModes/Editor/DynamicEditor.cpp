@@ -6,16 +6,17 @@
 #include <Physics/PhysicsManager.h>
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h>
 #include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
+#include <Events/Events.h>
 std::vector<std::pair<std::vector<std::string>,DynamicEditor::ModeFactory*>> DynamicEditor::editorModes
 ({
     {
-        {"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragVariable>()
+        {"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragVariable>(),
     }
  });
 std::unordered_map<std::string, DynamicEditor::VariableFactory*> DynamicEditor::editorVariables
 ({
     {
-        "material", new DynamicEditor::DerivedVariableFactory<TextEditBox>()
+        "StaticSkinFactory", new DynamicEditor::DerivedVariableFactory<TextEditBox>()
     }
  });
 
@@ -24,6 +25,8 @@ DynamicEditor::DynamicEditor(FreeCamera* camera)
     //ctor
     camera->activate();
     mCamera = camera;
+    window = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditMode.layout", "DynamicEditor");
+    CEGUI::System::getSingleton().getGUISheet()->addChildWindow(window);
 }
 
 DynamicEditor::~DynamicEditor()
@@ -40,6 +43,7 @@ DynamicEditorMode* DynamicEditor::createEditorMode(const std::string& factoryNam
 {
     AbstractFactoryBase<Entity>* factory = AbstractFactories::global().getFactory<Entity>(factoryName);
     BoxDragVariable* editor = nullptr;
+    CEGUI::TabControl* tab;
     {
         FactoryParameters parameters(true);
         g_PhysicsManager.destroyBody(factory->use(&parameters)->mBody);
@@ -62,9 +66,12 @@ DynamicEditorMode* DynamicEditor::createEditorMode(const std::string& factoryNam
             }
             if (matches == values.size())
             {
-                editor = new BoxDragVariable();
-                editor->initEditorMode(factoryName);
-                editor->initEditorVariable(this, &params);
+                tab = static_cast<CEGUI::TabControl*>(window->getChild("DynamicEditor/TabControl"));
+                CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorTab.layout", factoryName);
+                page->setProperty("Text",factoryName);
+                tab->addTab(page);
+                editor = new BoxDragVariable(editor, &params);
+                editor->initEditorMode(factoryName, page);
                 while (!matchedStrings.empty())
                 {
                     values.erase(matchedStrings.back());
@@ -77,17 +84,24 @@ DynamicEditorMode* DynamicEditor::createEditorMode(const std::string& factoryNam
     }
     {
         TextFileFactoryLoader loader(nullptr, true);
+        FactoryGetList getList;
+        Events::global().registerListener<FactoryGetEvent>(&getList);
         factory->init(&loader, &AbstractFactories::global());
+        Events::global().unregisterListener<FactoryGetEvent>(&getList);
         std::vector<std::string> values = loader.getUndefinedLog();
-        for (auto value = values.begin(); value != values.end(); value++)
+        for (auto value = getList.getFactories().begin(); value != getList.getFactories().end(); value++)
         {
             auto variable = editorVariables.find(*value);
             if (variable != editorVariables.end())
             {
-                editor->addVariable(variable->second->createVariable());
+                DynamicEditorVariable* editorVar = variable->second->createVariable(editor,&params);
+                editor->addVariable(editorVar);
             }
         }
     }
+    tab->setSelectedTabAtIndex(0);
+    CEGUI::EventArgs args;
+    activate(args);
     return editor;
 }
 
@@ -102,4 +116,10 @@ void DynamicEditor::mouseMove(Vec2i mouse)
 void DynamicEditor::buttonUp(Vec2i mouse, unsigned char button)
 {
     activeEditor->buttonUp(mouse,button);
+}
+
+bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
+{
+    factories.insert(event->getName());
+    return true;
 }

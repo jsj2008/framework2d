@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<GUILayout>
+    <Window Type="TaharezLook/Editbox" Name="/Textbox">
+      <Property Name="ID" Value="2" />
+      <Property Name="VerticalAlignment" Value="Bottom" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedPosition" Value="{{0,7},{0,-7}}" />
+      <Property Name="UnifiedSize" Value="{{0.75,-21},{0,30}}" />
+      <Property Name="Text" Value="" />
+    </Window>
+</GUILayout>

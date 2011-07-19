@@ -11,6 +11,7 @@ template <typename Product>
 class AbstractFactoryBase;
 class FactoryParameters;
 class UntypedAbstractFactory;
+template <typename DerivedEvent>
 class EventsListener;
 
 class AbstractFactories
@@ -36,9 +37,6 @@ class AbstractFactories
         void init();
 
         void print(std::ostream* stream);
-
-        template <typename Product>
-        void registerListener(EventsListener* listener){getFactoryList<Product>()->registerListener(listener);}
 
         static AbstractFactories& global() /// Its not actually a singleton
         {
