@@ -13,6 +13,7 @@ class FactoryParameters;
 class UntypedAbstractFactory;
 template <typename DerivedEvent>
 class EventsListener;
+class FactoryLoader;
 
 class AbstractFactories
 {
@@ -29,14 +30,17 @@ class AbstractFactories
         template <typename Product>
         AbstractFactoryBase<Product>* getFactory(const std::string& name);
 
-        /// For this function, considering storing all untyped factories in one list refernced by one parameter,
+        template <typename Product>
+        void addFactory(FactoryLoader* _loader);
+
+        /// For this function, considering storing all untyped factories in one list referenced by one parameter,
         /// if I start to use it enough. These are inefficient to create and use, but it will take a little more
         /// time and memory to maintain a list of all factories
         UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
 
         void init();
 
-        void print(std::ostream* stream);
+        void print();
 
         static AbstractFactories& global() /// Its not actually a singleton
         {
@@ -92,6 +96,12 @@ void AbstractFactories::renameProduct(const std::string& name)
     (*getFactoryListList())[name] = list;
     getFactoryListList()->erase(list->getProductName());
     list->setProductName(name);
+}
+
+template <typename Product>
+void AbstractFactories::addFactory(FactoryLoader* _loader)
+{
+    getFactoryList<Product>()->addFactory(this, _loader);
 }
 
 #endif // ABSTRACTFACTORIES_H

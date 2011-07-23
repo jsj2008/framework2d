@@ -22,7 +22,8 @@ CrateFactory::~CrateFactory()
 void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     fixtureDef.density = loader->get<float>("density",1.0f);
-    skinFactory = factories->getFactory<Skin>("StaticSkinFactory");
+    std::string skinFactoryName = loader->get<std::string>("material","StaticSkinFactory");
+    skinFactory = factories->getFactory<Skin>(skinFactoryName);
 }
 Entity* CrateFactory::useFactory(FactoryParameters* parameters)
 {

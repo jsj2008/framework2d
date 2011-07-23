@@ -2,11 +2,11 @@
 #include <GameModes/Editor/DynamicEditor/DynamicEditorMode.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-DynamicEditorVariable::DynamicEditorVariable(DynamicEditorMode* _editor, FactoryParameters* _params)
+DynamicEditorVariable::DynamicEditorVariable(CEGUI::Window* _rootWindow, TypeTable* _params)
 {
     //ctor
-    editor = _editor;
-    params = _params;
+    rootWindow = _rootWindow;
+    typeTable = _params;
 }
 
 DynamicEditorVariable::~DynamicEditorVariable()

@@ -30,6 +30,8 @@ class FactoryLoader
         T get(const std::string& name, const T& normal);
         template <typename T>
         void addType(const std::string& name);
+
+        TypeTable* getTypeTable(){return &mvalues;}
     protected:
         std::string type, name;
         void syntaxError(const std::string& message);

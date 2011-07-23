@@ -14,6 +14,7 @@ class AbstractFactories;
 #include <Events/Events/FactoryEvent.h>
 template <typename Product>
 const std::string EvaluateTypeName();
+class FactoryLoader;
 
 class AbstractFactoryListBase
 {
@@ -21,7 +22,7 @@ class AbstractFactoryListBase
         AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& _productName);
         virtual ~AbstractFactoryListBase();
         virtual void init(AbstractFactories* factories)=0;
-        virtual void print(std::ostream* stream)=0;
+        virtual void print()=0;
         virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
     protected:
     private:
@@ -34,8 +35,12 @@ class AbstractFactoryList: private AbstractFactoryListBase
         AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists);
         void init(AbstractFactories* factories);
         virtual ~AbstractFactoryList();
+
         template <typename Factory>
         void registerFactoryType(const std::string& name, AbstractFactories* factories);
+
+        void addFactory(AbstractFactories* _factories, FactoryLoader* _loader);
+
         Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
         AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory);
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
@@ -47,7 +52,7 @@ class AbstractFactoryList: private AbstractFactoryListBase
         {
             productName() = _productName;
         }
-        void print(std::ostream* stream);
+        void print();
     protected:
     private:
         std::string& productName()
@@ -147,6 +152,16 @@ UntypedAbstractFactory* AbstractFactoryList<Product>::getUntypedFactory(const st
 }
 
 template <typename Product>
+void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, FactoryLoader* _loader)
+{
+    assert(factories.find(_loader->getName()) == factories.end());
+    AbstractFactoryBase<Product>* factory = factoryCreators[_loader->getType()]->createFactory();
+    factory->init(_loader, _factories);
+    factories[_loader->getName()] = factory;
+}
+
+
+template <typename Product>
 AbstractFactoryList<Product>::AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists)
 :AbstractFactoryListBase(factoryLists, productName())
 {
@@ -161,11 +176,12 @@ AbstractFactoryList<Product>::~AbstractFactoryList()
 
 void privatePrint(std::ostream* stream, const std::string& factoryType, const std::string& factoryInstance, const std::string& productName, const std::string& realProductName);
 template <typename Product>
-void AbstractFactoryList<Product>::print(std::ostream* stream)
+void AbstractFactoryList<Product>::print()
 {
+    std::ofstream file("Resources/" + productName() + "Factories.txt");
     for (auto i = factories.begin(); i != factories.end(); i++)
     {
-        privatePrint(stream, i->second->getName(), i->first, productName(), EvaluateTypeName<Product>());
+        privatePrint(&file, i->second->getName(), i->first, productName(), EvaluateTypeName<Product>());
     }
 }
 #include <AbstractFactory/EvaluateTypeName.h>

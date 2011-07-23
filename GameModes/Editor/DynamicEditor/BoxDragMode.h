@@ -1,14 +1,14 @@
-#ifndef BOXDRAGVARIABLE_H
-#define BOXDRAGVARIABLE_H
+#ifndef BOXDRAGVMODE_H
+#define BOXDRAGVMODE_H
 
 #include <GameModes/Editor/DynamicEditor/DynamicEditorMode.h>
 #include <Input/Mouse/ClickDragEvent.h>
 
-class BoxDragVariable : public DynamicEditorMode
+class BoxDragMode: public DynamicEditorMode
 {
     public:
-        BoxDragVariable(DynamicEditorMode* _editor, FactoryParameters* _params);
-        virtual ~BoxDragVariable();
+        BoxDragMode(FactoryParameters* _params);
+        virtual ~BoxDragMode();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
@@ -21,4 +21,4 @@ class BoxDragVariable : public DynamicEditorMode
         Vec2f topLeft, bottomright;
 };
 
-#endif // BOXDRAGVARIABLE_H
+#endif // BOXDRAGVMODE_H

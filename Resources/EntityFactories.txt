@@ -56,3 +56,15 @@ SuctionBubbleFactory suctionBubble
 UpwardsGravityBubbleFactory upwardsGravityBubble
 {
 }
+
+CrateFactory sillyBox
+{string material StaticSkinFactory}
+
+CrateFactory EnterEntityName
+{
+string material StaticSkinFactory
+}
+CrateFactory EnterEntityName
+{
+string material StaticSkinFactory
+}

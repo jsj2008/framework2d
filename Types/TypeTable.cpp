@@ -148,6 +148,18 @@ ostream& operator<< (ostream &out, const TypeTable &table)
     }
     return out;
 }
+void TypeTable::output(ostream *out)
+{
+    unsigned short size = values.size();
+    for (auto i = values.begin(); i != values.end(); i++)
+    {
+        std::string typeId = i->second->getTypeId();
+        *out << typeId << ' ';
+        std::string name = i->first;
+        *out << name << ' ';
+        i->second->output(out);
+    }
+}
 TypeTable::UntypedValue::UntypedValue(TypeIndex _type, const ValueIndex& _name)
 :name(_name),
 type(_type)

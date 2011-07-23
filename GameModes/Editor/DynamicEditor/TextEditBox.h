@@ -4,17 +4,15 @@
 #include <CEGUI/CEGUI.h>
 #include <GameModes/Editor/DynamicEditor/DynamicEditorVariable.h>
 
-class GameConsoleStringSetCommand;
-
 class TextEditBox : public DynamicEditorVariable
 {
     public:
-        TextEditBox(DynamicEditorMode* _editor, FactoryParameters* _params);
+        TextEditBox(CEGUI::Window* _rootWindow, TypeTable* _params);
         virtual ~TextEditBox();
+        void addPropertyBagVariable(CppFactoryLoader* _loader);
     protected:
         void finish();
     private:
-        GameConsoleStringSetCommand* command;
         CEGUI::Window* widget;
 };
 

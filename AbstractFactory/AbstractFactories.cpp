@@ -21,12 +21,11 @@ void AbstractFactories::init()
     }
 }
 
-void AbstractFactories::print(std::ostream* stream)
+void AbstractFactories::print()
 {
     for (auto i = getFactoryListList()->begin(); i != getFactoryListList()->end(); i++)
     {
-        i->second->print(stream);
-        *stream << std::endl;
+        i->second->print();
     }
 }
 

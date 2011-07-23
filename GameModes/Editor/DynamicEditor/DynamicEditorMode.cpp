@@ -1,10 +1,11 @@
 #include "DynamicEditorMode.h"
 #include <Level/LevelManager.h>
 
-DynamicEditorMode::DynamicEditorMode(DynamicEditorMode* _editor, FactoryParameters* _params)
-:DynamicEditorVariable(_editor, _params)
+DynamicEditorMode::DynamicEditorMode(FactoryParameters* _params)
+:DynamicEditorVariable(nullptr, _params->getTypeTable())
 {
     //ctor
+    params = _params;
 }
 
 DynamicEditorMode::~DynamicEditorMode()
@@ -15,7 +16,7 @@ DynamicEditorMode::~DynamicEditorMode()
 void DynamicEditorMode::initEditorMode(std::string _name, CEGUI::Window* _window)
 {
     name = _name;
-    window = _window;
+    rootWindow = _window;
 }
 void DynamicEditorMode::create()
 {
@@ -27,7 +28,7 @@ void DynamicEditorMode::create()
     g_LevelManager.addBody(name, params);
 }
 
-void DynamicEditorMode::addChildWindow(CEGUI::Window* _window)
+void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)
 {
-    window->addChildWindow(_window);
+    throw -1;
 }

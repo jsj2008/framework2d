@@ -50,7 +50,7 @@ void Events::registerListener(EventsListener<DerivedEvent>* listener)
 template <typename DerivedEvent>
 void Events::unregisterListener(EventsListener<DerivedEvent>* listener)
 {
-    *getListener<DerivedEvent>() = listener;
+    *getListener<DerivedEvent>() = nullptr;
 }
 
 

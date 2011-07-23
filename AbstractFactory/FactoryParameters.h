@@ -26,6 +26,8 @@ class FactoryParameters
         friend std::ostream& operator<< (std::ostream &out, const FactoryParameters &params);
         friend std::istream& operator>> (std::istream &in, FactoryParameters &params);
 
+        TypeTable* getTypeTable(){return &table;}
+
     protected:
     private:
         //std::unordered_map<std::string, float> parameters;

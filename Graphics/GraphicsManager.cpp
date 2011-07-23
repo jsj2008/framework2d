@@ -17,12 +17,12 @@ bool function(const CEGUI::EventArgs& e)
     std::cout << "Jumped" << std::endl;
     return true;
 }
-GameConsole* g_Console; /// FIXME
 GraphicsManager::GraphicsManager()
 {
     //ctor
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER);
         assert(result == 0);
+    SDL_EnableUNICODE(1);
     SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL,0);
     resize(Vec2i(1200,800));
 
@@ -57,7 +57,7 @@ GraphicsManager::GraphicsManager()
     CEGUI::Window *myWindow = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorRoot.layout");
     CEGUI::System::getSingleton().getGUISheet()->addChildWindow(myWindow);
 
-    g_Console = new GameConsole();
+    new GameConsole();
 
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);

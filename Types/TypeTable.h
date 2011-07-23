@@ -53,6 +53,7 @@ class TypeTable
         void removeValue(const ValueIndex& name);
         void clear();
 
+        void output(std::ostream *out);
         friend std::ostream& operator<< (std::ostream &out, const TypeTable &table);
         friend std::istream& operator>> (std::istream &in, TypeTable &table);
 

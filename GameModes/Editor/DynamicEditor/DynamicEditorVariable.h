@@ -1,19 +1,21 @@
 #ifndef DYNAMICEDITORVARIABLE_H
 #define DYNAMICEDITORVARIABLE_H
 
+#include <CEGUI/CEGUI.h>
 #include <string>
-class DynamicEditorMode;
-class FactoryParameters;
+class TypeTable;
+class CppFactoryLoader;
 
 class DynamicEditorVariable
 {
     public:
-        DynamicEditorVariable(DynamicEditorMode* _editor, FactoryParameters* _params);
+        DynamicEditorVariable(CEGUI::Window* _rootWindow, TypeTable* _params);
         virtual ~DynamicEditorVariable();
         virtual void finish()=0;
+        virtual void addPropertyBagVariable(CppFactoryLoader* _loader)=0;
     protected:
-        DynamicEditorMode* editor;
-        FactoryParameters* params;
+        CEGUI::Window* rootWindow;
+        TypeTable* typeTable;
     private:
 };
 

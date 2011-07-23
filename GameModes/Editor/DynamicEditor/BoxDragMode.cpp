@@ -1,29 +1,29 @@
-#include "BoxDragVariable.h"
+#include "BoxDragMode.h"
 #include <AbstractFactory/FactoryParameters.h>
 
-BoxDragVariable::BoxDragVariable(DynamicEditorMode* _editor, FactoryParameters* _params)
-:DynamicEditorMode(_editor,_params)
+BoxDragMode::BoxDragMode(FactoryParameters* _params)
+:DynamicEditorMode(_params)
 {
     //ctor
 }
 
-BoxDragVariable::~BoxDragVariable()
+BoxDragMode::~BoxDragMode()
 {
     //dtor
 }
 
-void BoxDragVariable::buttonDown(Vec2i mouse, unsigned char button)
+void BoxDragMode::buttonDown(Vec2i mouse, unsigned char button)
 {
     startPos = mouse;
     topLeft = mouse.ScreenToWorldSpace();
     bottomright = topLeft;
     dragging = true;
 }
-void BoxDragVariable::mouseMove(Vec2i mouse)
+void BoxDragMode::mouseMove(Vec2i mouse)
 {
     bottomright = mouse.ScreenToWorldSpace();
 }
-void BoxDragVariable::buttonUp(Vec2i mouse, unsigned char button)
+void BoxDragMode::buttonUp(Vec2i mouse, unsigned char button)
 {
     bottomright = mouse.ScreenToWorldSpace();
     Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
@@ -33,15 +33,15 @@ void BoxDragVariable::buttonUp(Vec2i mouse, unsigned char button)
     }
     dragging = false;
 }
-void BoxDragVariable::finish()
+void BoxDragMode::finish()
 {
     Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
     Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
-    params->add("position",pos);
-    params->add("dimensions",dimensions);
+    typeTable->addValue("position",pos);
+    typeTable->addValue("dimensions",dimensions);
 }
 #include <GL/gl.h>
-void BoxDragVariable::render()
+void BoxDragMode::render()
 {
     if (dragging)
     {

@@ -1,7 +1,13 @@
-6 CrateFactory 3 Vec2f dimensions 4.8 2.46667 Vec2f position -7.6 2.36667 string material player
- CrateFactory 3 Vec2f dimensions 4.8 2.46667 Vec2f position -7.6 2.36667 string material player
- zombie 3 Vec2f position 3 16.4 userData userData 0x1409f80userData joint 0x142b540
- zombie 3 Vec2f position -1.86667 -16.6667 userData userData 0x1409ef0userData joint 0x142b400
- CrateFactory 3 Vec2f position 0.166667 -12.9667 Vec2f dimensions 2.73333 1.53333 string material 
+12 CrateFactory 2 Vec2f dimensions 1.86667 1.26667 Vec2f position 4.6 -0.7 
+ CrateFactory 2 Vec2f dimensions 1.8 1.13333 Vec2f position 8.96667 9.1 
+ CrateFactory 2 Vec2f position 7.03333 6.73333 Vec2f dimensions 1.8 1.46667 
  levelGeometry 1 Vec2fArray points 4 -4.86667 13.3333  17.8667 14.4667  18.2667 21.9333  -6.86667 22.9333  
+ CrateFactory 2 Vec2f dimensions 1.86667 1.4 Vec2f position 6.8 4.63333 
+ CrateFactory 2 Vec2f dimensions 2.06667 1.4 Vec2f position 5.1 6.43333 
+ CrateFactory 3 Vec2f dimensions 2.6 2 Vec2f position 4.1 0.866667 string material StaticSkinFactory
+ CrateFactory 2 Vec2f position 6.26667 6.4 Vec2f dimensions 1.86667 2 
+ CrateFactory 2 Vec2f dimensions 2.06667 1.4 Vec2f position 5.1 6.43333 
+ CrateFactory 2 Vec2f position -1.33333 -10.8667 Vec2f dimensions 1.86667 1.33333 
+ EnterEntityName 2 Vec2f dimensions 2 2.33333 Vec2f position 8 1.83333 
+ CrateFactory 3 Vec2f position 10.5 5.06667 Vec2f dimensions 1.93333 1.86667 string material StaticSkinFactory
  
