@@ -5,7 +5,7 @@
 #include <CEGUI/CEGUI.h>
 #include <iostream>
 
-EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initializer_list<const char*> _icons, InputContext** _states)
+EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initializer_list<std::string> _icons, InputContext** _states)
 {
     //ctor
     //CEGUI::Window *myRoot = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("TabControlDemo.layout");
@@ -25,7 +25,7 @@ EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initia
     auto iter = _icons.begin();
     for (unsigned int i = 0; i < _icons.size(); i++)
     {
-        CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(*iter);
+        CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(*iter + ".layout");
         tab->addTab(page);
         CEGUI::System::getSingleton().getGUISheet()->getChildRecursive(*iter)->subscribeEvent(CEGUI::TabButton::EventShown,CEGUI::SubscriberSlot(&InputContext::activate,states[i]));
         iter++;

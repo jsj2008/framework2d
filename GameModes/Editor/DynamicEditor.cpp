@@ -35,6 +35,7 @@ InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab
 
     return editorMode;
 }
+std::vector<Entity*> deadBodies; /// FIXME
 bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _args)
 {
     CppFactoryLoader loader;
@@ -47,6 +48,9 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     }
     AbstractFactories::global().addFactory<Entity>(&loader);
     editor->editorFactories[name] = editor->searchExistingFactoryInstances(name, false);
+    for (unsigned int i = 0; i < deadBodies.size(); i++)
+        delete deadBodies[i];
+    deadBodies.clear();
     editor->activeEditor = editor->editorFactories[name]->createEditor(editor->instanceTab, name);
     editor->factoryInstances.push_back(editor->activeEditor);
     editor->instanceTab->setSelectedTabAtIndex(editor->instanceTab->getTabCount()-1);
@@ -60,8 +64,7 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
 }
 CEGUI::TabControl* createTabControl(const std::string& _prefix)
 {
-    CEGUI::Window* window = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditMode.layout", _prefix);
-    window->setText(_prefix);
+    CEGUI::Window* window = CEGUI::System::getSingletonPtr()->getGUISheet()->getChild(_prefix);
     CEGUI::System::getSingleton().getGUISheet()->addChildWindow(window);
     CEGUI::Window* uncastTab = window->getChild(_prefix + "/TabControl");
     assert(dynamic_cast<CEGUI::TabControl*>(uncastTab));
@@ -93,6 +96,9 @@ editorVariables
     mCamera = camera;
     instanceTab = createTabControl("Entities");
     typeTab = createTabControl("EntityTypes");
+
+    CEGUI::Window* button = typeTab->getParent()->getChild("CreateButton");
+    button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&DynamicEditor::createFactory,this));
     Events::global().registerListener(this);
 }
 
@@ -105,12 +111,17 @@ DynamicEditor::~DynamicEditor()
 }
 
 
+bool DynamicEditor::createFactory(const CEGUI::EventArgs& _args)
+{
+    unsigned int index = typeTab->getSelectedTabIndex();
+    factoryTypes[index]->createButton(_args);
+    return true;
+}
 bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
 {
     return true;
 }
 #include <iostream>
-std::vector<Entity*> deadBodies;
 void DynamicEditor::init()
 {
     for (unsigned int i = 0; i < FactoryTypeRegisterEvent<Entity>::factoryNames.size(); i++)
@@ -178,7 +189,6 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
                 //break;
                 goto MATCH_FOUND;
             }
-            /// else matchedStrings.clear(); - Not necessary
         }
     }
     return nullptr;
@@ -204,19 +214,13 @@ MATCH_FOUND:
         page->setProperty("Text",factoryName + "Type");
         typeTab->addTab(page);
 
-        CEGUI::Window* button = CEGUI::WindowManager::getSingleton().createWindow("TaharezLook/Button",factoryName + "CreateButton");
-        button->setPosition(CEGUI::UVector2(CEGUI::UDim(0.75,0),CEGUI::UDim(0.50,0)));
-        button->setSize(CEGUI::UVector2(CEGUI::UDim(0,50),CEGUI::UDim(0,50)));
-        button->setText("Create");
-        page->addChildWindow(button);
+        unsigned int tabsSize = typeTab->getTabCount();
+        if (factoryTypes.size() < tabsSize)
+            factoryTypes.resize(tabsSize);
+        factoryTypes[tabsSize-1] = editor;
 
-        CEGUI::Window* factoryNameBox = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditBox.layout", factoryName + "InstanceName");
-        factoryNameBox->setProperty("Text","EnterEntityName");
-        factoryNameBox->setProperty("VerticalAlignment", "Top");
-        page->addChildWindow(factoryNameBox);
+        CEGUI::Window* factoryNameBox = typeTab->getParent()->getChild("NewFactoryName");
         editor->setInstanceNameWidget(factoryNameBox);
-
-        button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&EditorFactoryType::createButton,editor));
     }
     CEGUI::EventArgs args;
     activate(args);

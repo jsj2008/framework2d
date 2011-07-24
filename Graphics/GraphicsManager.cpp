@@ -52,10 +52,8 @@ GraphicsManager::GraphicsManager()
     CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme", "schemes");
     CEGUI::System::getSingleton().setDefaultMouseCursor( "TaharezLook", "MouseArrow" );
 
-    CEGUI::Window* myRoot = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow");
+    CEGUI::Window* myRoot = CEGUI::WindowManager::getSingleton().loadWindowLayout("Root.layout");
     CEGUI::System::getSingleton().setGUISheet(myRoot);
-    CEGUI::Window *myWindow = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditorRoot.layout");
-    CEGUI::System::getSingleton().getGUISheet()->addChildWindow(myWindow);
 
     new GameConsole();
 

@@ -14,7 +14,7 @@ namespace CEGUI
 class EditorStateSwitcher : public ClickNoEvent
 {
     public:
-        EditorStateSwitcher(const char* tabControlName, std::initializer_list<const char*> icons, InputContext** _states);
+        EditorStateSwitcher(const char* tabControlName, std::initializer_list<std::string> icons, InputContext** _states);
         virtual ~EditorStateSwitcher();
         void push(const char* name, InputContext* event);
         void eventShow();

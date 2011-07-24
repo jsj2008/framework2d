@@ -5,7 +5,7 @@
 #include <Graphics/GraphicsManager.h>
 #include <Game.h>
 #include "EditorStateSwitcher.h"
-#define NUM_MODES 7
+#define NUM_MODES 4
 EditorMode::EditorMode()
 {
     //ctor
@@ -15,15 +15,12 @@ EditorMode::EditorMode()
     g_GraphicsManager.setCamera(mCamera);
 
     modes[0] = new DynamicEditor(mFreeCamera);
-    modes[1] = new GeometryEditor(mFreeCamera);
-    modes[2] = new ItemSpawner(mFreeCamera);
-    modes[3] = new ParallaxEditor(mFreeCamera);
-    modes[4] = new JointEditor(mFreeCamera);
-    modes[5] = new GeometrySelector(mFreeCamera);
-    modes[6] = g_Game.getGameMode(ePlayGameMode);
+    modes[1] = new JointEditor(mFreeCamera);
+    modes[2] = new GeometrySelector(mFreeCamera);
+    modes[3] = g_Game.getGameMode(ePlayGameMode);
 
     Vec2i dimensions(500/NUM_MODES,100);
-    selectionBox = new EditorStateSwitcher("Editor/TabControl",{"DynamicEditor","GeometryEditor","ItemSpawner","ParallaxEditor","JointEditor","GeometrySelector","TestPlay"},modes);
+    selectionBox = new EditorStateSwitcher("Editor/TabControl",{"DynamicEditor","JointEditor","GeometrySelector","TestPlay"},modes);
 
     for (unsigned int i = 0; i < NUM_MODES; i++)
     {

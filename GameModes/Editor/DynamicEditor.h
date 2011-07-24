@@ -35,6 +35,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         class ModeFactory;
         DynamicEditorMode* createEditorMode(const std::string& factoryName);
         EditorFactory* searchExistingFactoryInstances(const std::string& factoryName, bool _createType);
+        bool createFactory(const CEGUI::EventArgs& _args);
         //EditorFactoryType* createEditorFactoryType(const std::string& factoryName);
         InputContext* activeEditor;
         std::vector<InputContext*> factoryInstances;
