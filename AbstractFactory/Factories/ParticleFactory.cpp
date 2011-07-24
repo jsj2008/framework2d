@@ -26,14 +26,15 @@ ParticleFactory::~ParticleFactory()
 Entity* ParticleFactory::useFactory(FactoryParameters* parameters)
 {
     //PositionParameters* params = (PositionParameters*)parameters;
-    Entity* entity = new PhysicsParticle(lifetime);
+    Skin* skin = new StaticSkin(1.0f,1.f);
+    Entity* entity = new PhysicsParticle(lifetime, skin);
 
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));//params->position;
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&shape, density);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&shape, density);
 
-    entity->mSkin = new StaticSkin(1.0f,1.f);
-    setMaterial(entity->mSkin,materialName);
+    setMaterial(skin,materialName);
     return entity;
 }

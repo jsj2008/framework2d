@@ -13,7 +13,7 @@ class PathFollower
     public:
         PathFollower();
         virtual ~PathFollower();
-        AIManager::Operation update(b2Body* body, Node newTarget);
+        AIManager::Operation update(const Vec2f& _position, Node newTarget);
         Node getCurrentSegment(){return instructions.top().node;}
     protected:
     private:

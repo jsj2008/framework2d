@@ -7,7 +7,7 @@
 class UpwardsGravityBubble : public Bubble
 {
     public:
-        UpwardsGravityBubble();
+        UpwardsGravityBubble(Skin* _skin);
         virtual ~UpwardsGravityBubble();
         BubbleType getBubbleType(){return eUpwardsGravityBubbleType;}
         static std::string name()

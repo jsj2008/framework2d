@@ -1,7 +1,8 @@
 #include "Bubble.h"
 #include <Box2D/Dynamics/Contacts/b2Contact.h>
 
-Bubble::Bubble()
+Bubble::Bubble(Skin* _skin)
+:Entity(_skin)
 {
     //ctor
 }

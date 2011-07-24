@@ -3,6 +3,7 @@
 
 class Skin;
 class b2Body;
+class Vec2f;
 enum EntityType
 {
     eCrateEntityType,
@@ -19,16 +20,18 @@ enum EntityType
 class Entity
 {
     public:
-        Entity();
+        Entity(Skin* _skin);
+        virtual ~Entity();
         virtual void render();
         virtual void update()=0;
         virtual EntityType getType()=0;
         virtual void damage(){}
+        const Vec2f& getPosition();
+        /// FIXME should think of a better way to do this (its for the factories)
+        void setBody(b2Body* _body);
+    protected:
         b2Body* mBody;
         Skin* mSkin;
-    protected:
-        friend class PhysicsManager; // Just want to assert nobody else can delete these
-        virtual ~Entity();
     private:
 };
 

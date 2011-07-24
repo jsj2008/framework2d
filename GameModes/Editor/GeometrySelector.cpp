@@ -63,7 +63,7 @@ void GeometrySelector::start(unsigned char button)
                 }
                 if (!mouseJointRemoved)
                 {
-                    g_LevelManager.removeBody(body);
+                    g_LevelManager.removeBody(static_cast<Entity*>(body->GetUserData()));
                 }
             }
         }

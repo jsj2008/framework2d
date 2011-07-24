@@ -24,8 +24,8 @@ Level::~Level()
 }
 void Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
-    b2Body* body = AbstractFactories::global().useFactory<Entity>(factory, parameters)->mBody;
-    table[body] = {factory,*parameters};
+    Entity* entity = AbstractFactories::global().useFactory<Entity>(factory, parameters);
+    table[entity] = {factory,*parameters};
 }
 void Level::addJoint(b2JointDef* def)
 {
@@ -80,8 +80,8 @@ void Level::addJoint(b2JointDef* def)
             throw -1;
         }
     }
-    b2Body* bodyA = def->bodyA;
-    b2Body* bodyB = def->bodyB;
+    Entity* bodyA = static_cast<Entity*>(def->bodyA->GetUserData());
+    Entity* bodyB = static_cast<Entity*>(def->bodyB->GetUserData());
     auto crateIter = table.find(bodyA);
     auto geometryIter = table.find(bodyB);
     if (crateIter != table.end() && geometryIter != table.end())
@@ -94,14 +94,14 @@ void Level::addJoint(b2JointDef* def)
     strcpy(filename,"Resources/Levels/");\
     strcpy(filename+strlen("Resources/Levels/"),name);\
     strcpy(filename+strlen("Resources/Levels/")+strlen(name),".lvl")
-void Level::removeBody(b2Body* body)
+void Level::removeBody(Entity* body)
 {
     auto result = table.find(body);
     if (result != table.end())
     {
         table.erase(body);
     }
-    g_PhysicsManager.destroyBody(body);
+    delete body;
 }
 void Level::removeJoint(b2Joint* joint)
 {
@@ -121,7 +121,7 @@ void Level::loadLevel()
         file >> factory;
         FactoryParameters params;
         file >> params;
-        b2Body* body = AbstractFactories::global().useFactory<Entity>(factory, &params)->mBody;
+        Entity* body = AbstractFactories::global().useFactory<Entity>(factory, &params);
         table[body] = {factory,params};
     }
 }

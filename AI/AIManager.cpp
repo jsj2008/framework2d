@@ -22,10 +22,9 @@ void AIManager::path(Node start, Node end, std::stack<PathInstruction>& instruct
     return paths->path(start,end, instructions);
 }
 
-void AIManager::setPlayerNode(b2Body* body)
+void AIManager::setPlayerNode(const Vec2f& _playerPosition)
 {
-    const Vec2f& playerPosition = body->GetPosition();
-    playerNode = paths->findClosestNode(playerPosition);
+    playerNode = paths->findClosestNode(_playerPosition);
 }
 
 Node AIManager::findClosestNode(const Vec2f& position)

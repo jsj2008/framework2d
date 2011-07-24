@@ -12,4 +12,8 @@ EventListener::EventListener()
 EventListener::~EventListener()
 {
     //dtor
+    /*g_InputManager.unregisterEvent(this,eUp);
+    g_InputManager.unregisterEvent(this,eLeft);
+    g_InputManager.unregisterEvent(this,eDown);
+    g_InputManager.unregisterEvent(this,eRight);*/
 }

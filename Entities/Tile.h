@@ -7,11 +7,12 @@
 class Tile : public Entity
 {
     public:
-        Tile();
+        Tile(Skin* _skin);
         void update();
         EntityType getType(){return eTileEntityType;}
     protected:
     private:
+        friend class TileMap;
         virtual ~Tile();
 };
 

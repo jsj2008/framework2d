@@ -1,7 +1,8 @@
 #include "PhysicsParticle.h"
 #include <Physics/PhysicsManager.h>
 
-PhysicsParticle::PhysicsParticle(int _timer)
+PhysicsParticle::PhysicsParticle(int _timer, Skin* _skin)
+:Entity(_skin)
 {
     //ctor
     timer = _timer;

@@ -7,8 +7,9 @@
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
-AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory)
-:controller(this)
+AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin)
+:controller(this),
+Entity(_skin)
 {
     //ctor
     mBrain = _Brain;

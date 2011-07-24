@@ -7,7 +7,7 @@
 class SuctionBubble : public Bubble
 {
     public:
-        SuctionBubble();
+        SuctionBubble(Skin* _skin);
         virtual ~SuctionBubble();
         BubbleType getBubbleType(){return eSuctionBubbleType;}
         static std::string name()

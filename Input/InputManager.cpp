@@ -27,6 +27,11 @@ void InputManager::registerEvent(EventListener* event, InputActions action)
 {
     controls[action].event = event;
 }
+void InputManager::unregisterEvent(EventListener* event, InputActions action)
+{
+    if (controls[action].event == event)
+        controls[action].event = nullptr;
+}
 void InputManager::registerGlobalEvent(EventListener* event, InputActions action)
 {
 }

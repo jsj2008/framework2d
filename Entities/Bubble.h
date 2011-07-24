@@ -7,7 +7,7 @@
 class Bubble : public Entity
 {
     public:
-        Bubble();
+        Bubble(Skin* _skin);
         void update();
         enum BubbleType
         {

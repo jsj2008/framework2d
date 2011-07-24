@@ -1,6 +1,6 @@
 #ifndef TILEFACTORY_H
 #define TILEFACTORY_H
-/*
+
 #include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
@@ -26,5 +26,5 @@ class TileFactory : public AbstractFactory<Entity, TileFactory>
         Vec2f size;
         std::string materialName;
 };
-*/
+
 #endif // TILEFACTORY_H

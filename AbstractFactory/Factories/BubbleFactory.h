@@ -52,16 +52,17 @@ void BubbleFactory<Bubble>::init(FactoryLoader* loader, AbstractFactories* facto
 template <typename Bubble>
 Entity* BubbleFactory<Bubble>::useFactory(FactoryParameters* parameters)
 {
-    Entity* entity = new Bubble;
+    Skin* skin = new BubbleSkin(shapeDef.m_radius);
+    Entity* entity = new Bubble(skin);
 
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     shapeDef.m_radius = parameters->get<float>("radius",1.0f);
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new BubbleSkin(shapeDef.m_radius);
-    setMaterial(entity->mSkin,parameters->get<std::string>("materialName",""));
+    setMaterial(skin,parameters->get<std::string>("materialName",""));
     return entity;
 }
 

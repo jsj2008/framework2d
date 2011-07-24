@@ -30,10 +30,12 @@ Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
     //PositionVelocityParameters* params = (PositionVelocityParameters*)parameters;
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));// params->position;
     bodyDef.linearVelocity = parameters->get<Vec2f>("v",Vec2f(1,0));//params->velocity;
-    Entity* entity = new Projectile(explosion, new StaticSkin(radius,radius));
+    Skin* skin = new StaticSkin(radius,radius);
+    Entity* entity = new Projectile(explosion, skin);
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
-    setMaterial(entity->mSkin,material);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
+    setMaterial(skin,material);
     return entity;
 }

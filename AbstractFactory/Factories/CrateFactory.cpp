@@ -32,14 +32,14 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     Vec2f dimensions = parameters->get<Vec2f>("dimensions",Vec2f(2,2));
 
     shapeDef.SetAsBox(dimensions.x*0.5f,dimensions.y*0.5f);
-    Entity* entity = new Crate;
+    Entity* entity = new Crate(skinFactory->use(parameters));
 
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
 
-    entity->mSkin = skinFactory->use(parameters);
     return entity;
 }

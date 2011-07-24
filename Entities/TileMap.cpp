@@ -3,6 +3,7 @@
 #include <Entities/Tile.h>
 
 TileMap::TileMap(const Vec2i& _dimensions, const Vec2f& _offset, const Vec2f& _tileSize)
+:Entity(nullptr)
 {
     //ctor
     dimensions = _dimensions;
@@ -18,6 +19,13 @@ TileMap::TileMap(const Vec2i& _dimensions, const Vec2f& _offset, const Vec2f& _t
 TileMap::~TileMap()
 {
     //dtor
+    for (unsigned int i = 0; i < tiles.size(); i++)
+    {
+        for (unsigned int ii = 0; ii < tiles[i].size(); ii++)
+        {
+            delete tiles[i][ii];
+        }
+    }
 }
 
 void TileMap::update()

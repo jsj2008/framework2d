@@ -6,7 +6,7 @@
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <Types/Vec2i.h>
-/*
+
 TileFactory::TileFactory()
 {
     fixtureDef.shape = &shapeDef;
@@ -27,6 +27,7 @@ TileFactory::~TileFactory()
 
 Entity* TileFactory::useFactory(FactoryParameters* parameters)
 {
+    Skin* skin = new StaticSkin(size.x,size.y);
     Vec2f position(parameters->get<Vec2f>("position", Vec2f(0,0)));
     Vec2f readDimensions = parameters->get<Vec2f>("size",size);
     if (readDimensions != Vec2f(0,0))
@@ -34,16 +35,16 @@ Entity* TileFactory::useFactory(FactoryParameters* parameters)
         size = readDimensions;
         shapeDef.SetAsBox(size.x*0.5f,size.y*0.5f);
     }
-    Entity* entity = new Tile;
+    Entity* entity = new Tile(skin);
 
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new StaticSkin(size.x,size.y);
-    setMaterial(entity->mSkin,materialName);
+    setMaterial(skin,materialName);
     return entity;
 }
-*/
+

@@ -27,10 +27,12 @@ ExplosionFactory::~ExplosionFactory()
 Entity* ExplosionFactory::useFactory(FactoryParameters* parameters)
 {
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
-    Entity* entity = new Explosion(shapeDef.m_radius,damage,force,time, new BubbleSkin(shapeDef.m_radius));
+    Skin* skin = new BubbleSkin(shapeDef.m_radius);
+    Entity* entity = new Explosion(shapeDef.m_radius,damage,force,time, skin);
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
-    setMaterial(entity->mSkin,material);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
+    setMaterial(skin,material);
     return entity;
 }

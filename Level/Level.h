@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <AbstractFactory/FactoryParameters.h>
-class b2Body;
+class Entity;
 class b2Joint;
 class b2JointDef;
 class TextureContext;
@@ -19,7 +19,7 @@ class Level
         void addJoint(b2JointDef* def);
         void tempRender();
         void renderBackLayers();
-        void removeBody(b2Body* body);
+        void removeBody(Entity* body);
         void removeJoint(b2Joint* joint);
     protected:
     private:
@@ -31,7 +31,7 @@ class Level
         Vec2f backgroundTransform;
         std::vector<ParallaxLayer*> parallaxLayers;
 
-        std::unordered_map<b2Body*, std::pair<std::string,FactoryParameters> > table;
+        std::unordered_map<Entity*, std::pair<std::string,FactoryParameters> > table;
 };
 
 #endif // LEVEL_H

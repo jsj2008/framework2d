@@ -31,6 +31,7 @@ extern class InputManager
         bool processInput();
         void registerStateSelect(InputContext* state, const char* name);
         void registerEvent(EventListener* event, InputActions action);
+        void unregisterEvent(EventListener* event, InputActions action);
         void registerGlobalEvent(EventListener* event, InputActions action); /// These are global controls
         void render();
         void setActiveEvent(InputContext* _activeEvent);

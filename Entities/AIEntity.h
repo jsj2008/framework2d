@@ -12,7 +12,7 @@ class AbstractFactoryBase;
 class AIEntity : public Entity
 {
     public:
-        AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory);
+        AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin);
         EntityType getType(){return eAIEntityType;}
         void update();
         void jump();

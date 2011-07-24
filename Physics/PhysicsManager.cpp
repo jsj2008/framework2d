@@ -66,22 +66,10 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 using namespace std;
 void PhysicsManager::destroyBody(b2Body* body)
 {
-    for (b2JointEdge* jointEdge = body->GetJointList(); jointEdge != nullptr; )
+    if (body) /// FIXME shouldn't be needed, is only here for TileMap
     {
-        b2Joint* joint = jointEdge->joint;
-        if (joint->GetBodyB() == nullptr)
-        {
-            return;
-        }
-        b2Body* other = joint->GetBodyA();
-        if (other == body) body = joint->GetBodyB();
-        deleteJoint(joint);
-        mWorld->DestroyBody(other);
-        jointEdge = body->GetJointList();
+        mWorld->DestroyBody(body);
     }
-    Entity* entity = (Entity*)body->GetUserData();
-    delete entity;
-    mWorld->DestroyBody(body);
 }
 b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 {

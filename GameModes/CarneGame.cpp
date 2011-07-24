@@ -19,7 +19,7 @@ CarneGame::~CarneGame()
 }
 void CarneGame::buttonUp(Vec2i mouse, unsigned char button)
 {
-    Vec2f position = playerBrain->mEntity->mBody->GetPosition();
+    Vec2f position = playerBrain->mEntity->getPosition();
     Vec2f direction = mouse.ScreenToWorldSpace()-position;
     direction.Normalize();
     //g_TileMap->destroy(position,direction);

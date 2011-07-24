@@ -4,13 +4,13 @@
 #include <Physics/PhysicsManager.h>
 
 Explosion::Explosion(float _radius, float _damage, float _force, unsigned short _frames, Skin* _skin)
+:Entity(_skin)
 {
     //ctor
     radius = _radius;
     damage = _damage;
     force = _force;
     expiryFrame = _frames + g_Timer.getFrame();
-    mSkin = _skin;
 }
 
 Explosion::~Explosion()

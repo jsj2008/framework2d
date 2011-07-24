@@ -1,6 +1,7 @@
 #include "Crate.h"
 
-Crate::Crate()
+Crate::Crate(Skin* _skin)
+:Entity(_skin)
 {
     //ctor
 }

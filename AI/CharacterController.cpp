@@ -1,6 +1,7 @@
 #include "CharacterController.h"
 #include <Entities/AIEntity.h>
 #include <Box2D/Box2D.h>
+#include <Physics/PhysicsManager.h>
 
 #define WALK_SPEED 20.0f
 #define JUMP_HEIGHT 50.0f
@@ -20,6 +21,7 @@ CharacterController::CharacterController(AIEntity* _entity)
 CharacterController::~CharacterController()
 {
     //dtor
+    g_PhysicsManager.destroyBody(wheel->GetBodyB());
 }
 
 void CharacterController::walkLeft()

@@ -4,7 +4,7 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/TileMap.h>
 #include <Entities/Tile.h>
-/*
+
 TileMapFactory::TileMapFactory()
 {
 
@@ -12,7 +12,7 @@ TileMapFactory::TileMapFactory()
 void TileMapFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
-    tileType = loader->get<std::string>("tileType", "tile");
+    tileType = loader->get<std::string>("tileType", "TileFactory");
     tileSize = loader->get<Vec2f>("tileSize",Vec2f(1,1));
     offset = loader->get<Vec2f>("offset",Vec2f(-30,-30));
 }
@@ -39,4 +39,4 @@ Entity* TileMapFactory::useFactory(FactoryParameters* params)
     g_TileMap = entity;
     return entity;
 }
-*/
+

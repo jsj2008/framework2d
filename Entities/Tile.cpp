@@ -1,6 +1,7 @@
 #include "Tile.h"
 
-Tile::Tile()
+Tile::Tile(Skin* _skin)
+:Entity(_skin)
 {
     //ctor
 }

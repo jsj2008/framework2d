@@ -18,7 +18,7 @@ ZombieBrain::~ZombieBrain()
 using namespace std;
 void ZombieBrain::update()
 {
-    AIManager::Operation operation = follower->update(mEntity->mBody, g_AIManager.getPlayerNode());
+    AIManager::Operation operation = follower->update(mEntity->getPosition(), g_AIManager.getPlayerNode());
     switch (operation)
     {
         case AIManager::Operation::eStandStill:

@@ -27,18 +27,19 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{{0,0},{1,1},{-2,1}});
 
     //g_AIManager.addStaticGeometry(&points[0],points.size());
-    StaticGeometry* entity = new StaticGeometry;
+    Skin* skin = new ConvexPolygonSkin(&points[0],points.size());
+    StaticGeometry* entity = new StaticGeometry(skin);
 
     assert(points.size() <= b2_maxPolygonVertices);
 
     shapeDef.Set(&points[0],points.size());
 
     bodyDef.userData = (void*)entity;
-    entity->mBody = g_PhysicsManager.createBody(&bodyDef);
-    entity->mBody->CreateFixture(&fixtureDef);
+    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    entity->setBody(body);
+    body->CreateFixture(&fixtureDef);
 
-    entity->mSkin = new ConvexPolygonSkin(&points[0],points.size());
-    setMaterial(entity->mSkin,parameters->get<std::string>("materialName","").c_str());
+    setMaterial(skin, parameters->get<std::string>("materialName","").c_str());
 
     return entity;
 }

@@ -14,6 +14,10 @@ PlayerInputBrain::PlayerInputBrain()
 PlayerInputBrain::~PlayerInputBrain()
 {
     //dtor
+    /*g_InputManager.unregisterEvent(this,eUp);
+    g_InputManager.unregisterEvent(this,eLeft);
+    g_InputManager.unregisterEvent(this,eDown);
+    g_InputManager.unregisterEvent(this,eRight);*/
 }
 
 void PlayerInputBrain::activate()
@@ -25,7 +29,7 @@ void PlayerInputBrain::activate()
 }
 void PlayerInputBrain::update()
 {
-    g_AIManager.setPlayerNode(mEntity->mBody);
+    g_AIManager.setPlayerNode(mEntity->getPosition());
 }
 void PlayerInputBrain::resetInput()
 {

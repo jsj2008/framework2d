@@ -110,7 +110,7 @@ bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
     return true;
 }
 #include <iostream>
-std::vector<b2Body*> deadBodies;
+std::vector<Entity*> deadBodies;
 void DynamicEditor::init()
 {
     for (unsigned int i = 0; i < FactoryTypeRegisterEvent<Entity>::factoryNames.size(); i++)
@@ -130,7 +130,7 @@ void DynamicEditor::init()
     }
 
     for (unsigned int i = 0; i < deadBodies.size(); i++)
-        g_PhysicsManager.destroyBody(deadBodies[i]);
+        delete deadBodies[i];
     deadBodies.clear();
     FactoryTypeRegisterEvent<Entity>::factoryNames.clear();
 }
@@ -141,7 +141,7 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
     EditorFactoryType* editor = nullptr;
     {
         FactoryParameters parameters(true);
-        deadBodies.push_back(factory->use(&parameters)->mBody);
+        deadBodies.push_back(factory->use(&parameters));
         std::vector<std::string> values = parameters.getUndefinedLog(); /// FIXME this could be faster, its stored as a map internally, we could sort it
         for (auto editorMode = editorModes.begin(); editorMode != editorModes.end(); editorMode++)
         {

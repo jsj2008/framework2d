@@ -1,7 +1,8 @@
 #include "UpwardsGravityBubble.h"
 #include <Box2D/Dynamics/b2Body.h>
 
-UpwardsGravityBubble::UpwardsGravityBubble()
+UpwardsGravityBubble::UpwardsGravityBubble(Skin* _skin)
+:Bubble(_skin)
 {
     //ctor
 }

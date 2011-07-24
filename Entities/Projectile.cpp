@@ -5,11 +5,11 @@
 #include <Box2D/Box2D.h>
 
 Projectile::Projectile(const std::string& _explosion, Skin* _skin)
+:Entity(_skin)
 {
     //ctor
     alive = true;
     explosion = _explosion;
-    mSkin = _skin;
 }
 
 Projectile::~Projectile()

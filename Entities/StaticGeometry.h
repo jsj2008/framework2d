@@ -7,7 +7,7 @@
 class StaticGeometry : public Entity
 {
     public:
-        StaticGeometry();
+        StaticGeometry(Skin* _skin);
         void update();
         EntityType getType(){return eStaticGeometryEntityType;}
     protected:

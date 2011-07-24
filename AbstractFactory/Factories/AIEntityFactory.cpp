@@ -38,14 +38,12 @@ Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
     damageSprayFactory = AbstractFactories::global().getFactory<Entity>("spark");
     Brain* brain = brainFactory->use(parameters);
-    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory);
+    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));
 
     parameters->add<void*>("userData",entity);
 
-    entity->mBody = bodyFactory->use(parameters);
+    entity->setBody(bodyFactory->use(parameters));
     entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",nullptr));
-
-    entity->mSkin = skinFactory->use(parameters);
 
     return entity;
 }

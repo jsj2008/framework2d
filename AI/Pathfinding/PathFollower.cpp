@@ -15,10 +15,9 @@ PathFollower::~PathFollower()
     //dtor
 }
 
-AIManager::Operation PathFollower::update(b2Body* body, Node newTarget)
+AIManager::Operation PathFollower::update(const Vec2f& _position, Node newTarget)
 {
-    const Vec2f& position = body->GetPosition();
-    Node newClosest = g_AIManager.findClosestNode(position); // FIXME optimise this so it checks the distance first
+    Node newClosest = g_AIManager.findClosestNode(_position); // FIXME optimise this so it checks the distance first
     if (newClosest != closest || newTarget != target)
     {
         target = newTarget;
@@ -37,7 +36,7 @@ AIManager::Operation PathFollower::update(b2Body* body, Node newTarget)
             case AIManager::eJumpLeft:
             case AIManager::eWalkLeft:
             {
-                if (position.x < instruction.target.x)
+                if (_position.x < instruction.target.x)
                 {
                     instructions.pop();
                 }
@@ -46,7 +45,7 @@ AIManager::Operation PathFollower::update(b2Body* body, Node newTarget)
             case AIManager::eJumpRight:
             case AIManager::eWalkRight:
             {
-                if (position.x > instruction.target.x)
+                if (_position.x > instruction.target.x)
                 {
                     instructions.pop();
                 }

@@ -34,7 +34,7 @@ extern class AIManager
         void tempRender(){pathfinding->tempRender();}
         Node findClosestNode(const Vec2f& position);
         Node getPlayerNode(){return playerNode;}
-        void setPlayerNode(b2Body* playerbody);
+        void setPlayerNode(const Vec2f& _playerPosition);
         void path(Node start, Node end, std::stack<PathInstruction>& instructions);
     protected:
     private:
