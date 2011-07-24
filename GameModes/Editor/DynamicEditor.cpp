@@ -5,6 +5,7 @@
 #include <Entities/Entity.h>
 #include <Physics/PhysicsManager.h>
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h>
+#include <GameModes/Editor/DynamicEditor/AllDynamicEditorModes.h>
 #include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
 #include <Events/Events.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
@@ -28,7 +29,7 @@ InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab
 
     for (auto i = factoryType->instanceVariableFactories.begin(); i != factoryType->instanceVariableFactories.end(); i++)
     {
-        DynamicEditorVariable* editorVar = (*i)->createVariable(editorMode->getWindow(),params->getTypeTable());
+        DynamicEditorVariable* editorVar = (*i)->createVariable(editorMode->getWindow(),params->getTypeTable(), _factoryName);
         editorMode->addVariable(editorVar);
     }
 
@@ -66,21 +67,33 @@ CEGUI::TabControl* createTabControl(const std::string& _prefix)
     assert(dynamic_cast<CEGUI::TabControl*>(uncastTab));
     return static_cast<CEGUI::TabControl*>(uncastTab);
 }
+
+class TextEditBoxFactory : public DynamicEditor::VariableFactory
+{
+    public:
+        TextEditBoxFactory(const std::string& _name, const std::string& _defaultValue){name = _name;defaultValue = _defaultValue;}
+        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){return new TextEditBox(_rootWindow,_params,name,defaultValue,_factoryName);}
+    private:
+        std::string name, defaultValue;
+};
 DynamicEditor::DynamicEditor(FreeCamera* camera)
 :editorModes
-({{
-    {"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragMode>(),
-}}),
+({
+    {{"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragMode>()},
+    {{"points"}, new DynamicEditor::DerivedModeFactory<PointGeometryMode>()},
+    {{"position"}, new DynamicEditor::DerivedModeFactory<ClickPlaceMode>()},
+}),
 editorVariables
-({{
-    "material", new DynamicEditor::DerivedVariableFactory<TextEditBox>()
-}})
+({
+    {"material", new TextEditBoxFactory("material","StaticSkinFactory")},
+})
 {
     //ctor
     camera->activate();
     mCamera = camera;
     instanceTab = createTabControl("Entities");
     typeTab = createTabControl("EntityTypes");
+    Events::global().registerListener(this);
 }
 
 DynamicEditor::~DynamicEditor()
@@ -88,14 +101,38 @@ DynamicEditor::~DynamicEditor()
     //dtor
     instanceTab->getParent()->destroy();
     typeTab->getParent()->destroy();
+    Events::global().unregisterListener(this);
+}
+
+
+bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
+{
+    return true;
 }
 #include <iostream>
+std::vector<b2Body*> deadBodies;
 void DynamicEditor::init()
 {
-    editorFactories["CrateFactory"] = searchExistingFactoryInstances("CrateFactory", true);
-    activeEditor = editorFactories["CrateFactory"]->createEditor(instanceTab, "CrateFactory");
-    factoryInstances.push_back(activeEditor);
-    instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
+    for (unsigned int i = 0; i < FactoryTypeRegisterEvent<Entity>::factoryNames.size(); i++)
+    {
+        std::string name = FactoryTypeRegisterEvent<Entity>::factoryNames[i];
+        if (name != "AIEntityFactory")
+        {
+            DynamicEditor::EditorFactory* factory = searchExistingFactoryInstances(name, true);
+            if (factory != nullptr)
+            {
+                editorFactories[name] = factory;
+                activeEditor = factory->createEditor(instanceTab, name);
+                factoryInstances.push_back(activeEditor);
+                instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
+            }
+        }
+    }
+
+    for (unsigned int i = 0; i < deadBodies.size(); i++)
+        g_PhysicsManager.destroyBody(deadBodies[i]);
+    deadBodies.clear();
+    FactoryTypeRegisterEvent<Entity>::factoryNames.clear();
 }
 
 DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(const std::string& factoryName, bool _createType)
@@ -104,7 +141,7 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
     EditorFactoryType* editor = nullptr;
     {
         FactoryParameters parameters(true);
-        g_PhysicsManager.destroyBody(factory->use(&parameters)->mBody);
+        deadBodies.push_back(factory->use(&parameters)->mBody);
         std::vector<std::string> values = parameters.getUndefinedLog(); /// FIXME this could be faster, its stored as a map internally, we could sort it
         for (auto editorMode = editorModes.begin(); editorMode != editorModes.end(); editorMode++)
         {
@@ -122,7 +159,7 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
                     }
                 }
             }
-            if (matches == values.size())
+            if (matches == editorMode->first.size())
             {
                 editor = new EditorFactoryType(editorMode->second, this, factoryName);
                 while (!matchedStrings.empty())
@@ -138,11 +175,14 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
                         editor->addInstanceVariableFactory(variable->second);
                     }
                 }
-                break;
+                //break;
+                goto MATCH_FOUND;
             }
             /// else matchedStrings.clear(); - Not necessary
         }
     }
+    return nullptr;
+MATCH_FOUND:
     if (_createType)
     {
         TextFileFactoryLoader loader(nullptr, true);
@@ -158,7 +198,7 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
             auto variable = editorVariables.find(*value);
             if (variable != editorVariables.end())
             {
-                editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable()));
+                editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable(),factoryName));
             }
         }
         page->setProperty("Text",factoryName + "Type");
@@ -185,19 +225,28 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
 
 void DynamicEditor::buttonDown(Vec2i mouse, unsigned char button)
 {
-    activeEditor->buttonDown(mouse,button);
+    factoryInstances[instanceTab->getSelectedTabIndex()]->buttonDown(mouse,button);
 }
 void DynamicEditor::mouseMove(Vec2i mouse)
 {
-    activeEditor->mouseMove(mouse);
+    factoryInstances[instanceTab->getSelectedTabIndex()]->mouseMove(mouse);
 }
 void DynamicEditor::buttonUp(Vec2i mouse, unsigned char button)
 {
-    activeEditor->buttonUp(mouse,button);
+    factoryInstances[instanceTab->getSelectedTabIndex()]->buttonUp(mouse,button);
+}
+void DynamicEditor::render()
+{
+    factoryInstances[instanceTab->getSelectedTabIndex()]->render();
 }
 
 bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
 {
     factories.insert(event->getName());
+    return true;
+}
+bool DynamicEditor::FactoryUseList::trigger(FactoryEvent<b2Body>* event)
+{
+    factories.push_back(event->get());
     return true;
 }

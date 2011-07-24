@@ -17,15 +17,12 @@ CarneGame::~CarneGame()
 {
     //dtor
 }
-extern TileMap* g_TileMap; /// FIXME
 void CarneGame::buttonUp(Vec2i mouse, unsigned char button)
 {
-    /*Vec2f position = mouse.ScreenToWorldSpace();
-    playerBrain->mEntity->fireAt(position);*/
     Vec2f position = playerBrain->mEntity->mBody->GetPosition();
     Vec2f direction = mouse.ScreenToWorldSpace()-position;
     direction.Normalize();
-    g_TileMap->destroy(position,direction);
+    //g_TileMap->destroy(position,direction);
 }
 
 void CarneGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)

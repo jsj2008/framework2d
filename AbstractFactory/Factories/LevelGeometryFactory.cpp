@@ -24,7 +24,7 @@ LevelGeometryFactory::~LevelGeometryFactory()
 
 Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
 {
-    std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{});
+    std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{{0,0},{1,1},{-2,1}});
 
     //g_AIManager.addStaticGeometry(&points[0],points.size());
     StaticGeometry* entity = new StaticGeometry;

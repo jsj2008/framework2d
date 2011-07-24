@@ -4,7 +4,7 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/TileMap.h>
 #include <Entities/Tile.h>
-
+/*
 TileMapFactory::TileMapFactory()
 {
 
@@ -39,3 +39,4 @@ Entity* TileMapFactory::useFactory(FactoryParameters* params)
     g_TileMap = entity;
     return entity;
 }
+*/

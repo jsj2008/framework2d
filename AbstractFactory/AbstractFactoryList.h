@@ -85,22 +85,27 @@ class TemplateFactoryCreator : public FactoryCreator<Product>
         AbstractFactoryBase<Product>* createFactory(){return new Factory();}
 };
 
-template <typename Product>
-template <typename Factory>
-void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, AbstractFactories* _factories)
-{
-    auto creator = new TemplateFactoryCreator<Product, Factory>;
-    factoryCreators[name] = creator;
-    AbstractFactoryBase<Product>* factory = creator->createFactory();
-    factories[name] = factory;
-}
-
-
+#include <Events/Events/FactoryTypeRegisterEvent.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactory.h>
 #include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
 #include <Events/Events/FactoryGetEvent.h>
 #include <Events/Events.h>
+
+template <typename Product>
+template <typename Factory>
+void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, AbstractFactories* _factories)
+{
+    if (factoryCreators.find(name) == factoryCreators.end())
+    {
+        auto creator = new TemplateFactoryCreator<Product, Factory>;
+        factoryCreators[name] = creator;
+        AbstractFactoryBase<Product>* factory = creator->createFactory();
+        factories[name] = factory;
+        FactoryTypeRegisterEvent<Product> event(name);
+        Events::global().triggerEvent(&event);
+    }
+}
 
 template <typename Product>
 AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference factory)

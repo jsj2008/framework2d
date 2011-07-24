@@ -26,8 +26,7 @@ ExplosionFactory::~ExplosionFactory()
 }
 Entity* ExplosionFactory::useFactory(FactoryParameters* parameters)
 {
-    //PositionParameters* params = (PositionParameters*)parameters;
-    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));//params->position;
+    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     Entity* entity = new Explosion(shapeDef.m_radius,damage,force,time, new BubbleSkin(shapeDef.m_radius));
     bodyDef.userData = (void*)entity;
     entity->mBody = g_PhysicsManager.createBody(&bodyDef);

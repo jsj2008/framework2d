@@ -188,6 +188,8 @@
 		<Unit filename="AbstractFactory/Factories/TileMapFactory.h" />
 		<Unit filename="AbstractFactory/FactoryLoader.cpp" />
 		<Unit filename="AbstractFactory/FactoryLoader.h" />
+		<Unit filename="AbstractFactory/FactoryLoaders/CppFactoryLoader.cpp" />
+		<Unit filename="AbstractFactory/FactoryLoaders/CppFactoryLoader.h" />
 		<Unit filename="AbstractFactory/FactoryLoaders/TextFileFactoryLoader.cpp" />
 		<Unit filename="AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h" />
 		<Unit filename="AbstractFactory/FactoryParameters.cpp" />
@@ -253,9 +255,12 @@
 		<Unit filename="GameModes/Editor/CrateSpawner.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/AllDynamicEditorModes.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h" />
-		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragVariable.cpp" />
-		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragVariable.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragMode.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragMode.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.cpp" />

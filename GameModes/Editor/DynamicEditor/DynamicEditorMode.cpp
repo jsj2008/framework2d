@@ -2,7 +2,7 @@
 #include <Level/LevelManager.h>
 
 DynamicEditorMode::DynamicEditorMode(FactoryParameters* _params)
-:DynamicEditorVariable(nullptr, _params->getTypeTable())
+:DynamicEditorVariable(nullptr, _params->getTypeTable(),"")
 {
     //ctor
     params = _params;

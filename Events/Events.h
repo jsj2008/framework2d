@@ -1,6 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
+#include <Events/GenericEvent.h>
 class Event;
 template <typename DerivedEvent>
 class EventsListener;
@@ -19,6 +20,9 @@ class Events
 
         template <typename DerivedEvent>
         void unregisterListener(EventsListener<DerivedEvent>* listener);
+
+        template <GenericEvents eventName>
+        void triggerGenericEvent();
     protected:
     private:
         Events();

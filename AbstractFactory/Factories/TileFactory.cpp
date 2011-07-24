@@ -6,7 +6,7 @@
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <Types/Vec2i.h>
-
+/*
 TileFactory::TileFactory()
 {
     fixtureDef.shape = &shapeDef;
@@ -46,3 +46,4 @@ Entity* TileFactory::useFactory(FactoryParameters* parameters)
     setMaterial(entity->mSkin,materialName);
     return entity;
 }
+*/
