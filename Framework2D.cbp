@@ -242,6 +242,10 @@
 		<Unit filename="Events/Events/FactoryInstanceEvent.h" />
 		<Unit filename="Events/Events/FactoryTypeEvent.cpp" />
 		<Unit filename="Events/Events/FactoryTypeEvent.h" />
+		<Unit filename="Events/Events/FactoryTypeRegisterEvent.cpp" />
+		<Unit filename="Events/Events/FactoryTypeRegisterEvent.h" />
+		<Unit filename="Events/GenericEvent.cpp" />
+		<Unit filename="Events/GenericEvent.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
@@ -267,6 +271,8 @@
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/PointGeometryMode.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/PointGeometryMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/TextEditBox.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/TextEditBox.h" />
 		<Unit filename="GameModes/Editor/EditorMode.cpp" />
