@@ -15,11 +15,11 @@ class Level
     public:
         Level(const char* _name);
         virtual ~Level();
-        void addBody(const std::string& factory, FactoryParameters* parameters);
+        Entity* addBody(const std::string& factory, FactoryParameters* parameters);
         void addJoint(b2JointDef* def);
         void tempRender();
         void renderBackLayers();
-        void removeBody(Entity* body);
+        void removeBody(Entity* body, std::pair<std::string,FactoryParameters>* _saveConstruction = nullptr);
         void removeJoint(b2Joint* joint);
     protected:
     private:

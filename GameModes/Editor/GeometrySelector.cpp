@@ -6,6 +6,8 @@
 #include <Graphics/Camera/FreeCamera.h>
 #include <Box2D/Common/b2Math.h>
 #include <Entities/AIEntity.h>
+#include <GameModes/Editor/Undo/UndoStack.h>
+#include <GameModes/Editor/Undo/Entries/EntityDeleteEntry.h>
 
 GeometrySelector::GeometrySelector(FreeCamera* camera)
 {
@@ -63,7 +65,8 @@ void GeometrySelector::start(unsigned char button)
                 }
                 if (!mouseJointRemoved)
                 {
-                    g_LevelManager.removeBody(static_cast<Entity*>(body->GetUserData()));
+                    UndoStack::global().addEntry(new EntityDeleteEntry(static_cast<Entity*>(body->GetUserData()), g_LevelManager.getLevel()));
+                    //g_LevelManager.getLevel()->removeBody(static_cast<Entity*>(body->GetUserData()));
                 }
             }
         }

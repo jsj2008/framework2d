@@ -22,10 +22,11 @@ Level::~Level()
     //dtor
     saveLevel();
 }
-void Level::addBody(const std::string& factory, FactoryParameters* parameters)
+Entity* Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
     Entity* entity = AbstractFactories::global().useFactory<Entity>(factory, parameters);
     table[entity] = {factory,*parameters};
+    return entity;
 }
 void Level::addJoint(b2JointDef* def)
 {
@@ -94,11 +95,16 @@ void Level::addJoint(b2JointDef* def)
     strcpy(filename,"Resources/Levels/");\
     strcpy(filename+strlen("Resources/Levels/"),name);\
     strcpy(filename+strlen("Resources/Levels/")+strlen(name),".lvl")
-void Level::removeBody(Entity* body)
+void Level::removeBody(Entity* body, std::pair<std::string,FactoryParameters>* _saveConstruction)
 {
     auto result = table.find(body);
     if (result != table.end())
     {
+        if (_saveConstruction != nullptr)
+        {
+            _saveConstruction->first = result->second.first;
+            _saveConstruction->second = result->second.second;
+        }
         table.erase(body);
     }
     delete body;

@@ -2,7 +2,7 @@
 
 <GUILayout >
     <Window Type="DefaultWindow" Name="Root" >
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{-0.000884956,0},{0,0},{0.999115,0},{1,0}}" />
         <Window Type="TaharezLook/FrameWindow" Name="Frame" >
             <Property Name="Text" Value="Tab Control Demo" />
             <Property Name="Alpha" Value="0.5" />
@@ -78,6 +78,28 @@
             <Window Type="TaharezLook/Listbox" Name="ConsoleRoot/ChatBox" >
                 <Property Name="Tooltip" Value="Fuck you and your tooltips" />
                 <Property Name="UnifiedAreaRect" Value="{{0.0236181,0},{0.0194826,0},{0.967906,0},{0.768822,0}}" />
+            </Window>
+        </Window>
+        <Window Type="TaharezLook/FrameWindow" Name="UndoHistory" >
+            <Property Name="TitlebarFont" Value="DejaVuSans-10" />
+            <Property Name="TitlebarEnabled" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.691687,0},{0.354464,0},{0.941686,0},{0.604463,0}}" />
+            <Window Type="TaharezLook/Listbox" Name="UndoHistory/ListBox" >
+                <Property Name="UnifiedAreaRect" Value="{{0.0318749,0},{0.0191532,0},{0.956461,0},{0.734554,0}}" />
+            </Window>
+            <Window Type="TaharezLook/Button" Name="UndoHistory/Undo" >
+                <Property Name="Text" Value="Undo" />
+                <Property Name="UnifiedAreaRect" Value="{{0.0373261,0},{0.780843,0},{0.287325,0},{0.974675,0}}" />
+            </Window>
+            <Window Type="TaharezLook/Button" Name="UndoHistory/Redo" >
+                <Property Name="Text" Value="Redo" />
+                <Property Name="UnifiedAreaRect" Value="{{0.70934,0},{0.781747,0},{0.95934,0},{0.987614,0}}" />
+            </Window>
+            <Window Type="TaharezLook/StaticText" Name="UndoHistory/InfoBox" >
+                <Property Name="Text" >Undos: 0
+Redos: 0
+</Property>
+                <Property Name="UnifiedAreaRect" Value="{{0.31062,0},{0.76941,0},{0.702212,0},{0.995337,0}}" />
             </Window>
         </Window>
     </Window>

@@ -8,6 +8,7 @@
 #include <Timer.h>
 #include <GameModes/Editor/EditorMode.h>
 #include <Level/LevelManager.h>
+#include <GameModes/Editor/Undo/UndoStack.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <AI/AIManager.h>
 #include <AI/CharacterController.h>
@@ -66,6 +67,7 @@ void Game::init()
 
     g_AIManager.finalisePathfinding();
 
+    UndoStack::global().init();
     g_Timer.unPause();
 }
 Game::~Game()
