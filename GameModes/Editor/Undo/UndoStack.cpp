@@ -18,6 +18,7 @@ void UndoStack::init()
     window->getChild("UndoHistory/Undo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::undoButton, this));
     window->getChild("UndoHistory/Redo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::redoButton, this));
     listBox = static_cast<CEGUI::Listbox*>(window->getChild("UndoHistory/ListBox"));
+    listBox->setItemTooltipsEnabled(true);
 }
 UndoStack& UndoStack::global()
 {
@@ -28,9 +29,13 @@ bool UndoStack::undoButton(const CEGUI::EventArgs& _args)
 {
     if (undoStack.size() - stackOffset != 0)
     {
-        undoStack[undoStack.size()-(stackOffset+1)]->undo();
         stackOffset++;
+        undoStack[undoStack.size()-stackOffset]->undo();
         setInfoboxText();
+        std::string text("[colour='FFFF0000']");
+        text += undoStack[undoStack.size()-stackOffset]->getListText();
+        listBox->getListboxItemFromIndex(undoStack.size() - stackOffset)->setText(text);
+        listBox->handleUpdatedItemData();
     }
     return true;
 }
@@ -39,6 +44,10 @@ bool UndoStack::redoButton(const CEGUI::EventArgs& _args)
     if (stackOffset != 0)
     {
         undoStack[undoStack.size()-stackOffset]->redo();
+        std::string text("[colour='FFFFFFFF']");
+        text += undoStack[undoStack.size()-stackOffset]->getListText();
+        listBox->getListboxItemFromIndex(undoStack.size() - stackOffset)->setText(text);
+        listBox->handleUpdatedItemData();
         stackOffset--;
         setInfoboxText();
     }
@@ -56,6 +65,7 @@ void UndoStack::addEntry(UndoEntry* _entry)
     undoStack.push_back(_entry);
     _entry->redo();
     CEGUI::ListboxItem* item = new CEGUI::ListboxTextItem(_entry->getListText());
+    item->setTooltipText(_entry->getTooltipText());
     listBox->addItem(item);
     setInfoboxText();
 }

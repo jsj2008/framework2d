@@ -15,6 +15,7 @@ class EntityCreateEntry : public UndoEntry
         void redo();
         void undo();
         const char* getListText();
+        const char* getTooltipText();
     protected:
     private:
         UndoResource entity;

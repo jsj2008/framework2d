@@ -1,5 +1,7 @@
 #include "EntityCreateEntry.h"
 #include <Level/Level.h>
+#include <sstream>
+#include <cstring>
 
 EntityCreateEntry::EntityCreateEntry(const std::string& _factory, FactoryParameters* _params, Level* _level)
 {
@@ -28,5 +30,15 @@ void EntityCreateEntry::undo()
 
 const char* EntityCreateEntry::getListText()
 {
-    return "Create entity";
+    static char listText[32] = "Create ";
+    memcpy(listText + strlen("Create "), &factory[0], factory.length());
+    return listText;
+}
+
+const char* EntityCreateEntry::getTooltipText()
+{
+    static std::stringstream text;
+    text.str("");
+    text << params;
+    return text.str().c_str();
 }

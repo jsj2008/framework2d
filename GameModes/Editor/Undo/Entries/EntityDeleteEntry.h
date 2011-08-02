@@ -15,7 +15,8 @@ class EntityDeleteEntry : public UndoEntry
         ~EntityDeleteEntry();
         void redo();
         void undo();
-        const char* getListText(){return "Delete entity";}
+        const char* getListText();
+        const char* getTooltipText();
     protected:
     private:
         UndoResource entity;

@@ -177,6 +177,7 @@ bool InputManager::processInput()
             }
         }
     }
+    CEGUI::System::getSingleton().injectTimePulse(1.0f/60.0f);
     for (unsigned int i = 0; i < eInputActionsMax; i++)
     {
         if (controls[i].event != nullptr)

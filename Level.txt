@@ -1,4 +1,10 @@
-3 ExplosionFactory 1 Vec2f position 9.2 4.46667 
+9 ExplosionFactory 1 Vec2f position 9.2 4.46667 
+ CrateFactory 2 Vec2f position 8.76667 1.8 Vec2f dimensions 2.33333 4.26667 
+ CrateFactory 2 Vec2f dimensions 3.93333 2.73333 Vec2f position 7.56667 -0.366667 
  ExplosionFactory 1 Vec2f position 11.5333 5.93333 
+ CrateFactory 2 Vec2f position 8.76667 1.8 Vec2f dimensions 2.33333 4.26667 
  LevelGeometryFactory 1 Vec2fArray points 4 -1 6.86667  26.3333 9.2  25.5333 18.8  1.86667 20.2  
+ CrateFactory 2 Vec2f position 9.66667 3.46667 Vec2f dimensions 2.13333 7.46667 
+ CrateFactory 2 Vec2f position 4.3 -4.16667 Vec2f dimensions 4.06667 2.6 
+ CrateFactory 2 Vec2f position 9.66667 3.46667 Vec2f dimensions 2.13333 7.46667 
  

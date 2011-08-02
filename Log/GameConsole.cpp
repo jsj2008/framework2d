@@ -56,6 +56,7 @@ void GameConsole::registerHandlers()
                         CEGUI::Event::Subscriber(
                             &GameConsole::handleSendButtonPressed,
                         this));
+    consoleWindow->getChild("ConsoleRoot/SendButton")->setTooltipText("Suck ma boab");
     consoleWindow->getChild("ConsoleRoot/EditBox")->subscribeEvent(CEGUI::Editbox::EventMouseClick,
                         CEGUI::Event::Subscriber(&GameConsole::handleTextSubmitted,this));
 }

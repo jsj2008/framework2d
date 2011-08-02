@@ -54,6 +54,7 @@ GraphicsManager::GraphicsManager()
 
     CEGUI::Window* myRoot = CEGUI::WindowManager::getSingleton().loadWindowLayout("Root.layout");
     CEGUI::System::getSingleton().setGUISheet(myRoot);
+    CEGUI::System::getSingleton().setDefaultTooltip("TaharezLook/Tooltip");
 
     new GameConsole();
 
