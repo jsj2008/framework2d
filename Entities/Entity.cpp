@@ -15,7 +15,7 @@ Entity::~Entity()
 {
     //dtor
     delete mSkin;
-    g_PhysicsManager.destroyBody(mBody);
+    mBody->GetWorld()->DestroyBody(mBody);
     //mBody->GetWorld()->DestroyBody(mBody);
 }
 

@@ -8,13 +8,17 @@ AIManager g_AIManager;
 AIManager::AIManager()
 {
     //ctor
-    playerNode = Node(0,0);
-    pathfinding = new Pathfinding;
 }
 
 AIManager::~AIManager()
 {
     //dtor
+}
+
+void AIManager::init(PhysicsManager* _physicsManager)
+{
+    playerNode = Node(0,0);
+    pathfinding = new Pathfinding(_physicsManager);
 }
 
 void AIManager::path(Node start, Node end, std::stack<PathInstruction>& instructions)

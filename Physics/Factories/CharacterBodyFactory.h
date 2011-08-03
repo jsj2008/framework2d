@@ -25,6 +25,7 @@ class CharacterBodyFactory : public AbstractFactory<b2Body, CharacterBodyFactory
         b2FixtureDef wheelFixture;
         b2CircleShape wheelShape;
         b2RevoluteJointDef wheelJoint;
+        PhysicsManager* world;
 
         Vec2f dimensions;
 };

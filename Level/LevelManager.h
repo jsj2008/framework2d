@@ -8,7 +8,7 @@
 #include <Level/Level.h>
 class FactoryParameters;
 
-extern class LevelManager
+class LevelManager
 {
     public:
         LevelManager();
@@ -16,13 +16,14 @@ extern class LevelManager
         Level* getLevel(){return level;}
         void addJoint(b2JointDef* def){level->addJoint(def);}
         void renderBackLayers(){level->renderBackLayers();}
-        void tempRender(){level->tempRender();}
+        void render(){level->render();}
         void removeJoint(b2Joint* joint){level->removeJoint(joint);}
-        void loadLevel(const char* name){level = new Level(name);}
+        Level* loadLevel(const char* name){level = new Level(name); return level;}
         void saveLevel(const char* name){delete level;}
+        bool update(){return level->update();}
     protected:
     private:
         Level* level;
-}g_LevelManager;
+};
 
 #endif // LEVELMANAGER_H

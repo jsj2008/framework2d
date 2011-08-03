@@ -6,6 +6,7 @@
 #include <Box2D/Box2D.h>
 class FactoryLoader;
 class Entity;
+class PhysicsManager;
 
 class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
 {
@@ -28,6 +29,7 @@ class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
+        PhysicsManager* physicsManager;
 };
 
 #endif // EXPLOSIONFACTORY_H

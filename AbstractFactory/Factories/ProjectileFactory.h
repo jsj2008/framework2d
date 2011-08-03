@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 class Entity;
 class FactoryLoader;
+class PhysicsManager;
 
 class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
 {
@@ -22,6 +23,7 @@ class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
+        PhysicsManager* physicsManager;
 
         std::string material;
         float radius;

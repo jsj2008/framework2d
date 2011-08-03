@@ -14,11 +14,13 @@ class Entity;
 class FreeCamera;
 class DynamicEditorMode;
 class DynamicEditorVariable;
+class EditorMode;
+class Level;
 
 class DynamicEditor : public GameMode, public InputContext,  public EventsListener<FactoryTypeRegisterEvent<Entity>>
 {
     public:
-        DynamicEditor(FreeCamera* camera);
+        DynamicEditor(FreeCamera* camera, EditorMode* _mode);
         virtual ~DynamicEditor();
         void init();
         void buttonDown(Vec2i mouse, unsigned char button);
@@ -26,6 +28,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         void buttonUp(Vec2i mouse, unsigned char button);
         bool trigger(FactoryTypeRegisterEvent<Entity>* event);
         void render();
+        Level* getActiveLevel();
 
         class VariableFactory;
     protected:
@@ -48,7 +51,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
             public:
                 EditorFactory(EditorFactoryType* _factoryType){factoryType = _factoryType;}
                 ~EditorFactory();
-                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName);
+                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName, DynamicEditor* _editor);
             private:
                 EditorFactoryType* factoryType;
         };
@@ -121,6 +124,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         };
         CEGUI::TabControl* instanceTab;
         CEGUI::TabControl* typeTab;
+        EditorMode* editorMode;
 };
 
 #endif // DYNAMICEDITOR_H

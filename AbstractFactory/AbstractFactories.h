@@ -14,6 +14,7 @@ class UntypedAbstractFactory;
 template <typename DerivedEvent>
 class EventsListener;
 class FactoryLoader;
+class PhysicsManager;
 
 class AbstractFactories
 {
@@ -38,7 +39,7 @@ class AbstractFactories
         /// time and memory to maintain a list of all factories
         UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
 
-        void init();
+        void init(PhysicsManager* _world);
 
         void print();
 
@@ -47,6 +48,8 @@ class AbstractFactories
             static AbstractFactories factories;
             return factories;
         }
+
+        PhysicsManager* getWorld();
 
     protected:
     private:
@@ -63,6 +66,7 @@ class AbstractFactories
             static std::unordered_map<std::string, class AbstractFactoryListBase*> factoryLists;
             return &factoryLists;
         }
+        PhysicsManager* physicsManager;
 };
 
 /** Implementation

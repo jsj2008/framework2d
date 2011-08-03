@@ -65,10 +65,6 @@ void PlayMode::setCamera(Camera* _camera)
 {
     mCamera = _camera;
 }
-void PlayMode::setPlayerBrain(PlayerInputBrain* _playerBrain)
-{
-    playerBrain = _playerBrain;
-}
 
 bool PlayMode::activate(const CEGUI::EventArgs& args)
 {

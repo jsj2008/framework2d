@@ -9,6 +9,8 @@ ShooterGame::ShooterGame()
 {
     //ctor
     mCamera = nullptr;
+    playerBrain = nullptr;
+    Events::global().registerListener(this);
 }
 
 ShooterGame::~ShooterGame()
@@ -42,3 +44,12 @@ bool ShooterGame::activate(const CEGUI::EventArgs& args)
     return true;
 }
 
+bool ShooterGame::trigger(FactoryTypeEvent<Brain, PlayerInputBrainFactory>* event)
+{
+    playerBrain = static_cast<PlayerInputBrain*>(event->get());
+    return true;
+}
+void ShooterGame::setCamera(Camera* _camera)
+{
+    mCamera = _camera;
+}

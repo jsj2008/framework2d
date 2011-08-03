@@ -10,7 +10,7 @@ class DebugDraw;
 #define JUMPING
 #define WORLD_GRAVITY 9.8f
 
-extern class PhysicsManager
+class PhysicsManager
 {
     public:
         PhysicsManager();
@@ -21,7 +21,6 @@ extern class PhysicsManager
         b2Body* createBody(b2BodyDef* def);
         b2Joint* createJoint(b2JointDef* def);
         /// You create fixtures on the body
-        void destroyBody(b2Body* body);
         b2MouseJoint* createJoint(b2Body* body, Vec2f& point);
         void deleteJoint(b2Joint* joint);
         bool update();
@@ -53,6 +52,6 @@ extern class PhysicsManager
         DebugDraw* debugDraw;
         unsigned int startTime;
         unsigned int stepsTaken;
-}g_PhysicsManager;
+};
 
 #endif // PHYSICSMANAGER_H

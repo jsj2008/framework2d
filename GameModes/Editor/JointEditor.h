@@ -7,12 +7,13 @@ class EditorStateSwitcher;
 class SelectionBox;
 class b2Body;
 class FreeCamera;
+class EditorMode;
 #define NUM_JOINT_MODES 1
 
 class JointEditor : public GameMode, public ClickNoEvent
 {
     public:
-        JointEditor(FreeCamera* camera);
+        JointEditor(FreeCamera* camera, EditorMode* _editorMode);
         void init();
         virtual ~JointEditor();
         void registerEvent(InputContext* event);
@@ -21,6 +22,7 @@ class JointEditor : public GameMode, public ClickNoEvent
     private:
         InputContext* modes[NUM_JOINT_MODES];
         EditorStateSwitcher* stateSwitcher;
+        EditorMode* editorMode;
 };
 
 #endif // JOINTEDITOR_H

@@ -25,7 +25,6 @@ Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
     AbstractFactoryBase<Entity>* entityFactory = AbstractFactories::global().getFactory<Entity>(factoryName);
     entityFactory->use(params);
     Camera* camera = new PhysicsCamera(body);
-    static_cast<PlayMode*>(g_Game.getGameMode(ePlayGameMode))->setCamera(camera);
     return camera;
 }
 

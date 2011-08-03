@@ -3,9 +3,10 @@
 #include <AI/PathGeneration/PathNodeDynamic.h>
 #include <AI/Pathfinding/Paths.h>
 
-PathGraph::PathGraph()
+PathGraph::PathGraph(PhysicsManager* _physicsManager)
 {
     //ctor
+    physicsManager = _physicsManager;
 }
 
 PathGraph::~PathGraph()
@@ -140,7 +141,7 @@ Paths* PathGraph::finalise()
         PathSegment* segment = segments[i];
         Vec2f point = ((segment->getNodeB()->getPosition() - segment->getNodeA()->getPosition())*0.5f)+segment->getNodeA()->getPosition();
         PathNodeDynamicGeometryCallback callback(point);
-        g_PhysicsManager.AABBQuery(&callback,point);
+        physicsManager->AABBQuery(&callback,point);
         if (callback.contained())
         {
             PathNodeDynamic* node = segments[i]->getNodeA();

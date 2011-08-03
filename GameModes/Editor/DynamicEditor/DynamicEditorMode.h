@@ -4,13 +4,14 @@
 #include <Input/Mouse/InputContext.h>
 #include <GameModes/Editor/DynamicEditor/DynamicEditorVariable.h>
 class FactoryParameters;
+class DynamicEditor;
 
 class DynamicEditorMode : public InputContext, public DynamicEditorVariable
 {
     public:
         DynamicEditorMode(FactoryParameters* _params);
         virtual ~DynamicEditorMode();
-        void initEditorMode(std::string _name, CEGUI::Window* _window);
+        void initEditorMode(std::string _name, CEGUI::Window* _window, DynamicEditor* _editor);
         /// Called during initialisation also
         void addVariable(DynamicEditorVariable* _variable){variables.push_back(_variable);}
         CEGUI::Window* getWindow(){return rootWindow;}
@@ -18,6 +19,7 @@ class DynamicEditorMode : public InputContext, public DynamicEditorVariable
     protected:
         void create();
     private:
+        DynamicEditor* editor;
         FactoryParameters* params;
         std::vector<DynamicEditorVariable*> variables;
         std::string name;

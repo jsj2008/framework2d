@@ -5,6 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
+class PhysicsManager;
 
 class TileFactory : public AbstractFactory<Entity, TileFactory>
 {
@@ -22,6 +23,7 @@ class TileFactory : public AbstractFactory<Entity, TileFactory>
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
+        PhysicsManager* physicsManager;
 
         Vec2f size;
         std::string materialName;

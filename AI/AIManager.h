@@ -8,6 +8,7 @@
 class Paths;
 class PathNode;
 class b2Body;
+class PhysicsManager;
 
 extern class AIManager
 {
@@ -27,8 +28,8 @@ extern class AIManager
             Operation operation;
             Vec2f target;
         };
-        AIManager();
         virtual ~AIManager();
+        void init(PhysicsManager* _physicsManager);
         void addStaticGeometry(Vec2f* vertices, int numVertices){pathfinding->addStaticGeometry(vertices, numVertices);}
         void finalisePathfinding(){paths = pathfinding->finalise();}
         void tempRender(){pathfinding->tempRender();}
@@ -36,6 +37,7 @@ extern class AIManager
         Node getPlayerNode(){return playerNode;}
         void setPlayerNode(const Vec2f& _playerPosition);
         void path(Node start, Node end, std::stack<PathInstruction>& instructions);
+        AIManager(); /// This is just here as a reminder to call init(), and then migrate it to here
     protected:
     private:
         Paths* paths;

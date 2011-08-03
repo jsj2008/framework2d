@@ -8,6 +8,7 @@
 
 ParticleFactory::ParticleFactory()
 {
+    physicsManager = nullptr;
     bodyDef.type = b2_dynamicBody;
 }
 void ParticleFactory::init(FactoryLoader* loader, AbstractFactories* factories)
@@ -16,7 +17,7 @@ void ParticleFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     density = loader->get<float>("density",1.0f);
     lifetime = loader->get<int>("lifetime",60); /// FIXME needs ints
     materialName = loader->get<std::string>("materialName","Spark");
-
+    physicsManager = factories->getWorld();
 }
 
 ParticleFactory::~ParticleFactory()
@@ -31,7 +32,7 @@ Entity* ParticleFactory::useFactory(FactoryParameters* parameters)
 
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));//params->position;
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&shape, density);
 

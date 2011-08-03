@@ -56,7 +56,7 @@ void AIEntity::update()
     mBrain->update();
     if (health  < 1)
     {
-        g_PhysicsManager.destroyBody(mBody);
+        mBody->GetWorld()->DestroyBody(mBody);
     }
     controller.update();
 }

@@ -5,6 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
+class PhysicsManager;
 
 class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
 {
@@ -25,6 +26,7 @@ class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
 
         b2BodyDef bodyDef;
         b2CircleShape shape;
+        PhysicsManager* physicsManager;
 };
 
 #endif // PARTICLEFACTORY_H

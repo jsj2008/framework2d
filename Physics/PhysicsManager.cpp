@@ -11,7 +11,6 @@
 #include <stack>
 #define DEBUG_DRAW
 
-PhysicsManager g_PhysicsManager;
 PhysicsManager::PhysicsManager()
 {
     //ctor
@@ -24,6 +23,7 @@ PhysicsManager::PhysicsManager()
 
     usedPositiveCollisionGroups = 1;
     usedNegativeCollisionGroups = -1;
+    init();
 }
 PhysicsManager::~PhysicsManager()
 {
@@ -64,13 +64,6 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 }
 #include <iostream>
 using namespace std;
-void PhysicsManager::destroyBody(b2Body* body)
-{
-    if (body) /// FIXME shouldn't be needed, is only here for TileMap
-    {
-        mWorld->DestroyBody(body);
-    }
-}
 b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 {
     static b2Body* groundBody = nullptr;
@@ -90,7 +83,6 @@ b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 void PhysicsManager::deleteJoint(b2Joint* joint)
 {
     mWorld->DestroyJoint(joint);
-    g_LevelManager.removeJoint(joint);
 }
 bool PhysicsManager::update()
 {

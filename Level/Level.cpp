@@ -14,7 +14,7 @@ Level::Level(const char* _name)
 {
     //ctor
     name = _name;
-    loadLevel();
+    world = new PhysicsManager();
 }
 
 Level::~Level()
@@ -87,7 +87,7 @@ void Level::addJoint(b2JointDef* def)
     auto geometryIter = table.find(bodyB);
     if (crateIter != table.end() && geometryIter != table.end())
     {
-        jointToDefTable[g_PhysicsManager.createJoint(copy)] = copy;
+        jointToDefTable[world->createJoint(copy)] = copy;
     }
 }
 #define CREATE_FILE_NAME \
@@ -195,9 +195,14 @@ unsigned int getJointDefSize(b2JointType type)
     }
     return 0;
 }
-#include <GL/gl.h>
-void Level::tempRender()
+bool Level::update()
 {
+    return world->update();
+}
+#include <GL/gl.h>
+void Level::render()
+{
+    world->render();
     glColor3f(0,1,0);
     glBegin(GL_LINES);
     for (auto i = jointToDefTable.begin(); i != jointToDefTable.end(); i++)

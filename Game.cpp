@@ -16,20 +16,9 @@
 #include <SharedContent/WeaponContent.h>
 #include <AbstractFactory/AbstractFactories.h>
 
-#include <AbstractFactory/Factories/ExplosionFactory.h>
-#include <AbstractFactory/Factories/ProjectileFactory.h>
-#include <AbstractFactory/Factories/ParticleFactory.h>
-#include <AbstractFactory/Factories/CrateFactory.h>
-#include <AbstractFactory/Factories/LevelGeometryFactory.h>
-#include <AbstractFactory/Factories/AIEntityFactory.h>
-#include <AbstractFactory/Factories/TileFactory.h>
-#include <AbstractFactory/Factories/TileMapFactory.h>
 #include <AbstractFactory/Factories/BubbleFactory.h>
-#include <Graphics/SkinFactory/StaticSkinFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
-#include <Physics/Factories/CharacterBodyFactory.h>
 
-#include <AI/BrainFactory/AllBrainFactories.h>
 
 #include <cstring>
 #include <iostream>
@@ -44,27 +33,25 @@ void Game::init()
     //ctor
     g_Timer.init();
     g_Timer.pause();
+    level = new Level("default");
 
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
-    AbstractFactories::global().init();
+    AbstractFactories::global().init(level->getWorld());
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
-    g_PhysicsManager.init();
 
-    mGameModes[ePlayGameMode] = new ShooterGame;
-
-    g_LevelManager.loadLevel("default");
+    level->loadLevel();
     FactoryParameters params;
-    AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params);
-    //g_LevelManager.addBody("tiles",&params);
+    ShooterGame* playMode = new ShooterGame;
+    playMode->setCamera(AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params));
 
-    mGameModes[eEditorGameMode] = new EditorMode;
+    editor = new EditorMode(level, playMode);
 
     CEGUI::EventArgs args;
-    mGameModes[eEditorGameMode]->activate(args);
-    mGameModes[ePlayGameMode]->activate(args);
+    editor->activate(args);
 
+    g_AIManager.init(level->getWorld());
     g_AIManager.finalisePathfinding();
 
     UndoStack::global().init();
@@ -74,32 +61,26 @@ Game::~Game()
 {
     //dtor
 }
-InputContext* Game::getGameMode(GameModes mode)
-{
-    return mGameModes[mode];
-}
 #include <GL/gl.h>
 void Game::run()
 {
     bool running = true;
     while (running)
     {
-        if (g_PhysicsManager.update())
+        if (level->update())
         {
             running = g_InputManager.processInput();
         }
         g_GraphicsManager.beginScene();
-        g_PhysicsManager.render();
         g_InputManager.render();
-        g_LevelManager.tempRender();
+        level->render();
         g_AIManager.tempRender();
         SDL_Delay(5);
         g_GraphicsManager.endScene();
     }
-    g_LevelManager.saveLevel("default");
+    delete level;
     //delete mGameModes[ePlayGameMode];
     //delete mGameModes[eEditorGameMode];
-    g_PhysicsManager.clear();
 }
 
 

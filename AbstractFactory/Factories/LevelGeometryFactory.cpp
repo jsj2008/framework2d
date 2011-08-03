@@ -9,17 +9,20 @@
 LevelGeometryFactory::LevelGeometryFactory()
 {
     //ctor
+    physicsManager = nullptr;
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
-}
-void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
-{
 }
 
 LevelGeometryFactory::~LevelGeometryFactory()
 {
     //dtor
+}
+
+void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+{
+    physicsManager = factories->getWorld();
+    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
@@ -35,7 +38,7 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     shapeDef.Set(&points[0],points.size());
 
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 

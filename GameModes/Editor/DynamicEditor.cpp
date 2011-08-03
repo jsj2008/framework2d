@@ -7,6 +7,7 @@
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h>
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorModes.h>
 #include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
+#include <GameModes/Editor/EditorMode.h>#
 #include <Events/Events.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
 
@@ -16,7 +17,7 @@ DynamicEditorMode* DynamicEditor::DerivedModeFactory<mode>::createMode(FactoryPa
     return new mode(_params);
 }
 
-InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab, std::string _factoryName)
+InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab, std::string _factoryName, DynamicEditor* _editor)
 {
     FactoryParameters* params = new FactoryParameters(true);
     DynamicEditorMode* editorMode = factoryType->modeFactory->createMode(params);
@@ -25,7 +26,7 @@ InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab
     page->setProperty("Text",_factoryName);
     _tab->addTab(page);
 
-    editorMode->initEditorMode(_factoryName, page);
+    editorMode->initEditorMode(_factoryName, page, _editor);
 
     for (auto i = factoryType->instanceVariableFactories.begin(); i != factoryType->instanceVariableFactories.end(); i++)
     {
@@ -51,7 +52,7 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     for (unsigned int i = 0; i < deadBodies.size(); i++)
         delete deadBodies[i];
     deadBodies.clear();
-    editor->activeEditor = editor->editorFactories[name]->createEditor(editor->instanceTab, name);
+    editor->activeEditor = editor->editorFactories[name]->createEditor(editor->instanceTab, name, editor);
     editor->factoryInstances.push_back(editor->activeEditor);
     editor->instanceTab->setSelectedTabAtIndex(editor->instanceTab->getTabCount()-1);
     std::ofstream file ("Resources/EntityFactories.txt", std::ios::app);
@@ -79,7 +80,7 @@ class TextEditBoxFactory : public DynamicEditor::VariableFactory
     private:
         std::string name, defaultValue;
 };
-DynamicEditor::DynamicEditor(FreeCamera* camera)
+DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 :editorModes
 ({
     {{"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragMode>()},
@@ -100,6 +101,7 @@ editorVariables
     CEGUI::Window* button = typeTab->getParent()->getChild("CreateButton");
     button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&DynamicEditor::createFactory,this));
     Events::global().registerListener(this);
+    editorMode = _mode;
 }
 
 DynamicEditor::~DynamicEditor()
@@ -133,7 +135,7 @@ void DynamicEditor::init()
             if (factory != nullptr)
             {
                 editorFactories[name] = factory;
-                activeEditor = factory->createEditor(instanceTab, name);
+                activeEditor = factory->createEditor(instanceTab, name, this);
                 factoryInstances.push_back(activeEditor);
                 instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
             }
@@ -253,4 +255,9 @@ bool DynamicEditor::FactoryUseList::trigger(FactoryEvent<b2Body>* event)
 {
     factories.push_back(event->get());
     return true;
+}
+
+Level* DynamicEditor::getActiveLevel()
+{
+    return editorMode->getActiveLevel();
 }

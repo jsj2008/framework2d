@@ -7,7 +7,7 @@ class Vec2f;
 class Pathfinding
 {
     public:
-        Pathfinding();
+        Pathfinding(PhysicsManager* _physicsManager);
         virtual ~Pathfinding();
         void addStaticGeometry(Vec2f* vertices, int numVertices);
         Paths* finalise();

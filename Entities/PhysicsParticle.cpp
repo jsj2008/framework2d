@@ -18,6 +18,6 @@ void PhysicsParticle::update()
     timer--;
     if (timer == 0)
     {
-        g_PhysicsManager.destroyBody(mBody);
+        mBody->GetWorld()->DestroyBody(mBody);
     }
 }

@@ -6,11 +6,12 @@
 #include <GameModes/GameMode.h>
 class b2MouseJoint;
 class FreeCamera;
+class EditorMode;
 
 class GeometrySelector : public GameMode, public ClickDragEvent
 {
     public:
-        GeometrySelector(FreeCamera* camera);
+        GeometrySelector(FreeCamera* camera, EditorMode* _editorMode);
         virtual ~GeometrySelector();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
@@ -22,6 +23,7 @@ class GeometrySelector : public GameMode, public ClickDragEvent
         unsigned int bodyHealth;
         std::unordered_set<b2MouseJoint*> activeMouseJoints;
         void drawMouseJoints();
+        EditorMode* editorMode;
 };
 
 #endif // GEOMETRYSELECTOR_H

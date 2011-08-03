@@ -10,7 +10,7 @@ namespace CEGUI
 class DistanceJointEditor : public BaseJointEditor
 {
     public:
-        DistanceJointEditor(FreeCamera* _camera);
+        DistanceJointEditor(FreeCamera* _camera, EditorMode* _editorMode);
         virtual ~DistanceJointEditor();
         void init();
     protected:

@@ -2,7 +2,8 @@
 #include <Types/Vec2f.h>
 class PathSegment;
 
-Pathfinding::Pathfinding()
+Pathfinding::Pathfinding(PhysicsManager* _physicsManager)
+:pathGraph(_physicsManager)
 {
     //ctor
 }

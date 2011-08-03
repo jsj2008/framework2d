@@ -1,10 +1,11 @@
 #include "DistanceJointEditor.h"
 #include <Physics/PhysicsManager.h>
 #include <Level/LevelManager.h>
+#include <GameModes/Editor/EditorMode.h>
 #include <CEGUI/CEGUI.h>
 
-DistanceJointEditor::DistanceJointEditor(FreeCamera* _camera)
-:BaseJointEditor(_camera)
+DistanceJointEditor::DistanceJointEditor(FreeCamera* _camera, EditorMode* _editorMode)
+:BaseJointEditor(_camera, _editorMode)
 {
     //ctor
 }
@@ -33,5 +34,5 @@ void DistanceJointEditor::createJoint(b2Body* bodyB, Vec2f& localPointB)
 	def.collideConnected = collideConnected();
 	def.dampingRatio = dampingRatio->getCurrentValue();
 	def.frequencyHz = frequencyHz->getCurrentValue();
-    g_LevelManager.addJoint(&def);
+    editorMode->getActiveLevel()->addJoint(&def);
 }

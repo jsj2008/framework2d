@@ -1,13 +1,15 @@
 #include "BaseJointEditor.h"
 #include <Graphics/Camera/FreeCamera.h>
 #include <Physics/PhysicsManager.h>
+#include <GameModes/Editor/EditorMode.h>
 
-BaseJointEditor::BaseJointEditor(FreeCamera* camera)
+BaseJointEditor::BaseJointEditor(FreeCamera* camera, EditorMode* _editorMode)
 {
     //ctor
     mCamera = camera;
     camera->activate();
     bodyA = nullptr;
+    editorMode = _editorMode;
 }
 
 BaseJointEditor::~BaseJointEditor()
@@ -18,7 +20,7 @@ BaseJointEditor::~BaseJointEditor()
 void BaseJointEditor::click(Vec2i mouse, unsigned char button)
 {
     Vec2f point = mouse.ScreenToWorldSpace();
-    b2Body* body = g_PhysicsManager.select(point);
+    b2Body* body = editorMode->getActiveWorld()->select(point);
     if (body != nullptr)
     {
         if (bodyA == nullptr)

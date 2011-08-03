@@ -36,6 +36,6 @@ void Explosion::update()
     }
     if (expiryFrame == g_Timer.getFrame())
     {
-        g_PhysicsManager.destroyBody(mBody);
+        mBody->GetWorld()->DestroyBody(mBody);
     }
 }

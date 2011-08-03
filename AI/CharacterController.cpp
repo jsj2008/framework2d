@@ -21,7 +21,7 @@ CharacterController::CharacterController(AIEntity* _entity)
 CharacterController::~CharacterController()
 {
     //dtor
-    g_PhysicsManager.destroyBody(wheel->GetBodyB());
+    wheel->GetBodyB()->GetWorld()->DestroyBody(wheel->GetBodyB());
 }
 
 void CharacterController::walkLeft()

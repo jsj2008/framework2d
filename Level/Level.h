@@ -9,6 +9,7 @@ class b2Joint;
 class b2JointDef;
 class TextureContext;
 class ParallaxLayer;
+class PhysicsManager;
 
 class Level
 {
@@ -17,14 +18,16 @@ class Level
         virtual ~Level();
         Entity* addBody(const std::string& factory, FactoryParameters* parameters);
         void addJoint(b2JointDef* def);
-        void tempRender();
+        void render();
         void renderBackLayers();
         void removeBody(Entity* body, std::pair<std::string,FactoryParameters>* _saveConstruction = nullptr);
         void removeJoint(b2Joint* joint);
+        bool update();
+        PhysicsManager* getWorld(){return world;}
+        void loadLevel();
     protected:
     private:
         const char* name;
-        void loadLevel();
         void saveLevel();
         std::unordered_map<b2Joint*, b2JointDef*> jointToDefTable;
         Vec2f backgroundScale;
@@ -32,6 +35,8 @@ class Level
         std::vector<ParallaxLayer*> parallaxLayers;
 
         std::unordered_map<Entity*, std::pair<std::string,FactoryParameters> > table;
+
+        PhysicsManager* world;
 };
 
 #endif // LEVEL_H

@@ -23,7 +23,7 @@ void Projectile::update()
     {
         FactoryParameters parameters({{"position",mBody->GetPosition()}});
         AbstractFactories::global().useFactory<Entity>(explosion,&parameters);
-        g_PhysicsManager.destroyBody(mBody);
+        mBody->GetWorld()->DestroyBody(mBody);
     }
 }
 

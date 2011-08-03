@@ -2,6 +2,7 @@
 #include <Level/LevelManager.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityCreateEntry.h>
+#include <GameModes/Editor/DynamicEditor.h>
 
 DynamicEditorMode::DynamicEditorMode(FactoryParameters* _params)
 :DynamicEditorVariable(nullptr, _params->getTypeTable(),"")
@@ -15,10 +16,11 @@ DynamicEditorMode::~DynamicEditorMode()
     //dtor
 }
 
-void DynamicEditorMode::initEditorMode(std::string _name, CEGUI::Window* _window)
+void DynamicEditorMode::initEditorMode(std::string _name, CEGUI::Window* _window, DynamicEditor* _editor)
 {
     name = _name;
     rootWindow = _window;
+    editor = _editor;
 }
 void DynamicEditorMode::create()
 {
@@ -27,7 +29,7 @@ void DynamicEditorMode::create()
     {
         (*i)->finish();
     }
-    UndoStack::global().addEntry(new EntityCreateEntry(name,params,g_LevelManager.getLevel()));
+    UndoStack::global().addEntry(new EntityCreateEntry(name,params,editor->getActiveLevel()));
 }
 
 void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)

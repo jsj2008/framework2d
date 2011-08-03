@@ -7,6 +7,7 @@
 
 ProjectileFactory::ProjectileFactory()
 {
+    physicsManager = nullptr;
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;
 }
@@ -18,6 +19,7 @@ void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories
     shapeDef.m_radius = radius; /// FIXME just spotted this
     explosion = loader->get<std::string>("explosion","explosion");
     material = loader->get<std::string>("material","Bullet");
+    physicsManager = factories->getWorld();
 }
 
 ProjectileFactory::~ProjectileFactory()
@@ -33,7 +35,7 @@ Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
     Skin* skin = new StaticSkin(radius,radius);
     Entity* entity = new Projectile(explosion, skin);
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
     setMaterial(skin,material);

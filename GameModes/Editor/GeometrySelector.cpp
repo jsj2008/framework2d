@@ -8,13 +8,15 @@
 #include <Entities/AIEntity.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityDeleteEntry.h>
+#include <GameModes/Editor/EditorMode.h>
 
-GeometrySelector::GeometrySelector(FreeCamera* camera)
+GeometrySelector::GeometrySelector(FreeCamera* camera, EditorMode* _editorMode)
 {
     //ctor
     mouseJoint = nullptr;
     camera->activate();
     mCamera = camera;
+    editorMode = _editorMode;
     //g_InputManager.registerStateSelect(this,"GeometrySelector");
 }
 
@@ -34,12 +36,12 @@ void GeometrySelector::start(unsigned char button)
     else
     {
         Vec2f point = startPos.ScreenToWorldSpace();
-        b2Body* body = g_PhysicsManager.select(point, nullptr);
+        b2Body* body = editorMode->getActiveWorld()->select(point, nullptr);
         if (body != nullptr)
         {
             if (button == 1)
             {
-                mouseJoint = g_PhysicsManager.createJoint(body,point);
+                mouseJoint = editorMode->getActiveWorld()->createJoint(body,point);
                 // This is code to prevent the attached body from dying
                 AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)body->GetUserData());
                 if (entity != nullptr)
@@ -58,14 +60,14 @@ void GeometrySelector::start(unsigned char button)
                     if (joint->GetType() == e_mouseJoint)
                     {
                         activeMouseJoints.erase((b2MouseJoint*)joint);
-                        g_PhysicsManager.deleteJoint(joint);
+                        editorMode->getActiveWorld()->deleteJoint(joint);
                         mouseJointRemoved = true;
                         break;
                     }
                 }
                 if (!mouseJointRemoved)
                 {
-                    UndoStack::global().addEntry(new EntityDeleteEntry(static_cast<Entity*>(body->GetUserData()), g_LevelManager.getLevel()));
+                    UndoStack::global().addEntry(new EntityDeleteEntry(static_cast<Entity*>(body->GetUserData()), editorMode->getActiveLevel()));
                     //g_LevelManager.getLevel()->removeBody(static_cast<Entity*>(body->GetUserData()));
                 }
             }
@@ -89,7 +91,7 @@ void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
         AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)(mouseJoint->GetBodyB()->GetUserData()));
         if (entity != nullptr)
             entity->health = bodyHealth;
-        g_PhysicsManager.deleteJoint(mouseJoint);
+        editorMode->getActiveWorld()->deleteJoint(mouseJoint);
         mouseJoint = nullptr;
     }
 }

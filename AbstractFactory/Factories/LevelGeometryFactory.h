@@ -5,6 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
+class PhysicsManager;
 
 class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory>
 {
@@ -22,7 +23,7 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
-
+        PhysicsManager* physicsManager;
 };
 
 #endif // LEVELGEOMETRYFACTORY_H

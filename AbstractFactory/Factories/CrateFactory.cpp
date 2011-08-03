@@ -8,10 +8,10 @@
 CrateFactory::CrateFactory()
 {
     //ctor
+    physicsManager = nullptr;
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::CrateCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::CrateCategory);
 }
 
 CrateFactory::~CrateFactory()
@@ -24,6 +24,8 @@ void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     fixtureDef.density = loader->get<float>("density",1.0f);
     std::string skinFactoryName = loader->get<std::string>("material","StaticSkinFactory");
     skinFactory = factories->getFactory<Skin>(skinFactoryName);
+    physicsManager = factories->getWorld();
+    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::CrateCategory);
 }
 Entity* CrateFactory::useFactory(FactoryParameters* parameters)
 {
@@ -37,7 +39,7 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 

@@ -22,6 +22,7 @@ class CrateFactory : public AbstractFactory<Entity, CrateFactory>
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
         AbstractFactoryBase<Skin>* skinFactory;
+        PhysicsManager* physicsManager;
     private:
 };
 

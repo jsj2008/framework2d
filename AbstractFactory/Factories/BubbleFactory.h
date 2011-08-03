@@ -20,6 +20,7 @@ class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
         }
     protected:
     private:
+        PhysicsManager* physicsManager;
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
@@ -37,6 +38,7 @@ BubbleFactory<Bubble>::BubbleFactory()
     //ctor
     fixtureDef.isSensor = true;
     fixtureDef.shape = &shapeDef;
+    physicsManager = nullptr;
 }
 
 template <typename Bubble>
@@ -47,6 +49,7 @@ BubbleFactory<Bubble>::~BubbleFactory()
 template <typename Bubble>
 void BubbleFactory<Bubble>::init(FactoryLoader* loader, AbstractFactories* factories)
 {
+    physicsManager = factories->getWorld();
 }
 
 template <typename Bubble>
@@ -58,7 +61,7 @@ Entity* BubbleFactory<Bubble>::useFactory(FactoryParameters* parameters)
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     shapeDef.m_radius = parameters->get<float>("radius",1.0f);
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 

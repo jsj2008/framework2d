@@ -11,13 +11,15 @@ TileFactory::TileFactory()
 {
     fixtureDef.shape = &shapeDef;
     fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
-    fixtureDef.filter.maskBits = g_PhysicsManager.getCollisionMask(PhysicsManager::StaticGeometryCategory);
+    physicsManager = nullptr;
 }
 void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     materialName = loader->get<std::string>("materialName","player");
     size = loader->get<Vec2f>("size",Vec2f(1,1));
+    physicsManager = factories->getWorld();
+    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 TileFactory::~TileFactory()
@@ -40,7 +42,7 @@ Entity* TileFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    b2Body* body = g_PhysicsManager.createBody(&bodyDef);
+    b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 

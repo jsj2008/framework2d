@@ -2,6 +2,7 @@
 #define GAME_H
 
 class InputContext;
+class Level;
 #include <stack>
 enum GameModes
 {
@@ -16,10 +17,10 @@ extern class Game
         void init();
         virtual ~Game();
         void run();
-        InputContext* getGameMode(GameModes mode);
     protected:
     private:
-        InputContext* mGameModes[eGameModesMax];
+        InputContext* editor;
+        Level* level;
 }g_Game;
 
 #endif // GAME_H
