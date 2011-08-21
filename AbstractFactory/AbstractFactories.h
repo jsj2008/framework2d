@@ -39,16 +39,17 @@ class AbstractFactories
         /// time and memory to maintain a list of all factories
         UntypedAbstractFactory* getUntypedFactory(const std::string& type, const std::string& name);
 
-        void init(PhysicsManager* _world);
+        void init();
 
         void print();
 
-        static AbstractFactories& global() /// Its not actually a singleton
+        static AbstractFactories& global()
         {
             static AbstractFactories factories;
             return factories;
         }
 
+        void setWorld(PhysicsManager* _world);
         PhysicsManager* getWorld();
 
     protected:

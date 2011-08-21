@@ -3,13 +3,14 @@
 
 class Camera;
 class InputContext;
+class Level;
 class GameMode
 {
     public:
         GameMode();
         virtual ~GameMode();
-        void set();
-        virtual void renderGameMode(){}
+        //virtual void renderGameMode()=0;
+        virtual bool update()=0;
     protected:
     private:
 };

@@ -7,18 +7,20 @@ class InputState;
 class EditorStateSwitcher;
 class Level;
 class PhysicsManager;
+class PlayMode;
 
 class EditorMode : public GameMode, public ClickNoEvent
 {
     public:
-        EditorMode(Level* _editing, InputContext* _playMode); /// FIXME change this to be mutable and managed internally
+        EditorMode(PlayMode* _playMode); /// FIXME change this to be mutable and managed internally
         virtual ~EditorMode();
         PhysicsManager* getActiveWorld();
         Level* getActiveLevel();
+        bool update();
     protected:
     private:
         EditorStateSwitcher* selectionBox;
-        Level* editing;
+        PlayMode* activeLevel;
 };
 
 #endif // EDITORMODE_H

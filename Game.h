@@ -3,13 +3,8 @@
 
 class InputContext;
 class Level;
-#include <stack>
-enum GameModes
-{
-    eEditorGameMode,
-    ePlayGameMode,
-    eGameModesMax
-};
+class GameMode;
+
 extern class Game
 {
     public:
@@ -19,8 +14,7 @@ extern class Game
         void run();
     protected:
     private:
-        InputContext* editor;
-        Level* level;
+        GameMode* gameMode;
 }g_Game;
 
 #endif // GAME_H

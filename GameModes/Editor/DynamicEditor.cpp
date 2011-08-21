@@ -7,7 +7,7 @@
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h>
 #include <GameModes/Editor/DynamicEditor/AllDynamicEditorModes.h>
 #include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
-#include <GameModes/Editor/EditorMode.h>#
+#include <GameModes/Editor/EditorMode.h>
 #include <Events/Events.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
 

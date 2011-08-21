@@ -28,6 +28,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         void buttonUp(Vec2i mouse, unsigned char button);
         bool trigger(FactoryTypeRegisterEvent<Entity>* event);
         void render();
+        bool update(){return true;}  // FIXME
         Level* getActiveLevel();
 
         class VariableFactory;

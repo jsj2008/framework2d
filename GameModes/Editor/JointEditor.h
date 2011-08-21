@@ -18,6 +18,7 @@ class JointEditor : public GameMode, public ClickNoEvent
         virtual ~JointEditor();
         void registerEvent(InputContext* event);
         bool activate(const CEGUI::EventArgs&);
+        bool update(){return true;}  // FIXME
     protected:
     private:
         InputContext* modes[NUM_JOINT_MODES];

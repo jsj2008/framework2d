@@ -250,6 +250,8 @@
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
 		<Unit filename="GameModes/BubbleDrawEvent.h" />
+		<Unit filename="GameModes/BubbleGame.cpp" />
+		<Unit filename="GameModes/BubbleGame.h" />
 		<Unit filename="GameModes/CarneGame.cpp" />
 		<Unit filename="GameModes/CarneGame.h" />
 		<Unit filename="GameModes/Editor/AllEditorModes.h" />

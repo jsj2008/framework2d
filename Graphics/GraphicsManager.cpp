@@ -86,6 +86,7 @@ void GraphicsManager::beginScene()
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, resolution.x, resolution.y, 0, 0, 1);
+    glViewport(0, 0, resolution.x, resolution.y);
     gluLookAt(0,0,1,0,0,-1,0,1,0);
 
     glMatrixMode(GL_MODELVIEW);

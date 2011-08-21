@@ -13,9 +13,12 @@ AbstractFactories::~AbstractFactories()
 }
 
 
-void AbstractFactories::init(PhysicsManager* _world)
+void AbstractFactories::setWorld(PhysicsManager* _world)
 {
     physicsManager = _world;
+}
+void AbstractFactories::init()
+{
     std::unordered_map<std::string, class AbstractFactoryListBase*>* factoryLists = getFactoryListList();
     for (auto i = factoryLists->begin(); i != factoryLists->end(); i++)
     {

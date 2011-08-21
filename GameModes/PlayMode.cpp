@@ -5,8 +5,11 @@
 #include <Graphics/GraphicsManager.h>
 #include <Input/InputManager.h>
 #include <AI/PlayerInputBrain.h>
+#include <Level/Level.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactories.h>
+#include <AI/AIManager.h>
+#include <SDL/SDL.h>
 
 PlayMode::PlayMode()
 {
@@ -29,38 +32,6 @@ void PlayMode::mouseMove(Vec2i mouse)
 {
 
 }
-void PlayMode::buttonUp(Vec2i mouse, unsigned char button)
-{
-    Vec2f position = startPos.ScreenToWorldSpace();
-    float radius = (position-mouse.ScreenToWorldSpace()).Length();
-    if (radius != 0.0f)
-    {
-        FactoryParameters parameters;
-        parameters.add<Vec2f>("position",position);
-        parameters.add<float>("radius",radius);
-        parameters.add<std::string>("materialName","defaultBubble");
-        std::string factory;
-        switch (type)
-        {
-            case Bubble::eSuctionBubbleType:
-            {
-                factory = "suctionBubble";
-                break;
-            }
-            case Bubble::eUpwardsGravityBubbleType:
-            {
-                factory = "upwardsGravityBubble";
-                break;
-            }
-            case Bubble::eBubbleTypesMax:
-            default:
-            {
-                throw -1;
-            }
-        }
-        AbstractFactories::global().useFactory<Entity>(factory,&parameters);
-    }
-}
 void PlayMode::setCamera(Camera* _camera)
 {
     mCamera = _camera;
@@ -79,3 +50,19 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
     return true;
 }
 
+
+bool PlayMode::update()
+{
+    bool running = true;
+    if (activeLevel->update())
+    {
+        running = g_InputManager.processInput();
+    }
+    g_GraphicsManager.beginScene();
+    g_InputManager.render();
+    activeLevel->render();
+    g_AIManager.tempRender();
+    //SDL_Delay(5);
+    g_GraphicsManager.endScene();
+    return running;
+}

@@ -6,6 +6,7 @@
 #include <Level/ParallaxLayer.h>
 #include <Box2D/Box2D.h>
 #include <Entities/Entity.h>
+#include <AI/AIManager.h>
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -117,6 +118,8 @@ void Level::removeJoint(b2Joint* joint)
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
 {
+    g_AIManager.init(world); /// FIXME this shouildn't be global
+    g_AIManager.finalisePathfinding();
     ifstream file;
     file.open("Level.txt");
     unsigned short size;

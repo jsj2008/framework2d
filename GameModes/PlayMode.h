@@ -18,13 +18,15 @@ class PlayMode : public ClickDragEvent, public GameMode, public EventsListener<F
         virtual ~PlayMode();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
-        void buttonUp(Vec2i mouse, unsigned char button);
         void setCamera(Camera* _camera);
         bool activate(const CEGUI::EventArgs&);
+        bool update();
+        Level* getLevel(){return activeLevel;}
     protected:
-    private:
         Bubble::BubbleType type;
         PlayerInputBrain* playerBrain;
+        Level* activeLevel;
+    private:
 };
 
 #endif // PLAYMODE_H

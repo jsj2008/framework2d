@@ -3,14 +3,18 @@
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <Graphics/GraphicsManager.h>
+#include <GameModes/ShooterGame.h>
+#include <AbstractFactory/AbstractFactories.h>
+#include <AI/AIManager.h>
 #include <Game.h>
 #include <Level/Level.h>
 #include "EditorStateSwitcher.h"
 #define NUM_MODES 4
-EditorMode::EditorMode(Level* _editing, InputContext* _playMode)
+EditorMode::EditorMode(PlayMode* _playMode)
 {
     //ctor
-    editing = _editing;
+    activeLevel = _playMode;
+
     InputContext* modes[NUM_MODES];
     FreeCamera* mFreeCamera = new FreeCamera();
     mCamera = mFreeCamera;
@@ -19,7 +23,7 @@ EditorMode::EditorMode(Level* _editing, InputContext* _playMode)
     modes[0] = new DynamicEditor(mFreeCamera, this);
     modes[1] = new JointEditor(mFreeCamera, this);
     modes[2] = new GeometrySelector(mFreeCamera, this);
-    modes[3] = _playMode;
+    modes[3] = activeLevel;
 
     Vec2i dimensions(500/NUM_MODES,100);
     selectionBox = new EditorStateSwitcher("Editor/TabControl",{"DynamicEditor","JointEditor","GeometrySelector","TestPlay"},modes);
@@ -28,19 +32,25 @@ EditorMode::EditorMode(Level* _editing, InputContext* _playMode)
     {
         modes[i]->init();
     }
+
 }
 
 EditorMode::~EditorMode()
 {
     //dtor
+    delete activeLevel;
     delete selectionBox;
 }
 
 PhysicsManager* EditorMode::getActiveWorld()
 {
-    return editing->getWorld();
+    return activeLevel->getLevel()->getWorld();
 }
 Level* EditorMode::getActiveLevel()
 {
-    return editing;
+    return activeLevel->getLevel();
+}
+bool EditorMode::update()
+{
+    return activeLevel->update();
 }

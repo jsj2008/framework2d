@@ -1,4 +1,2 @@
-3 LevelGeometryFactory 1 Vec2fArray points 4 -1 6.86667  26.3333 9.2  25.5333 18.8  1.86667 20.2  
- ExplosionFactory 1 Vec2f position 9.2 4.46667 
- ExplosionFactory 1 Vec2f position 11.5333 5.93333 
+1 LevelGeometryFactory 1 Vec2fArray points 5 -2.46667 4.26667  8.46667 9.4  15.8667 16.5333  3 19.9333  -9.13333 12.5333  
  

@@ -19,7 +19,6 @@
 #include <AbstractFactory/Factories/BubbleFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
 
-
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -27,32 +26,20 @@ Game g_Game;
 Game::Game()
 {
 }
-#include <SDL/SDL_timer.h>
 void Game::init()
 {
     //ctor
     g_Timer.init();
     g_Timer.pause();
-    level = new Level("default");
-
-    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>();
-    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
-    AbstractFactories::global().init(level->getWorld());
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
 
-    level->loadLevel();
-    FactoryParameters params;
-    ShooterGame* playMode = new ShooterGame;
-    playMode->setCamera(AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params));
-
-    editor = new EditorMode(level, playMode);
+    EditorMode* typedMode = new EditorMode(new ShooterGame());
+    gameMode = typedMode;
 
     CEGUI::EventArgs args;
-    editor->activate(args);
+    typedMode->activate(args);
 
-    g_AIManager.init(level->getWorld());
-    g_AIManager.finalisePathfinding();
 
     UndoStack::global().init();
     g_Timer.unPause();
@@ -64,23 +51,8 @@ Game::~Game()
 #include <GL/gl.h>
 void Game::run()
 {
-    bool running = true;
-    while (running)
-    {
-        if (level->update())
-        {
-            running = g_InputManager.processInput();
-        }
-        g_GraphicsManager.beginScene();
-        g_InputManager.render();
-        level->render();
-        g_AIManager.tempRender();
-        SDL_Delay(5);
-        g_GraphicsManager.endScene();
-    }
-    delete level;
-    //delete mGameModes[ePlayGameMode];
-    //delete mGameModes[eEditorGameMode];
+    while (gameMode->update());
+    delete gameMode;
 }
 
 

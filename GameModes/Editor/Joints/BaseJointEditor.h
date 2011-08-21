@@ -14,6 +14,7 @@ class BaseJointEditor : public GameMode, public ClickReleaseEvent
         BaseJointEditor(FreeCamera* camera, EditorMode* _editorMode);
         virtual ~BaseJointEditor();
         void click(Vec2i mouse, unsigned char button);
+        bool update(){return true;}  // FIXME
     protected:
         b2Body* bodyA;
         Vec2f localPointA;
