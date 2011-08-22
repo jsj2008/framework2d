@@ -28,7 +28,7 @@ ContactListener::~ContactListener()
 {
     //dtor
 }
-#include <iostream>
+
 using namespace std;
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {

@@ -100,8 +100,6 @@ class PathNodeDynamicGeometryCallback : public b2QueryCallback
         Vec2f point;
 };
 #include <unordered_map>
-#include <iostream>
-using namespace std;
 Paths* PathGraph::finalise()
 {
     unsigned int size = 0;
@@ -207,7 +205,6 @@ Paths* PathGraph::finalise()
     }
     delete nodeLists.back();
     nodeLists.pop_back();
-    std::cout << nodeLists.size() << endl;
     return new Paths(nodeLists);
 }
 void PathGraph::deleteNode(PathNodeDynamic* node)

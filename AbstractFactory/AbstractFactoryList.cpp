@@ -1,5 +1,5 @@
 #include "AbstractFactoryList.h"
-#include <iostream>
+
 
 AbstractFactoryListBase::AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& _productName)
 {

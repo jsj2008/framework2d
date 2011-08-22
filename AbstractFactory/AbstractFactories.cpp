@@ -1,5 +1,4 @@
 #include "AbstractFactories.h"
-#include <iostream>
 
 AbstractFactories::AbstractFactories()
 {

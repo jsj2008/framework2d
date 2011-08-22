@@ -13,9 +13,6 @@ ZombieBrain::~ZombieBrain()
 {
     //dtor
 }
-#define PRINT(x)// if (lastOperation != operation){lastOperation = operation; x; }
-#include <iostream>
-using namespace std;
 void ZombieBrain::update()
 {
     AIManager::Operation operation = follower->update(mEntity->getPosition(), g_AIManager.getPlayerNode());
@@ -24,25 +21,21 @@ void ZombieBrain::update()
         case AIManager::Operation::eStandStill:
         {
             mEntity->stopWalking();
-            PRINT(cout << "Stand still\n");
             break;
         }
         case AIManager::Operation::eWalkLeft:
         {
             mEntity->walkLeft();
-            PRINT(cout << "walk left\n";)
             break;
         }
         case AIManager::Operation::eWalkRight:
         {
             mEntity->walkRight();
-            PRINT(cout << "walk right\n";)
             break;
         }
         case AIManager::Operation::eJumpLeft:
         {
             mEntity->walkLeft();
-            PRINT(cout << "jump left\n";)
             mEntity->jump();
             break;
         }
@@ -50,7 +43,6 @@ void ZombieBrain::update()
         {
             mEntity->walkRight();
             mEntity->jump();
-            PRINT(cout << "jump right\n";)
             break;
         }
         case AIManager::Operation::eOperationsMax:

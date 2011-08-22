@@ -150,7 +150,6 @@ ostream& operator<< (ostream &out, const TypeTable &table)
 }
 void TypeTable::output(ostream *out)
 {
-    unsigned short size = values.size();
     for (auto i = values.begin(); i != values.end(); i++)
     {
         std::string typeId = i->second->getTypeId();
@@ -176,15 +175,15 @@ void TypeTable::UntypedValue::set(std::istream* parseSource)
     parseSource->getline(stream, 124);
     unparsedValue = stream;
 }
-#include <iostream>
 void TypeTable::UntypedValue::output(std::ostream* parseDestination)
 {
-    std::cout << "Unknown how to output" << unparsedValue << ' ' << name << std::endl;
-    throw -1;
+    g_Log.error(std::string("Unknown type, cannot output: ") + unparsedValue);
 }
 std::string TypeTable::UntypedValue::getTypeId()
 {
-    std::cout << "Unknown type:" << unparsedValue << ' ' << name << std::endl;
+    g_Log.error(std::string("Unknown type") + unparsedValue);
+
+    /// This code is unreachable; Log::error throws an exception anyway. Just cleaning up compiler warnings
     throw -1;
 }
 TypeTable::Value* TypeTable::UntypedValue::clone()

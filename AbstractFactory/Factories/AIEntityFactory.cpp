@@ -10,7 +10,7 @@
 #include <Game.h>
 #include <GameModes/PlayMode.h>
 #include <Graphics/Camera/PhysicsCamera.h>
-#include <iostream>
+
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/FactoryLoader.h>
 

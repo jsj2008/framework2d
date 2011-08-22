@@ -8,7 +8,7 @@ class StreamPlayer : public SoundPlayer
     public:
         StreamPlayer(const char* _filename);
         virtual ~StreamPlayer();
-        SoundInstance* activate(SoundManager* _manager);
+        SoundInstance* activate(SDLSoundManager* _manager, unsigned int _volume);
         bool update(unsigned char* _stream, unsigned int _begin, unsigned int _length); /// Returns false if buffer has ended
         void streamInstanceDestroyed(){referenceCount--;}
     protected:

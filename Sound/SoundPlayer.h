@@ -1,7 +1,7 @@
 #ifndef SOUNDPLAYER_H
 #define SOUNDPLAYER_H
 
-class SoundManager;
+class SDLSoundManager;
 class SoundInstance;
 
 class SoundPlayer
@@ -9,7 +9,7 @@ class SoundPlayer
     public:
         SoundPlayer();
         virtual ~SoundPlayer();
-        virtual SoundInstance* activate(SoundManager* _manager)=0;
+        virtual SoundInstance* activate(SDLSoundManager* _manager, unsigned int _volume)=0;
     protected:
     private:
 };

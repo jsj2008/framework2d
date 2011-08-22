@@ -123,7 +123,7 @@ bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
 {
     return true;
 }
-#include <iostream>
+
 void DynamicEditor::init()
 {
     for (unsigned int i = 0; i < FactoryTypeRegisterEvent<Entity>::factoryNames.size(); i++)

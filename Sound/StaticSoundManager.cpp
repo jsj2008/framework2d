@@ -1,9 +1,13 @@
 #include "StaticSoundManager.h"
-#include <Sound/SoundManager.h>
+#include <Sound/SDLSoundManager.h>
+#include <Sound/NullSoundManager.h>
+
+using namespace std;
 
 StaticSoundManager::StaticSoundManager()
 {
     //ctor
+    soundManager = nullptr;
 }
 
 StaticSoundManager::~StaticSoundManager()
@@ -13,9 +17,15 @@ StaticSoundManager::~StaticSoundManager()
 
 void StaticSoundManager::init()
 {
-    soundManager = new SoundManager();
+    try
+    {
+        soundManager = new SDLSoundManager();
+    }
+    catch (...)
+    {
+        soundManager = new NullSoundManager;
+    }
 }
-
 void StaticSoundManager::quit()
 {
     delete soundManager;

@@ -17,7 +17,6 @@ PathfindingAlgorithm::~PathfindingAlgorithm()
     //dtor
     delete[] doublesValues;
 }
-#include <iostream>
 void PathfindingAlgorithm::path(std::stack<AIManager::PathInstruction>& instructions)
 {
     unsigned int iterations = 0;
@@ -30,7 +29,6 @@ void PathfindingAlgorithm::path(std::stack<AIManager::PathInstruction>& instruct
     }
     if (workingSet.top().getNode() == target)
     {
-        std::cout << "Found him in " << iterations << " iterations and a distance of " << workingSet.top().getDistanceTravelled() << std::endl;
         std::queue<NodeReference> backTrace;
         NodeReference current = workingSet.top().getNode();
         while (current != start)

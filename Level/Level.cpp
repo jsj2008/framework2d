@@ -8,7 +8,6 @@
 #include <Entities/Entity.h>
 #include <AI/AIManager.h>
 #include <cstring>
-#include <iostream>
 #include <fstream>
 using namespace std;
 Level::Level(const char* _name)
@@ -78,8 +77,7 @@ void Level::addJoint(b2JointDef* def)
         case e_mouseJoint:
         default:
         {
-            std::cout << "Unrecognised joint type" << std::endl;
-            throw -1;
+            g_Log.error(std::string("Unrecognised joint type: " + def->type));
         }
     }
     Entity* bodyA = static_cast<Entity*>(def->bodyA->GetUserData());
@@ -191,7 +189,7 @@ unsigned int getJointDefSize(b2JointType type)
         case e_mouseJoint:
         default:
         {
-            cout << "Invalid joint to get size of" << endl;
+            g_Log.error(std::string("Unrecognised joint type: " + type));
             throw -1;
         }
 

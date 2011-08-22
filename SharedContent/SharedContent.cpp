@@ -1,7 +1,7 @@
 #include "SharedContent.h"
 #include <cstring>
 #include <cassert>
-#include <iostream>
+#include <Log/Log.h>
 
 SharedContent::SharedContent(const char* _name)
 {
@@ -23,7 +23,7 @@ SharedContent::~SharedContent()
     //dtor
     if (referenceCount != 0 && name[0] != '\0')
     {
-        std::cout << "Warning: Shared content: " << name << " not completely freed" << std::endl;
+        g_Log.warning(std::string("Shared content: ") + name + " not completely freed");
     }
 }
 

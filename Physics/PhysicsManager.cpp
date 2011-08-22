@@ -62,7 +62,7 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 {
     return mWorld->CreateJoint(def);
 }
-#include <iostream>
+
 using namespace std;
 b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
 {

@@ -1,7 +1,7 @@
 #include "GraphicalContentManager.h"
 #include <string>
 #include <fstream>
-#include <iostream>
+#include <Log/Log.h>
 #include <cstring>
 #include <Graphics/Contexts/TextureContext.h>
 #include <Graphics/Contexts/ShaderContext.h>
@@ -24,7 +24,7 @@ bool GraphicalContentManager::MaterialDef::parseMaterialFile()
     std::ifstream file(fullFileName.c_str()); /// FIXME passing the string directly gives a linker error. Will probably be fixed in a newer version of g++
     if (!file.good())
     {
-        std::cout << "Failed to open " << fullFileName << " for reading" << std::endl;
+        g_Log.warning(std::string("Failed to open ") + fullFileName + " for reading");
         return false;
     }
     while (file.good())
@@ -40,7 +40,7 @@ bool GraphicalContentManager::MaterialDef::parseMaterialFile()
             }
             else
             {
-                std::cout << "Expected a \"=\"" << std::endl;
+                g_Log.warning(std::string("Error parsing ") + fullFileName + ": Expected a \"=\"");
             }
         }
         else if (input == "shader")
@@ -52,12 +52,12 @@ bool GraphicalContentManager::MaterialDef::parseMaterialFile()
             }
             else
             {
-                std::cout << "Expected a \"=\"" << std::endl;
+                g_Log.warning(std::string("Error parsing ") + fullFileName + ": Expected a \"=\"");
             }
         }
         else
         {
-            std::cout << "Unrecognised token: " << input << std::endl;
+            g_Log.warning(std::string("Error parsing ") + fullFileName + ": Unrecognised token: " + input);
         }
     }
     fullFileName.replace(fullFileName.end()-4,fullFileName.end(),".mat");

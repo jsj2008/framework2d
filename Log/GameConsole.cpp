@@ -1,4 +1,5 @@
 #include "GameConsole.h"
+#include <Log/Log.h>
 
 GameConsoleCommand::GameConsoleCommand(std::string _name)
 {
@@ -7,9 +8,9 @@ GameConsoleCommand::GameConsoleCommand(std::string _name)
 }
 
 
-void GameConsoleCommand::outputText(CEGUI::String message, unsigned int colour)
+void GameConsoleCommand::outputText(std::string _msg, unsigned int _colour)
 {
-    console->outputText(message, colour);
+    console->outputText(_msg, _colour);
 }
 
 
@@ -63,7 +64,7 @@ void GameConsole::registerHandlers()
 bool GameConsole::handleTextSubmitted(const CEGUI::EventArgs &e)
 {
     CEGUI::String Msg = consoleWindow->getChild("ConsoleRoot/EditBox")->getText();
-    (this)->parseText(Msg);
+    parseText(Msg);
     consoleWindow->getChild("ConsoleRoot/EditBox")->setText("");
 
     return true;
@@ -71,7 +72,7 @@ bool GameConsole::handleTextSubmitted(const CEGUI::EventArgs &e)
 bool GameConsole::handleSendButtonPressed(const CEGUI::EventArgs &e)
 {
     CEGUI::String Msg = consoleWindow->getChild("ConsoleRoot/EditBox")->getText();
-    (this)->parseText(Msg);
+    parseText(Msg);
     consoleWindow->getChild("ConsoleRoot/EditBox")->setText("");
 
     return true;
@@ -103,14 +104,17 @@ void GameConsole::parseText(CEGUI::String inMsg)
 	}
 }
 
-
-void GameConsole::outputText(CEGUI::String message, unsigned int colour)
+Logger* GameConsole::newLogger(Logger* _newLogger)
+{
+    throw "Error: Invalid command for this class";
+}
+void GameConsole::outputText(std::string _msg, unsigned int _timeStamp, unsigned int _colour)
 {
 	CEGUI::Listbox *outputWindow = static_cast<CEGUI::Listbox*>(consoleWindow->getChild("ConsoleRoot/ChatBox"));
 
 	CEGUI::ListboxTextItem *newItem=0;
-	newItem = new CEGUI::ListboxTextItem(message,CEGUI::HTF_WORDWRAP_LEFT_ALIGNED);
-	newItem->setTextColours(colour);
+	newItem = new CEGUI::ListboxTextItem(Log::getTimeString(_timeStamp) + ' ' + _msg,CEGUI::HTF_WORDWRAP_LEFT_ALIGNED);
+	newItem->setTextColours(_colour);
 	outputWindow->addItem(newItem);
 }
 

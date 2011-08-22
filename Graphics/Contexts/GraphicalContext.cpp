@@ -1,6 +1,6 @@
 #include "GraphicalContext.h"
 #include <cstring>
-#include <iostream>
+#include <Log/Log.h>
 
 GraphicalContext::GraphicalContext(const char* _name)
 {
@@ -20,7 +20,7 @@ GraphicalContext::~GraphicalContext()
     //dtor
     if (referenceCount != 0 && name[0] != '\0')
     {
-        std::cout << "Warning: Graphical context: " << name << " not completely freed" << std::endl;
+        g_Log.warning(std::string("Graphical context: ") + name + " not completely freed");
     }
 }
 

@@ -3,7 +3,7 @@
 #include <Input/InputManager.h>
 #include <Game.h>
 #include <CEGUI/CEGUI.h>
-#include <iostream>
+#include <Log/Log.h>
 
 EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initializer_list<std::string> _icons, InputContext** _states)
 {
@@ -15,7 +15,7 @@ EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initia
     tab = (CEGUI::TabControl*)guiSheet->getChildRecursive(tabControlName);
     if (tab == nullptr)
     {
-        std::cout << "Failed to find CEGUI window " << tabControlName << std::endl;
+        g_Log.error(std::string("Failed to find CEGUI window ") + tabControlName);
     }
     states.resize(_icons.size());
     for (unsigned int i = 0; i < _icons.size(); i++)

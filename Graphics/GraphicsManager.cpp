@@ -4,17 +4,15 @@
 #include <GL/glu.h>
 #include <Graphics/Camera/Camera.h>
 #include <cassert>
-#include <iostream>
 #include <Graphics/Skins/AllSkins.h>
 #include <Graphics/Sprites/SpriteList.h>
-#include <Log/GameConsole.h>
+#include <Log/Log.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
 bool function(const CEGUI::EventArgs& e);
 bool function(const CEGUI::EventArgs& e)
 {
-    std::cout << "Jumped" << std::endl;
     return true;
 }
 GraphicsManager::GraphicsManager()
@@ -56,7 +54,7 @@ GraphicsManager::GraphicsManager()
     CEGUI::System::getSingleton().setGUISheet(myRoot);
     CEGUI::System::getSingleton().setDefaultTooltip("TaharezLook/Tooltip");
 
-    new GameConsole();
+    g_Log.init();
 
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
@@ -101,8 +99,7 @@ void GraphicsManager::endScene()
     GLenum errorCode = glGetError();
 	if (errorCode != GL_NO_ERROR)
 	{
-	    std::cout << (const char*)gluErrorString(errorCode) << std::endl;
-	    throw -1;
+	    g_Log.error(std::string("Opengl error detected: ") + reinterpret_cast<const char*>(gluErrorString(errorCode)));
 	}
 }
 void GraphicsManager::resize(Vec2i newResolution)

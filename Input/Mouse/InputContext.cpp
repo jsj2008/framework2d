@@ -17,10 +17,8 @@ void InputContext::changeResolution(Vec2i newResolution)
 {
 }
 
-#include <iostream>
 bool InputContext::activate(const CEGUI::EventArgs&)
 {
-    std::cout << "State switched " << this << std::endl;
     g_InputManager.setActiveEvent(this);
     if (mCamera != nullptr)
     {

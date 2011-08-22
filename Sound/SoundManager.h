@@ -1,24 +1,20 @@
 #ifndef SOUNDMANAGER_H
 #define SOUNDMANAGER_H
 
-#include <vector>
-#include <SDL/SDL.h>
 class SoundPlayer;
 class SoundInstance;
+
+#define MAX_VOLUME 128
 
 class SoundManager
 {
     public:
         SoundManager();
         virtual ~SoundManager();
-        void soundAction(unsigned int _action);
-        void streamUpdate(unsigned char* _stream, int _length);
-        void addSoundPlayer(SoundPlayer* _soundPlayer);
+        virtual void soundAction(unsigned int _action, unsigned int _volume = MAX_VOLUME)=0;
+        virtual void streamUpdate(unsigned char* _stream, int _length)=0;
     protected:
     private:
-        std::vector<SoundPlayer*> soundActions;
-        std::vector<SoundInstance*> soundInstances;
-        SDL_mutex* mutex;
 };
 
 #endif // SOUNDMANAGER_H

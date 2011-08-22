@@ -1,13 +1,14 @@
 #include "ChimePlayer.h"
 #include <cmath>
 
-ChimePlayer::ChimePlayer()
+ChimePlayer::ChimePlayer(unsigned int _volume)
 {
     //ctor
     timeRemaining = 300000;
     frequency = 120;
     currentOffset = 0;
     currentVolume = 128;
+    volume = _volume;
 }
 
 ChimePlayer::~ChimePlayer()

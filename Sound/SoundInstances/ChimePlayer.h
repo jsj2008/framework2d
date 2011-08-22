@@ -6,7 +6,7 @@
 class ChimePlayer : public SoundInstance
 {
     public:
-        ChimePlayer();
+        ChimePlayer(unsigned int _volume);
         ~ChimePlayer();
         bool update(unsigned char* _streamSize, int _length); /// Returns true if still active
     protected:
@@ -15,6 +15,7 @@ class ChimePlayer : public SoundInstance
         unsigned int frequency;
         unsigned int currentOffset;
         unsigned int currentVolume;
+        unsigned int volume;
 };
 
 #endif // CHIMEPLAYER_H

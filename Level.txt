@@ -1,2 +1,4 @@
-1 LevelGeometryFactory 1 Vec2fArray points 5 -2.46667 4.26667  8.46667 9.4  15.8667 16.5333  3 19.9333  -9.13333 12.5333  
+3 CrateFactory 2 Vec2f position 4.26667 5.16667 Vec2f dimensions 1.6 2.6 
+ CrateFactory 2 Vec2f position 4.26667 5.16667 Vec2f dimensions 1.6 2.6 
+ LevelGeometryFactory 1 Vec2fArray points 5 -2.46667 4.26667  8.46667 9.4  15.8667 16.5333  3 19.9333  -9.13333 12.5333  
  

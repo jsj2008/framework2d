@@ -22,7 +22,7 @@
 #include <Sound/SoundManager.h>
 
 #include <cstring>
-#include <iostream>
+
 using namespace std;
 Game g_Game;
 Game::Game()
