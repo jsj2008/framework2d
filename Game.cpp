@@ -18,6 +18,8 @@
 
 #include <AbstractFactory/Factories/BubbleFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
+#include <Sound/StaticSoundManager.h>
+#include <Sound/SoundManager.h>
 
 #include <cstring>
 #include <iostream>
@@ -31,6 +33,8 @@ void Game::init()
     //ctor
     g_Timer.init();
     g_Timer.pause();
+
+    StaticSoundManager::init();
 
     g_ContentManager.addSharedContent(new WeaponContent("pistol"));
 
