@@ -4,7 +4,9 @@
 #include <Events/Event.h>
 #include <string>
 #include <vector>
-
+/**
+    When a factory type is registered (usually before the main loop is entered) this is called with its type-name
+**/
 template <typename Product>
 class FactoryTypeRegisterEvent : public Event
 {

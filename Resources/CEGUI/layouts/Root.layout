@@ -59,23 +59,23 @@
                 <Property Name="UnifiedAreaRect" Value="{{0,10},{0,10},{1,-10},{1,-10}}" />
             </Window>
         </Window>
-        <Window Type="TaharezLook/FrameWindow" Name="ConsoleRoot" >
+        <Window Type="TaharezLook/FrameWindow" Name="Console" >
             <Property Name="Text" Value="Chat Window" />
             <Property Name="TitlebarFont" Value="DejaVuSans-10" />
             <Property Name="TitlebarEnabled" Value="True" />
             <Property Name="UnifiedAreaRect" Value="{{0.00121262,0},{0.688173,0},{0.303392,0},{0.998122,0}}" />
-            <Window Type="TaharezLook/Editbox" Name="ConsoleRoot/EditBox" >
+            <Window Type="TaharezLook/Editbox" Name="Console/EditBox" >
                 <Property Name="MaxTextLength" Value="1073741823" />
                 <Property Name="UnifiedAreaRect" Value="{{0.0201637,0},{0.793119,0},{0.694549,0},{0.963715,0}}" />
                 <Property Name="TextParsingEnabled" Value="False" />
             </Window>
-            <Window Type="TaharezLook/Button" Name="ConsoleRoot/SendButton" >
+            <Window Type="TaharezLook/Button" Name="Console/SendButton" >
                 <Property Name="Text" Value="Send" />
                 <Property Name="Tooltip" Value="Fuck you and your tooltips" />
                 <Property Name="UnifiedAreaRect" Value="{{0.752175,0},{0.824368,0},{0.948247,0},{0.958851,0}}" />
                 <Property Name="InheritsTooltipText" Value="False" />
             </Window>
-            <Window Type="TaharezLook/Listbox" Name="ConsoleRoot/ChatBox" >
+            <Window Type="TaharezLook/Listbox" Name="Console/ChatBox" >
                 <Property Name="Tooltip" Value="Fuck you and your tooltips" />
                 <Property Name="UnifiedAreaRect" Value="{{0.0236181,0},{0.0194826,0},{0.967906,0},{0.768822,0}}" />
             </Window>

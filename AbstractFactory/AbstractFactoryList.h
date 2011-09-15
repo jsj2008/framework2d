@@ -11,7 +11,7 @@ class AbstractFactoryBase;
 class FactoryParameters;
 class UntypedAbstractFactory;
 class AbstractFactories;
-#include <Events/Events/FactoryEvent.h>
+#include <Events/Events/FactoryUsageEvent.h>
 template <typename Product>
 const std::string EvaluateTypeName();
 class FactoryLoader;
@@ -90,6 +90,7 @@ class TemplateFactoryCreator : public FactoryCreator<Product>
 #include <AbstractFactory/AbstractFactory.h>
 #include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
 #include <Events/Events/FactoryGetEvent.h>
+#include <Events/Events/FactoryCreateEvent.h>
 #include <Events/Events.h>
 
 template <typename Product>
@@ -148,6 +149,8 @@ void AbstractFactoryList<Product>::init(AbstractFactories* _factories)
         factory->init(&loader, _factories);
         factories[loader.getName()] = factory;
         loader.end();
+        FactoryCreateEvent<Product> event(factory, loader.getName());
+        Events::global().triggerEvent(&event);
     }
 }
 template <typename Product>

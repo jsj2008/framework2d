@@ -56,3 +56,23 @@ string material StaticSkinFactory
 }
 
 
+LevelGeometryFactory MudGeometry
+{
+
+}
+UpwardsGravityBubbleFactory EnterEntityName
+{
+
+}
+CrateFactory EnterEntityName2
+{
+string material StaticSkinFactory
+}
+CrateFactory CratesYo
+{
+string material StaticSkinFactory
+}
+CrateFactory EnterEntityNamederp
+{
+string material StaticSkinFactory
+}

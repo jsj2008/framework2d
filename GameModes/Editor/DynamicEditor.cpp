@@ -63,10 +63,10 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     loader.output(&file);
     return true;
 }
-CEGUI::TabControl* createTabControl(const std::string& _prefix)
+CEGUI::TabControl* getTabControl(const std::string& _prefix)
 {
     CEGUI::Window* window = CEGUI::System::getSingletonPtr()->getGUISheet()->getChild(_prefix);
-    CEGUI::System::getSingleton().getGUISheet()->addChildWindow(window);
+    //CEGUI::System::getSingleton().getGUISheet()->addChildWindow(window);
     CEGUI::Window* uncastTab = window->getChild(_prefix + "/TabControl");
     assert(dynamic_cast<CEGUI::TabControl*>(uncastTab));
     return static_cast<CEGUI::TabControl*>(uncastTab);
@@ -95,8 +95,12 @@ editorVariables
     //ctor
     camera->activate();
     mCamera = camera;
-    instanceTab = createTabControl("Entities");
-    typeTab = createTabControl("EntityTypes");
+    instanceTab = getTabControl("Entities");
+    typeTab = getTabControl("EntityTypes");
+    instanceTab->getParent()->setEnabled(false);
+    typeTab->getParent()->setEnabled(false);
+    instanceTab->getParent()->setVisible(false);
+    typeTab->getParent()->setVisible(false);
 
     CEGUI::Window* button = typeTab->getParent()->getChild("CreateButton");
     button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&DynamicEditor::createFactory,this));
@@ -119,8 +123,26 @@ bool DynamicEditor::createFactory(const CEGUI::EventArgs& _args)
     factoryTypes[index]->createButton(_args);
     return true;
 }
-bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
+bool DynamicEditor::trigger(FactoryCreateEvent<Entity>* event)
 {
+    for (unsigned int i = 0; i < FactoryCreateEvent<Entity>::factories.size(); i++)
+    {
+        std::string name = FactoryCreateEvent<Entity>::factories[i].first->getName();
+        if (name != "AIEntityFactory" && CEGUI::System::getSingleton().getGUISheet()->getChildRecursive(name + "Tab") == nullptr)
+        {
+            DynamicEditor::EditorFactory* factory = editorFactories[name];
+            if (factory != nullptr)
+            {
+                activeEditor = factory->createEditor(instanceTab, FactoryCreateEvent<Entity>::factories[i].second, this);
+                factoryInstances.push_back(activeEditor);
+            }
+        }
+    }
+
+    for (unsigned int i = 0; i < deadBodies.size(); i++)
+        delete deadBodies[i];
+    deadBodies.clear();
+    FactoryCreateEvent<Entity>::factories.clear();
     return true;
 }
 
@@ -135,9 +157,9 @@ void DynamicEditor::init()
             if (factory != nullptr)
             {
                 editorFactories[name] = factory;
-                activeEditor = factory->createEditor(instanceTab, name, this);
-                factoryInstances.push_back(activeEditor);
-                instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
+                //activeEditor = factory->createEditor(instanceTab, name, this);
+                //factoryInstances.push_back(activeEditor);
+                //instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
             }
         }
     }
@@ -146,7 +168,25 @@ void DynamicEditor::init()
         delete deadBodies[i];
     deadBodies.clear();
     FactoryTypeRegisterEvent<Entity>::factoryNames.clear();
+    trigger(nullptr);
 }
+bool DynamicEditor::activate(const CEGUI::EventArgs& args)
+{
+    bool ret = InputContext::activate(args);
+    instanceTab->getParent()->setEnabled(true);
+    typeTab->getParent()->setEnabled(true);
+    instanceTab->getParent()->setVisible(true);
+    typeTab->getParent()->setVisible(true);
+    return ret;
+}
+void DynamicEditor::deactivate()
+{
+    instanceTab->getParent()->setEnabled(false);
+    typeTab->getParent()->setEnabled(false);
+    instanceTab->getParent()->setVisible(false);
+    typeTab->getParent()->setVisible(false);
+}
+
 
 DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(const std::string& factoryName, bool _createType)
 {
@@ -225,7 +265,7 @@ MATCH_FOUND:
         editor->setInstanceNameWidget(factoryNameBox);
     }
     CEGUI::EventArgs args;
-    activate(args);
+    //activate(args);
     return new EditorFactory(editor);
 }
 
@@ -243,7 +283,8 @@ void DynamicEditor::buttonUp(Vec2i mouse, unsigned char button)
 }
 void DynamicEditor::render()
 {
-    factoryInstances[instanceTab->getSelectedTabIndex()]->render();
+    if (instanceTab->getTabCount() != 0)
+        factoryInstances[instanceTab->getSelectedTabIndex()]->render();
 }
 
 bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
@@ -251,7 +292,7 @@ bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
     factories.insert(event->getName());
     return true;
 }
-bool DynamicEditor::FactoryUseList::trigger(FactoryEvent<b2Body>* event)
+bool DynamicEditor::FactoryUseList::trigger(FactoryUsageEvent<b2Body>* event)
 {
     factories.push_back(event->get());
     return true;

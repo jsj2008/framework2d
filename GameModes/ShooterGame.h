@@ -6,7 +6,7 @@
 #include <GameModes/PlayMode.h>
 #include <Entities/Bubble.h>
 #include <Events/EventListener.h>
-#include <Events/Events/FactoryTypeEvent.h>
+#include <Events/Events/FactoryTypeUsageEvent.h>
 #include <AI/Brain.h>
 #include <AI/BrainFactory/PlayerInputBrainFactory.h>
 class b2Body;
@@ -21,7 +21,7 @@ class ShooterGame : public PlayMode
         virtual ~ShooterGame();
         void setBody(b2Body* body, PlayerInputBrain* _playerBrain);
         void buttonUp(Vec2i mouse, unsigned char button);
-        bool trigger(FactoryTypeEvent<Brain, PlayerInputBrainFactory>* event);
+        bool trigger(FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>* event);
     protected:
     private:
 };

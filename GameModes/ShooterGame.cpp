@@ -59,7 +59,7 @@ void ShooterGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
     return true;
 }*/
 
-bool ShooterGame::trigger(FactoryTypeEvent<Brain, PlayerInputBrainFactory>* event)
+bool ShooterGame::trigger(FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>* event)
 {
     playerBrain = static_cast<PlayerInputBrain*>(event->get());
     return true;

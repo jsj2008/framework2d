@@ -56,7 +56,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
 
 #include <AbstractFactory/AbstractFactories.h>
 #include <Events/Events.h>
-#include <Events/Events/FactoryInstanceEvent.h>
+#include <Events/Events/FactoryInstanceUsageEvent.h>
 
 template <typename Product>
 AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string _name)
@@ -75,7 +75,7 @@ template <typename Product>
 Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
 {
     Product* product = privateUseFactory(parameters);
-    FactoryEvent<Product> untypedEvent(product);
+    FactoryUsageEvent<Product> untypedEvent(product);
     Events::global().triggerEvent(&untypedEvent);
     return product;
 }
@@ -106,9 +106,9 @@ template <typename Product, typename DerivedType>
 Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
 {
     Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
-    FactoryTypeEvent<Product, DerivedType> typeEvent(product);
+    FactoryTypeUsageEvent<Product, DerivedType> typeEvent(product);
     Events::global().triggerEvent(&typeEvent);
-    FactoryInstanceEvent<Product, DerivedType> instanceEvent(product, "error this is stupid");
+    FactoryInstanceUsageEvent<Product, DerivedType> instanceEvent(product, "error this is stupid");
     Events::global().triggerEvent(&typeEvent);
     return product;
 }

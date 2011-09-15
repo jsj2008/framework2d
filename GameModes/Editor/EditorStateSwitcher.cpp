@@ -40,6 +40,7 @@ EditorStateSwitcher::~EditorStateSwitcher()
 void EditorStateSwitcher::eventShow()
 {
     tab->setSelectedTabAtIndex(states.size());
+    selectedTab = states.size();
 }
 void EditorStateSwitcher::push(const char* name, InputContext* event)
 {
@@ -56,4 +57,7 @@ void EditorStateSwitcher::selectionTrigger()
     }
     g_Game.push(states[currentSelection]);
     states[currentSelection]->set();*/
+    unsigned int newSelectedTab = tab->getSelectedTabIndex();
+    //states[newSelectedTab]->activate();
+    selectedTab = newSelectedTab;
 }

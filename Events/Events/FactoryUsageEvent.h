@@ -1,18 +1,20 @@
-#ifndef FACTORYEVENT_H
-#define FACTORYEVENT_H
+#ifndef FACTORYUSAGEEVENT_H
+#define FACTORYUSAGEEVENT_H
 
 #include <Events/Event.h>
-
+/**
+    Base class for all factory usage events
+**/
 template <typename Product>
-class FactoryEvent : public Event
+class FactoryUsageEvent : public Event
 {
     public:
-        FactoryEvent(Product* _product)
+        FactoryUsageEvent(Product* _product)
         {
             //ctor
             product = _product;
         }
-        virtual ~FactoryEvent()
+        virtual ~FactoryUsageEvent()
         {
             //dtor
         }
@@ -22,4 +24,4 @@ class FactoryEvent : public Event
         Product* product;
 };
 
-#endif // FACTORYEVENT_H
+#endif // FACTORYUSAGEEVENT_H

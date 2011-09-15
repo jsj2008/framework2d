@@ -5,13 +5,13 @@
 #include <Input/Mouse/ClickDragEvent.h>
 #include <Entities/Bubble.h>
 #include <Events/EventListener.h>
-#include <Events/Events/FactoryTypeEvent.h>
+#include <Events/Events/FactoryTypeUsageEvent.h>
 #include <AI/Brain.h>
 #include <AI/BrainFactory/PlayerInputBrainFactory.h>
 class b2Body;
 class PlayerInputBrain;
 
-class PlayMode : public ClickDragEvent, public GameMode, public EventsListener<FactoryTypeEvent<Brain, PlayerInputBrainFactory>>
+class PlayMode : public ClickDragEvent, public GameMode, public EventsListener<FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>>
 {
     public:
         PlayMode();

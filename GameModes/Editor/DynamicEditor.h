@@ -7,8 +7,9 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Events/EventListener.h>
 #include <Events/Events/FactoryGetEvent.h>
-#include <Events/Events/FactoryEvent.h>
-#include <Events/Events/FactoryTypeRegisterEvent.h>
+#include <Events/Events/FactoryUsageEvent.h>
+#include <AbstractFactory/AbstractFactoryList.h>
+#include <Events/Events/FactoryCreateEvent.h>
 #include <Box2D/Box2D.h>
 class Entity;
 class FreeCamera;
@@ -17,7 +18,7 @@ class DynamicEditorVariable;
 class EditorMode;
 class Level;
 
-class DynamicEditor : public GameMode, public InputContext,  public EventsListener<FactoryTypeRegisterEvent<Entity>>
+class DynamicEditor : public GameMode, public InputContext,  public EventsListener<FactoryCreateEvent<Entity>>
 {
     public:
         DynamicEditor(FreeCamera* camera, EditorMode* _mode);
@@ -26,9 +27,12 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
-        bool trigger(FactoryTypeRegisterEvent<Entity>* event);
+        bool trigger(FactoryCreateEvent<Entity>* event);
         void render();
         bool update(){return true;}  // FIXME
+        bool activate(const CEGUI::EventArgs&);
+        void deactivate();
+
         Level* getActiveLevel();
 
         class VariableFactory;
@@ -115,12 +119,12 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
                 bool trigger(FactoryGetEvent* event);
                 std::unordered_set<std::string> factories;
         };
-        class FactoryUseList: public EventsListener<FactoryEvent<b2Body>>
+        class FactoryUseList: public EventsListener<FactoryUsageEvent<b2Body>>
         {
             public:
                 std::vector<b2Body*>& getBodies(){return factories;}
             protected:
-                bool trigger(FactoryEvent<b2Body>* event);
+                bool trigger(FactoryUsageEvent<b2Body>* event);
                 std::vector<b2Body*> factories;
         };
         CEGUI::TabControl* instanceTab;

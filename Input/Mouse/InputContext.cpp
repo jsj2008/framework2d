@@ -27,3 +27,7 @@ bool InputContext::activate(const CEGUI::EventArgs&)
     }
     return true;
 }
+
+void InputContext::deactivate()
+{
+}

@@ -22,6 +22,7 @@ class EditorStateSwitcher : public ClickNoEvent
     private:
         void selectionTrigger();
         std::vector<InputContext*> states;
+        unsigned int selectedTab;
         CEGUI::TabControl* tab;
 };
 

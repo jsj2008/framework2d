@@ -41,6 +41,8 @@ void InputManager::render()
 }
 void InputManager::setActiveEvent(InputContext* _activeEvent)
 {
+    if (activeEvent != nullptr)
+        activeEvent->deactivate();
     activeEvent = _activeEvent;
 }
 void handle_mouse_down(Uint8 button);

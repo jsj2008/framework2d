@@ -28,9 +28,9 @@ Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
     return camera;
 }
 
-bool BodyCameraFactory::trigger(FactoryEvent<b2Body>* _event)
+bool BodyCameraFactory::trigger(FactoryUsageEvent<b2Body>* _event)
 {
-    FactoryEvent<b2Body>* event = static_cast<FactoryEvent<b2Body>*>(_event);
+    FactoryUsageEvent<b2Body>* event = static_cast<FactoryUsageEvent<b2Body>*>(_event);
     body = event->get();
     return false;
 }

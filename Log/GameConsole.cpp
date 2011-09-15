@@ -45,35 +45,35 @@ void GameConsole::addCommand(GameConsoleCommand* _command)
 }
 void GameConsole::createCEGUIWindow()
 {
-    consoleWindow = CEGUI::System::getSingletonPtr()->getGUISheet()->getChild("ConsoleRoot");
+    consoleWindow = CEGUI::System::getSingletonPtr()->getGUISheet()->getChild("Console");
     CEGUI::System::getSingleton().getGUISheet()->addChildWindow(consoleWindow);
     (this)->registerHandlers();
 }
 
 void GameConsole::registerHandlers()
 {
-    consoleWindow->getChild("ConsoleRoot/SendButton")->subscribeEvent(
+    consoleWindow->getChild("Console/SendButton")->subscribeEvent(
                         CEGUI::PushButton::EventClicked,
                         CEGUI::Event::Subscriber(
                             &GameConsole::handleSendButtonPressed,
                         this));
-    consoleWindow->getChild("ConsoleRoot/SendButton")->setTooltipText("Suck ma boab");
-    consoleWindow->getChild("ConsoleRoot/EditBox")->subscribeEvent(CEGUI::Editbox::EventMouseClick,
+    consoleWindow->getChild("Console/SendButton")->setTooltipText("Suck ma boab");
+    consoleWindow->getChild("Console/EditBox")->subscribeEvent(CEGUI::Editbox::EventMouseClick,
                         CEGUI::Event::Subscriber(&GameConsole::handleTextSubmitted,this));
 }
 bool GameConsole::handleTextSubmitted(const CEGUI::EventArgs &e)
 {
-    CEGUI::String Msg = consoleWindow->getChild("ConsoleRoot/EditBox")->getText();
+    CEGUI::String Msg = consoleWindow->getChild("Console/EditBox")->getText();
     parseText(Msg);
-    consoleWindow->getChild("ConsoleRoot/EditBox")->setText("");
+    consoleWindow->getChild("Console/EditBox")->setText("");
 
     return true;
 }
 bool GameConsole::handleSendButtonPressed(const CEGUI::EventArgs &e)
 {
-    CEGUI::String Msg = consoleWindow->getChild("ConsoleRoot/EditBox")->getText();
+    CEGUI::String Msg = consoleWindow->getChild("Console/EditBox")->getText();
     parseText(Msg);
-    consoleWindow->getChild("ConsoleRoot/EditBox")->setText("");
+    consoleWindow->getChild("Console/EditBox")->setText("");
 
     return true;
 }
@@ -110,7 +110,7 @@ Logger* GameConsole::newLogger(Logger* _newLogger)
 }
 void GameConsole::outputText(std::string _msg, unsigned int _timeStamp, unsigned int _colour)
 {
-	CEGUI::Listbox *outputWindow = static_cast<CEGUI::Listbox*>(consoleWindow->getChild("ConsoleRoot/ChatBox"));
+	CEGUI::Listbox *outputWindow = static_cast<CEGUI::Listbox*>(consoleWindow->getChild("Console/ChatBox"));
 
 	CEGUI::ListboxTextItem *newItem=0;
 	newItem = new CEGUI::ListboxTextItem(Log::getTimeString(_timeStamp) + ' ' + _msg,CEGUI::HTF_WORDWRAP_LEFT_ALIGNED);

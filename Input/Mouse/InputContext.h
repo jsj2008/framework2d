@@ -15,6 +15,7 @@ class InputContext
         virtual void mouseMove(Vec2i mouse)=0;
         virtual void buttonUp(Vec2i mouse, unsigned char button)=0;
         virtual void changeResolution(Vec2i newResolution);
+        virtual void deactivate();
         virtual bool activate(const CEGUI::EventArgs& args);
     protected:
         Camera* mCamera;
