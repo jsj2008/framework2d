@@ -17,11 +17,13 @@ PlayMode::PlayMode()
     type = Bubble::eSuctionBubbleType;
     mCamera = nullptr;
     playerBrain = nullptr;
+    Events::global().registerListener(this, eBlockQueue);
 }
 
 PlayMode::~PlayMode()
 {
     //dtor
+    Events::global().unregisterListener(this, true);
 }
 
 void PlayMode::start(unsigned char button)

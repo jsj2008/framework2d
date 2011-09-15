@@ -2,10 +2,10 @@
 #define EVENTS_H
 
 #include <Events/GenericEvent.h>
+#include <Events/EventHandler.h>
 class Event;
 template <typename DerivedEvent>
 class EventsListener;
-class EventHandler;
 
 class Events
 {
@@ -16,10 +16,10 @@ class Events
         void triggerEvent(DerivedEvent* event);
 
         template <typename DerivedEvent>
-        void registerListener(EventsListener<DerivedEvent>* listener);
+        void registerListener(EventsListener<DerivedEvent>* listener, EventListenerProperties _properties);
 
         template <typename DerivedEvent>
-        void unregisterListener(EventsListener<DerivedEvent>* listener);
+        void unregisterListener(EventsListener<DerivedEvent>* listener, bool _blockingQueue);
 
         template <GenericEvents eventName>
         void triggerGenericEvent();
@@ -29,7 +29,7 @@ class Events
         virtual ~Events();
 
         template <typename DerivedEvent>
-        EventsListener<DerivedEvent>** getListener();
+        EventHandler<DerivedEvent>& getHandler();
 };
 
 /**
@@ -41,27 +41,26 @@ class Events
 template <typename DerivedEvent>
 void Events::triggerEvent(DerivedEvent* event)
 {
-    if ((*getListener<DerivedEvent>()) != nullptr)
-        (*getListener<DerivedEvent>())->trigger(event);
+    getHandler<DerivedEvent>().trigger(event);
 }
 
 template <typename DerivedEvent>
-void Events::registerListener(EventsListener<DerivedEvent>* listener)
+void Events::registerListener(EventsListener<DerivedEvent>* listener, EventListenerProperties _properties)
 {
-    *getListener<DerivedEvent>() = listener;
+    getHandler<DerivedEvent>().registerListener(listener, &_properties);
 }
 
 template <typename DerivedEvent>
-void Events::unregisterListener(EventsListener<DerivedEvent>* listener)
+void Events::unregisterListener(EventsListener<DerivedEvent>* listener, bool _blockingQueue)
 {
-    *getListener<DerivedEvent>() = nullptr;
+    getHandler<DerivedEvent>().unregisterListener(listener, _blockingQueue);
 }
 
 
 template <typename DerivedEvent>
-EventsListener<DerivedEvent>** Events::getListener()
+EventHandler<DerivedEvent>& Events::getHandler()
 {
-    static EventsListener<DerivedEvent>* listener = nullptr;
-    return &listener;
+    static EventHandler<DerivedEvent> handler;
+    return handler;
 }
 #endif // EVENTS_H

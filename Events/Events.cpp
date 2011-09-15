@@ -15,3 +15,4 @@ Events& Events::global()
     static Events events;
     return events;
 }
+

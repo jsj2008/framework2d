@@ -230,6 +230,8 @@
 		<Unit filename="Entities/Weapons/Weapon.h" />
 		<Unit filename="Events/Event.cpp" />
 		<Unit filename="Events/Event.h" />
+		<Unit filename="Events/EventHandler.cpp" />
+		<Unit filename="Events/EventHandler.h" />
 		<Unit filename="Events/EventListener.cpp" />
 		<Unit filename="Events/EventListener.h" />
 		<Unit filename="Events/Events.cpp" />

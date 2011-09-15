@@ -18,7 +18,7 @@ class DynamicEditorVariable;
 class EditorMode;
 class Level;
 
-class DynamicEditor : public GameMode, public InputContext,  public EventsListener<FactoryCreateEvent<Entity>>
+class DynamicEditor : public GameMode, public InputContext, public EventsListener<FactoryCreateEvent<Entity>>, public EventsListener<FactoryTypeRegisterEvent<Entity>>
 {
     public:
         DynamicEditor(FreeCamera* camera, EditorMode* _mode);
@@ -28,6 +28,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
         bool trigger(FactoryCreateEvent<Entity>* event);
+        bool trigger(FactoryTypeRegisterEvent<Entity>* event);
         void render();
         bool update(){return true;}  // FIXME
         bool activate(const CEGUI::EventArgs&);
@@ -42,24 +43,13 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
         class EditorFactoryType;
         class ModeFactory;
         DynamicEditorMode* createEditorMode(const std::string& factoryName);
-        EditorFactory* searchExistingFactoryInstances(const std::string& factoryName, bool _createType);
+        EditorFactoryType* searchExistingFactoryInstances(const std::string& factoryName);
         bool createFactory(const CEGUI::EventArgs& _args);
-        //EditorFactoryType* createEditorFactoryType(const std::string& factoryName);
         InputContext* activeEditor;
-        std::vector<InputContext*> factoryInstances;
-        std::vector<EditorFactoryType*> factoryTypes;
-        std::unordered_map<std::string, EditorFactory*> editorFactories;
+        std::unordered_map<std::string, EditorFactoryType*> editorFactories;
         FactoryParameters params;
+        InputContext* getActiveEditor();
 
-        class EditorFactory
-        {
-            public:
-                EditorFactory(EditorFactoryType* _factoryType){factoryType = _factoryType;}
-                ~EditorFactory();
-                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor);
-            private:
-                EditorFactoryType* factoryType;
-        };
         class EditorFactoryType
         {
             public:
@@ -70,6 +60,8 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
                 void addInstanceVariableFactory(VariableFactory* _variableFactory){instanceVariableFactories.push_back(_variableFactory);}
                 bool createButton(const CEGUI::EventArgs&);
                 void setInstanceNameWidget(CEGUI::Window* _instanceNameWidget){instanceNameWidget = _instanceNameWidget;}
+                const std::string& getName(){return factoryTypeName;}
+                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor);
             private:
                 std::string factoryTypeName;
                 CEGUI::Window* instanceNameWidget;

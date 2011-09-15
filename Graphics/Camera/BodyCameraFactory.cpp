@@ -21,10 +21,11 @@ BodyCameraFactory::~BodyCameraFactory()
 Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
 {
     body = nullptr;
-    Events::global().registerListener(this);
+    Events::global().registerListener(this, eBlockQueue);
     AbstractFactoryBase<Entity>* entityFactory = AbstractFactories::global().getFactory<Entity>(factoryName);
     entityFactory->use(params);
     Camera* camera = new PhysicsCamera(body);
+    Events::global().unregisterListener(this, true);
     return camera;
 }
 

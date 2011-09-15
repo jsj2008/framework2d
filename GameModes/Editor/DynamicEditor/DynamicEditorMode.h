@@ -16,6 +16,7 @@ class DynamicEditorMode : public InputContext, public DynamicEditorVariable
         void addVariable(DynamicEditorVariable* _variable){variables.push_back(_variable);}
         CEGUI::Window* getWindow(){return rootWindow;}
         void addPropertyBagVariable(CppFactoryLoader* _loader);
+        bool destroySelf(const CEGUI::EventArgs&);
     protected:
         void create();
     private:

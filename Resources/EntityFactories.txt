@@ -76,3 +76,67 @@ CrateFactory EnterEntityNamederp
 {
 string material StaticSkinFactory
 }
+SuctionBubbleFactory EnterEntityNameherp
+{
+
+}
+CrateFactory EnterEntityNamoo
+{
+string material StaticSkinFactory
+}
+ExplosionFactory kaboom
+{
+string material StaticSkinFactory
+}
+UpwardsGravityBubbleFactory sandcoons
+{
+
+}
+UpwardsGravityBubbleFactory awwwnoo
+{
+
+}
+SuctionBubbleFactory niggers
+{
+
+}
+ExplosionFactory dick
+{
+string material StaticSkinFactory
+}
+SuctionBubbleFactory gay
+{
+
+}
+ParticleFactory poo
+{
+
+}
+UpwardsGravityBubbleFactory asdcoon
+{
+
+}
+CrateFactory hooray
+{
+string material StaticSkinFactory
+}
+ParticleFactory whatajoy
+{
+
+}
+ProjectileFactory noobs
+{
+string material StaticSkinFactory
+}
+CrateFactory thecoooon
+{
+string material StaticSkinFactory
+}
+LevelGeometryFactory herpyderpy
+{
+
+}
+UpwardsGravityBubbleFactory moomeow
+{
+
+}

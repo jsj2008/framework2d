@@ -21,6 +21,7 @@ void DynamicEditorMode::initEditorMode(std::string _name, CEGUI::Window* _window
     name = _name;
     rootWindow = _window;
     editor = _editor;
+    rootWindow->getChild(_name+"Tab/DeleteButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::SubscriberSlot(&DynamicEditorMode::destroySelf,this));
 }
 void DynamicEditorMode::create()
 {
@@ -35,4 +36,13 @@ void DynamicEditorMode::create()
 void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)
 {
     throw -1;
+}
+
+bool DynamicEditorMode::destroySelf(const CEGUI::EventArgs&)
+{
+    delete params;
+    params = nullptr;
+    static_cast<CEGUI::TabControl*>(rootWindow->getParent()->getParent())->removeTab(rootWindow->getName());
+    delete this;
+    return false;
 }

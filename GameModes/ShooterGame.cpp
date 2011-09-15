@@ -18,7 +18,6 @@ ShooterGame::ShooterGame()
 
     mCamera = nullptr;
     playerBrain = nullptr;
-    Events::global().registerListener(this);
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>(); /// FIXME these should be in the bubble game
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
 

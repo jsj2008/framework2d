@@ -17,20 +17,21 @@ DynamicEditorMode* DynamicEditor::DerivedModeFactory<mode>::createMode(FactoryPa
     return new mode(_params);
 }
 
-InputContext* DynamicEditor::EditorFactory::createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor)
+InputContext* DynamicEditor::EditorFactoryType::createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor)
 {
     FactoryParameters* params = new FactoryParameters(true);
-    DynamicEditorMode* editorMode = factoryType->modeFactory->createMode(params);
+    DynamicEditorMode* editorMode = modeFactory->createMode(params);
 
     CEGUI::Window* page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityInstanceTab.layout", _factoryName);
     CEGUI::Window* typeNameDisplay = page->getChild(_factoryName + "Tab/EntityTypeName");
     typeNameDisplay->appendText(_typeName);
     page->setProperty("Text",_factoryName);
     _tab->addTab(page);
+    page->setUserData(editorMode);
 
     editorMode->initEditorMode(_factoryName, page, _editor);
 
-    for (auto i = factoryType->instanceVariableFactories.begin(); i != factoryType->instanceVariableFactories.end(); i++)
+    for (auto i = instanceVariableFactories.begin(); i != instanceVariableFactories.end(); i++)
     {
         DynamicEditorVariable* editorVar = (*i)->createVariable(editorMode->getWindow(),params->getTypeTable(), _factoryName);
         editorMode->addVariable(editorVar);
@@ -50,12 +51,10 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
         (*i)->addPropertyBagVariable(&loader);
     }
     AbstractFactories::global().addFactory<Entity>(&loader);
-    editor->editorFactories[name] = editor->searchExistingFactoryInstances(name, false);
     for (unsigned int i = 0; i < deadBodies.size(); i++)
         delete deadBodies[i];
     deadBodies.clear();
-    editor->activeEditor = editor->editorFactories[name]->createEditor(editor->instanceTab, name, "Typename", editor);
-    editor->factoryInstances.push_back(editor->activeEditor);
+    editor->activeEditor = createEditor(editor->instanceTab, name, factoryTypeName, editor);
     editor->instanceTab->setSelectedTabAtIndex(editor->instanceTab->getTabCount()-1);
     std::ofstream file ("Resources/EntityFactories.txt", std::ios::app);
     for (auto i = variables.begin(); i != variables.end(); i++)
@@ -106,7 +105,6 @@ editorVariables
 
     CEGUI::Window* button = typeTab->getParent()->getChild("CreateButton");
     button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&DynamicEditor::createFactory,this));
-    Events::global().registerListener(this);
     editorMode = _mode;
 }
 
@@ -115,62 +113,57 @@ DynamicEditor::~DynamicEditor()
     //dtor
     instanceTab->getParent()->destroy();
     typeTab->getParent()->destroy();
-    Events::global().unregisterListener(this);
+    Events::global().unregisterListener(static_cast<EventsListener<FactoryTypeRegisterEvent<Entity>>*>(this), true);
+    Events::global().unregisterListener(static_cast<EventsListener<FactoryCreateEvent<Entity>>*>(this), true);
 }
 
 
 bool DynamicEditor::createFactory(const CEGUI::EventArgs& _args)
 {
     unsigned int index = typeTab->getSelectedTabIndex();
-    factoryTypes[index]->createButton(_args);
+    CEGUI::Window* tab = typeTab->getTabContentsAtIndex(index);
+    static_cast<EditorFactoryType*>(tab->getUserData())->createButton(_args);
     return true;
 }
 bool DynamicEditor::trigger(FactoryCreateEvent<Entity>* event)
 {
-    for (unsigned int i = 0; i < FactoryCreateEvent<Entity>::factories.size(); i++)
+    std::string name = event->getFactory()->getName();
+    if (name != "AIEntityFactory")
     {
-        std::string name = FactoryCreateEvent<Entity>::factories[i].first->getName();
-        if (name != "AIEntityFactory" && CEGUI::System::getSingleton().getGUISheet()->getChildRecursive(name + "Tab") == nullptr)
+        DynamicEditor::EditorFactoryType* factory = editorFactories[name];
+        if (factory != nullptr)
         {
-            DynamicEditor::EditorFactory* factory = editorFactories[name];
-            if (factory != nullptr)
-            {
-                activeEditor = factory->createEditor(instanceTab, FactoryCreateEvent<Entity>::factories[i].second, FactoryCreateEvent<Entity>::factories[i].first->getName(), this);
-                factoryInstances.push_back(activeEditor);
-            }
+            activeEditor = factory->createEditor(instanceTab, event->getFactoryName(), name, this);
         }
     }
 
     for (unsigned int i = 0; i < deadBodies.size(); i++)
         delete deadBodies[i];
     deadBodies.clear();
-    FactoryCreateEvent<Entity>::factories.clear();
     return true;
 }
 
-void DynamicEditor::init()
+bool DynamicEditor::trigger(FactoryTypeRegisterEvent<Entity>* event)
 {
-    for (unsigned int i = 0; i < FactoryTypeRegisterEvent<Entity>::factoryNames.size(); i++)
+    std::string name = event->getFactoryName();
+    if (name != "AIEntityFactory")
     {
-        std::string name = FactoryTypeRegisterEvent<Entity>::factoryNames[i];
-        if (name != "AIEntityFactory")
+        DynamicEditor::EditorFactoryType* factory = searchExistingFactoryInstances(name);
+        if (factory != nullptr)
         {
-            DynamicEditor::EditorFactory* factory = searchExistingFactoryInstances(name, true);
-            if (factory != nullptr)
-            {
-                editorFactories[name] = factory;
-                //activeEditor = factory->createEditor(instanceTab, name, this);
-                //factoryInstances.push_back(activeEditor);
-                //instanceTab->setSelectedTabAtIndex(instanceTab->getTabCount()-1);
-            }
+            editorFactories[name] = factory;
         }
     }
 
     for (unsigned int i = 0; i < deadBodies.size(); i++)
         delete deadBodies[i];
     deadBodies.clear();
-    FactoryTypeRegisterEvent<Entity>::factoryNames.clear();
-    trigger(nullptr);
+    return true;
+}
+void DynamicEditor::init()
+{
+    Events::global().registerListener(static_cast<EventsListener<FactoryTypeRegisterEvent<Entity>>*>(this), {eReadQueue|eClearQueue|eBlockQueue});
+    Events::global().registerListener(static_cast<EventsListener<FactoryCreateEvent<Entity>>*>(this), {eReadQueue|eClearQueue|eBlockQueue});
 }
 bool DynamicEditor::activate(const CEGUI::EventArgs& args)
 {
@@ -190,7 +183,7 @@ void DynamicEditor::deactivate()
 }
 
 
-DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(const std::string& factoryName, bool _createType)
+DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(const std::string& factoryName)
 {
     AbstractFactoryBase<Entity>* factory = AbstractFactories::global().getFactory<Entity>(factoryName);
     EditorFactoryType* editor = nullptr;
@@ -237,56 +230,56 @@ DynamicEditor::EditorFactory* DynamicEditor::searchExistingFactoryInstances(cons
     }
     return nullptr;
 MATCH_FOUND:
-    if (_createType)
+    TextFileFactoryLoader loader(nullptr, true);
+    FactoryGetList getList;
+    Events::global().registerListener<FactoryGetEvent>(&getList,{eBlockQueue});
+    factory->init(&loader, &AbstractFactories::global());
+    Events::global().unregisterListener<FactoryGetEvent>(&getList, true);
+    std::vector<std::string> values = loader.getUndefinedLog();
+    FactoryParameters* params = new FactoryParameters();
+    CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
+    for (auto value = values.begin(); value != values.end(); value++)
     {
-        TextFileFactoryLoader loader(nullptr, true);
-        FactoryGetList getList;
-        Events::global().registerListener<FactoryGetEvent>(&getList);
-        factory->init(&loader, &AbstractFactories::global());
-        Events::global().unregisterListener<FactoryGetEvent>(&getList);
-        std::vector<std::string> values = loader.getUndefinedLog();
-        FactoryParameters* params = new FactoryParameters();
-        CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName + "Type");
-        for (auto value = values.begin(); value != values.end(); value++)
+        auto variable = editorVariables.find(*value);
+        if (variable != editorVariables.end())
         {
-            auto variable = editorVariables.find(*value);
-            if (variable != editorVariables.end())
-            {
-                editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable(),factoryName));
-            }
+            editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable(),factoryName));
         }
-        page->setProperty("Text",factoryName + "Type");
-        typeTab->addTab(page);
-
-        unsigned int tabsSize = typeTab->getTabCount();
-        if (factoryTypes.size() < tabsSize)
-            factoryTypes.resize(tabsSize);
-        factoryTypes[tabsSize-1] = editor;
-
-        CEGUI::Window* factoryNameBox = typeTab->getParent()->getChild("NewFactoryName");
-        editor->setInstanceNameWidget(factoryNameBox);
     }
-    CEGUI::EventArgs args;
-    //activate(args);
-    return new EditorFactory(editor);
+    page->setProperty("Text",factoryName);
+    typeTab->addTab(page);
+
+    page->setUserData(editor);
+
+    CEGUI::Window* factoryNameBox = typeTab->getParent()->getChild("NewFactoryName");
+    editor->setInstanceNameWidget(factoryNameBox);
+    return editor;
 }
 
+InputContext* DynamicEditor::getActiveEditor()
+{
+    CEGUI::Window* page = instanceTab->getTabContentsAtIndex(instanceTab->getSelectedTabIndex());
+    return static_cast<InputContext*>(page->getUserData());
+}
 void DynamicEditor::buttonDown(Vec2i mouse, unsigned char button)
 {
-    factoryInstances[instanceTab->getSelectedTabIndex()]->buttonDown(mouse,button);
+    getActiveEditor()->buttonDown(mouse,button);
 }
 void DynamicEditor::mouseMove(Vec2i mouse)
 {
-    factoryInstances[instanceTab->getSelectedTabIndex()]->mouseMove(mouse);
+    getActiveEditor()->mouseMove(mouse);
 }
 void DynamicEditor::buttonUp(Vec2i mouse, unsigned char button)
 {
-    factoryInstances[instanceTab->getSelectedTabIndex()]->buttonUp(mouse,button);
+    getActiveEditor()->buttonUp(mouse,button);
 }
 void DynamicEditor::render()
 {
     if (instanceTab->getTabCount() != 0)
-        factoryInstances[instanceTab->getSelectedTabIndex()]->render();
+    {
+        InputContext* context = getActiveEditor();
+        //context->render(); FIXME put this back in
+    }
 }
 
 bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
