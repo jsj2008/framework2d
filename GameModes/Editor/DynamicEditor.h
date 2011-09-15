@@ -56,7 +56,7 @@ class DynamicEditor : public GameMode, public InputContext,  public EventsListen
             public:
                 EditorFactory(EditorFactoryType* _factoryType){factoryType = _factoryType;}
                 ~EditorFactory();
-                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName, DynamicEditor* _editor);
+                InputContext* createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor);
             private:
                 EditorFactoryType* factoryType;
         };

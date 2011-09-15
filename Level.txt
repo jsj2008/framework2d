@@ -1,10 +1,9 @@
-9 grenade 1 Vec2f position 8.46667 -3.26667 
- crate 2 Vec2f dimensions 2 1.73333 Vec2f position 5.8 3 
- LevelGeometryFactory 1 Vec2fArray points 4 14.0667 14.6  24.1333 8.73333  33.2667 16.3333  24.4 19.3333  
- sillyBox 2 Vec2f dimensions 1.93333 2.4 Vec2f position 6.76667 0.533333 
- LevelGeometryFactory 1 Vec2fArray points 3 -13.1594 3.4606  -2.77759 10.7005  -6.14712 13.3871  
- CratesYo 2 Vec2f position 2.36667 -6.43333 Vec2f dimensions 3.13333 2.73333 
- MudGeometry 1 Vec2fArray points 5 14.8 4.2  24.7333 -0.933333  26.6667 5.4  24.2 8.6  19.2 8.13333  
- EnterEntityNamederp 2 Vec2f position 4.8 1.73333 Vec2f dimensions 4 4 
+8 MudGeometry 1 Vec2fArray points 5 14.8 4.2  24.7333 -0.933333  26.6667 5.4  24.2 8.6  19.2 8.13333  
  LevelGeometryFactory 1 Vec2fArray points 5 -2.46667 4.26667  8.46667 9.4  15.8667 16.5333  3 19.9333  -9.13333 12.5333  
+ CratesYo 2 Vec2f dimensions 3.13333 2.73333 Vec2f position 2.36667 -6.43333 
+ LevelGeometryFactory 1 Vec2fArray points 3 -13.1594 3.4606  -2.77759 10.7005  -6.14712 13.3871  
+ LevelGeometryFactory 1 Vec2fArray points 4 14.0667 14.6  24.1333 8.73333  33.2667 16.3333  24.4 19.3333  
+ crate 2 Vec2f position 5.8 3 Vec2f dimensions 2 1.73333 
+ grenade 1 Vec2f position 8.46667 -3.26667 
+ EnterEntityNamederp 2 Vec2f dimensions 4 4 Vec2f position 4.8 1.73333 
  

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="DefaultWindow" Name="Tab" >
+        <Property Name="Text" Value="Error, set the text property" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Window Type="TaharezLook/StaticText" Name="Tab/EntityTypeName" >
+            <Property Name="Text" Value="Base type: " />
+            <Property Name="UnifiedAreaRect" Value="{{0.0,0},{0.0,0},{1.0,0},{0.0,28}}" />
+        </Window>
+    </Window>
+</GUILayout>
