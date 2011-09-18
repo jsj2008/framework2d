@@ -26,7 +26,7 @@ EditorMode::EditorMode(PlayMode* _playMode)
     modes[3] = activeLevel;
 
     Vec2i dimensions(500/NUM_MODES,100);
-    selectionBox = new EditorStateSwitcher("Editor/TabControl",{"DynamicEditor","JointEditor","GeometrySelector","TestPlay"},modes);
+    selectionBox = new EditorStateSwitcher("Root/Frame/TabControl",{"DynamicEditor","JointEditor","GeometrySelector","TestPlay"},modes);
 
     for (unsigned int i = 0; i < NUM_MODES; i++)
     {

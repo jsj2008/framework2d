@@ -12,7 +12,7 @@ EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initia
     //CEGUI::System::getSingleton().setGUISheet( myRoot );
 
     CEGUI::Window* guiSheet = CEGUI::System::getSingleton().getGUISheet();
-    tab = (CEGUI::TabControl*)guiSheet->getChildRecursive(tabControlName);
+    tab = static_cast<CEGUI::TabControl*>(guiSheet->getChildRecursive(tabControlName));
     if (tab == nullptr)
     {
         g_Log.error(std::string("Failed to find CEGUI window ") + tabControlName);
@@ -25,12 +25,22 @@ EditorStateSwitcher::EditorStateSwitcher(const char* tabControlName, std::initia
     auto iter = _icons.begin();
     for (unsigned int i = 0; i < _icons.size(); i++)
     {
-        CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(*iter + ".layout");
-        tab->addTab(page);
+        //if (i > 0)
+        //if (*iter != "DistanceJoints")
+        {
+            CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(*iter + ".layout");
+            tab->addTab(page);
+        }
         CEGUI::System::getSingleton().getGUISheet()->getChildRecursive(*iter)->subscribeEvent(CEGUI::TabButton::EventShown,CEGUI::SubscriberSlot(&InputContext::activate,states[i]));
         iter++;
     }
     eventShow();
+    /*if (std::string(tabControlName) == "Root/Frame/TabControl")
+    {
+        std::ofstream file("Resources/CEGUI/layouts/NewRoot.layout");
+        CEGUI::XMLSerializer xml(file);
+        CEGUI::System::getSingleton().getGUISheet()->writeXMLToStream(xml);
+    }*/
 }
 
 EditorStateSwitcher::~EditorStateSwitcher()

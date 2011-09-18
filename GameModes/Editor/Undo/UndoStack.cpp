@@ -14,10 +14,10 @@ UndoStack::~UndoStack()
 
 void UndoStack::init()
 {
-    window = CEGUI::System::getSingleton().getGUISheet()->getChild("UndoHistory");
-    window->getChild("UndoHistory/Undo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::undoButton, this));
-    window->getChild("UndoHistory/Redo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::redoButton, this));
-    listBox = static_cast<CEGUI::Listbox*>(window->getChild("UndoHistory/ListBox"));
+    window = CEGUI::System::getSingleton().getGUISheet()->getChild("Root/UndoHistory");
+    window->getChild("Root/UndoHistory/Undo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::undoButton, this));
+    window->getChild("Root/UndoHistory/Redo")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&UndoStack::redoButton, this));
+    listBox = static_cast<CEGUI::Listbox*>(window->getChild("Root/UndoHistory/ListBox"));
     listBox->setItemTooltipsEnabled(true);
 }
 UndoStack& UndoStack::global()
@@ -75,5 +75,5 @@ void UndoStack::setInfoboxText()
     std::stringstream entries;
     entries << "Undos: " << undoStack.size()-stackOffset << std::endl;
     entries << "Redos: " << stackOffset;
-    window->getChild("UndoHistory/InfoBox")->setText(entries.str());
+    window->getChild("Root/UndoHistory/InfoBox")->setText(entries.str());
 }

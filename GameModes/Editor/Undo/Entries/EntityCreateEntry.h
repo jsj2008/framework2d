@@ -10,7 +10,7 @@ class Level;
 class EntityCreateEntry : public UndoEntry
 {
     public:
-        EntityCreateEntry(const std::string& _factory, FactoryParameters* _params, Level* _level);
+        EntityCreateEntry(const std::string& _factory, const std::string& _name, FactoryParameters* _params, Level* _level);
         ~EntityCreateEntry();
         void redo();
         void undo();
@@ -20,6 +20,7 @@ class EntityCreateEntry : public UndoEntry
     private:
         UndoResource entity;
         std::string factory;
+        std::string name;
         FactoryParameters params;
         Level* level;
 };

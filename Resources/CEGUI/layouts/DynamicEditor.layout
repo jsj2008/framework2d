@@ -1,8 +1,7 @@
-<?xml version="1.0" ?>
 <GUILayout>
-  <Window Type="DefaultGUISheet" Name="DynamicEditor">
-    <Property Name="Text" Value="Dynamic editor" />
-
-    
-  </Window>
+    <Window Name="DynamicEditor" Type="DefaultWindow">
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Font" Value="DejaVuSans-10" />
+        <Property Name="Text" Value="Dynamic editor" />
+    </Window>
 </GUILayout>

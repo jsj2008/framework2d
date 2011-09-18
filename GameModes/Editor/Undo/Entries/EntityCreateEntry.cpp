@@ -3,10 +3,11 @@
 #include <sstream>
 #include <cstring>
 
-EntityCreateEntry::EntityCreateEntry(const std::string& _factory, FactoryParameters* _params, Level* _level)
+EntityCreateEntry::EntityCreateEntry(const std::string& _factory, const std::string& _name, FactoryParameters* _params, Level* _level)
 {
     //ctor
     factory = _factory;
+    name = _name;
     params = *_params;
     level = _level;
     entity = UndoResources::global().createEntry();
@@ -30,9 +31,9 @@ void EntityCreateEntry::undo()
 
 const char* EntityCreateEntry::getListText()
 {
-    static char listText[32] = "Create ";
-    memcpy(listText + strlen("Create "), &factory[0], factory.length());
-    return listText;
+    static std::string listText = "Create ";
+    listText = std::string("Create ") + name;
+    return listText.c_str();
 }
 
 const char* EntityCreateEntry::getTooltipText()

@@ -4,7 +4,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <stack>
 #include <cassert>
 #include <Types/Vec2f.h>
 #include <Log/Log.h>
@@ -26,6 +25,7 @@ class TypeTable
         typedef std::string TypeIndex;
 
         TypeTable(bool logUndefined);
+        TypeTable(const TypeTable& _rhs);
         //TypeTable(const TypeTable& rhs);
         virtual ~TypeTable();
 
@@ -128,7 +128,7 @@ class TypeTable
         };
 
         static std::unordered_map<TypeIndex,Type*> types;
-        std::unordered_map<TypeIndex, std::stack<UntypedValue*>> untypedValues;
+        std::unordered_map<TypeIndex, std::vector<UntypedValue*>> untypedValues;
         bool logUndefined;
         std::unordered_map<ValueIndex, Value*> undefinedLog;
     private:

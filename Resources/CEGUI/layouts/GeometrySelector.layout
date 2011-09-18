@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <GUILayout>
-    <Window Type="DefaultGUISheet" Name="GeometrySelector">
+    <Window Type="DefaultWindow" Name="GeometrySelector">
         <Property Name="Text" Value="Geometry selector" />
     </Window>
 </GUILayout>

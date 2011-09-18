@@ -2,14 +2,34 @@
 #include <Log/Log.h>
 #include <Types/Vec2i.h>
 #include <sstream>
+TypeTable::TypeTable(const TypeTable& _rhs)
+{
+    /// FIXME I think this is being called more frequently than it should be
+    for (auto iter = _rhs.values.begin(); iter != _rhs.values.end(); iter++)
+    {
+        values[iter->first] = iter->second->clone();
+    }
+    for (auto i = _rhs.untypedValues.begin(); i != _rhs.untypedValues.end(); i++)
+    {
+        std::vector<UntypedValue*>& lookup = untypedValues[i->first];
+        lookup.reserve(i->second.size());
+        for (auto ii = i->second.begin(); ii != i->second.end(); ii++)
+        {
+            lookup.push_back(*ii);
+        }
+    }
+    for (auto i = _rhs.undefinedLog.begin(); i != _rhs.undefinedLog.end(); i++)
+    {
+        undefinedLog[i->first] = i->second->clone();
+    }
+}
 TypeTable::~TypeTable()
 {
-    /// FIXME for some reason this breaks things
-    /*for (auto i = values.begin(); i != values.end(); i++)
+    for (auto i = values.begin(); i != values.end(); i++)
     {
         delete i->second;
     }
-    values.clear();*/
+    values.clear();
 }
 void TypeTable::removeValue(const ValueIndex& name)
 {
@@ -27,6 +47,12 @@ void TypeTable::clear()
         delete i->second;
     }
     values.clear();
+    for (auto i = undefinedLog.begin(); i != undefinedLog.end(); i++)
+    {
+        g_Log.warning("Undefined value " + i->first + " not used");
+        delete i->second;
+    }
+    undefinedLog.clear();
 }
 
 
@@ -103,8 +129,8 @@ void TypeTable::registerType(const TypeIndex& _name)
     {
         while (!iter->second.empty())
         {
-            UntypedValue* value = iter->second.top();
-            iter->second.pop();
+            UntypedValue* value = iter->second.back();
+            iter->second.pop_back();
             values[value->getValueIndex()] = value->instance<T>();
             delete value;
         }
@@ -118,7 +144,7 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
     if (type == nullptr)
     {
         UntypedValue* ret = new UntypedValue(_type, _name);
-        untypedValues[_type].push(ret);
+        untypedValues[_type].push_back(ret);
         return ret;
     }
     else

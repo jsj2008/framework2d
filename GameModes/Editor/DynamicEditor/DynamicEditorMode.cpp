@@ -30,7 +30,18 @@ void DynamicEditorMode::create()
     {
         (*i)->finish();
     }
-    UndoStack::global().addEntry(new EntityCreateEntry(name,params,editor->getActiveLevel()));
+    const std::string& string = params->get<std::string>("name", "");
+    if (string == "")
+    {
+        UndoStack::global().addEntry(new EntityCreateEntry(name,name,params,editor->getActiveLevel()));
+    }
+    else
+    {
+        std::string nameInQuotes("\"");
+        nameInQuotes = nameInQuotes + string + '"';
+        UndoStack::global().addEntry(new EntityCreateEntry(name,nameInQuotes,params,editor->getActiveLevel()));
+        params->remove("name");
+    }
 }
 
 void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)

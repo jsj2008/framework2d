@@ -102,6 +102,8 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
                 ModeFactory*>
             > editorModes;
         std::unordered_map<std::string,VariableFactory*> editorVariables;
+        //DynamicEditorVariable* nameVariableController;
+        VariableFactory* nameVariableControllerFactory;
 
         class FactoryGetList: public EventsListener<FactoryGetEvent>
         {
@@ -121,6 +123,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         };
         CEGUI::TabControl* instanceTab;
         CEGUI::TabControl* typeTab;
+        CEGUI::Window* entityName;
         EditorMode* editorMode;
 };
 

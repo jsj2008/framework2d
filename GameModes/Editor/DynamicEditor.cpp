@@ -81,6 +81,40 @@ class TextEditBoxFactory : public DynamicEditor::VariableFactory
     private:
         std::string name, defaultValue;
 };
+class NameVariableController: public DynamicEditorVariable
+{
+    public:
+        NameVariableController(CEGUI::Window* _entityName, TypeTable* _params)
+        :DynamicEditorVariable(_entityName, _params, "name")
+        {
+        }
+        void finish()
+        {
+            std::string string = rootWindow->getProperty("Text").c_str();
+            if (string != "")
+            {
+                typeTable->addValue<std::string>(factoryName, string.c_str());
+            }
+        }
+        void addPropertyBagVariable(CppFactoryLoader* _loader)
+        {
+            std::string string = rootWindow->getProperty("Text").c_str();
+            if (string != "")
+            {
+                _loader->addValue<std::string>(factoryName, string.c_str());
+            }
+        }
+    private:
+        //CEGUI::Window* entityName;
+};
+class NameVariableControllerFactory : public DynamicEditor::VariableFactory
+{
+    public:
+        NameVariableControllerFactory(CEGUI::Window* _nameEditBox){nameEditBox = _nameEditBox;}
+        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){return new NameVariableController(nameEditBox,_params);}
+    private:
+        CEGUI::Window* nameEditBox;
+};
 DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 :editorModes
 ({
@@ -96,14 +130,18 @@ editorVariables
     //ctor
     camera->activate();
     mCamera = camera;
-    instanceTab = getTabControl("Entities");
-    typeTab = getTabControl("EntityTypes");
+    instanceTab = getTabControl("Root/Entities");
+    typeTab = getTabControl("Root/EntityTypes");
+    entityName = CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("Root/Entities/EntityName");
+    //nameVariableController = new NameVariableController(entityName, &params);
+    nameVariableControllerFactory = new NameVariableControllerFactory(entityName);
+    assert(entityName);
     instanceTab->getParent()->setEnabled(false);
     typeTab->getParent()->setEnabled(false);
     instanceTab->getParent()->setVisible(false);
     typeTab->getParent()->setVisible(false);
 
-    CEGUI::Window* button = typeTab->getParent()->getChild("CreateButton");
+    CEGUI::Window* button = typeTab->getParent()->getChild("Root/EntityTypes/CreateButton");
     button->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::SubscriberSlot(&DynamicEditor::createFactory,this));
     editorMode = _mode;
 }
@@ -223,6 +261,7 @@ DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(
                         editor->addInstanceVariableFactory(variable->second);
                     }
                 }
+                editor->addInstanceVariableFactory(nameVariableControllerFactory);
                 //break;
                 goto MATCH_FOUND;
             }
@@ -251,7 +290,7 @@ MATCH_FOUND:
 
     page->setUserData(editor);
 
-    CEGUI::Window* factoryNameBox = typeTab->getParent()->getChild("NewFactoryName");
+    CEGUI::Window* factoryNameBox = typeTab->getParent()->getChild("Root/EntityTypes/NewFactoryName");
     editor->setInstanceNameWidget(factoryNameBox);
     return editor;
 }
@@ -278,7 +317,7 @@ void DynamicEditor::render()
     if (instanceTab->getTabCount() != 0)
     {
         InputContext* context = getActiveEditor();
-        //context->render(); FIXME put this back in
+        context->render(); //FIXME put this back in
     }
 }
 

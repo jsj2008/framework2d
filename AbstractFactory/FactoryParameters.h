@@ -21,6 +21,7 @@ class FactoryParameters
 
         std::vector<std::string> getUndefinedLog();
 
+        void remove(const std::string& _name){table.removeValue(_name);}
         void clear();
 
         friend std::ostream& operator<< (std::ostream &out, const FactoryParameters &params);
