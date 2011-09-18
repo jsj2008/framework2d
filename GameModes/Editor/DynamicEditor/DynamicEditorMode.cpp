@@ -3,6 +3,7 @@
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityCreateEntry.h>
 #include <GameModes/Editor/DynamicEditor.h>
+#include <GameModes/Editor/DynamicEditor/EntityList.h>
 
 DynamicEditorMode::DynamicEditorMode(FactoryParameters* _params)
 :DynamicEditorVariable(nullptr, _params->getTypeTable(),"")
@@ -31,17 +32,21 @@ void DynamicEditorMode::create()
         (*i)->finish();
     }
     const std::string& string = params->get<std::string>("name", "");
+    EntityCreateEntry* entry = nullptr;
     if (string == "")
     {
-        UndoStack::global().addEntry(new EntityCreateEntry(name,name,params,editor->getActiveLevel()));
+        entry = new EntityCreateEntry(name,name,params,editor->getActiveLevel());
+        UndoStack::global().addEntry(entry);
     }
     else
     {
         std::string nameInQuotes("\"");
         nameInQuotes = nameInQuotes + string + '"';
-        UndoStack::global().addEntry(new EntityCreateEntry(name,nameInQuotes,params,editor->getActiveLevel()));
+        entry = new EntityCreateEntry(name,nameInQuotes,params,editor->getActiveLevel());
+        UndoStack::global().addEntry(entry);
         params->remove("name");
     }
+    editor->getEntityList()->addEntity(entry->getEntity(), name);
 }
 
 void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)

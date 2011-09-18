@@ -17,6 +17,7 @@ class DynamicEditorMode;
 class DynamicEditorVariable;
 class EditorMode;
 class Level;
+class EntityList;
 
 class DynamicEditor : public GameMode, public InputContext, public EventsListener<FactoryCreateEvent<Entity>>, public EventsListener<FactoryTypeRegisterEvent<Entity>>
 {
@@ -33,6 +34,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         bool update(){return true;}  // FIXME
         bool activate(const CEGUI::EventArgs&);
         void deactivate();
+        EntityList* getEntityList();
 
         Level* getActiveLevel();
 

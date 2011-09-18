@@ -1,15 +1,17 @@
-14 spark 1 Vec2f position 12.4 14.2667 
- spark 2 Vec2f position 11.6 11.2 string name dick
- grenade 1 Vec2f position 6.33333 13.0667 
- levelGeometry 1 Vec2fArray points 4 -1.93333 22.3333  15.6667 22.8  15.4667 27.3333  -3.66667 27.2667  
- spark 1 Vec2f position 10 15.3333 
- spark 1 Vec2f position 7.33333 7.4 
- spark 1 Vec2f position 11.4 16.2 
- grenade 1 Vec2f position 10.6667 3.6 
- spark 1 Vec2f position 7.06667 16.6 
+16 spark 2 Vec2f position 3.6 15 string name dickhead
  spark 1 Vec2f position 9.86667 13.8 
- levelGeometry 2 Vec2fArray points 4 -18.9333 5.66667  -5.73333 18.4  -17.2667 21.8667  -20.6 15.5333  string name wall
- spark 2 Vec2f position 3.6 15 string name dickhead
+ spark 2 Vec2f position 3.66667 12.1333 string name dick
+ spark 1 Vec2f position 12.4 14.2667 
+ explosion 2 Vec2f position 8.8 17.8 string name coon
+ spark 1 Vec2f position 11.4 16.2 
+ spark 1 Vec2f position 7.33333 7.4 
+ levelGeometry 1 Vec2fArray points 4 -1.93333 22.3333  15.6667 22.8  15.4667 27.3333  -3.66667 27.2667  
+ spark 1 Vec2f position 7.06667 16.6 
+ grenade 1 Vec2f position 10.6667 3.6 
  explosion 2 Vec2f position 26 5.4 string name dick
+ spark 1 Vec2f position 10 15.3333 
+ spark 2 Vec2f position 11.6 11.2 string name dick
  spark 2 Vec2f position 10.2667 17.9333 string name dickholes
+ grenade 1 Vec2f position 6.33333 13.0667 
+ levelGeometry 2 Vec2fArray points 4 -18.9333 5.66667  -5.73333 18.4  -17.2667 21.8667  -20.6 15.5333  string name wall
  

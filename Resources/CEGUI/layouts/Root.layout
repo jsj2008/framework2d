@@ -39,6 +39,26 @@
                 </AutoWindow>
             </Window>
         </Window>
+        <Window Name="Root/EntityList" Type="TaharezLook/FrameWindow">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-250},{0,300},{1,0}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Entity list" />
+            <Property Name="Alpha" Value="0.5" />
+            <Property Name="UnifiedMinSize" Value="{{0,128},{0,128}}" />
+            <Property Name="TitlebarFont" Value="DejaVuSans-10" />
+            <Property Name="EWSizingCursorImage" Value="" />
+            <Property Name="NSSizingCursorImage" Value="" />
+            <Property Name="NESWSizingCursorImage" Value="" />
+            <Property Name="NWSESizingCursorImage" Value="" />
+            <AutoWindow NameSuffix="__auto_closebutton__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <Window Name="Root/EntityList/Listbox" Type="TaharezLook/Combobox">
+                <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="ClippedByParent" Value="False" />
+            </Window>
+        </Window>
         <Window Name="Root/EntityTypes" Type="TaharezLook/FrameWindow">
             <Property Name="UnifiedAreaRect" Value="{{0.00626336,0},{0,281},{0,333},{-0.146667,685}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
@@ -131,7 +151,7 @@
         <Window Name="Root/Console" Type="TaharezLook/FrameWindow">
             <Property Name="UnifiedAreaRect" Value="{{0.423713,0},{0.698173,0},{0.725892,0},{0.998122,0}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
-            <Property Name="Text" Value="Chat Window" />
+            <Property Name="Text" Value="Console" />
             <Property Name="TitlebarFont" Value="DejaVuSans-10" />
             <Property Name="EWSizingCursorImage" Value="" />
             <Property Name="NSSizingCursorImage" Value="" />
