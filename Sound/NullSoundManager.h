@@ -10,7 +10,7 @@ class NullSoundManager : public SoundManager
         NullSoundManager();
         virtual ~NullSoundManager();
         void soundAction(unsigned int _action, unsigned int _volume = MAX_VOLUME);
-        void streamUpdate(unsigned char* _stream, int _length);
+        void poly_streamUpdate(unsigned char* _stream, int _length);
     protected:
     private:
 };

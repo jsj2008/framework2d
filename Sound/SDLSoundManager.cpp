@@ -31,6 +31,11 @@ SDLSoundManager::SDLSoundManager()
     soundActions.push_back(new StreamPlayer("chimes.wav"));
     soundActions.push_back(new TemplateSoundPlayer<ChimePlayer>());
     soundAction(0);
+
+    int wtf = 32;
+    bufferSize = 8096*4*wtf;
+    buffer = new unsigned char[bufferSize];
+    bufferOffset = 0;
 }
 
 SDLSoundManager::~SDLSoundManager()
@@ -54,24 +59,60 @@ void SDLSoundManager::soundAction(unsigned int _action, unsigned int _volume)
     SDL_UnlockMutex(mutex);
 }
 
-void SDLSoundManager::streamUpdate(unsigned char* _stream, int _length)
+void SDLSoundManager::poly_streamUpdate(unsigned char* _stream, int _length)
 {
     SDL_LockMutex(mutex);
+    if (_length > bufferSize && false)
+    {
+        /*unsigned int oldBufferSize = bufferSize;
+        memcpy(_stream, buffer, bufferSize);
+
+        delete[] buffer;
+        buffer = new unsigned char[_length];
+        bufferSize = _length;*/
+
+        /// Agh whatever
+        throw -1;
+
+    }
+    else
+    {
+        /*bool spliced = false;
+        int length = _length;
+        if (bufferOffset + _length > bufferSize)
+        {
+            length = bufferSize - bufferOffset;
+            spliced = true;
+        }
+        memcpy(_stream, buffer + bufferOffset, length);
+        impl_streamUpdate(buffer + bufferOffset, length);
+
+        if (spliced)
+        {
+            bufferOffset = _length - length;
+            memcpy(_stream + length, buffer, bufferOffset);
+            impl_streamUpdate(buffer, bufferOffset);
+        }
+        else bufferOffset += length;*/
+        impl_streamUpdate(_stream, _length);
+    }
+    SDL_UnlockMutex(mutex);
+}
+
+void SDLSoundManager::impl_streamUpdate(unsigned char* _stream, int _length)
+{
     memset(_stream, 0, _length);
     for (unsigned int i = 0; i < soundInstances.size(); i++)
     {
-        if (!soundInstances[i]->update(_stream, _length))
+        if (!soundInstances[i]->update(_stream , _length))
         {
             delete soundInstances[i];
             soundInstances[i] = soundInstances.back();
             soundInstances.pop_back();
             i--;
         }
-    }
-    SDL_UnlockMutex(mutex);
+    }// */
 }
-
-
 
 
 

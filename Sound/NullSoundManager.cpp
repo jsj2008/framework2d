@@ -14,7 +14,7 @@ void NullSoundManager::soundAction(unsigned int _action, unsigned int _volume)
 {
 
 }
-void NullSoundManager::streamUpdate(unsigned char* _stream, int _length)
+void NullSoundManager::poly_streamUpdate(unsigned char* _stream, int _length)
 {
 
 }
