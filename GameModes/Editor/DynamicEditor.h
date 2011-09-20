@@ -34,7 +34,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         bool update(){return true;}  // FIXME
         bool activate(const CEGUI::EventArgs&);
         void deactivate();
-        EntityList* getEntityList();
+        EntityList* getEntityList(){return entityList;}
 
         Level* getActiveLevel();
 
@@ -47,6 +47,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         DynamicEditorMode* createEditorMode(const std::string& factoryName);
         EditorFactoryType* searchExistingFactoryInstances(const std::string& factoryName);
         bool createFactory(const CEGUI::EventArgs& _args);
+        EntityList* entityList;
         InputContext* activeEditor;
         std::unordered_map<std::string, EditorFactoryType*> editorFactories;
         FactoryParameters params;

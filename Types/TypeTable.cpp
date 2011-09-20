@@ -166,9 +166,9 @@ ostream& operator<< (ostream &out, const TypeTable &table)
     out << size << ' ';
     for (auto i = table.values.begin(); i != table.values.end(); i++)
     {
+        std::string name = i->first;
         std::string typeId = i->second->getTypeId();
         out << typeId << ' ';
-        std::string name = i->first;
         out << name << ' ';
         i->second->output(&out);
     }
@@ -214,7 +214,8 @@ std::string TypeTable::UntypedValue::getTypeId()
 }
 TypeTable::Value* TypeTable::UntypedValue::clone()
 {
-    return nullptr;
+    throw -1;
+    //return nullptr;
 }
 template <typename T>
 TypeTable::Value* TypeTable::UntypedValue::instance()

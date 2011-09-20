@@ -236,6 +236,10 @@
 		<Unit filename="Events/EventListener.h" />
 		<Unit filename="Events/Events.cpp" />
 		<Unit filename="Events/Events.h" />
+		<Unit filename="Events/Events/EntityPlaceEvent.cpp" />
+		<Unit filename="Events/Events/EntityPlaceEvent.h" />
+		<Unit filename="Events/Events/EntityRemoveEvent.cpp" />
+		<Unit filename="Events/Events/EntityRemoveEvent.h" />
 		<Unit filename="Events/Events/FactoryCreateEvent.cpp" />
 		<Unit filename="Events/Events/FactoryCreateEvent.h" />
 		<Unit filename="Events/Events/FactoryGetEvent.cpp" />
@@ -273,6 +277,8 @@
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorVariable.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/EntityList.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/EntityList.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/PointGeometryMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/PointGeometryMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/TextEditBox.cpp" />
@@ -457,6 +463,12 @@
 		<Unit filename="Types/Vec2i.h" />
 		<Unit filename="Types/Vec3f.cpp" />
 		<Unit filename="Types/Vec3f.h" />
+		<Unit filename="UI/BarDisplay.cpp" />
+		<Unit filename="UI/BarDisplay.h" />
+		<Unit filename="UI/BeatDisplay.cpp" />
+		<Unit filename="UI/BeatDisplay.h" />
+		<Unit filename="UI/ItemList.cpp" />
+		<Unit filename="UI/ItemList.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

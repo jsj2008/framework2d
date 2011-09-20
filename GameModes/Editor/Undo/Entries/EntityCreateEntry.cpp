@@ -1,5 +1,8 @@
 #include "EntityCreateEntry.h"
 #include <Level/Level.h>
+#include <Events/Events.h>
+#include <Events/Events/EntityPlaceEvent.h>
+#include <Events/Events/EntityRemoveEvent.h>
 #include <sstream>
 #include <cstring>
 
@@ -18,14 +21,27 @@ EntityCreateEntry::~EntityCreateEntry()
     //dtor
 }
 
+Entity* EntityCreateEntry::getEntity()
+{
+    Entity* ret = static_cast<Entity*>(UndoResources::global().getValue(entity));
+    if (ret == nullptr)
+    {
+        throw -1;
+    }
+    return ret;
+}
 void EntityCreateEntry::redo()
 {
     Entity* entityPtr = level->addBody(factory,&params);
     UndoResources::global().setValue(entity, entityPtr);
+    EntityPlaceEvent event(entityPtr, &params);
+    Events::global().triggerEvent(&event);
 }
 void EntityCreateEntry::undo()
 {
     Entity* entityPtr = static_cast<Entity*>(UndoResources::global().getValue(entity));
+    EntityRemoveEvent event(entityPtr, &params);
+    Events::global().triggerEvent(&event);
     level->removeBody(entityPtr);
 }
 

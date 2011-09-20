@@ -10,6 +10,7 @@
 #include <GameModes/Editor/EditorMode.h>
 #include <Events/Events.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
+#include <GameModes/Editor/DynamicEditor/EntityList.h>
 
 template <typename mode>
 DynamicEditorMode* DynamicEditor::DerivedModeFactory<mode>::createMode(FactoryParameters* _params)
@@ -128,6 +129,7 @@ editorVariables
 })
 {
     //ctor
+    entityList = new EntityList("Root/EntityList/Listbox");
     camera->activate();
     mCamera = camera;
     instanceTab = getTabControl("Root/Entities");
