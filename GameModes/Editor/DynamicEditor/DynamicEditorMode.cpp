@@ -46,9 +46,8 @@ void DynamicEditorMode::create()
         UndoStack::global().addEntry(entry);
         params->remove("name");
     }
-    editor->getEntityList()->addEntity(entry->getEntity(), name);// continue working here
+    //editor->getEntityList()->addEntity(entry->getEntity(), name);
 }
-
 void DynamicEditorMode::addPropertyBagVariable(CppFactoryLoader* _loader)
 {
     throw -1;

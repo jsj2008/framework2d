@@ -2,6 +2,7 @@
 #define ENTITYPLACEEVENT_H
 
 #include <Events/Event.h>
+#include <string>
 class Entity;
 class FactoryParameters;
 
@@ -13,11 +14,15 @@ class FactoryParameters;
 class EntityPlaceEvent : public Event
 {
     public:
-        EntityPlaceEvent(Entity* _entity, FactoryParameters* _parameters);
+        EntityPlaceEvent(Entity* _entity, std::string& _factoryName, FactoryParameters* _parameters);
+        EntityPlaceEvent(const EntityPlaceEvent& rhs);
         virtual ~EntityPlaceEvent();
+        const std::string& getFactoryName(){return factoryName;}
+        FactoryParameters* getParameters(){return parameters;}
     protected:
     private:
         Entity* entity;
+        std::string factoryName;
         FactoryParameters* parameters;
 };
 

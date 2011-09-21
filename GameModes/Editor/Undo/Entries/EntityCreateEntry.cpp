@@ -34,13 +34,13 @@ void EntityCreateEntry::redo()
 {
     Entity* entityPtr = level->addBody(factory,&params);
     UndoResources::global().setValue(entity, entityPtr);
-    EntityPlaceEvent event(entityPtr, &params);
+    EntityPlaceEvent event(entityPtr, factory, &params);
     Events::global().triggerEvent(&event);
 }
 void EntityCreateEntry::undo()
 {
     Entity* entityPtr = static_cast<Entity*>(UndoResources::global().getValue(entity));
-    EntityRemoveEvent event(entityPtr, &params);
+    EntityRemoveEvent event(entityPtr, factory, &params);
     Events::global().triggerEvent(&event);
     level->removeBody(entityPtr);
 }

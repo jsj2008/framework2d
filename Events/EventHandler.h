@@ -84,21 +84,24 @@ void EventHandler<DerivedEvent>::registerListener(EventsListener<DerivedEvent>* 
     }
     listenersStart = _listener;
 
-    if (_properties->getFlag(eReadQueue) && queuedInstances != nullptr)
+    if (queuedInstances != nullptr)
     {
-        for (auto event = queuedInstances->begin(); event != queuedInstances->end(); event++)
+        if (_properties->getFlag(eReadQueue))
         {
-            EventsListener<DerivedEvent>* listener = listenersStart;
-            while (listener != nullptr)
+            for (auto event = queuedInstances->begin(); event != queuedInstances->end(); event++)
             {
-                listener->trigger(&*event);
-                listener = listener->next;
+                EventsListener<DerivedEvent>* listener = listenersStart;
+                while (listener != nullptr)
+                {
+                    listener->trigger(&*event);
+                    listener = listener->next;
+                }
             }
         }
-    }
-    if (_properties->getFlag(eClearQueue))
-    {
-        queuedInstances->clear();
+        if (_properties->getFlag(eClearQueue))
+        {
+            queuedInstances->clear();
+        }
     }
     if (_properties->getFlag(eBlockQueue))
     {

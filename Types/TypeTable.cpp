@@ -15,7 +15,7 @@ TypeTable::TypeTable(const TypeTable& _rhs)
         lookup.reserve(i->second.size());
         for (auto ii = i->second.begin(); ii != i->second.end(); ii++)
         {
-            lookup.push_back(*ii);
+            lookup.push_back((*ii)->clone());
         }
     }
     for (auto i = _rhs.undefinedLog.begin(); i != _rhs.undefinedLog.end(); i++)
@@ -55,19 +55,6 @@ void TypeTable::clear()
     undefinedLog.clear();
 }
 
-
-// FIXME should put this in
-/*TypeTable::TypeTable(const TypeTable& rhs)
-{
-    for (auto i = rhs.values.begin(); i != rhs.values.end(); i++)
-    {
-        values[i->first] = i->second->clone();
-    }
-    for (auto i = rhs.typeInfoMap.begin(); i != rhs.typeInfoMap.end(); i++)
-    {
-        typeInfoMap[i->first] = i->second;
-    }
-}*/
 template <typename T>
 std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements)
 {

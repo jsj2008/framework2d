@@ -7,6 +7,7 @@
 #include <Box2D/Box2D.h>
 #include <Entities/Entity.h>
 #include <AI/AIManager.h>
+#include <Events/Events/EntityPlaceEvent.h>
 #include <cstring>
 #include <fstream>
 using namespace std;
@@ -130,6 +131,8 @@ void Level::loadLevel()
         file >> params;
         Entity* body = AbstractFactories::global().useFactory<Entity>(factory, &params);
         table[body] = {factory,params};
+        EntityPlaceEvent event(body, factory, &params);
+        Events::global().triggerEvent(&event);
     }
 }
 void Level::saveLevel()
