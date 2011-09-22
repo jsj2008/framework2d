@@ -47,7 +47,7 @@ void Events::triggerEvent(DerivedEvent* event)
 template <typename DerivedEvent>
 void Events::registerListener(EventsListener<DerivedEvent>* listener, EventListenerProperties _properties)
 {
-    getHandler<DerivedEvent>().registerListener(listener, &_properties);
+    getHandler<DerivedEvent>().registerListener(listener, _properties);
 }
 
 template <typename DerivedEvent>

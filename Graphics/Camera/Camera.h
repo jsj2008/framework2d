@@ -12,6 +12,7 @@ class Camera
         float getPixelsPerMeter(){return scale;}
         const Vec2f& getTranslation(){return translation;}
         virtual void activate()=0;
+        void registerDeathListener(void*){throw -1;}
     protected:
         virtual void updateTransform(Vec2i resolution)=0;
         Vec2f translation;

@@ -362,6 +362,8 @@ public:
 	b2World* GetWorld();
 	const b2World* GetWorld() const;
 
+	void registerDeathListener(void*){throw -1;}
+
 private:
 
 	friend class b2World;
@@ -369,7 +371,7 @@ private:
 	friend class b2ContactManager;
 	friend class b2ContactSolver;
 	friend class b2TOISolver;
-	
+
 	friend class b2DistanceJoint;
 	friend class b2GearJoint;
 	friend class b2LineJoint;

@@ -42,6 +42,10 @@ EditorMode::~EditorMode()
     delete selectionBox;
 }
 
+EntityList* EditorMode::getEntityList()
+{
+    return getActiveLevel()->getEntityList();
+}
 PhysicsManager* EditorMode::getActiveWorld()
 {
     return activeLevel->getLevel()->getWorld();

@@ -65,7 +65,7 @@ void UndoStack::addEntry(UndoEntry* _entry)
     undoStack.push_back(_entry);
     _entry->redo();
     CEGUI::ListboxItem* item = new CEGUI::ListboxTextItem(_entry->getListText());
-    item->setTooltipText(_entry->getTooltipText());
+    //item->setTooltipText(_entry->getTooltipText()); FIXME put this back in
     listBox->addItem(item);
     setInfoboxText();
 }

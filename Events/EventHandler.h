@@ -32,7 +32,7 @@ class EventHandler
         EventHandler();
         virtual ~EventHandler();
         void trigger(DerivedEvent* _event);
-        void registerListener(EventsListener<DerivedEvent>* _listener, EventListenerProperties* _properties);
+        void registerListener(EventsListener<DerivedEvent>* _listener, EventListenerProperties _properties);
         void unregisterListener(EventsListener<DerivedEvent>* _listener, bool _blockingQueue);
     protected:
     private:
@@ -62,7 +62,15 @@ void EventHandler<DerivedEvent>::trigger(DerivedEvent* _event)
     EventsListener<DerivedEvent>* listener = listenersStart;
     while (listener != nullptr)
     {
-        listener->trigger(_event);
+        if (!listener->trigger(_event))
+        {
+            if (listener->prev != nullptr)
+                listener->prev->next = listener->next;
+            else
+                listenersStart = listener->next;
+            if (listener->next != nullptr)
+                listener->next->prev = listener->prev;
+        }
         listener = listener->next;
     }
 
@@ -75,7 +83,7 @@ void EventHandler<DerivedEvent>::trigger(DerivedEvent* _event)
 }
 
 template <typename DerivedEvent>
-void EventHandler<DerivedEvent>::registerListener(EventsListener<DerivedEvent>* _listener, EventListenerProperties* _properties)
+void EventHandler<DerivedEvent>::registerListener(EventsListener<DerivedEvent>* _listener, EventListenerProperties _properties)
 {
     if (listenersStart != nullptr)
     {
@@ -86,7 +94,7 @@ void EventHandler<DerivedEvent>::registerListener(EventsListener<DerivedEvent>* 
 
     if (queuedInstances != nullptr)
     {
-        if (_properties->getFlag(eReadQueue))
+        if (_properties.getFlag(eReadQueue))
         {
             for (auto event = queuedInstances->begin(); event != queuedInstances->end(); event++)
             {
@@ -98,12 +106,12 @@ void EventHandler<DerivedEvent>::registerListener(EventsListener<DerivedEvent>* 
                 }
             }
         }
-        if (_properties->getFlag(eClearQueue))
+        if (_properties.getFlag(eClearQueue))
         {
             queuedInstances->clear();
         }
     }
-    if (_properties->getFlag(eBlockQueue))
+    if (_properties.getFlag(eBlockQueue))
     {
         queueBlocking++;
         if (queuedInstances != nullptr && queuedInstances->size() == 0)

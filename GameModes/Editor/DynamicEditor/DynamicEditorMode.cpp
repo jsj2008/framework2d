@@ -1,5 +1,6 @@
 #include "DynamicEditorMode.h"
 #include <Level/LevelManager.h>
+#include <Level/LevelEntity.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityCreateEntry.h>
 #include <GameModes/Editor/DynamicEditor.h>
@@ -35,14 +36,18 @@ void DynamicEditorMode::create()
     EntityCreateEntry* entry = nullptr;
     if (string == "")
     {
-        entry = new EntityCreateEntry(name,name,params,editor->getActiveLevel());
+        LevelEntity* entity = new LevelEntity(editor->getEntityList(), params, name);
+        //entry = new EntityCreateEntry(name,name,params,editor->getActiveLevel());
+        entry = new EntityCreateEntry(entity, editor->getActiveLevel());
         UndoStack::global().addEntry(entry);
     }
     else
     {
         std::string nameInQuotes("\"");
         nameInQuotes = nameInQuotes + string + '"';
-        entry = new EntityCreateEntry(name,nameInQuotes,params,editor->getActiveLevel());
+        LevelEntity* entity = new LevelEntity(editor->getEntityList(), params, name);
+        //entry = new EntityCreateEntry(name,nameInQuotes,params,editor->getActiveLevel());
+        entry = new EntityCreateEntry(entity, editor->getActiveLevel());
         UndoStack::global().addEntry(entry);
         params->remove("name");
     }

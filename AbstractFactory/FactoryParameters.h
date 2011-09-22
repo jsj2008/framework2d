@@ -19,6 +19,9 @@ class FactoryParameters
         template <typename Type>
         Type get(const std::string& name, const Type& _default);
 
+        std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator begin(){return table.begin();}
+        std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator end(){return table.end();}
+
         std::vector<std::string> getUndefinedLog();
 
         void remove(const std::string& _name){table.removeValue(_name);}

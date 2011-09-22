@@ -9,6 +9,8 @@
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityDeleteEntry.h>
 #include <GameModes/Editor/EditorMode.h>
+#include <Events/Events.h>
+#include <Events/Events/EntitySelectEvent.h>
 
 GeometrySelector::GeometrySelector(FreeCamera* camera, EditorMode* _editorMode)
 {
@@ -42,12 +44,15 @@ void GeometrySelector::start(unsigned char button)
             if (button == 1)
             {
                 mouseJoint = editorMode->getActiveWorld()->createJoint(body,point);
+                Entity* entity = static_cast<Entity*>(body->GetUserData());
+                EntitySelectEvent event(entity);
+                Events::global().triggerEvent(&event);
                 // This is code to prevent the attached body from dying
-                AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)body->GetUserData());
-                if (entity != nullptr)
+                AIEntity* castEntity = dynamic_cast<AIEntity*>(entity);
+                if (castEntity != nullptr)
                 {
-                    bodyHealth = entity->health;
-                    entity->health = pow(2,30);
+                    bodyHealth = castEntity->health;
+                    castEntity->health = pow(2,30);
                 }
             }
             else if (button == 3)

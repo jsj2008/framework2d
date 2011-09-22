@@ -172,6 +172,14 @@ void TypeTable::output(ostream *out)
         i->second->output(out);
     }
 }
+std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator TypeTable::begin()
+{
+    return values.begin();
+}
+std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator TypeTable::end()
+{
+    return values.end();
+}
 TypeTable::UntypedValue::UntypedValue(TypeIndex _type, const ValueIndex& _name)
 :name(_name),
 type(_type)

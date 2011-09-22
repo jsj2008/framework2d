@@ -3,8 +3,10 @@
 
 #include "Camera.h"
 #include <Input/EventListener.h>
+#include <Events/EventListener.h>
+#include <Events/Events/ShowEntityEvent.h>
 
-class FreeCamera : public Camera, public EventListener
+class FreeCamera : public Camera, public EventListener, public EventsListener<ShowEntityEvent>
 {
     public:
         FreeCamera();
@@ -13,9 +15,12 @@ class FreeCamera : public Camera, public EventListener
         void resetInput();
         void trigger(InputActions actions);
         void activate();
+        bool trigger(ShowEntityEvent* _event);
     protected:
     private:
         Vec2i position;
+        Vec2f bias;
+        bool enableBias;
 };
 
 #endif // FREECAMERA_H

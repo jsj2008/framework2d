@@ -18,6 +18,6 @@ void PhysicsParticle::update()
     timer--;
     if (timer == 0)
     {
-        mBody->GetWorld()->DestroyBody(mBody);
+        delete this;
     }
 }

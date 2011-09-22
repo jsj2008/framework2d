@@ -240,6 +240,8 @@
 		<Unit filename="Events/Events/EntityPlaceEvent.h" />
 		<Unit filename="Events/Events/EntityRemoveEvent.cpp" />
 		<Unit filename="Events/Events/EntityRemoveEvent.h" />
+		<Unit filename="Events/Events/EntitySelectEvent.cpp" />
+		<Unit filename="Events/Events/EntitySelectEvent.h" />
 		<Unit filename="Events/Events/FactoryCreateEvent.cpp" />
 		<Unit filename="Events/Events/FactoryCreateEvent.h" />
 		<Unit filename="Events/Events/FactoryGetEvent.cpp" />
@@ -252,6 +254,8 @@
 		<Unit filename="Events/Events/FactoryTypeUsageEvent.h" />
 		<Unit filename="Events/Events/FactoryUsageEvent.cpp" />
 		<Unit filename="Events/Events/FactoryUsageEvent.h" />
+		<Unit filename="Events/Events/ShowEntityEvent.cpp" />
+		<Unit filename="Events/Events/ShowEntityEvent.h" />
 		<Unit filename="Events/GenericEvent.cpp" />
 		<Unit filename="Events/GenericEvent.h" />
 		<Unit filename="Game.cpp" />
@@ -365,6 +369,8 @@
 		<Unit filename="Input/Mouse/InputContext.h" />
 		<Unit filename="Level/Level.cpp" />
 		<Unit filename="Level/Level.h" />
+		<Unit filename="Level/LevelEntity.cpp" />
+		<Unit filename="Level/LevelEntity.h" />
 		<Unit filename="Level/LevelManager.cpp" />
 		<Unit filename="Level/LevelManager.h" />
 		<Unit filename="Level/ParallaxLayer.cpp" />

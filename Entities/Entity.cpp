@@ -14,9 +14,10 @@ Entity::Entity(Skin* _skin)
 Entity::~Entity()
 {
     //dtor
+    EntityDeathEvent event(this);
+    deathHandler.trigger(&event);
     delete mSkin;
     mBody->GetWorld()->DestroyBody(mBody);
-    //mBody->GetWorld()->DestroyBody(mBody);
 }
 
 void Entity::render()
@@ -32,4 +33,9 @@ void Entity::setBody(b2Body* _body)
 const Vec2f& Entity::getPosition()
 {
     return mBody->GetPosition();
+}
+
+void Entity::registerDeathListener(EventsListener<EntityDeathEvent>* _listener)
+{
+    deathHandler.registerListener(_listener, {eClearQueue|eBlockQueue});
 }

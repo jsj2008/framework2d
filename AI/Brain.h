@@ -22,6 +22,7 @@ class Brain
         {
             return "Brain";
         }
+        void registerDeathListener(void*){throw -1;}
     protected:
         friend class ShooterGame; /// FIXME
         friend class CarneGame; /// FIXME

@@ -10,6 +10,7 @@ class b2JointDef;
 class TextureContext;
 class ParallaxLayer;
 class PhysicsManager;
+class EntityList;
 
 class Level
 {
@@ -25,6 +26,7 @@ class Level
         bool update();
         PhysicsManager* getWorld(){return world;}
         void loadLevel();
+        EntityList* getEntityList(){return entityList;}
     protected:
     private:
         const char* name;
@@ -37,6 +39,7 @@ class Level
         std::unordered_map<Entity*, std::pair<std::string,FactoryParameters> > table;
 
         PhysicsManager* world;
+        EntityList* entityList;
 };
 
 #endif // LEVEL_H

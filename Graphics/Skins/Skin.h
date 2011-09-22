@@ -19,6 +19,7 @@ class Skin
         virtual void vRender()=0;
         virtual SkinType getType()=0;
         MaterialContext* material; // FIXME make this private once the entity factory is a concrete type
+        void registerDeathListener(void*){throw -1;}
     protected:
     private:
 };

@@ -16,6 +16,7 @@ Level::Level(const char* _name)
     //ctor
     name = _name;
     world = new PhysicsManager();
+    entityList = nullptr;
 }
 
 Level::~Level()
@@ -114,12 +115,15 @@ void Level::removeJoint(b2Joint* joint)
     jointToDefTable.erase(joint);
 }
 #include <vector>
+#include <GameModes/Editor/DynamicEditor/EntityList.h>
+#include <Level/LevelEntity.h>
 unsigned int getJointDefSize(b2JointType type);
 void Level::loadLevel()
 {
     g_AIManager.init(world); /// FIXME this shouildn't be global
     g_AIManager.finalisePathfinding();
-    ifstream file;
+    entityList = new EntityList("Root/EntityList/Listbox", "Level.txt");
+    /*ifstream file;
     file.open("Level.txt");
     unsigned short size;
     file >> size;
@@ -129,15 +133,17 @@ void Level::loadLevel()
         file >> factory;
         FactoryParameters params;
         file >> params;
-        Entity* body = AbstractFactories::global().useFactory<Entity>(factory, &params);
+        LevelEntity* entity = new LevelEntity(entityList, &params, factory);
+        Entity* body = entity->createEntity();
         table[body] = {factory,params};
         EntityPlaceEvent event(body, factory, &params);
         Events::global().triggerEvent(&event);
-    }
+    }*/
 }
 void Level::saveLevel()
 {
-    ofstream file;
+    entityList->saveLevel("Level.txt");
+    /*ofstream file;
     file.open("Level.txt");
     unsigned short size = table.size();
     file << size;
@@ -150,7 +156,7 @@ void Level::saveLevel()
         FactoryParameters params = i->second.second;
         file << params;
         file << ' ';
-    }
+    }*/
 }
 unsigned int getJointDefSize(b2JointType type)
 {

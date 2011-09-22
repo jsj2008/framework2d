@@ -54,13 +54,146 @@
                 <Property Name="Font" Value="DejaVuSans-10" />
             </AutoWindow>
             <Window Name="Root/EntityList/Listbox" Type="TaharezLook/Combobox">
-                <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{3.7998e-07,0},{0.119539,0},{1.00001,0},{1.01772,0}}" />
                 <Property Name="Font" Value="DejaVuSans-10" />
                 <Property Name="ClippedByParent" Value="False" />
+                <AutoWindow NameSuffix="__auto_button__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_editbox__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <Property Name="MouseCursorImage" Value="" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_droplist__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_hscrollbar__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                        <AutoWindow NameSuffix="__auto_thumb__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                        <AutoWindow NameSuffix="__auto_decbtn__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                        <AutoWindow NameSuffix="__auto_incbtn__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_vscrollbar__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                        <AutoWindow NameSuffix="__auto_thumb__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                        <AutoWindow NameSuffix="__auto_decbtn__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                        <AutoWindow NameSuffix="__auto_incbtn__">
+                            <Property Name="Font" Value="DejaVuSans-10" />
+                        </AutoWindow>
+                    </AutoWindow>
+                </AutoWindow>
+            </Window>
+            <Window Name="Root/EntityList/Alive" Type="TaharezLook/StaticText">
+                <Property Name="UnifiedAreaRect" Value="{{0.0172414,0},{0.247934,0},{0.255172,0},{0.384595,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="Text" Value="Spawned" />
+                <AutoWindow NameSuffix="__auto_hscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_vscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+            </Window>
+            <Window Name="Root/EntityList/FactoryName" Type="TaharezLook/StaticText">
+                <Property Name="UnifiedAreaRect" Value="{{0.255173,0},{0.243505,0},{0.824139,0},{0.380166,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="Text" Value="Factory name" />
+                <AutoWindow NameSuffix="__auto_hscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_vscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+            </Window>
+            <Window Name="Root/EntityList/Properties" Type="TaharezLook/MultiColumnList">
+                <Property Name="UnifiedAreaRect" Value="{{0.0103448,0},{0.385181,0},{0.817241,50},{0.765937,50}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <AutoWindow NameSuffix="__auto_hscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_listheader__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_vscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+            </Window>
+            <Window Name="Root/EntityList/KillButton" Type="TaharezLook/SystemButton">
+                <Property Name="UnifiedAreaRect" Value="{{0.827586,0},{0.234652,0},{0.817242,50},{0.150531,50}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="Text" Value="Kill" />
+            </Window>
+            <Window Name="Root/EntityList/FilterDead" Type="TaharezLook/Checkbox">
+                <Property Name="UnifiedAreaRect" Value="{{0,0},{0.00885476,0},{0.155172,50},{-0.0974024,50}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="Text" Value="Filter dead" />
             </Window>
         </Window>
         <Window Name="Root/EntityTypes" Type="TaharezLook/FrameWindow">
-            <Property Name="UnifiedAreaRect" Value="{{0.00626336,0},{0,281},{0,333},{-0.146667,685}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.447513,0},{0.0466667,281},{0.44125,333},{-0.1,685}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
             <Property Name="Text" Value="EntityTypes" />
             <Property Name="Alpha" Value="0.5" />

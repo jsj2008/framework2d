@@ -4,6 +4,7 @@
 #include <string>
 #include <istream>
 #include <Graphics/GraphicsManager.h> /// FIXME
+#include <Events/Events/EntityDeathEvent.h>
 class FactoryParameters;
 class FactoryLoader;
 template <typename Product>
@@ -45,6 +46,9 @@ class AbstractFactory: public AbstractFactoryBase<Product>
     private:
         Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;
+
+        static EventsListener<DeathEvent<Product>>* factoryTypeDeathListeners;
+        EventsListener<DeathEvent<Product>>* factoryNameDeathListeners;
 };
 
 /** Implementation
@@ -90,6 +94,7 @@ AbstractFactory<Product, DerivedType>::AbstractFactory()
 :AbstractFactoryBase<Product>(DerivedType::name())
 {
     registrar.check();
+    factoryNameDeathListeners = nullptr;
 }
 template <typename Product, typename DerivedType>
 AbstractFactory<Product, DerivedType>::~AbstractFactory()
@@ -110,6 +115,14 @@ Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParamet
     Events::global().triggerEvent(&typeEvent);
     FactoryInstanceUsageEvent<Product, DerivedType> instanceEvent(product, "error this is stupid");
     Events::global().triggerEvent(&typeEvent);
+    for (auto i = factoryTypeDeathListeners; i != nullptr; i = i->getNext())
+    {
+        product->registerDeathListener(i);
+    }
+    for (auto i = factoryNameDeathListeners; i != nullptr; i = i->getNext())
+    {
+        product->registerDeathListener(i);
+    }
     return product;
 }
 
@@ -121,4 +134,6 @@ Registrar<Product, DerivedType>::Registrar()
     AbstractFactories::global().registerFactoryType<Product, DerivedType>();
 }
 
+template <typename Product, typename DerivedType>
+EventsListener<DeathEvent<Product>>* AbstractFactory<Product, DerivedType>::factoryTypeDeathListeners = nullptr;
 #endif // ABSTRACTFACTORY_H

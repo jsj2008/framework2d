@@ -129,7 +129,7 @@ editorVariables
 })
 {
     //ctor
-    entityList = new EntityList("Root/EntityList/Listbox");
+    //entityList = new EntityList("Root/EntityList/Listbox");
     camera->activate();
     mCamera = camera;
     instanceTab = getTabControl("Root/Entities");
@@ -158,6 +158,10 @@ DynamicEditor::~DynamicEditor()
 }
 
 
+EntityList* DynamicEditor::getEntityList()
+{
+    return editorMode->getEntityList();
+}
 bool DynamicEditor::createFactory(const CEGUI::EventArgs& _args)
 {
     unsigned int index = typeTab->getSelectedTabIndex();

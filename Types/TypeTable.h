@@ -44,6 +44,9 @@ class TypeTable
     template <typename T>
         const T popValue(const ValueIndex& name, const T& _default);
 
+        std::unordered_map<ValueIndex,Value*>::iterator begin();
+        std::unordered_map<ValueIndex,Value*>::iterator end();
+
         std::vector<std::string> getUndefinedLog();
 
         // Don't use these unless neccessary, use the functions in the base class unless you're reading from file or something

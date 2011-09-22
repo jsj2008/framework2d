@@ -8,8 +8,8 @@
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin)
-:controller(this),
-Entity(_skin)
+:Entity(_skin),
+controller(this)
 {
     //ctor
     mBrain = _Brain;

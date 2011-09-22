@@ -1,18 +1,27 @@
 #include "FreeCamera.h"
 #include <Graphics/GraphicsManager.h>
+#include <Graphics/Camera/PhysicsCamera.h>
+#include <Entities/Entity.h>
+#include <Events/Events.h>
 
 FreeCamera::FreeCamera()
 :EventListener()
 {
     //ctor
-    g_InputManager.registerEvent(this,ePlus);
-    g_InputManager.registerEvent(this,eMinus);
     scale = 15.0f;
+    Events::global().registerListener(this, {eClearQueue|eBlockQueue});
+    enableBias = false;
 }
 
 FreeCamera::~FreeCamera()
 {
     //dtor
+    g_InputManager.unregisterEvent(this,eUp);
+    g_InputManager.unregisterEvent(this,eLeft);
+    g_InputManager.unregisterEvent(this,eDown);
+    g_InputManager.unregisterEvent(this,eRight);
+    g_InputManager.unregisterEvent(this,ePlus);
+    g_InputManager.unregisterEvent(this,eMinus);
 }
 void FreeCamera::activate()
 {
@@ -30,10 +39,24 @@ void FreeCamera::updateTransform(Vec2i resolution)
 
     translation.x = -(position.x/scale) + xView;
     translation.y = -(position.y/scale) + yView;
+
+    if (enableBias)
+    {
+        translation.x = -bias.x + xView;
+        translation.y = -bias.y + yView;
+    }
 }
 void FreeCamera::resetInput()
 {
+}
 
+bool FreeCamera::trigger(ShowEntityEvent* _event) /// FIXME the maths here is wrong
+{
+    bias = _event->getEntity()->getPosition();
+    enableBias = true;
+    //g_GraphicsManager.setCamera(new PhysicsCamera(_event->getEntity()->getBody()));
+    //delete this;
+    return true;
 }
 void FreeCamera::trigger(InputActions action)
 {

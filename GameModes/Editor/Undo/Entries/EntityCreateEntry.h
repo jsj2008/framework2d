@@ -4,13 +4,14 @@
 #include <GameModes/Editor/Undo/UndoEntry.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <GameModes/Editor/Undo/UndoResources.h>
-class Entity;
+class LevelEntity;
 class Level;
+class Entity;
 
 class EntityCreateEntry : public UndoEntry
 {
     public:
-        EntityCreateEntry(const std::string& _factory, const std::string& _name, FactoryParameters* _params, Level* _level);
+        EntityCreateEntry(LevelEntity* _entity, Level* _level);
         ~EntityCreateEntry();
         void redo();
         void undo();
@@ -19,10 +20,7 @@ class EntityCreateEntry : public UndoEntry
         Entity* getEntity();
     protected:
     private:
-        UndoResource entity;
-        std::string factory;
-        std::string name;
-        FactoryParameters params;
+        LevelEntity* entity;
         Level* level;
 };
 

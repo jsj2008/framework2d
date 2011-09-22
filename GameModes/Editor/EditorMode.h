@@ -8,6 +8,7 @@ class EditorStateSwitcher;
 class Level;
 class PhysicsManager;
 class PlayMode;
+class EntityList;
 
 class EditorMode : public GameMode, public ClickNoEvent
 {
@@ -16,6 +17,7 @@ class EditorMode : public GameMode, public ClickNoEvent
         virtual ~EditorMode();
         PhysicsManager* getActiveWorld();
         Level* getActiveLevel();
+        EntityList* getEntityList();
         bool update();
     protected:
     private:

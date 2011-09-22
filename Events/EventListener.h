@@ -11,6 +11,7 @@ class EventsListener /// FIXME rename EventListener
         EventsListener();
         virtual ~EventsListener();
         virtual bool trigger(EventType* event)=0; /// Do I keep listening?
+        EventsListener<EventType>* getNext(){return next;}
     protected:
     private:
         friend class EventHandler<EventType>;
