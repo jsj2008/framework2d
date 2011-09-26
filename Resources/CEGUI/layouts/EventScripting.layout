@@ -1,0 +1,40 @@
+<GUILayout>
+    <Window Name="EventScripting" Type="DefaultWindow">
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Font" Value="DejaVuSans-10" />
+        <Property Name="Text" Value="Event scripting" />
+        <Window Name="EventScripting/CreateButton" Type="TaharezLook/Button">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-50},{0.06,50},{1,0}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Create" />
+        </Window>
+        <Window Name="EventScripting/ScriptList" Type="TaharezLook/Listbox">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.9375,50},{0.525,50}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <AutoWindow NameSuffix="__auto_hscrollbar__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <AutoWindow NameSuffix="__auto_thumb__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_decbtn__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_incbtn__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_vscrollbar__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <AutoWindow NameSuffix="__auto_thumb__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_decbtn__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_incbtn__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                </AutoWindow>
+            </AutoWindow>
+        </Window>
+    </Window>
+</GUILayout>

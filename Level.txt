@@ -1,2 +1,7 @@
-1 levelGeometry 1 Vec2fArray points 4 -4.8 8.33333  14.4 8.73333  4.53333 14.5333  -3 13.6  
+6 levelGeometry 1 Vec2fArray points 4 -4.8 8.33333  14.4 8.73333  4.53333 14.5333  -3 13.6  
+ spark 1 Vec2f position 9.66667 -11.7333 
+ spark 1 Vec2f position 12.5333 -12.8667 
+ spark 1 Vec2f position 13.0667 -14.2 
+ spark 1 Vec2f position 13.7333 -12.4 
+ spark 1 Vec2f position 11.5333 -15.2667 
  

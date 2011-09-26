@@ -293,6 +293,12 @@
 		<Unit filename="GameModes/Editor/EditorState.h" />
 		<Unit filename="GameModes/Editor/EditorStateSwitcher.cpp" />
 		<Unit filename="GameModes/Editor/EditorStateSwitcher.h" />
+		<Unit filename="GameModes/Editor/EventScripter.cpp" />
+		<Unit filename="GameModes/Editor/EventScripter.h" />
+		<Unit filename="GameModes/Editor/EventScripter/ActionEventsList.cpp" />
+		<Unit filename="GameModes/Editor/EventScripter/ActionEventsList.h" />
+		<Unit filename="GameModes/Editor/EventScripter/ScriptEventsList.cpp" />
+		<Unit filename="GameModes/Editor/EventScripter/ScriptEventsList.h" />
 		<Unit filename="GameModes/Editor/GeometrySelector.cpp" />
 		<Unit filename="GameModes/Editor/GeometrySelector.h" />
 		<Unit filename="GameModes/Editor/JointEditor.cpp" />
