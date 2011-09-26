@@ -9,18 +9,15 @@ class CharacterController
     public:
         CharacterController(AIEntity* _entity);
         virtual ~CharacterController();
-        void update();
-        void walkLeft();
-        void walkRight();
-        void stopWalking();
-        void jump();
-        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
+        virtual void update()=0;
+        virtual void walkLeft()=0;
+        virtual void walkRight()=0;
+        virtual void stopWalking()=0;
+        virtual void jump()=0;
+        void registerDeathListener(void*){throw -1;}
     protected:
-    private:
         AIEntity* entity;
-        b2RevoluteJoint* wheel;
-        unsigned short airbourneCounter;
-        unsigned short jumpCounter;
+    private:
 };
 
 #endif // CHARACTERCONTROLLER_H

@@ -101,6 +101,9 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 {
 
 }
+/**
+    If the derived factory doesn't override this function it will result in a stack overflow
+**/
 template <typename Product, typename DerivedType>
 void AbstractFactory<Product, DerivedType>::init(FactoryLoader* loader, AbstractFactories* factories)
 {

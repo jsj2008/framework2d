@@ -4,12 +4,13 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Weapons/Weapon.h>
+#include <AI/CharacterController.h>
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
 AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin)
 :Entity(_skin),
-controller(this)
+controller(nullptr)
 {
     //ctor
     mBrain = _Brain;
@@ -58,23 +59,23 @@ void AIEntity::update()
     {
         mBody->GetWorld()->DestroyBody(mBody);
     }
-    controller.update();
+    controller->update();
 }
 void AIEntity::jump()
 {
-    controller.jump();
+    controller->jump();
 }
 void AIEntity::walkLeft()
 {
-    controller.walkLeft();
+    controller->walkLeft();
 }
 void AIEntity::walkRight()
 {
-    controller.walkRight();
+    controller->walkRight();
 }
 void AIEntity::stopWalking()
 {
-    controller.stopWalking();
+    controller->stopWalking();
 }
 
 

@@ -131,6 +131,10 @@
 		<Unit filename="AI/BrainFactory/PlayerInputBrainFactory.h" />
 		<Unit filename="AI/CharacterController.cpp" />
 		<Unit filename="AI/CharacterController.h" />
+		<Unit filename="AI/CharacterControllerFactory/WheelControllerFactory.cpp" />
+		<Unit filename="AI/CharacterControllerFactory/WheelControllerFactory.h" />
+		<Unit filename="AI/CharacterControllers/WheelCharacterController.cpp" />
+		<Unit filename="AI/CharacterControllers/WheelCharacterController.h" />
 		<Unit filename="AI/PathGeneration/PathGraph.cpp" />
 		<Unit filename="AI/PathGeneration/PathGraph.h" />
 		<Unit filename="AI/PathGeneration/PathNodeDynamic.cpp" />

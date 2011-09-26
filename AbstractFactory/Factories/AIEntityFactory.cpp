@@ -26,6 +26,7 @@ void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     bodyFactory = factories->getFactory<b2Body>("CharacterBodyFactory");
     skinFactory = factories->getFactory<Skin>("StaticSkinFactory");
     brainFactory = factories->getFactory<Brain>("PlayerInputBrainFactory");
+    controllerFactory = factories->getFactory<CharacterController>("WheelControllerFactory");
     //damageSprayFactory = factories->getFactory<Entity>(loader->get<std::string>("damageSpray","spark"));
 }
 
@@ -33,17 +34,21 @@ AIEntityFactory::~AIEntityFactory()
 {
     //dtor
 }
+#include <AI/CharacterController.h>
 
 Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
     damageSprayFactory = AbstractFactories::global().getFactory<Entity>("spark");
     Brain* brain = brainFactory->use(parameters);
-    AIEntity* entity = new AIEntity(brain, new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));
+    AIEntity* entity = new AIEntity(brain,
+        new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));
 
     parameters->add<void*>("userData",entity);
 
     entity->setBody(bodyFactory->use(parameters));
-    entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",nullptr));
+    CharacterController* controller = controllerFactory->use(parameters);
+    entity->setController(controller);
+    //entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",nullptr));
 
     return entity;
 }

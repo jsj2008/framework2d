@@ -2,8 +2,8 @@
 #define AIENTITY_H
 
 #include "Entity.h"
-#include <AI/CharacterController.h>
 #include <Box2D/Common/b2Math.h>
+class CharacterController;
 class Brain;
 class Weapon;
 template <typename Product>
@@ -21,7 +21,7 @@ class AIEntity : public Entity
         void stopWalking();
         void damage();
         void fireAt(Vec2f targetPosition);
-        void setWheel(b2RevoluteJoint* _wheel){controller.setWheel(_wheel);}
+        void setController(CharacterController* _controller){controller = _controller;}
     protected:
     private:
         friend class CharacterController;
@@ -30,7 +30,7 @@ class AIEntity : public Entity
         int health;
         virtual ~AIEntity();
         Brain* mBrain;
-        CharacterController controller;
+        CharacterController* controller;
         Weapon* weapon;
         AbstractFactoryBase<Entity>* damageSprayFactory;
 };
