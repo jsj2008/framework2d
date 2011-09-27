@@ -7,7 +7,7 @@ WeaponContent::WeaponContent(const char* _name)
 :SharedContent(_name)
 {
     //ctor
-    projectile = "grenade";
+    projectile = "ProjectileFactory";
     reloadFrames = 10;
 }
 

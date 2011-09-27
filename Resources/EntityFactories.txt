@@ -1,146 +1,28 @@
-ExplosionFactory explosion
-{
-  float damage 0.0
-  string material defaultBubble
-  float force 2.0
-  float time 10.0
-  float radius 2.0
-}
-
-
-ProjectileFactory grenade
-{
-  string gay bum
-}
-
-ParticleFactory spark
-{
-  float penis 0.0
-  int lifetime 60
-}
-
-CrateFactory crate
-{
-}
-
 LevelGeometryFactory levelGeometry
 {
+
 }
-
-AIEntityFactory player
-{
-  int aiType 0
-  Vec2f dimensions 2 2
-}
-
-AIEntityFactory zombie
-{
-  int aiType 1
-  
-}
-
-SuctionBubbleFactory suctionBubble
-{
-}
-
-UpwardsGravityBubbleFactory upwardsGravityBubble
-{
-}
-
-CrateFactory sillyBox
-{string material StaticSkinFactory}
-
-CrateFactory EnterEntityNameherpder
-{
-string material StaticSkinFactory
-}
-
-
-LevelGeometryFactory MudGeometry
+LevelGeometryFactory levelGeometry2
 {
 
 }
-UpwardsGravityBubbleFactory EnterEntityName
+CrateFactory EnterEntityName
 {
 
 }
 CrateFactory EnterEntityName2
 {
-string material StaticSkinFactory
+
 }
-CrateFactory CratesYo
-{
-string material StaticSkinFactory
-}
-CrateFactory EnterEntityNamederp
-{
-string material StaticSkinFactory
-}
-SuctionBubbleFactory EnterEntityNameherp
+CrateFactory crate
 {
 
 }
-CrateFactory EnterEntityNamoo
-{
-string material StaticSkinFactory
-}
-ExplosionFactory kaboom
-{
-string material StaticSkinFactory
-}
-UpwardsGravityBubbleFactory sandcoons
+CrateFactory mrcrate
 {
 
 }
-UpwardsGravityBubbleFactory awwwnoo
-{
-
-}
-SuctionBubbleFactory niggers
-{
-
-}
-ExplosionFactory dick
-{
-string material StaticSkinFactory
-}
-SuctionBubbleFactory gay
-{
-
-}
-ParticleFactory poo
-{
-
-}
-UpwardsGravityBubbleFactory asdcoon
-{
-
-}
-CrateFactory hooray
-{
-string material StaticSkinFactory
-}
-ParticleFactory whatajoy
-{
-
-}
-ProjectileFactory noobs
-{
-string material StaticSkinFactory
-}
-CrateFactory thecoooon
-{
-string material StaticSkinFactory
-}
-LevelGeometryFactory herpyderpy
-{
-
-}
-UpwardsGravityBubbleFactory moomeow
-{
-
-}
-UpwardsGravityBubbleFactory testing
+CrateFactory testingcrate
 {
 
 }

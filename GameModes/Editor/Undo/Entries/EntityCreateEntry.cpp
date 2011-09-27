@@ -30,7 +30,7 @@ EntityCreateEntry::~EntityCreateEntry()
 }*/
 void EntityCreateEntry::redo()
 {
-    Entity* entityPtr = entity->createEntity();
+    entity->createEntity();
     //UndoResources::global().setValue(entity, entityPtr);
     //EntityPlaceEvent event(entityPtr, factory, &params);
     //Events::global().triggerEvent(&event);

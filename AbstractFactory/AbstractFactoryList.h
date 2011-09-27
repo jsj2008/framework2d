@@ -168,12 +168,13 @@ void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, Fac
     factories[_loader->getName()] = factory;
 }
 
-
+#include <AbstractFactory/TypeTableFactoryType.h>
 template <typename Product>
 AbstractFactoryList<Product>::AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists)
 :AbstractFactoryListBase(factoryLists, productName())
 {
     //ctor
+    TypeTable::overloadType<AbstractFactoryBase<Product>*>(getProductName()+"Factory", new TypeTableFactoryType<Product>(this));
 }
 
 template <typename Product>

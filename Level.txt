@@ -1,2 +1,5 @@
-1 levelGeometry 1 Vec2fArray points 4 -4.8 8.33333  14.4 8.73333  4.53333 14.5333  -3 13.6  
+4 crate 1 Vec2f position 13.1333 -11.1 
+ levelGeometry2 1 Vec2fArray points 4 -5.66667 5.26667  18.5333 5  18.7333 8.8  -5.46667 8.06667  
+ mrcrate 1 Vec2f position 4.8 1.63333 
+ testingcrate 2 Vec2f position 6.7 -4.93333 Vec2f dimensions 4.06667 3.33333 
  

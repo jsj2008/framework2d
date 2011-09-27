@@ -37,5 +37,8 @@ void TextEditBox::addPropertyBagVariable(CppFactoryLoader* _loader)
     {
         value = defaultValue;
     }
-    _loader->addValue<std::string>(name, value);
+    else
+    {
+        _loader->addValue<std::string>(name, value);
+    }
 }

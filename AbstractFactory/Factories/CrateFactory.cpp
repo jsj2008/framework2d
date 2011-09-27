@@ -22,8 +22,8 @@ CrateFactory::~CrateFactory()
 void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     fixtureDef.density = loader->get<float>("density",1.0f);
-    std::string skinFactoryName = loader->get<std::string>("material","StaticSkinFactory");
-    skinFactory = factories->getFactory<Skin>(skinFactoryName);
+    skinFactory = loader->get<AbstractFactoryBase<Skin>*>("material",factories->getFactory<Skin>("StaticSkinFactory"));
+//    skinFactory = factories->getFactory<Skin>(skinFactoryName);
     physicsManager = factories->getWorld();
     fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::CrateCategory);
 }

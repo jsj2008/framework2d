@@ -18,9 +18,8 @@ std::string& name()
 
 class TypeTable
 {
-    protected:
-        class Value;
     public:
+        class Value;
         typedef std::string ValueIndex;
         typedef std::string TypeIndex;
 
@@ -50,7 +49,7 @@ class TypeTable
         std::vector<std::string> getUndefinedLog();
 
         // Don't use these unless neccessary, use the functions in the base class unless you're reading from file or something
-        Value* addDynamicValue(const TypeIndex& type, const ValueIndex& name);
+        Value* addDynamicValue(const TypeIndex& type, const ValueIndex& name, const std::string& _value);
         void addDynamicValue(const TypeIndex& type, const ValueIndex& name, std::istream* parseSource);
 
         void removeValue(const ValueIndex& name);
@@ -60,18 +59,42 @@ class TypeTable
         friend std::ostream& operator<< (std::ostream &out, const TypeTable &table);
         friend std::istream& operator>> (std::istream &in, TypeTable &table);
 
-    protected:
-        std::unordered_map<ValueIndex,Value*> values;
 
+        class Type
+        {
+            public:
+                Type(){}
+                virtual ~Type(){}
+                virtual Value* instance(const std::string& _value)=0;
+                virtual Type* clone()=0;
+        };
         class Value
         {
             public:
                 virtual ~Value(){}
-                virtual void set(std::istream* parseSource)=0;
                 virtual void output(std::ostream* parseDestination)=0;
                 virtual std::string getTypeId()=0;
                 virtual Value* clone()=0;
         };
+        template <typename T>
+        class TemplateBaseValue : public Value
+        {
+            public:
+                TemplateBaseValue(){}
+                TemplateBaseValue(const std::string& _value);
+                void set(const T& _value){value = _value;}
+                const T& get(){return value;}
+                std::string getTypeId(){return name<T>();} /// Might want to put this in the derived class
+            protected:
+                T value;
+        };
+
+    template <typename T>
+        static void overloadType(const TypeIndex& name, Type* _newFactory);
+
+    protected:
+        std::unordered_map<ValueIndex,Value*> values;
+
         class UntypedValue : public Value
         {
             public:
@@ -81,6 +104,7 @@ class TypeTable
                 void output(std::ostream* parseDestination);
                 std::string getTypeId();
                 Value* clone();
+                UntypedValue* typedClone();
                 template <typename T>
                 Value* instance();
                 std::string getValueIndex(){return name;}
@@ -90,44 +114,31 @@ class TypeTable
                 TypeIndex type;
         };
         template <typename T>
-        class TemplateValue : public Value
-        {
-            public:
-                TemplateValue(){}
-                TemplateValue(const T& _value){value = _value;}
-                void set(const T& _value){value = _value;}
-                void set(std::istream* parseSource){(*parseSource) >> value;}
-                void output(std::ostream* parseDestination){(*parseDestination) << value;}
-                const T& get(){return value;}
-                std::string getTypeId(){return name<T>();}
-                Value* clone(){return new TemplateValue<T>(value);}
-            private:
-                T value;
-        };
-        template <typename T>
         class AutomaticRegister
         {
             public:
                 AutomaticRegister();
                 void check();
         };
-        class Type
-        {
-            public:
-                Type(){}
-                virtual ~Type(){}
-                virtual Value* instance()=0;
-                virtual Type* clone()=0;
-        };
         template <typename T>
         class TemplateType : public Type
         {
             public:
                 TemplateType(){staticRegister.check();}
-                Value* instance(){return new TemplateValue<T>();}
+                Value* instance(const std::string& _value){return new TemplateValue<T>(_value);}
                 Type* clone(){return new TemplateType<T>();}
             private:
                 static AutomaticRegister<T> staticRegister;
+        };
+        template <typename T>
+        class TemplateValue : public TypeTable::TemplateBaseValue<T>
+        {
+            public:
+                TemplateValue(){}
+                TemplateValue(const std::string& _value);
+                void output(std::ostream* parseDestination){(*parseDestination) << TemplateBaseValue<T>::value;}
+                Value* clone(){TemplateValue<T>* ret = new TemplateValue<T>();ret->set(TemplateBaseValue<T>::value);return ret;}
+            protected:
         };
 
         static std::unordered_map<TypeIndex,Type*> types;
@@ -145,13 +156,15 @@ template <typename T>
 std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
 
 template <typename T>
-void TypeTable::addValue(const ValueIndex& name, const T& value)
+void TypeTable::addValue(const ValueIndex& name, const T& _value)
 {
     if(values.find(name) != values.end())
     {
         delete values[name];
     }
-    values[name] = new TemplateValue<T>(value);
+    TemplateValue<T>* value = new TemplateValue<T>();
+    value->set(_value);
+    values[name] = value;
 }
 
 template <typename T>
@@ -159,8 +172,8 @@ void TypeTable::setValue(const ValueIndex& name, const T& _value)
 {
     assert(values.find(name) != values.end());
     Value* value = values[name];
-    assert(dynamic_cast<TemplateValue<T>*>(value));
-    TemplateValue<T>* typedValue = (TemplateValue<T>*)value;
+    assert(dynamic_cast<TemplateBaseValue<T>*>(value));
+    TemplateBaseValue<T>* typedValue = (TemplateBaseValue<T>*)value;
     typedValue->set(_value);
 }
 
@@ -169,8 +182,8 @@ const T& TypeTable::getValue(const ValueIndex& name)
 {
     assert(values.find(name) != values.end());
     Value* value = values[name];
-    assert(dynamic_cast<TemplateValue<T>*>(value));
-    TemplateValue<T>* typedValue = static_cast<TemplateValue<T>*>(value);
+    assert(dynamic_cast<TemplateBaseValue<T>*>(value));
+    TemplateBaseValue<T>* typedValue = static_cast<TemplateBaseValue<T>*>(value);
     return typedValue->get();
 }
 
@@ -182,7 +195,11 @@ const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
         if (logUndefined)
         {
             if (undefinedLog.find(_name) == undefinedLog.end())
-                undefinedLog[_name] = new TemplateValue<T>(_default);
+            {
+                TemplateValue<T>* value = new TemplateValue<T>();
+                value->set(_default);
+                undefinedLog[_name] = value;
+            }
         }
         else
         {
@@ -191,8 +208,8 @@ const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
         return _default;
     }
     Value* value = values[_name];
-    assert(dynamic_cast<TemplateValue<T>*>(value));
-    TemplateValue<T>* typedValue = (TemplateValue<T>*)value;
+    assert(dynamic_cast<TemplateBaseValue<T>*>(value));
+    TemplateBaseValue<T>* typedValue = (TemplateBaseValue<T>*)value;
     return typedValue->get();
 }
 
@@ -201,10 +218,14 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
 {
     if (values.find(_name) == values.end())
     {
-        if (logUndefined)
+        if (logUndefined) /// FIXME pop shouldn't add values to the table...
         {
             if (undefinedLog.find(_name) == undefinedLog.end())
-                undefinedLog[_name] = new TemplateValue<T>(_default);
+            {
+                TemplateValue<T>* value = new TemplateValue<T>();
+                value->set(_default);
+                undefinedLog[_name] = value;
+            }
         }
         else
         {
@@ -213,12 +234,43 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
         return _default;
     }
     Value* value = values[_name];
-    assert(dynamic_cast<TemplateValue<T>*>(value));
-    TemplateValue<T>* typedValue = (TemplateValue<T>*)value;
+    assert(dynamic_cast<TemplateBaseValue<T>*>(value));
+    TemplateBaseValue<T>* typedValue = (TemplateBaseValue<T>*)value;
     T ret = typedValue->get();
     delete typedValue;
     values.erase(_name);
     return ret;
+}
+template <typename T>
+std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements)
+{
+    unsigned short size = elements.size();
+    out << size << ' ';
+    for (unsigned short i = 0; i < size; i++)
+    {
+        T element = elements[i];
+        out << element << ' ';
+    }
+    return out;
+}
+template <typename T>
+std::istream& operator>> (std::istream &in, std::vector<T> &elements)
+{
+    unsigned short size;
+    in >> size;
+    elements.reserve(size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        T element;
+        in >> element;
+        elements.push_back(element);
+    }
+    return in;
+}
+template <typename T>
+void TypeTable::overloadType(const TypeIndex& name, Type* _newFactory)
+{
+    types[name] = _newFactory;
 }
 template <typename T>
 TypeTable::AutomaticRegister<T>::AutomaticRegister()

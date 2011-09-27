@@ -2,5 +2,6 @@
 #define ALLDYNAMICEDITORVARIABLETYPES_H_INCLUDED
 
 #include "TextEditBox.h"
+#include "ComponenObjectSelectionVariable.h"
 
 #endif // ALLDYNAMICEDITORVARIABLETYPES_H_INCLUDED

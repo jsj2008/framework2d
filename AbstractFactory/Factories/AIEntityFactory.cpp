@@ -38,7 +38,7 @@ AIEntityFactory::~AIEntityFactory()
 
 Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
-    damageSprayFactory = AbstractFactories::global().getFactory<Entity>("spark");
+    damageSprayFactory = AbstractFactories::global().getFactory<Entity>("ParticleFactory");
     Brain* brain = brainFactory->use(parameters);
     AIEntity* entity = new AIEntity(brain,
         new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));

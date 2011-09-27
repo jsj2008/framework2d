@@ -21,7 +21,7 @@ class BodyCameraFactory : public AbstractFactory<Camera, BodyCameraFactory>, Eve
     protected:
     private:
         b2Body* body;
-        std::string factoryName;
+        AbstractFactoryBase<Entity>* entityFactory;
 };
 
 #endif // BODYCAMERAFACTORY_H

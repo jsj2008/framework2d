@@ -9,15 +9,15 @@ TypeTable::TypeTable(const TypeTable& _rhs)
     {
         values[iter->first] = iter->second->clone();
     }
-    for (auto i = _rhs.untypedValues.begin(); i != _rhs.untypedValues.end(); i++)
+    /*for (auto i = _rhs.untypedValues.begin(); i != _rhs.untypedValues.end(); i++)
     {
         std::vector<UntypedValue*>& lookup = untypedValues[i->first];
         lookup.reserve(i->second.size());
         for (auto ii = i->second.begin(); ii != i->second.end(); ii++)
         {
-            lookup.push_back((*ii)->clone());
+            lookup.push_back((*ii)->typedClone());
         }
-    }
+    }*/
     for (auto i = _rhs.undefinedLog.begin(); i != _rhs.undefinedLog.end(); i++)
     {
         undefinedLog[i->first] = i->second->clone();
@@ -55,39 +55,13 @@ void TypeTable::clear()
     undefinedLog.clear();
 }
 
-template <typename T>
-std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements)
-{
-    unsigned short size = elements.size();
-    out << size << ' ';
-    for (unsigned short i = 0; i < size; i++)
-    {
-        T element = elements[i];
-        out << element << ' ';
-    }
-    return out;
-}
-template <typename T>
-std::istream& operator>> (std::istream &in, std::vector<T> &elements)
-{
-    unsigned short size;
-    in >> size;
-    elements.reserve(size);
-    for (unsigned short i = 0; i < size; i++)
-    {
-        T element;
-        in >> element;
-        elements.push_back(element);
-    }
-    return in;
-}
 
 TypeTable::TypeTable(bool _logUndefined)
 {
     logUndefined = _logUndefined;
     //registerType<int>("int");
     //registerType<float>("float");
-    registerType<std::string>("string");
+    registerType<std::string>("string"); /// FIXME this a static function call and shouldn't be called every time
     registerType<Vec2f>("Vec2f");
     registerType<std::vector<Vec2f>>("Vec2fArray");
     registerType<std::vector<Vec2i>>("Vec2iArray");
@@ -99,7 +73,9 @@ void TypeTable::registerType(const TypeIndex& _name)
     //std::string oldName = EvaluateTypeName<T>();
     if (name<T>() != _name)
     {
-        TemplateType<T>* oldType = static_cast<TemplateType<T>*>(types[name<T>()]);
+        Type* uncastType = types[name<T>()];
+        assert(dynamic_cast<TemplateType<T>*>(uncastType));
+        TemplateType<T>* oldType = static_cast<TemplateType<T>*>(uncastType);
         if (oldType != nullptr)
         {
             assert(dynamic_cast<TemplateType<T>*>(types[name<T>()]));
@@ -124,7 +100,8 @@ void TypeTable::registerType(const TypeIndex& _name)
         untypedValues.erase(iter);
     }
 }
-TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const ValueIndex& _name)
+
+TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const ValueIndex& _name, const std::string& _value)
 {
     assert(values.find(_name) == values.end());
     Type* type = types[_type];
@@ -136,15 +113,28 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
     }
     else
     {
-        Value* ret = type->instance();
+        Value* ret = type->instance(_value);
         values[_name] = ret;
         return ret;
     }
 }
 void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, std::istream* parseSource)
 {
-    Value* value = addDynamicValue(type,_name);
-    value->set(parseSource);
+    std::string valueString;
+    valueString.resize(128);
+    /*char token = parseSource->get();
+    while (token != '"')
+    {
+        token = parseSource->get();
+    }
+    token = parseSource->get();
+    while (token != '"')
+    {
+        valueString.push_back(token);
+        token = parseSource->get();
+    }*/
+    parseSource->getline(&valueString[0], 128);
+    addDynamicValue(type,_name, valueString);
 }
 using namespace std;
 ostream& operator<< (ostream &out, const TypeTable &table)
@@ -212,16 +202,24 @@ TypeTable::Value* TypeTable::UntypedValue::clone()
     throw -1;
     //return nullptr;
 }
+TypeTable::UntypedValue* TypeTable::UntypedValue::typedClone()
+{
+    throw -1;
+    //return nullptr;
+}
 template <typename T>
 TypeTable::Value* TypeTable::UntypedValue::instance()
 {
-    Value* value = new TemplateValue<T>();
-    std::stringstream stream(unparsedValue);
-    value->set(&stream);
+    Value* value = new TemplateValue<T>(unparsedValue);
     return value;
 }
 
-
+template <typename T>
+TypeTable::TemplateValue<T>::TemplateValue(const std::string& _value)
+{
+    std::stringstream stream(_value);
+    stream >> TemplateBaseValue<T>::value;
+}
 std::vector<std::string> TypeTable::getUndefinedLog()
 {
     assert(logUndefined);

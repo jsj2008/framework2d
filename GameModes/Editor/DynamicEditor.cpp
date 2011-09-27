@@ -74,14 +74,6 @@ CEGUI::TabControl* getTabControl(const std::string& _prefix)
     return static_cast<CEGUI::TabControl*>(uncastTab);
 }
 
-class TextEditBoxFactory : public DynamicEditor::VariableFactory
-{
-    public:
-        TextEditBoxFactory(const std::string& _name, const std::string& _defaultValue){name = _name;defaultValue = _defaultValue;}
-        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){return new TextEditBox(_rootWindow,_params,name,defaultValue,_factoryName);}
-    private:
-        std::string name, defaultValue;
-};
 class NameVariableController: public DynamicEditorVariable
 {
     public:
@@ -125,7 +117,7 @@ DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 }),
 editorVariables
 ({
-    {"material", new TextEditBoxFactory("material","StaticSkinFactory")},
+    {"material", new ComponentObjectSelectionVariableFactory<Skin>("material","StaticSkinFactory")},
 })
 {
     //ctor

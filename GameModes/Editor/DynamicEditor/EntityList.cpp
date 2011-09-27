@@ -140,7 +140,7 @@ bool EntityList::filterDeadButton(const CEGUI::EventArgs& args) /// CONTINUE her
     filterDead = newFilterDead;
     if (filterDead)
     {
-        for (int i = 0; i < listBox->getItemCount(); i++)
+        for (unsigned int i = 0; i < listBox->getItemCount(); i++)
         {
             CEGUI::ListboxItem* item = listBox->getListboxItemFromIndex(i);
             LevelEntity* entity = static_cast<LevelEntity*>(item->getUserData());

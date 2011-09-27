@@ -85,7 +85,6 @@ void GeometrySelector::mouseMove(Vec2i mouse)
     {
         Vec2f point = mouse.ScreenToWorldSpace();
         mouseJoint->SetTarget(point);
-        b2Body* body = mouseJoint->GetBodyB();
     }
 }
 void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)

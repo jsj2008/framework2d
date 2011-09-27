@@ -200,6 +200,8 @@
 		<Unit filename="AbstractFactory/FactoryParameters.h" />
 		<Unit filename="AbstractFactory/FactoryUsageCollection.cpp" />
 		<Unit filename="AbstractFactory/FactoryUsageCollection.h" />
+		<Unit filename="AbstractFactory/TypeTableFactoryType.cpp" />
+		<Unit filename="AbstractFactory/TypeTableFactoryType.h" />
 		<Unit filename="AbstractFactory/UntypedAbstractFactory.cpp" />
 		<Unit filename="AbstractFactory/UntypedAbstractFactory.h" />
 		<Unit filename="AbstractFactory/UntypedAbstractFactoryImplementation.cpp" />
