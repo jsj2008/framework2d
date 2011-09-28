@@ -1,7 +1,7 @@
+#include <AbstractFactory/FactoryLoader.h>
 #ifndef TEXTFILEFACTORYLOADER_H
 #define TEXTFILEFACTORYLOADER_H
 
-#include <AbstractFactory/FactoryLoader.h>
 
 
 class TextFileFactoryLoader : public FactoryLoader

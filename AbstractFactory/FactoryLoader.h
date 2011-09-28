@@ -1,3 +1,4 @@
+#include <AbstractFactory/AbstractFactory.h>
 #ifndef FACTORYLOADER_H
 #define FACTORYLOADER_H
 
@@ -29,6 +30,10 @@ class FactoryLoader
         template <typename T>
         T get(const std::string& name, const T& normal);
         template <typename T>
+        T get(const std::string& name);
+        template <typename Product>
+        AbstractFactoryBase<Product>* getFactory(const std::string& name, const char* _default);
+        template <typename T>
         void addType(const std::string& name);
 
         TypeTable* getTypeTable(){return &mvalues;}
@@ -46,5 +51,22 @@ template <typename T>
 T FactoryLoader::get(const std::string& _name, const T& normal)
 {
     return mvalues.popValue<T>(_name, normal);
+}
+template <typename T>
+T FactoryLoader::get(const std::string& _name)
+{
+    return mvalues.popValue<T>(_name);
+}
+template <typename Product>
+AbstractFactoryBase<Product>* FactoryLoader::getFactory(const std::string& _name, const char* _default)
+{
+    try
+    {
+        return mvalues.popValue<AbstractFactoryBase<Product>*>(_name);
+    }
+    catch (int i)
+    {
+        return AbstractFactories::global().getFactory<Product>(_default);
+    }
 }
 #endif // FACTORYLOADER_H

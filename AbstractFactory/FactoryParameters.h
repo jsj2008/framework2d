@@ -16,8 +16,11 @@ class FactoryParameters
 
         template <typename Type>
         void add(const std::string& name, const Type& value);
+
         template <typename Type>
         Type get(const std::string& name, const Type& _default);
+        template <typename Type>
+        Type get(const std::string& name);
 
         std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator begin(){return table.begin();}
         std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator end(){return table.end();}

@@ -22,12 +22,12 @@ void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
     weapon = loader->get<std::string>("weapon","pistol");
-    materialName = loader->get<std::string>("materialName","player");
-    bodyFactory = factories->getFactory<b2Body>("CharacterBodyFactory");
-    skinFactory = factories->getFactory<Skin>("StaticSkinFactory");
-    brainFactory = factories->getFactory<Brain>("PlayerInputBrainFactory");
-    controllerFactory = factories->getFactory<CharacterController>("WheelControllerFactory");
-    //damageSprayFactory = factories->getFactory<Entity>(loader->get<std::string>("damageSpray","spark"));
+
+    bodyFactory = loader->getFactory<b2Body>("body" ,"CharacterBodyFactory");
+    skinFactory = loader->getFactory<Skin>("material", "StaticSkinFactory");
+    brainFactory = loader->getFactory<Brain>("brain", "PlayerInputBrainFactory");
+    controllerFactory = loader->getFactory<CharacterController>("characterController", "WheelControllerFactory");
+    damageSprayFactory = loader->getFactory<Entity>("damageSpray","ParticleFactory");
 }
 
 AIEntityFactory::~AIEntityFactory()
@@ -38,7 +38,7 @@ AIEntityFactory::~AIEntityFactory()
 
 Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
-    damageSprayFactory = AbstractFactories::global().getFactory<Entity>("ParticleFactory");
+    //damageSprayFactory = AbstractFactories::global().getFactory<Entity>("ParticleFactory");
     Brain* brain = brainFactory->use(parameters);
     AIEntity* entity = new AIEntity(brain,
         new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));

@@ -4,7 +4,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Box2D/Box2D.h>
 
-Projectile::Projectile(const std::string& _explosion, Skin* _skin)
+Projectile::Projectile(AbstractFactoryBase<Entity>* _explosion, Skin* _skin)
 :Entity(_skin)
 {
     //ctor
@@ -22,7 +22,7 @@ void Projectile::update()
     if (!alive)
     {
         FactoryParameters parameters({{"position",mBody->GetPosition()}});
-        AbstractFactories::global().useFactory<Entity>(explosion,&parameters);
+        explosion->use(&parameters);
         delete this;
     }
 }

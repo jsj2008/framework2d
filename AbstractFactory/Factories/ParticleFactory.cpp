@@ -16,7 +16,7 @@ void ParticleFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     //ctor
     density = loader->get<float>("density",1.0f);
     lifetime = loader->get<int>("lifetime",60); /// FIXME needs ints
-    materialName = loader->get<std::string>("materialName","Spark");
+    skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
     physicsManager = factories->getWorld();
 }
 
@@ -26,16 +26,14 @@ ParticleFactory::~ParticleFactory()
 }
 Entity* ParticleFactory::useFactory(FactoryParameters* parameters)
 {
-    //PositionParameters* params = (PositionParameters*)parameters;
-    Skin* skin = new StaticSkin(1.0f,1.f);
+    Skin* skin = skinFactory->use(parameters);
     Entity* entity = new PhysicsParticle(lifetime, skin);
 
-    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));//params->position;
+    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     bodyDef.userData = (void*)entity;
     b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&shape, density);
 
-    setMaterial(skin,materialName);
     return entity;
 }

@@ -16,8 +16,7 @@ TileFactory::TileFactory()
 void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
-    materialName = loader->get<std::string>("materialName","player");
-    size = loader->get<Vec2f>("size",Vec2f(1,1));
+    skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
     physicsManager = factories->getWorld();
     fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
@@ -29,14 +28,11 @@ TileFactory::~TileFactory()
 
 Entity* TileFactory::useFactory(FactoryParameters* parameters)
 {
-    Skin* skin = new StaticSkin(size.x,size.y);
+    Skin* skin = skinFactory->use(parameters);
     Vec2f position(parameters->get<Vec2f>("position", Vec2f(0,0)));
-    Vec2f readDimensions = parameters->get<Vec2f>("size",size);
-    if (readDimensions != Vec2f(0,0))
-    {
-        size = readDimensions;
-        shapeDef.SetAsBox(size.x*0.5f,size.y*0.5f);
-    }
+    Vec2f readDimensions = parameters->get<Vec2f>("size",Vec2f(1,1));
+    shapeDef.SetAsBox(readDimensions.x*0.5f,readDimensions.y*0.5f);
+
     Entity* entity = new Tile(skin);
 
     bodyDef.position = position;
@@ -46,7 +42,6 @@ Entity* TileFactory::useFactory(FactoryParameters* parameters)
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 
-    setMaterial(skin,materialName);
     return entity;
 }
 

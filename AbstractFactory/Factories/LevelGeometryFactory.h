@@ -24,6 +24,8 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
         PhysicsManager* physicsManager;
+
+        AbstractFactoryBase<Skin>* skinFactory;
 };
 
 #endif // LEVELGEOMETRYFACTORY_H

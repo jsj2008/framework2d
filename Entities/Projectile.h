@@ -3,11 +3,13 @@
 
 #include <Entities/Entity.h>
 #include <string>
+template <typename Product>
+class AbstractFactoryBase;
 
 class Projectile : public Entity
 {
     public:
-        Projectile(const std::string& _explosion, Skin* _skin);
+        Projectile(AbstractFactoryBase<Entity>* _explosion, Skin* _skin);
         virtual ~Projectile();
         void update();
         EntityType getType(){return eProjectileEntityType;}
@@ -16,7 +18,7 @@ class Projectile : public Entity
     protected:
     private:
         bool alive;
-        std::string explosion;
+        AbstractFactoryBase<Entity>* explosion;
 };
 
 #endif // PROJECTILE_H

@@ -25,8 +25,7 @@ class TileFactory : public AbstractFactory<Entity, TileFactory>
         b2PolygonShape shapeDef;
         PhysicsManager* physicsManager;
 
-        Vec2f size;
-        std::string materialName;
+        AbstractFactoryBase<Skin>* skinFactory;
 };
 
 #endif // TILEFACTORY_H

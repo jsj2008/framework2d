@@ -1,6 +1,4 @@
 #include "TileMapFactory.h"
-#include <AbstractFactory/FactoryLoader.h>
-#include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/TileMap.h>
 #include <Entities/Tile.h>

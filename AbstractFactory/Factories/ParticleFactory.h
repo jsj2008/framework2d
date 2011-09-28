@@ -27,6 +27,7 @@ class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
         b2BodyDef bodyDef;
         b2CircleShape shape;
         PhysicsManager* physicsManager;
+        AbstractFactoryBase<Skin>* skinFactory;
 };
 
 #endif // PARTICLEFACTORY_H

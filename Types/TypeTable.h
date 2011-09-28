@@ -43,6 +43,9 @@ class TypeTable
     template <typename T>
         const T popValue(const ValueIndex& name, const T& _default);
 
+    template <typename T>
+        const T popValue(const ValueIndex& name);
+
         std::unordered_map<ValueIndex,Value*>::iterator begin();
         std::unordered_map<ValueIndex,Value*>::iterator end();
 
@@ -216,6 +219,18 @@ const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
 template <typename T>
 const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
 {
+    try
+    {
+        return popValue<T>(_name);
+    }
+    catch (int i)
+    {
+        return _default;
+    }
+}
+template <typename T>
+const T TypeTable::popValue(const ValueIndex& _name)
+{
     if (values.find(_name) == values.end())
     {
         if (logUndefined) /// FIXME pop shouldn't add values to the table...
@@ -223,7 +238,6 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
             if (undefinedLog.find(_name) == undefinedLog.end())
             {
                 TemplateValue<T>* value = new TemplateValue<T>();
-                value->set(_default);
                 undefinedLog[_name] = value;
             }
         }
@@ -231,7 +245,7 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
         {
             g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
         }
-        return _default;
+        throw -1;
     }
     Value* value = values[_name];
     assert(dynamic_cast<TemplateBaseValue<T>*>(value));

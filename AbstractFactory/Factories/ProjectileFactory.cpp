@@ -17,8 +17,8 @@ void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories
     expiryTime = loader->get<float>("expiryTime",10.0f);
     radius = loader->get<float>("radius",1.0f);
     shapeDef.m_radius = radius; /// FIXME just spotted this
-    explosion = loader->get<std::string>("explosion","ExplosionFactory");
-    material = loader->get<std::string>("material","Bullet");
+    explosionFactory = loader->getFactory<Entity>("explosion","ExplosionFactory");
+    skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
     physicsManager = factories->getWorld();
 }
 
@@ -29,15 +29,14 @@ ProjectileFactory::~ProjectileFactory()
 
 Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
 {
-    //PositionVelocityParameters* params = (PositionVelocityParameters*)parameters;
-    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));// params->position;
-    bodyDef.linearVelocity = parameters->get<Vec2f>("v",Vec2f(1,0));//params->velocity;
-    Skin* skin = new StaticSkin(radius,radius);
-    Entity* entity = new Projectile(explosion, skin);
+    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
+    bodyDef.linearVelocity = parameters->get<Vec2f>("v",Vec2f(1,0));
+    Skin* skin = skinFactory->use(parameters);
+
+    Entity* entity = new Projectile(explosionFactory, skin);
     bodyDef.userData = (void*)entity;
     b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
-    setMaterial(skin,material);
     return entity;
 }

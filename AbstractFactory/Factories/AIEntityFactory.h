@@ -28,7 +28,6 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
         AbstractFactoryBase<Brain>* brainFactory;
         AbstractFactoryBase<Skin>* skinFactory;
         AbstractFactoryBase<CharacterController>* controllerFactory;
-        std::string materialName;
         AbstractFactoryBase<Entity>* damageSprayFactory;
 };
 

@@ -24,6 +24,8 @@ class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
+
+        AbstractFactoryBase<Skin>* skinFactory;
 };
 
 #include <AbstractFactory/FactoryLoader.h>
@@ -50,12 +52,13 @@ template <typename Bubble>
 void BubbleFactory<Bubble>::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     physicsManager = factories->getWorld();
+    skinFactory = loader->getFactory<Skin>("skin", "BubbleSkinFactory");
 }
 
 template <typename Bubble>
 Entity* BubbleFactory<Bubble>::useFactory(FactoryParameters* parameters)
 {
-    Skin* skin = new BubbleSkin(shapeDef.m_radius);
+    Skin* skin = skinFactory->use(parameters);
     Entity* entity = new Bubble(skin);
 
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
@@ -65,7 +68,6 @@ Entity* BubbleFactory<Bubble>::useFactory(FactoryParameters* parameters)
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
 
-    setMaterial(skin,parameters->get<std::string>("materialName",""));
     return entity;
 }
 

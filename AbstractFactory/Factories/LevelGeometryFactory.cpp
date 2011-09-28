@@ -21,6 +21,8 @@ LevelGeometryFactory::~LevelGeometryFactory()
 
 void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
+    skinFactory = loader->getFactory<Skin>("skin", "ConvexPolygonSkinFactory");
+
     physicsManager = factories->getWorld();
     fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
@@ -30,7 +32,8 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{{0,0},{1,1},{-2,1}});
 
     //g_AIManager.addStaticGeometry(&points[0],points.size());
-    Skin* skin = new ConvexPolygonSkin(&points[0],points.size());
+    Skin* skin = skinFactory->use(parameters);
+
     StaticGeometry* entity = new StaticGeometry(skin);
 
     assert(points.size() <= b2_maxPolygonVertices);
@@ -41,8 +44,6 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     b2Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
     body->CreateFixture(&fixtureDef);
-
-    setMaterial(skin, parameters->get<std::string>("materialName","").c_str());
 
     return entity;
 }

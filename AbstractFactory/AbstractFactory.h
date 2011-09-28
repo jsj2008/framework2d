@@ -26,7 +26,6 @@ class AbstractFactoryBase
     protected:
         virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
         const std::string nameCache;
-        void setMaterial(class Skin* skin,const std::string& materialName);
     private:
 };
 template <typename Product, typename DerivedType>
@@ -83,12 +82,6 @@ Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
     Events::global().triggerEvent(&untypedEvent);
     return product;
 }
-template <typename Product>
-void AbstractFactoryBase<Product>::setMaterial(class Skin* skin,const std::string& materialName)
-{
-    skin->material = g_GraphicsManager.getMaterial(materialName.c_str());
-}
-
 template <typename Product, typename DerivedType>
 AbstractFactory<Product, DerivedType>::AbstractFactory()
 :AbstractFactoryBase<Product>(DerivedType::name())

@@ -281,6 +281,8 @@
 		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/ComponenObjectSelectionVariable.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/ComponenObjectSelectionVariable.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/DynamicEditorModeCreator.cpp" />

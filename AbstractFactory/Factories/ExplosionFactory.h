@@ -21,7 +21,6 @@ class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
         }
     protected:
     private:
-        std::string material;
         float damage;
         float force;
         float time;
@@ -30,6 +29,8 @@ class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
         b2FixtureDef fixtureDef;
         b2CircleShape shapeDef;
         PhysicsManager* physicsManager;
+
+        AbstractFactoryBase<Skin>* skinFactory;
 };
 
 #endif // EXPLOSIONFACTORY_H

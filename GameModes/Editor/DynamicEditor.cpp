@@ -117,7 +117,7 @@ DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 }),
 editorVariables
 ({
-    {"material", new ComponentObjectSelectionVariableFactory<Skin>("material","StaticSkinFactory")},
+    {"skin", new ComponentObjectSelectionVariableFactory<Skin>("skin","StaticSkinFactory")},
 })
 {
     //ctor

@@ -7,21 +7,21 @@ StaticSkinFactory::StaticSkinFactory()
 {
 
 }
+StaticSkinFactory::~StaticSkinFactory()
+{
+    //dtor
+}
+
 void StaticSkinFactory::init(FactoryLoader* _loader, AbstractFactories* factories)
 {
     //ctor
     materialName = _loader->get<std::string>("materialName","player");
 }
 
-StaticSkinFactory::~StaticSkinFactory()
-{
-    //dtor
-}
-
 Skin* StaticSkinFactory::useFactory(FactoryParameters* parameters)
 {
     Vec2f dimensions = parameters->get("dimensions", Vec2f(2,2));
     Skin* skin = new StaticSkin(dimensions.x,dimensions.y);
-    setMaterial(skin,materialName);
+    skin->material = g_GraphicsManager.getMaterial(materialName.c_str());
     return skin;
 }

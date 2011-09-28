@@ -25,11 +25,11 @@ class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
         b2CircleShape shapeDef;
         PhysicsManager* physicsManager;
 
-        std::string material;
+        AbstractFactoryBase<Skin>* skinFactory;
         float radius;
 
         short damage;
-        std::string explosion;
+        AbstractFactoryBase<Entity>* explosionFactory;
         /// Expiry parameters
         float expiryTime;
         float maximumImpact;
