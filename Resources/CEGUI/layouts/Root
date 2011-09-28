@@ -3,7 +3,7 @@
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Property Name="Font" Value="DejaVuSans-10" />
         <Window Name="Root/Frame" Type="TaharezLook/FrameWindow">
-            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,350},{0,200}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,200},{0,300}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
             <Property Name="Text" Value="Editing modes" />
             <Property Name="Alpha" Value="0.5" />
@@ -40,7 +40,7 @@
             </Window>
         </Window>
         <Window Name="Root/EntityList" Type="TaharezLook/FrameWindow">
-            <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-350},{0,300},{1,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{1.13333,-250},{-0.12375,300},{1,0}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
             <Property Name="Text" Value="Entity list" />
             <Property Name="Alpha" Value="0.5" />
@@ -241,7 +241,7 @@
             </Window>
         </Window>
         <Window Name="Root/Entities" Type="TaharezLook/FrameWindow">
-            <Property Name="UnifiedAreaRect" Value="{{0.340013,333},{0,0},{0.340013,600},{0,281}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.165,470},{0.00899699,0},{-0.2,960},{-0.218333,281}}" />
             <Property Name="Font" Value="DejaVuSans-10" />
             <Property Name="Text" Value="Entities" />
             <Property Name="Alpha" Value="0.5" />

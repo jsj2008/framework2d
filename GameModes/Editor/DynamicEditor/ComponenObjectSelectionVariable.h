@@ -3,23 +3,25 @@
 
 #include <GameModes/Editor/DynamicEditor/DynamicEditorVariable.h>
 #include <GameModes/Editor/DynamicEditor.h>
-namespace CEGUI
-{
-    class Window;
-}
+template <typename Product>
+class ItemList;
+
 template <typename Product>
 class ComponentObjectSelectionVariable : public DynamicEditorVariable
 {
     public:
-        ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName);
+        ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName);
         virtual ~ComponentObjectSelectionVariable();
         void addPropertyBagVariable(CppFactoryLoader* _loader);
+        bool listDisplay(const CEGUI::EventArgs& _args);
+        void setFactory(AbstractFactoryBase<Product>* _value);
     protected:
         void finish();
     private:
         std::string name;
-        AbstractFactoryBase<Product>* defaultValue;
-        CEGUI::Window* widget;
+        AbstractFactoryBase<Product>* value;
+        ItemList<Product>* itemList;
+        CEGUI::Window* displayButton;
 };
 
 template <typename Product>
@@ -28,23 +30,28 @@ class ComponentObjectSelectionVariableFactory : public DynamicEditor::VariableFa
     public:
         ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue);
         DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){
-            return new ComponentObjectSelectionVariable<Product>(_rootWindow,_params,name,defaultValue,_factoryName);}
+            return new ComponentObjectSelectionVariable<Product>(_rootWindow, itemList,_params,name,defaultValue,_factoryName);}
     private:
         std::string name;
         AbstractFactoryBase<Product>* defaultValue;
+        ItemList<Product>* itemList;
 };
 
-
+#include <UI/ItemList.h>
+#include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
+#include <iostream>
 template <typename Product>
-ComponentObjectSelectionVariable<Product>::ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName)
-:DynamicEditorVariable(_rootWindow, _params, _factoryName)
+ComponentObjectSelectionVariable<Product>::ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName)
+:DynamicEditorVariable(nullptr, _params, _factoryName) /// FIXME base class doesn't need these variables
 {
     //ctor
     name = _name;
-    defaultValue = _defaultValue;
-    widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditBox.layout", factoryName + name);
-    widget->setProperty("Text","Select component");
-    _rootWindow->addChildWindow(widget);
+    value = _defaultValue;
+    itemList = _itemList;
+    displayButton = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelectionDisplay.layout", factoryName + name);
+    displayButton->setProperty("Text","Select component");
+    displayButton->subscribeEvent(CEGUI::Window::EventMouseClick, {&ComponentObjectSelectionVariable::listDisplay, this});
+    _rootWindow->addChildWindow(displayButton);
 }
 
 template <typename Product>
@@ -55,29 +62,36 @@ ComponentObjectSelectionVariable<Product>::~ComponentObjectSelectionVariable()
 template <typename Product>
 void ComponentObjectSelectionVariable<Product>::addPropertyBagVariable(CppFactoryLoader* _loader)
 {
-    std::string factoryName = widget->getText().c_str();
-    if (widget->getText() != "Select component")
-    {
-        auto factory = AbstractFactories::global().getFactory<Product>(factoryName);
-        typeTable->addValue<AbstractFactoryBase<Product>*>(name, factory);
-    }
+    _loader->addValue<AbstractFactoryBase<Product>*>(name, value);
 }
 
 template <typename Product>
 void ComponentObjectSelectionVariable<Product>::finish()
 {
-    std::string factoryName = widget->getText().c_str();
-    if (widget->getText() != "Select component")
-    {
-        auto factory = AbstractFactories::global().getFactory<Product>(factoryName);
-        typeTable->addValue<AbstractFactoryBase<Product>*>(name, factory);
-    }
+    typeTable->addValue<AbstractFactoryBase<Product>*>(name, value);
 }
 
+template <typename Product>
+bool ComponentObjectSelectionVariable<Product>::listDisplay(const CEGUI::EventArgs& _args)
+{
+    itemList->setListener(this);
+    return true;
+}
+
+template <typename Product>
+void ComponentObjectSelectionVariable<Product>::setFactory(AbstractFactoryBase<Product>* _value)
+{
+    value = _value;
+    displayButton->setText(_value->getInstanceName());
+}
 template <typename Product>
 ComponentObjectSelectionVariableFactory<Product>::ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue)
 {
     name = _name;
     defaultValue = AbstractFactories::global().getFactory<Product>(_defaultValue);
+    CEGUI::Window* widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelection.layout", name);
+    widget->setText(name);
+    itemList = new ItemList<Product>(widget, static_cast<CEGUI::Combobox*>(widget->getChildAtIdx(2)));
+    CEGUI::System::getSingleton().getGUISheet()->addChildWindow(widget);
 }
 #endif // COMPONENTOBJECTSELECTIONVARIABLE_H

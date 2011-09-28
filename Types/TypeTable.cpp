@@ -59,8 +59,8 @@ void TypeTable::clear()
 TypeTable::TypeTable(bool _logUndefined)
 {
     logUndefined = _logUndefined;
-    //registerType<int>("int");
-    //registerType<float>("float");
+    registerType<int>("int");
+    registerType<float>("float");
     registerType<std::string>("string"); /// FIXME this a static function call and shouldn't be called every time
     registerType<Vec2f>("Vec2f");
     registerType<std::vector<Vec2f>>("Vec2fArray");
@@ -120,8 +120,7 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
 }
 void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, std::istream* parseSource)
 {
-    std::string valueString;
-    valueString.resize(128);
+    char valueString[128];
     /*char token = parseSource->get();
     while (token != '"')
     {
@@ -134,7 +133,9 @@ void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, 
         token = parseSource->get();
     }*/
     parseSource->getline(&valueString[0], 128);
-    addDynamicValue(type,_name, valueString);
+    unsigned int offset = 0;
+    while (valueString[offset] == ' ') offset++;
+    addDynamicValue(type,_name, valueString+offset);
 }
 using namespace std;
 ostream& operator<< (ostream &out, const TypeTable &table)

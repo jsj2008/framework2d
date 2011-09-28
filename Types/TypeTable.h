@@ -46,6 +46,9 @@ class TypeTable
     template <typename T>
         const T popValue(const ValueIndex& name);
 
+    template <typename T>
+        const T popValue(const ValueIndex& name, const char* _default);
+
         std::unordered_map<ValueIndex,Value*>::iterator begin();
         std::unordered_map<ValueIndex,Value*>::iterator end();
 
@@ -87,9 +90,14 @@ class TypeTable
                 TemplateBaseValue(const std::string& _value);
                 void set(const T& _value){value = _value;}
                 const T& get(){return value;}
-                std::string getTypeId(){return name<T>();} /// Might want to put this in the derived class
             protected:
                 T value;
+        };
+        template <typename T>
+        class TemplateBaseType : public Type
+        {
+            public:
+                virtual Value* instance(T _value)=0;
         };
 
     template <typename T>
@@ -124,11 +132,12 @@ class TypeTable
                 void check();
         };
         template <typename T>
-        class TemplateType : public Type
+        class TemplateType : public TemplateBaseType<T>
         {
             public:
                 TemplateType(){staticRegister.check();}
                 Value* instance(const std::string& _value){return new TemplateValue<T>(_value);}
+                Value* instance(T _value){TemplateValue<T>* ret = new TemplateValue<T>; ret->set(_value); return ret;}
                 Type* clone(){return new TemplateType<T>();}
             private:
                 static AutomaticRegister<T> staticRegister;
@@ -141,6 +150,7 @@ class TypeTable
                 TemplateValue(const std::string& _value);
                 void output(std::ostream* parseDestination){(*parseDestination) << TemplateBaseValue<T>::value;}
                 Value* clone(){TemplateValue<T>* ret = new TemplateValue<T>();ret->set(TemplateBaseValue<T>::value);return ret;}
+                std::string getTypeId(){return name<T>();}
             protected:
         };
 
@@ -159,15 +169,16 @@ template <typename T>
 std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
 
 template <typename T>
-void TypeTable::addValue(const ValueIndex& name, const T& _value)
+void TypeTable::addValue(const ValueIndex& _name, const T& _value)
 {
-    if(values.find(name) != values.end())
+    if(values.find(_name) != values.end())
     {
-        delete values[name];
+        delete values[_name];
     }
-    TemplateValue<T>* value = new TemplateValue<T>();
-    value->set(_value);
-    values[name] = value;
+    Type* uncastType = types[name<T>()];
+    assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
+    TemplateValue<T>* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
+    values[_name] = value;
 }
 
 template <typename T>
@@ -225,20 +236,28 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
     }
     catch (int i)
     {
+        if (logUndefined)
+            static_cast<TemplateBaseValue<T>*>(undefinedLog[_name])->set(_default);
         return _default;
     }
 }
 template <typename T>
 const T TypeTable::popValue(const ValueIndex& _name)
 {
+    return popValue<T>(_name, "");
+}
+template <typename T>
+const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
+{
     if (values.find(_name) == values.end())
     {
-        if (logUndefined) /// FIXME pop shouldn't add values to the table...
+        if (logUndefined)
         {
             if (undefinedLog.find(_name) == undefinedLog.end())
             {
-                TemplateValue<T>* value = new TemplateValue<T>();
+                TemplateValue<T>* value = types[name<T>()]->instance(_default);
                 undefinedLog[_name] = value;
+                return value->get();
             }
         }
         else
@@ -282,9 +301,10 @@ std::istream& operator>> (std::istream &in, std::vector<T> &elements)
     return in;
 }
 template <typename T>
-void TypeTable::overloadType(const TypeIndex& name, Type* _newFactory)
+void TypeTable::overloadType(const TypeIndex& _name, Type* _newFactory)
 {
-    types[name] = _newFactory;
+    types[_name] = _newFactory;
+    name<T>() = _name;
 }
 template <typename T>
 TypeTable::AutomaticRegister<T>::AutomaticRegister()

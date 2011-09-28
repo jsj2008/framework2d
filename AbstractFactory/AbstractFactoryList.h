@@ -139,14 +139,14 @@ void AbstractFactoryList<Product>::init(AbstractFactories* _factories)
     static TextFileFactoryLoader emptyConfig(nullptr);
     for (auto i = factories.begin(); i != factories.end(); i++)
     {
-        i->second->init(&emptyConfig, _factories);
+        i->second->init(i->second->getName(), &emptyConfig, _factories);
     }
     TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.txt").c_str());
     while (loader.next())
     {
         assert(factories.find(loader.getName()) == factories.end());
         AbstractFactoryBase<Product>* factory = factoryCreators[loader.getType()]->createFactory();
-        factory->init(&loader, _factories);
+        factory->init(loader.getName(), &loader, _factories);
         factories[loader.getName()] = factory;
         loader.end();
         FactoryCreateEvent<Product> event(factory, loader.getName());
@@ -164,7 +164,7 @@ void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, Fac
 {
     assert(factories.find(_loader->getName()) == factories.end());
     AbstractFactoryBase<Product>* factory = factoryCreators[_loader->getType()]->createFactory();
-    factory->init(_loader, _factories);
+    factory->init(_loader->getName(), _loader, _factories);
     factories[_loader->getName()] = factory;
 }
 

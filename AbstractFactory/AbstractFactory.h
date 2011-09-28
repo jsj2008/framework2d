@@ -20,12 +20,14 @@ class AbstractFactoryBase
     public:
         AbstractFactoryBase(const std::string _name);
         virtual ~AbstractFactoryBase();
-        virtual void init(FactoryLoader* loader, AbstractFactories* factories)=0;
+        virtual void init(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)=0;
         Product* use(FactoryParameters* paramters);
         const std::string& getName(){return nameCache;}
+        const std::string& getInstanceName(){return instanceName;}
     protected:
         virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
         const std::string nameCache;
+        std::string instanceName;
     private:
 };
 template <typename Product, typename DerivedType>
@@ -41,7 +43,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
     public:
         AbstractFactory();
         ~AbstractFactory();
-        void init(FactoryLoader* loader, AbstractFactories* factories);
+        void init(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories);
     private:
         Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;
@@ -95,11 +97,12 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 
 }
 /**
-    If the derived factory doesn't override this function it will result in a stack overflow
+    If the derived factory doesn't override this function it will result in a compile error
 **/
 template <typename Product, typename DerivedType>
-void AbstractFactory<Product, DerivedType>::init(FactoryLoader* loader, AbstractFactories* factories)
+void AbstractFactory<Product, DerivedType>::init(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)
 {
+    AbstractFactoryBase<Product>::instanceName = _name;
     static_cast<DerivedType*>(this)->init(loader, factories);
 }
 

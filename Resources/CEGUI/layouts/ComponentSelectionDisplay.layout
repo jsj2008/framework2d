@@ -1,0 +1,31 @@
+<GUILayout>
+    <Window Name="StaticText" Type="TaharezLook/StaticText">
+        <Property Name="UnifiedAreaRect" Value="{{0.00375,0},{-0.00333332,0},{0.60875,0},{0.193334,0}}" />
+        <Property Name="Font" Value="DejaVuSans-10" />
+        <Property Name="VerticalAlignment" Value="Bottom" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+        </AutoWindow>
+    </Window>
+</GUILayout>

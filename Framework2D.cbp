@@ -348,6 +348,10 @@
 		<Unit filename="Graphics/GraphicalContentManager.h" />
 		<Unit filename="Graphics/GraphicsManager.cpp" />
 		<Unit filename="Graphics/GraphicsManager.h" />
+		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.cpp" />
+		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.h" />
+		<Unit filename="Graphics/SkinFactory/ConvexPolygonSkinFactory.cpp" />
+		<Unit filename="Graphics/SkinFactory/ConvexPolygonSkinFactory.h" />
 		<Unit filename="Graphics/SkinFactory/StaticSkinFactory.cpp" />
 		<Unit filename="Graphics/SkinFactory/StaticSkinFactory.h" />
 		<Unit filename="Graphics/Skins/AllSkins.h" />

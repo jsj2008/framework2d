@@ -62,7 +62,7 @@ AbstractFactoryBase<Product>* FactoryLoader::getFactory(const std::string& _name
 {
     try
     {
-        return mvalues.popValue<AbstractFactoryBase<Product>*>(_name);
+        return mvalues.popValue<AbstractFactoryBase<Product>*>(_name, _default);
     }
     catch (int i)
     {

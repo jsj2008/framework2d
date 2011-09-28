@@ -270,7 +270,7 @@ MATCH_FOUND:
     TextFileFactoryLoader loader(nullptr, true);
     FactoryGetList getList;
     Events::global().registerListener<FactoryGetEvent>(&getList,{eBlockQueue});
-    factory->init(&loader, &AbstractFactories::global());
+    factory->init(factoryName, &loader, &AbstractFactories::global());
     Events::global().unregisterListener<FactoryGetEvent>(&getList, true);
     std::vector<std::string> values = loader.getUndefinedLog();
     FactoryParameters* params = new FactoryParameters();

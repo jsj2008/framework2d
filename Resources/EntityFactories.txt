@@ -2,27 +2,3 @@ LevelGeometryFactory levelGeometry
 {
 
 }
-LevelGeometryFactory levelGeometry2
-{
-
-}
-CrateFactory EnterEntityName
-{
-
-}
-CrateFactory EnterEntityName2
-{
-
-}
-CrateFactory crate
-{
-
-}
-CrateFactory mrcrate
-{
-
-}
-CrateFactory testingcrate
-{
-
-}

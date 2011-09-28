@@ -2,7 +2,9 @@
 #define FACTORYCREATEEVENT_H
 
 #include <Events/Event.h>
-#include <AbstractFactory/AbstractFactory.h>
+#include <string>
+template <typename Product>
+class AbstractFactoryBase;
 
 template <typename Product>
 class FactoryCreateEvent : public Event
