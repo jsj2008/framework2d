@@ -2,6 +2,7 @@
 #include <Log/GameConsole.h>
 #include <Log/UninitialisedLogger.h>
 #include <SDL/SDL_timer.h>
+#include <iostream>
 Log g_Log;
 
 Log::Log()
@@ -25,6 +26,7 @@ void Log::warning(const std::string& _message)
 }
 void Log::error(const std::string& _message)
 {
+    std::cout << "Error: " + _message << std::endl;
     logger->outputText("Error: " + _message, SDL_GetTicks(), 0xFFFF0000);
     throw -1;
 }

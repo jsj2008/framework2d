@@ -15,6 +15,7 @@ std::string& name()
     static std::string name = EvaluateTypeName<T>();
     return name;
 }
+class PropertyBagSerializer;
 
 class TypeTable
 {
@@ -62,6 +63,7 @@ class TypeTable
         void clear();
 
         void output(std::ostream *out);
+        void output(PropertyBagSerializer* _out);
         friend std::ostream& operator<< (std::ostream &out, const TypeTable &table);
         friend std::istream& operator>> (std::istream &in, TypeTable &table);
 
@@ -78,6 +80,7 @@ class TypeTable
         {
             public:
                 virtual ~Value(){}
+                virtual void output(PropertyBagSerializer* _out)=0;
                 virtual void output(std::ostream* parseDestination)=0;
                 virtual std::string getTypeId()=0;
                 virtual Value* clone()=0;
@@ -113,6 +116,7 @@ class TypeTable
                 ~UntypedValue();
                 void set(std::istream* parseSource); /// FIXME make this something more generic, when I figure out the input type
                 void output(std::ostream* parseDestination);
+                void output(PropertyBagSerializer* _out){}
                 std::string getTypeId();
                 Value* clone();
                 UntypedValue* typedClone();
@@ -149,6 +153,7 @@ class TypeTable
                 TemplateValue(){}
                 TemplateValue(const std::string& _value);
                 void output(std::ostream* parseDestination){(*parseDestination) << TemplateBaseValue<T>::value;}
+                void output(PropertyBagSerializer* _out);
                 Value* clone(){TemplateValue<T>* ret = new TemplateValue<T>();ret->set(TemplateBaseValue<T>::value);return ret;}
                 std::string getTypeId(){return name<T>();}
             protected:
@@ -163,6 +168,12 @@ class TypeTable
         void registerType(const TypeIndex& name);
 };
 
+#include <Types/PropertyBagSerializer.h>
+template <typename T>
+void TypeTable::TemplateValue<T>::output(PropertyBagSerializer* _out)
+{
+    _out->outputValue<T>(TemplateBaseValue<T>::value);
+}
 template <typename T>
 std::istream& operator>> (std::istream &in, std::vector<T> &elements);
 template <typename T>
@@ -171,14 +182,19 @@ std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
 template <typename T>
 void TypeTable::addValue(const ValueIndex& _name, const T& _value)
 {
-    if(values.find(_name) != values.end())
+    auto iter = values.find(_name);
+    if(iter != values.end())
     {
-        delete values[_name];
+        static_cast<TemplateValue<T>*>(iter->second)->set(_value);
     }
-    Type* uncastType = types[name<T>()];
-    assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
-    TemplateValue<T>* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
-    values[_name] = value;
+    else
+    {
+        Type* uncastType = types[name<T>()];
+        assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
+        Value* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
+
+        values[_name] = value;
+    }
 }
 
 template <typename T>
@@ -255,7 +271,7 @@ const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
         {
             if (undefinedLog.find(_name) == undefinedLog.end())
             {
-                TemplateValue<T>* value = types[name<T>()]->instance(_default);
+                TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->instance(_default));
                 undefinedLog[_name] = value;
                 return value->get();
             }

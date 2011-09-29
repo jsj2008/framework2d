@@ -5,6 +5,7 @@
 #include <string>
 #include <Types/Vec2f.h>
 #include <Types/TypeTable.h>
+class PropertyBagSerializer;
 
 class FactoryParameters
 {
@@ -30,8 +31,9 @@ class FactoryParameters
         void remove(const std::string& _name){table.removeValue(_name);}
         void clear();
 
-        friend std::ostream& operator<< (std::ostream &out, const FactoryParameters &params);
+        //friend std::ostream& operator<< (std::ostream &out, const FactoryParameters &params);
         friend std::istream& operator>> (std::istream &in, FactoryParameters &params);
+        void output(PropertyBagSerializer* _serializer);
 
         TypeTable* getTypeTable(){return &table;}
 

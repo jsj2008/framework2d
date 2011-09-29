@@ -1,3 +1,1 @@
-2 levelGeometry 1 Vec2fArray points 4 22.0667 -7.6  28.7333 -4.8  26.9333 2  16 1.6  
- levelGeometry 1 Vec2fArray points 4 -2.53333 5.2  16.6 5.6  16.4 8.2  -1.13333 9.53333  
- 
+1 levelGeometry 1 Vec2fArray points 4 -7.8 10.4 11.7333 12.8667 12.2667 20.8 -10.7333 21.6667  

@@ -163,6 +163,16 @@ void TypeTable::output(ostream *out)
         i->second->output(out);
     }
 }
+void TypeTable::output(PropertyBagSerializer* _out)
+{
+    _out->startArray(values.size());
+    for (auto i = values.begin(); i != values.end(); i++)
+    {
+        _out->outputString(i->second->getTypeId());
+        _out->outputString(i->first);
+        i->second->output(_out);
+    }
+}
 std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator TypeTable::begin()
 {
     return values.begin();

@@ -29,6 +29,10 @@ std::vector<std::string> FactoryParameters::getUndefinedLog()
     return table.getUndefinedLog();
 }
 
+void FactoryParameters::output(PropertyBagSerializer* _serializer)
+{
+    table.output(_serializer);
+}
 
 using namespace std;
 istream& operator>> (istream &in, FactoryParameters &params)
@@ -44,10 +48,4 @@ istream& operator>> (istream &in, FactoryParameters &params)
         params.table.addDynamicValue(type, name, &in);
     }
     return in;
-}
-ostream& operator<< (ostream &out, const FactoryParameters & params)
-{
-    out << params.table;
-    out << '\n';
-    return out;
 }

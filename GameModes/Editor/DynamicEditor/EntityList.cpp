@@ -4,6 +4,7 @@
 #include <Level/LevelEntity.h>
 #include <Entities/Entity.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Types/TextFilePropertyBagSerializer.h>
 #include <fstream>
 
 EntityList::EntityList(const std::string& _windowName, const std::string& _listFilename)
@@ -58,6 +59,7 @@ void EntityList::saveLevel(const std::string& _listFileName)
 {
     std::ofstream file;
     file.open("Level.txt");
+    TextFilePropertyBagSerializer* serializer = new TextFilePropertyBagSerializer(&file);
     unsigned short size = listBox->getItemCount() + filteredDead.size();
     file << size;
     file << ' ';
@@ -65,12 +67,13 @@ void EntityList::saveLevel(const std::string& _listFileName)
     {
         CEGUI::ListboxItem* item = listBox->getListboxItemFromIndex(i);
         LevelEntity* entity = static_cast<LevelEntity*>(item->getUserData());
-        entity->output(&file);
+        entity->output(&file, serializer);
     }
     for (auto i = filteredDead.begin(); i != filteredDead.end(); i++)
     {
-        (*i)->output(&file);
+        (*i)->output(&file, serializer);
     }
+    delete serializer;
 }
 
 void EntityList::addEntity(LevelEntity* _entity, const std::string& _displayName)

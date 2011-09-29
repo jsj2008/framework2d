@@ -123,40 +123,10 @@ void Level::loadLevel()
     g_AIManager.init(world); /// FIXME this shouildn't be global
     g_AIManager.finalisePathfinding();
     entityList = new EntityList("Root/EntityList/Listbox", "Level.txt");
-    /*ifstream file;
-    file.open("Level.txt");
-    unsigned short size;
-    file >> size;
-    for (unsigned short i = 0; i < size; i++)
-    {
-        std::string factory;
-        file >> factory;
-        FactoryParameters params;
-        file >> params;
-        LevelEntity* entity = new LevelEntity(entityList, &params, factory);
-        Entity* body = entity->createEntity();
-        table[body] = {factory,params};
-        EntityPlaceEvent event(body, factory, &params);
-        Events::global().triggerEvent(&event);
-    }*/
 }
 void Level::saveLevel()
 {
     entityList->saveLevel("Level.txt");
-    /*ofstream file;
-    file.open("Level.txt");
-    unsigned short size = table.size();
-    file << size;
-    file << ' ';
-    for (auto i = table.begin(); i != table.end() ;i++)
-    {
-        std::string factory = i->second.first;
-        file << factory;
-        file << ' ';
-        FactoryParameters params = i->second.second;
-        file << params;
-        file << ' ';
-    }*/
 }
 unsigned int getJointDefSize(b2JointType type)
 {

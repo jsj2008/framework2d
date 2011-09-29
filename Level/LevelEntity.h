@@ -7,6 +7,7 @@
 #include <string>
 class EntityList;
 class Entity;
+class PropertyBagSerializer;
 template <typename Product>
 class AbstractFactoryBase;
 namespace CEGUI
@@ -32,7 +33,7 @@ class LevelEntity : public EventsListener<EntityDeathEvent>
         CEGUI::ListboxTextItem* getListBoxItem(){return listBoxItem;}
         void show();
         void activateDisplay(CEGUI::Window* _window);
-        void output(std::ofstream* _file);
+        void output(std::ofstream* _file, PropertyBagSerializer* _serializer);
     protected:
     private:
         bool quitButton(const CEGUI::EventArgs& _args);

@@ -2,3 +2,11 @@ LevelGeometryFactory levelGeometry
 {
 
 }
+SuctionBubbleFactory EnterEntityName
+{
+SkinFactory skin StaticSkinFactory
+}
+SuctionBubbleFactory testingstuff
+{
+SkinFactory skin skinFactory
+}

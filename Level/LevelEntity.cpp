@@ -116,11 +116,11 @@ std::string LevelEntity::getName()
     return factoryName;
 }
 
-void LevelEntity::output(std::ofstream* _file)
+void LevelEntity::output(std::ofstream* _file, PropertyBagSerializer* _serializer)
 {
     *_file << factoryName;
     *_file << ' ';
-    *_file << parameters;
+    parameters.output(_serializer);
     *_file << ' ';
 }
 
