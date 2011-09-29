@@ -10,3 +10,7 @@ SuctionBubbleFactory testingstuff
 {
 SkinFactory skin skinFactory
 }
+SuctionBubbleFactory moomoo
+{
+SkinFactory skin skinFactory
+}

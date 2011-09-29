@@ -269,9 +269,9 @@ DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(
 MATCH_FOUND:
     TextFileFactoryLoader loader(nullptr, true);
     FactoryGetList getList;
-    Events::global().registerListener<FactoryGetEvent>(&getList,{eBlockQueue});
-    factory->init(factoryName, &loader, &AbstractFactories::global());
-    Events::global().unregisterListener<FactoryGetEvent>(&getList, true);
+    Events::global().registerListener<FactoryGetEvent<Entity>>(&getList,{eBlockQueue});
+    factory->baseInit(factoryName, &loader, &AbstractFactories::global());
+    Events::global().unregisterListener<FactoryGetEvent<Entity>>(&getList, true);
     std::vector<std::string> values = loader.getUndefinedLog();
     FactoryParameters* params = new FactoryParameters();
     CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
@@ -319,7 +319,7 @@ void DynamicEditor::render()
     }
 }
 
-bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent* event)
+bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent<Entity>* event)
 {
     factories.insert(event->getName());
     return true;

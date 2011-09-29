@@ -109,11 +109,12 @@ void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, 
 }
 
 template <typename Product>
-AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference factory)
+AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference _factory)
 {
-    FactoryGetEvent event(factory);
+    auto factory = factories.find(_factory)->second;
+    FactoryGetEvent<Product> event(factory);
     Events::global().triggerEvent(&event);
-    return factories.find(factory)->second;
+    return factory;
 }
 
 template <typename Product>
@@ -139,14 +140,14 @@ void AbstractFactoryList<Product>::init(AbstractFactories* _factories)
     static TextFileFactoryLoader emptyConfig(nullptr);
     for (auto i = factories.begin(); i != factories.end(); i++)
     {
-        i->second->init(i->second->getName(), &emptyConfig, _factories);
+        i->second->baseInit(i->second->getName(), &emptyConfig, _factories);
     }
     TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.txt").c_str());
     while (loader.next())
     {
         assert(factories.find(loader.getName()) == factories.end());
         AbstractFactoryBase<Product>* factory = factoryCreators[loader.getType()]->createFactory();
-        factory->init(loader.getName(), &loader, _factories);
+        factory->baseInit(loader.getName(), &loader, _factories);
         factories[loader.getName()] = factory;
         loader.end();
         FactoryCreateEvent<Product> event(factory, loader.getName());
@@ -164,7 +165,7 @@ void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, Fac
 {
     assert(factories.find(_loader->getName()) == factories.end());
     AbstractFactoryBase<Product>* factory = factoryCreators[_loader->getType()]->createFactory();
-    factory->init(_loader->getName(), _loader, _factories);
+    factory->baseInit(_loader->getName(), _loader, _factories);
     factories[_loader->getName()] = factory;
 }
 

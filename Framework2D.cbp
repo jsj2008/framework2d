@@ -423,7 +423,6 @@
 		<Unit filename="Resources/CEGUI/layouts/EditBox.layout" />
 		<Unit filename="Resources/CEGUI/layouts/EditMode.layout" />
 		<Unit filename="Resources/CEGUI/layouts/EditorRoot.layout" />
-		<Unit filename="Resources/CEGUI/layouts/EditorTab.layout" />
 		<Unit filename="Resources/CEGUI/layouts/GeometrySelector.layout" />
 		<Unit filename="Resources/CEGUI/layouts/JointEditor.layout" />
 		<Unit filename="Resources/CEGUI/layouts/Root.layout" />
@@ -471,6 +470,12 @@
 		<Unit filename="Types/MyVector.h" />
 		<Unit filename="Types/PropertyBag.cpp" />
 		<Unit filename="Types/PropertyBag.h" />
+		<Unit filename="Types/PropertyBagSerializer.cpp" />
+		<Unit filename="Types/PropertyBagSerializer.h" />
+		<Unit filename="Types/SerializationTypes.cpp" />
+		<Unit filename="Types/SerializationTypes.h" />
+		<Unit filename="Types/TextFilePropertyBagSerializer.cpp" />
+		<Unit filename="Types/TextFilePropertyBagSerializer.h" />
 		<Unit filename="Types/Traversable.cpp" />
 		<Unit filename="Types/Traversable.h" />
 		<Unit filename="Types/TypeTable.cpp" />
