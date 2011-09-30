@@ -3,6 +3,8 @@
 
 template <typename EventType>
 class EventHandler;
+template <typename EventType>
+class NamedEventHandler;
 
 template <typename EventType>
 class EventsListener /// FIXME rename EventListener
@@ -15,6 +17,7 @@ class EventsListener /// FIXME rename EventListener
     protected:
     private:
         friend class EventHandler<EventType>;
+        friend class NamedEventHandler<EventType>;
         EventsListener<EventType>* prev,* next;
 
 };

@@ -415,5 +415,55 @@ Redos: 0
                 </AutoWindow>
             </Window>
         </Window>
+        <Window Name="Root/Events" Type="TaharezLook/FrameWindow">
+            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.475,0},{0.18375,0},{0.665,0}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Events" />
+            <Property Name="TitlebarFont" Value="DejaVuSans-10" />
+            <Property Name="EWSizingCursorImage" Value="" />
+            <Property Name="NSSizingCursorImage" Value="" />
+            <Property Name="NESWSizingCursorImage" Value="" />
+            <Property Name="NWSESizingCursorImage" Value="" />
+            <AutoWindow NameSuffix="__auto_closebutton__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+	    <Window Name="Root/Events/Combobox" Type="TaharezLook/Combobox">
+	      <Property Name="UnifiedAreaRect" Value="{{0.0,0},{0.0,0},{1.0,0},{1.0,0}}" />
+	    </Window>
+        </Window>
+        <Window Name="Root/Actions" Type="TaharezLook/FrameWindow">
+            <Property Name="UnifiedAreaRect" Value="{{0.1875,0},{0.475,0},{0.37375,0},{0.666667,0}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Actions" />
+            <Property Name="TitlebarFont" Value="DejaVuSans-10" />
+            <Property Name="EWSizingCursorImage" Value="" />
+            <Property Name="NSSizingCursorImage" Value="" />
+            <Property Name="NESWSizingCursorImage" Value="" />
+            <Property Name="NWSESizingCursorImage" Value="" />
+            <AutoWindow NameSuffix="__auto_closebutton__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <Window Name="Root/Actions/TabControl" Type="TaharezLook/TabControl">
+                <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="TabHeight" Value="{0,-1}" />
+                <AutoWindow NameSuffix="__auto_TabPane__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <Property Name="EnableBottom" Value="1" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_TabPane__Buttons">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <Property Name="EnableTop" Value="0" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_TabPane__ScrollLeft">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <Property Name="Visible" Value="False" />
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_TabPane__ScrollRight">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <Property Name="Visible" Value="False" />
+                </AutoWindow>
+            </Window>
+        </Window>
     </Window>
 </GUILayout>

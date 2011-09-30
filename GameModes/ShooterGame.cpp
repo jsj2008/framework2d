@@ -22,6 +22,7 @@ ShooterGame::ShooterGame()
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
 
     FactoryParameters params;
+    params.add<std::string>("name", "player");
     setCamera(AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params)); /// FIXME this needs to be in its own init function
     activeLevel->loadLevel();
 }

@@ -3,6 +3,7 @@
 
 #include <Events/GenericEvent.h>
 #include <Events/EventHandler.h>
+#include <Events/NamedEventHandler.h>
 class Event;
 template <typename DerivedEvent>
 class EventsListener;
@@ -21,6 +22,15 @@ class Events
         template <typename DerivedEvent>
         void unregisterListener(EventsListener<DerivedEvent>* listener, bool _blockingQueue);
 
+        template <typename DerivedEvent>
+        void triggerNamedEvent(DerivedEvent* event, const std::string& _name);
+
+        template <typename DerivedEvent>
+        void registerNamedListener(EventsListener<DerivedEvent>* listener, const std::string& _name);
+
+        template <typename DerivedEvent>
+        void unregisterNamedListener(EventsListener<DerivedEvent>* listener, const std::string& _name);
+
         template <GenericEvents eventName>
         void triggerGenericEvent();
     protected:
@@ -30,6 +40,9 @@ class Events
 
         template <typename DerivedEvent>
         EventHandler<DerivedEvent>& getHandler();
+
+        template <typename DerivedEvent>
+        NamedEventHandler<DerivedEvent>& getNamedHandler();
 };
 
 /**
@@ -56,11 +69,35 @@ void Events::unregisterListener(EventsListener<DerivedEvent>* listener, bool _bl
     getHandler<DerivedEvent>().unregisterListener(listener, _blockingQueue);
 }
 
+template <typename DerivedEvent>
+void Events::triggerNamedEvent(DerivedEvent* event, const std::string& _name)
+{
+    getNamedHandler<DerivedEvent>().trigger(event, _name);
+}
+
+template <typename DerivedEvent>
+void Events::registerNamedListener(EventsListener<DerivedEvent>* listener, const std::string& _name)
+{
+    getNamedHandler<DerivedEvent>().registerListener(listener, _name);
+}
+
+template <typename DerivedEvent>
+void Events::unregisterNamedListener(EventsListener<DerivedEvent>* listener, const std::string& _name)
+{
+    getNamedHandler<DerivedEvent>().unregisterListener(listener, _name);
+}
+
 
 template <typename DerivedEvent>
 EventHandler<DerivedEvent>& Events::getHandler()
 {
     static EventHandler<DerivedEvent> handler;
+    return handler;
+}
+template <typename DerivedEvent>
+NamedEventHandler<DerivedEvent>& Events::getNamedHandler()
+{
+    static NamedEventHandler<DerivedEvent> handler;
     return handler;
 }
 #endif // EVENTS_H

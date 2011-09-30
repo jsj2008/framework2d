@@ -131,6 +131,12 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
     {
         assert(factories[factory]);
         product = factories[factory]->use(parameters);
+        std::string name = parameters->get<std::string>("name", "");
+        if (name != "")
+        {
+            FactoryUsageEvent<Product> event(product);
+            Events::global().triggerNamedEvent(&event, name);
+        }
     }
     return product;
 }

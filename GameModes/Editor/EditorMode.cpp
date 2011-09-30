@@ -9,7 +9,7 @@
 #include <Game.h>
 #include <Level/Level.h>
 #include "EditorStateSwitcher.h"
-#define NUM_MODES 4
+#define NUM_MODES 5
 EditorMode::EditorMode(PlayMode* _playMode)
 {
     //ctor
@@ -23,10 +23,11 @@ EditorMode::EditorMode(PlayMode* _playMode)
     modes[0] = new DynamicEditor(mFreeCamera, this);
     modes[1] = new JointEditor(mFreeCamera, this);
     modes[2] = new GeometrySelector(mFreeCamera, this);
-    modes[3] = activeLevel;
+    modes[3] = new EventScripter(mFreeCamera, this);
+    modes[4] = activeLevel;
 
     Vec2i dimensions(500/NUM_MODES,100);
-    selectionBox = new EditorStateSwitcher("Root/Frame/TabControl",{"DynamicEditor","JointEditor","GeometrySelector","TestPlay"},modes);
+    selectionBox = new EditorStateSwitcher("Root/Frame/TabControl",{"DynamicEditor","JointEditor","GeometrySelector", "EventScripting", "TestPlay"},modes);
 
     for (unsigned int i = 0; i < NUM_MODES; i++)
     {
