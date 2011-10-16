@@ -5,6 +5,7 @@ LogScriptAction::LogScriptAction(const std::string& _message)
 {
     //ctor
     message = _message;
+    g_Log.message(message + " created");
 }
 
 LogScriptAction::~LogScriptAction()

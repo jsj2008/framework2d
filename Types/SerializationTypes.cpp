@@ -114,6 +114,8 @@ SerializationTypes::SerializationTypes()
 {
     //ctor
     setHelperToDefault<float>();
+    setHelperToDefault<int>();
+    setHelperToDefault<Vec2f>();
     setHelper<std::string>(new StringHelper);
     setHelper<std::vector<Vec2f>>(new ArrayHelper<Vec2f>(new Vec2fHelper));
 }

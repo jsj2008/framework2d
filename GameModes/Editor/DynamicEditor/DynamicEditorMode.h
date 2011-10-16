@@ -9,11 +9,11 @@ class DynamicEditor;
 class DynamicEditorMode : public InputContext, public DynamicEditorVariable
 {
     public:
-        DynamicEditorMode(FactoryParameters* _params);
+        DynamicEditorMode(CEGUI::Window* _rootWindow, FactoryParameters* _params);
         virtual ~DynamicEditorMode();
-        void initEditorMode(std::string _name, CEGUI::Window* _window, DynamicEditor* _editor);
+        void initEditorMode(std::string _name, DynamicEditor* _editor);
         /// Called during initialisation also
-        void addVariable(DynamicEditorVariable* _variable){variables.push_back(_variable);}
+        void addVariable(const std::string& _name, DynamicEditorVariable* _variable);
         CEGUI::Window* getWindow(){return rootWindow;}
         void addPropertyBagVariable(CppFactoryLoader* _loader);
         bool destroySelf(const CEGUI::EventArgs&);
@@ -22,6 +22,7 @@ class DynamicEditorMode : public InputContext, public DynamicEditorVariable
     private:
         DynamicEditor* editor;
         FactoryParameters* params;
+        CEGUI::Window* rootWindow;
         std::vector<DynamicEditorVariable*> variables;
         std::string name;
 };

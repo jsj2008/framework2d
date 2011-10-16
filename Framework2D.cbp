@@ -262,12 +262,28 @@
 		<Unit filename="Events/Events/FactoryTypeUsageEvent.h" />
 		<Unit filename="Events/Events/FactoryUsageEvent.cpp" />
 		<Unit filename="Events/Events/FactoryUsageEvent.h" />
+		<Unit filename="Events/Events/NamedFactoryUsageEvent.cpp" />
+		<Unit filename="Events/Events/NamedFactoryUsageEvent.h" />
 		<Unit filename="Events/Events/ShowEntityEvent.cpp" />
 		<Unit filename="Events/Events/ShowEntityEvent.h" />
 		<Unit filename="Events/GenericEvent.cpp" />
 		<Unit filename="Events/GenericEvent.h" />
+		<Unit filename="Events/InstanceEvents/Events/DeathEvent.cpp" />
+		<Unit filename="Events/InstanceEvents/Events/DeathEvent.h" />
+		<Unit filename="Events/InstanceEvents/InstanceEvent.cpp" />
+		<Unit filename="Events/InstanceEvents/InstanceEvent.h" />
+		<Unit filename="Events/InstanceEvents/InstanceEventHandler.cpp" />
+		<Unit filename="Events/InstanceEvents/InstanceEventHandler.h" />
+		<Unit filename="Events/InstanceEvents/InstanceEventListener.cpp" />
+		<Unit filename="Events/InstanceEvents/InstanceEventListener.h" />
 		<Unit filename="Events/NamedEventHandler.cpp" />
 		<Unit filename="Events/NamedEventHandler.h" />
+		<Unit filename="Events/SingletonEvents/SingletonEvent.cpp" />
+		<Unit filename="Events/SingletonEvents/SingletonEvent.h" />
+		<Unit filename="Events/SingletonEvents/SingletonEventHandler.cpp" />
+		<Unit filename="Events/SingletonEvents/SingletonEventHandler.h" />
+		<Unit filename="Events/SingletonEvents/SingletonEventListener.cpp" />
+		<Unit filename="Events/SingletonEvents/SingletonEventListener.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
@@ -314,6 +330,10 @@
 		<Unit filename="GameModes/Editor/EventScripter/Actions/AllScriptActions.h" />
 		<Unit filename="GameModes/Editor/EventScripter/Actions/LogScriptAction.cpp" />
 		<Unit filename="GameModes/Editor/EventScripter/Actions/LogScriptAction.h" />
+		<Unit filename="GameModes/Editor/EventScripter/EventFactory.cpp" />
+		<Unit filename="GameModes/Editor/EventScripter/EventFactory.h" />
+		<Unit filename="GameModes/Editor/EventScripter/EventListDisplay.cpp" />
+		<Unit filename="GameModes/Editor/EventScripter/EventListDisplay.h" />
 		<Unit filename="GameModes/Editor/EventScripter/Events/AllScriptEvents.h" />
 		<Unit filename="GameModes/Editor/EventScripter/Events/DeathScriptEvent.cpp" />
 		<Unit filename="GameModes/Editor/EventScripter/Events/DeathScriptEvent.h" />
@@ -514,6 +534,8 @@
 		<Unit filename="UI/BeatDisplay.h" />
 		<Unit filename="UI/ItemList.cpp" />
 		<Unit filename="UI/ItemList.h" />
+		<Unit filename="UI/ListDisplay.cpp" />
+		<Unit filename="UI/ListDisplay.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

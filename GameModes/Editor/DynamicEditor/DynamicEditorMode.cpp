@@ -6,11 +6,12 @@
 #include <GameModes/Editor/DynamicEditor.h>
 #include <GameModes/Editor/DynamicEditor/EntityList.h>
 
-DynamicEditorMode::DynamicEditorMode(FactoryParameters* _params)
-:DynamicEditorVariable(nullptr, _params->getTypeTable(),"")
+DynamicEditorMode::DynamicEditorMode(CEGUI::Window* _rootWindow, FactoryParameters* _params)
+:DynamicEditorVariable(_params->getTypeTable(),"")
 {
     //ctor
     params = _params;
+    rootWindow = _rootWindow;
 }
 
 DynamicEditorMode::~DynamicEditorMode()
@@ -18,10 +19,9 @@ DynamicEditorMode::~DynamicEditorMode()
     //dtor
 }
 
-void DynamicEditorMode::initEditorMode(std::string _name, CEGUI::Window* _window, DynamicEditor* _editor)
+void DynamicEditorMode::initEditorMode(std::string _name, DynamicEditor* _editor)
 {
     name = _name;
-    rootWindow = _window;
     editor = _editor;
     rootWindow->getChild(_name+"Tab/DeleteButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::SubscriberSlot(&DynamicEditorMode::destroySelf,this));
 }
@@ -66,3 +66,28 @@ bool DynamicEditorMode::destroySelf(const CEGUI::EventArgs&)
     delete this;
     return false;
 }
+void DynamicEditorMode::addVariable(const std::string& _name, DynamicEditorVariable* _variable)
+{
+    variables.push_back(_variable);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

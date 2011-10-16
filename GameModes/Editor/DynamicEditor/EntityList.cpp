@@ -5,6 +5,8 @@
 #include <Entities/Entity.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Types/TextFilePropertyBagSerializer.h>
+#include <Types/XmlFilePropertyBagSerializer.h>
+#include <Types/XmlPropertyBagLoader.h>
 #include <fstream>
 
 EntityList::EntityList(const std::string& _windowName, const std::string& _listFilename)
@@ -35,45 +37,52 @@ EntityList::~EntityList()
 {
     //dtor
 }
-
 void EntityList::loadLevel(const std::string& _listFileName)
 {
-    std::ifstream file;
-    file.open("Level.txt");
-    unsigned short size;
-    file >> size;
-    for (unsigned short i = 0; i < size; i++)
+    XmlPropertyBagLoader loader("Level.xml");
+    int version = loader.getVersion();
+    if (version != 1)
     {
-        std::string factory;
-        file >> factory;
-        FactoryParameters params;
-        file >> params;
-        LevelEntity* entity = new LevelEntity(this, &params, factory);
-        Entity* body = entity->createEntity();
-        EntityPlaceEvent event(body, factory, &params);
-        Events::global().triggerEvent(&event);
+        char message[128];
+        sprintf(message, "Unknown version number: %d in Level.xml", version);
+        g_Log.error(message);
     }
+    if (loader.startFactories())
+    {
+        do
+        {
+            std::string factory = loader.getFactoryName();
+            FactoryParameters params;
+            loader.readParameters(&params);
+            LevelEntity* entity = new LevelEntity(this, &params, factory);
+            Entity* body = entity->createEntity();
+            EntityPlaceEvent event(body, factory, &params);
+            Events::global().triggerEvent(&event);
+        }
+        while (loader.next());
+    }
+    else g_Log.error("Level loading from xml failed");
+    loader.endFactories();
 }
 
 void EntityList::saveLevel(const std::string& _listFileName)
 {
-    std::ofstream file;
-    file.open("Level.txt");
-    TextFilePropertyBagSerializer* serializer = new TextFilePropertyBagSerializer(&file);
+    XmlFilePropertyBagSerializer xml("Level.xml");
+    PropertyBagSerializer* serializer = &xml;
+
     unsigned short size = listBox->getItemCount() + filteredDead.size();
-    file << size;
-    file << ' ';
+    serializer->startFactories(size, "Entity");
+    serializer->setVersion(1);
     for (unsigned short i = 0; i != listBox->getItemCount() ; i++)
     {
         CEGUI::ListboxItem* item = listBox->getListboxItemFromIndex(i);
         LevelEntity* entity = static_cast<LevelEntity*>(item->getUserData());
-        entity->output(&file, serializer);
+        entity->output(serializer);
     }
     for (auto i = filteredDead.begin(); i != filteredDead.end(); i++)
     {
-        (*i)->output(&file, serializer);
+        (*i)->output(serializer);
     }
-    delete serializer;
 }
 
 void EntityList::addEntity(LevelEntity* _entity, const std::string& _displayName)

@@ -9,14 +9,15 @@ class CppFactoryLoader;
 class DynamicEditorVariable
 {
     public:
-        DynamicEditorVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName);
+        DynamicEditorVariable(TypeTable* _params, const std::string& _name);
         virtual ~DynamicEditorVariable();
         virtual void finish()=0;
         virtual void addPropertyBagVariable(CppFactoryLoader* _loader)=0;
+        CEGUI::Window* getWidget(){return widget;}
     protected:
-        CEGUI::Window* rootWindow;
+        CEGUI::Window* widget;
         TypeTable* typeTable;
-        std::string factoryName;
+        std::string name;
     private:
 };
 

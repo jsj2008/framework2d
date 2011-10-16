@@ -29,7 +29,7 @@ void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factor
 
 Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
 {
-    std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{{0,0},{1,1},{-2,1}});
+    std::vector<Vec2f> points = parameters->getArray<Vec2f>("points",{{0,0},{1,1},{-2,1}});
 
     //g_AIManager.addStaticGeometry(&points[0],points.size());
     Skin* skin = skinFactory->use(parameters);

@@ -1,8 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <Events/EventHandler.h>
-#include <Events/Events/EntityDeathEvent.h>
+#include <Events/InstanceEvents/InstanceEventHandler.h>
+#include <Events/InstanceEvents/Events/DeathEvent.h>
 class Skin;
 class b2Body;
 class Vec2f;
@@ -31,13 +31,13 @@ class Entity
         const Vec2f& getPosition();
         /// FIXME should think of a better way to do this (its for the factories)
         void setBody(b2Body* _body);
-        void registerDeathListener(EventsListener<EntityDeathEvent>* _listener);
+        void registerDeathListener(InstanceEventListener<EntityDeathEvent>* _listener);
         b2Body* getBody(){return mBody;}
     protected:
         b2Body* mBody;
         Skin* mSkin;
     private:
-        EventHandler<EntityDeathEvent> deathHandler;
+        InstanceEventHandler<EntityDeathEvent> deathHandler;
 };
 
 #endif // ENTITY_H

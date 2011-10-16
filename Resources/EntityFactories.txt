@@ -14,3 +14,10 @@ SuctionBubbleFactory moomoo
 {
 SkinFactory skin skinFactory
 }
+CrateFactory moobybooby
+{
+SkinFactory skin StaticSkinFactory
+}
+CrateFactory HeavyCrate
+{
+}

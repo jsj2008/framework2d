@@ -7,14 +7,14 @@
 class BoxDragMode: public DynamicEditorMode
 {
     public:
-        BoxDragMode(FactoryParameters* _params);
+        BoxDragMode(CEGUI::Window* _window, FactoryParameters* _params);
         virtual ~BoxDragMode();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
         void render();
-    protected:
         void finish();
+    protected:
     private:
         bool dragging;
         Vec2i startPos;

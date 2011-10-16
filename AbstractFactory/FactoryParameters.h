@@ -21,7 +21,11 @@ class FactoryParameters
         template <typename Type>
         Type get(const std::string& name, const Type& _default);
         template <typename Type>
+        const std::vector<Type>& getArray(const std::string& name, const std::vector<Type>& _default);
+        template <typename Type>
         Type get(const std::string& name);
+
+        void addDynamicValue(const TypeTable::TypeIndex& type, const TypeTable::ValueIndex& name, const std::string& _value);
 
         std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator begin(){return table.begin();}
         std::unordered_map<TypeTable::ValueIndex,TypeTable::Value*>::iterator end(){return table.end();}
@@ -53,6 +57,11 @@ template <typename Type>
 Type FactoryParameters::get(const std::string& name, const Type& _default)
 {
     return table.getValue(name, _default);
+}
+template <typename Type>
+const std::vector<Type>& FactoryParameters::getArray(const std::string& name, const std::vector<Type>& _default)
+{
+    return table.getArray(name, _default);
 }
 
 #endif // FACTORYPARAMETERS_H

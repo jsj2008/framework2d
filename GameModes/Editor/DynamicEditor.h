@@ -77,26 +77,31 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         class ModeFactory
         {
             public:
-                virtual DynamicEditorMode* createMode(FactoryParameters* _params)=0;
+                virtual DynamicEditorMode* createMode(CEGUI::Window* _window, FactoryParameters* _params)=0;
         };
         template <typename mode>
         class DerivedModeFactory : public ModeFactory
         {
             public:
-                DynamicEditorMode* createMode(FactoryParameters* _params);
+                DynamicEditorMode* createMode(CEGUI::Window* _window, FactoryParameters* _params);
         };
     public: /// FIXME
         class VariableFactory
         {
             public:
-                virtual DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName)=0;
+                VariableFactory(const std::string& _name){name = _name;}
+                virtual DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName, float* _uiElementTop)=0;
+                const std::string& getName(){return name;}
+            protected:
+                void createNameDisplay(float _top, float _height, CEGUI::Window* _root);
+                std::string name;
         };
     private:
         template <typename mode>
         class DerivedVariableFactory : public VariableFactory
         {
             public:
-                DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){return new mode(_rootWindow,_params, _factoryName);}
+                DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName, float* _uiElementTop){return new mode(_rootWindow,_params, _factoryName, _uiElementTop);}
         };
         std::vector<
             std::pair<

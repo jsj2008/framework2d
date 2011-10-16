@@ -4,14 +4,18 @@
 #include <Log/GameConsole.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
 
-TextEditBox::TextEditBox(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _name, const std::string& _defaultValue, const std::string& _factoryName)
-:DynamicEditorVariable(_rootWindow, _params, _factoryName)
+TextEditBox::TextEditBox(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _name,
+    const std::string& _defaultValue, const std::string& _factoryName, float* _uiElementHeight)
+:DynamicEditorVariable(_params, _name)
 {
     //ctor
-    name = _name;
     defaultValue = _defaultValue;
-    widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditBox.layout", factoryName + name);
-    widget->setProperty("Text",defaultValue);
+    widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EditBox.layout", _factoryName + _name);
+
+    widget->setPosition(CEGUI::UVector2({{0.5f, 0.0f}, {0.0f,*_uiElementHeight}})); /// FIXME this function should be in the base class
+    *_uiElementHeight += widget->getHeight().asAbsolute(0);
+
+    widget->setProperty("Text",_defaultValue);
     _rootWindow->addChildWindow(widget);
 }
 
@@ -20,6 +24,14 @@ TextEditBox::~TextEditBox()
     //dtor
 }
 
+DynamicEditorVariable* TextEditBoxFactory::createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName, float* _uiElementHeight)
+{
+    float top = *_uiElementHeight;
+    TextEditBox* ret = new TextEditBox(_rootWindow,_params, name, defaultValue,_factoryName, _uiElementHeight);
+    float height = *_uiElementHeight - top;
+    createNameDisplay(top, height, _rootWindow);
+    return ret;
+}
 void TextEditBox::finish()
 {
     std::string value = widget->getProperty("Text").c_str();
@@ -27,7 +39,7 @@ void TextEditBox::finish()
     {
         value = defaultValue;
     }
-    typeTable->addValue<std::string>(name, value);
+    typeTable->addDynamicValue("float", name, value);
 }
 
 void TextEditBox::addPropertyBagVariable(CppFactoryLoader* _loader)
@@ -39,6 +51,6 @@ void TextEditBox::addPropertyBagVariable(CppFactoryLoader* _loader)
     }
     else
     {
-        _loader->addValue<std::string>(name, value);
+        _loader->addDynamicValue("float", name, value);
     }
 }

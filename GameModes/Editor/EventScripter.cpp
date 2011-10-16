@@ -2,6 +2,7 @@
 #include <Graphics/Camera/FreeCamera.h>
 #include <GameModes/Editor/EventScripter/ScriptEventsList.h>
 #include <GameModes/Editor/EventScripter/ActionEventsList.h>
+#include <UI/ListDisplay.h>
 
 EventScripter::EventScripter(FreeCamera* _camera, EditorMode* _editorMode)
 {
@@ -13,6 +14,8 @@ EventScripter::EventScripter(FreeCamera* _camera, EditorMode* _editorMode)
     actions = new ActionEventsList;
     events->hide();
     actions->hide();
+
+    //new ListDisplay(CEGUI::System::getSingleton().getGUISheet()->getRootWindow(), "BOobeths");
 }
 
 EventScripter::~EventScripter()

@@ -1,8 +1,8 @@
 #include "ClickPlaceMode.h"
 #include <Types/TypeTable.h>
 
-ClickPlaceMode::ClickPlaceMode(FactoryParameters* _params)
-:DynamicEditorMode(_params)
+ClickPlaceMode::ClickPlaceMode(CEGUI::Window* _window, FactoryParameters* _params)
+:DynamicEditorMode(_window, _params)
 {
     //ctor
 }

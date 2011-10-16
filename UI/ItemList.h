@@ -84,8 +84,11 @@ void ItemList<Product>::setListener(ComponentObjectSelectionVariable<Product>* _
 template <typename Product>
 bool ItemList<Product>::selectFactoryCallback(const CEGUI::EventArgs& _args)
 {
-    variable->setFactory(static_cast<AbstractFactoryBase<Product>*>(listBox->getSelectedItem()->getUserData()));
-    root->setVisible(false);
+    if (listBox->getSelectedItem() != nullptr)
+    {
+        variable->setFactory(static_cast<AbstractFactoryBase<Product>*>(listBox->getSelectedItem()->getUserData()));
+        root->setVisible(false);
+    }
     return true;
 }
 

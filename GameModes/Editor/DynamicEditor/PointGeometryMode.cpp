@@ -1,8 +1,8 @@
 #include "PointGeometryMode.h"
 #include <Types/TypeTable.h>
 
-PointGeometryMode::PointGeometryMode(FactoryParameters* _params)
-:DynamicEditorMode(_params)
+PointGeometryMode::PointGeometryMode(CEGUI::Window* _window, FactoryParameters* _params)
+:DynamicEditorMode(_window, _params)
 {
     //ctor
 }
@@ -40,7 +40,7 @@ void PointGeometryMode::buttonUp(Vec2i mouse, unsigned char button)
 }
 void PointGeometryMode::finish()
 {
-    typeTable->addValue("points",points);
+    typeTable->addArray("points",points);
 }
 
 #include <GL/gl.h>

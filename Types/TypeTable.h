@@ -21,6 +21,7 @@ class TypeTable
 {
     public:
         class Value;
+        class ArrayValue;
         typedef std::string ValueIndex;
         typedef std::string TypeIndex;
 
@@ -33,6 +34,9 @@ class TypeTable
         void addValue(const ValueIndex& name, const T& value);
 
     template <typename T>
+        void addArray(const ValueIndex& name, const std::vector<T>& value);
+
+    template <typename T>
         void setValue(const ValueIndex& name, const T& value);
 
     template <typename T>
@@ -40,6 +44,9 @@ class TypeTable
 
     template <typename T>
         const T& getValue(const ValueIndex& name, const T& _default);
+
+    template <typename T>
+        const std::vector<T>& getArray(const ValueIndex& name, const std::vector<T>& _default);
 
     template <typename T>
         const T popValue(const ValueIndex& name, const T& _default);
@@ -57,6 +64,8 @@ class TypeTable
 
         // Don't use these unless neccessary, use the functions in the base class unless you're reading from file or something
         Value* addDynamicValue(const TypeIndex& type, const ValueIndex& name, const std::string& _value);
+        ArrayValue* addDynamicArrayValue(const TypeIndex& type, const ValueIndex& name, int _size, const std::string* _values);
+        ArrayValue* addDynamicArrayValue(const TypeIndex& type, const ValueIndex& name, int _size, std::istream* parseSource);
         void addDynamicValue(const TypeIndex& type, const ValueIndex& name, std::istream* parseSource);
 
         void removeValue(const ValueIndex& name);
@@ -74,6 +83,7 @@ class TypeTable
                 Type(){}
                 virtual ~Type(){}
                 virtual Value* instance(const std::string& _value)=0;
+                virtual ArrayValue* arrayInstance()=0;
                 virtual Type* clone()=0;
         };
         class Value
@@ -96,11 +106,29 @@ class TypeTable
             protected:
                 T value;
         };
+        class ArrayValue : public Value
+        {
+            public:
+                ArrayValue(){}
+                virtual void pushValue(const std::string& _value)=0;
+                virtual void pushValue(std::istream* _parseSource)=0;
+        };
+        template <typename T>
+        class TemplateBaseArrayValue : public ArrayValue
+        {
+            public:
+                TemplateBaseArrayValue(){}
+                const std::vector<T>& get(){return values;}
+                void set(const std::vector<T>& _values){values = _values;}
+            protected:
+                std::vector<T> values;
+        };
         template <typename T>
         class TemplateBaseType : public Type
         {
             public:
                 virtual Value* instance(T _value)=0;
+                virtual ArrayValue* arrayInstance()=0;
         };
 
     template <typename T>
@@ -141,6 +169,7 @@ class TypeTable
             public:
                 TemplateType(){staticRegister.check();}
                 Value* instance(const std::string& _value){return new TemplateValue<T>(_value);}
+                ArrayValue* arrayInstance(){return new TemplateArrayValue<T>();}
                 Value* instance(T _value){TemplateValue<T>* ret = new TemplateValue<T>; ret->set(_value); return ret;}
                 Type* clone(){return new TemplateType<T>();}
             private:
@@ -156,6 +185,21 @@ class TypeTable
                 void output(PropertyBagSerializer* _out);
                 Value* clone(){TemplateValue<T>* ret = new TemplateValue<T>();ret->set(TemplateBaseValue<T>::value);return ret;}
                 std::string getTypeId(){return name<T>();}
+            protected:
+        };
+        template <typename T>
+        class TemplateArrayValue : public TypeTable::TemplateBaseArrayValue<T>
+        {
+            public:
+                TemplateArrayValue(){}
+                void output(std::ostream* parseDestination);
+                void output(PropertyBagSerializer* _out);
+                Value* clone(){TemplateArrayValue<T>* ret = new TemplateArrayValue<T>();ret->set(TemplateBaseArrayValue<T>::values);return ret;}
+                std::string getTypeId(){return name<T>() + "Array";}
+                void set(const std::vector<T>& _values){TemplateBaseArrayValue<T>::values = _values;}
+                void pushValue(const std::string& _value);
+                void pushValue(std::istream* _parseSource);
+                const std::vector<T>& get(){return values;}
             protected:
         };
 
@@ -175,9 +219,20 @@ void TypeTable::TemplateValue<T>::output(PropertyBagSerializer* _out)
     _out->outputValue<T>(TemplateBaseValue<T>::value);
 }
 template <typename T>
-std::istream& operator>> (std::istream &in, std::vector<T> &elements);
+void TypeTable::TemplateArrayValue<T>::output(PropertyBagSerializer* _out)
+{
+    _out->outputArray<T>(&TemplateBaseArrayValue<T>::values[0], TemplateBaseArrayValue<T>::values.size());
+}
 template <typename T>
-std::ostream& operator<< (std::ostream &out, const std::vector<T> &elements);
+void TypeTable::TemplateArrayValue<T>::output(std::ostream* parseDestination)
+{
+    *parseDestination << "{ ";
+    for (unsigned int i = 0; i < TemplateBaseArrayValue<T>::values.size(); i++)
+    {
+        *parseDestination << TemplateBaseArrayValue<T>::values[i];
+    }
+    *parseDestination << '}';
+}
 
 template <typename T>
 void TypeTable::addValue(const ValueIndex& _name, const T& _value)
@@ -193,6 +248,21 @@ void TypeTable::addValue(const ValueIndex& _name, const T& _value)
         assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
         Value* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
 
+        values[_name] = value;
+    }
+}
+template <typename T>
+void TypeTable::addArray(const ValueIndex& _name, const std::vector<T>& _values)
+{
+    auto iter = values.find(_name);
+    if(iter != values.end())
+    {
+        static_cast<TemplateBaseArrayValue<T>*>(iter->second)->set(_values);
+    }
+    else
+    {
+        TemplateArrayValue<T>* value = new TemplateArrayValue<T>;
+        value->set(_values);
         values[_name] = value;
     }
 }
@@ -220,7 +290,8 @@ const T& TypeTable::getValue(const ValueIndex& name)
 template <typename T>
 const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
 {
-    if (values.find(_name) == values.end())
+    auto iter = values.find(_name);
+    if (iter == values.end())
     {
         if (logUndefined)
         {
@@ -237,9 +308,35 @@ const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
         }
         return _default;
     }
-    Value* value = values[_name];
+    Value* value = iter->second;
     assert(dynamic_cast<TemplateBaseValue<T>*>(value));
-    TemplateBaseValue<T>* typedValue = (TemplateBaseValue<T>*)value;
+    TemplateBaseValue<T>* typedValue = static_cast<TemplateBaseValue<T>*>(value);
+    return typedValue->get();
+}
+template <typename T>
+const std::vector<T>& TypeTable::getArray(const ValueIndex& _name, const std::vector<T>& _default)
+{
+    auto iter = values.find(_name);
+    if (iter == values.end())
+    {
+        if (logUndefined)
+        {
+            if (undefinedLog.find(_name) == undefinedLog.end())
+            {
+                TemplateArrayValue<T>* value = new TemplateArrayValue<T>();
+                value->set(_default);
+                undefinedLog[_name] = value;
+            }
+        }
+        else
+        {
+            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
+        }
+        return _default;
+    }
+    Value* value = iter->second;
+    assert(dynamic_cast<TemplateBaseArrayValue<T>*>(value));
+    TemplateBaseArrayValue<T>* typedValue = static_cast<TemplateBaseArrayValue<T>*>(value);
     return typedValue->get();
 }
 

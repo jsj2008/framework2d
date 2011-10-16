@@ -1,10 +1,10 @@
-#ifndef ENTITYDEATHEVENT_H
-#define ENTITYDEATHEVENT_H
+#ifndef DEATHEVENT_H
+#define DEATHEVENT_H
 
-#include <Events/Event.h>
+#include <Events/InstanceEvents/InstanceEvent.h>
 
 template <typename DeadClass>
-class DeathEvent : public Event
+class DeathEvent : public InstanceEvent<DeathEvent<DeadClass>>
 {
     public:
         DeathEvent(DeadClass* _entity);
@@ -14,7 +14,6 @@ class DeathEvent : public Event
     private:
         DeadClass* entity;
 };
-
 class Entity;
 typedef DeathEvent<Entity> EntityDeathEvent;
 
@@ -31,5 +30,4 @@ DeathEvent<DeadClass>::~DeathEvent()
 {
     //dtor
 }
-
-#endif // ENTITYDEATHEVENT_H
+#endif // DEATHEVENT_H

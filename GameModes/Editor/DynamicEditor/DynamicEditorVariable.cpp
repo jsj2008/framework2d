@@ -2,12 +2,11 @@
 #include <GameModes/Editor/DynamicEditor/DynamicEditorMode.h>
 #include <AbstractFactory/FactoryParameters.h>
 
-DynamicEditorVariable::DynamicEditorVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName)
+DynamicEditorVariable::DynamicEditorVariable(TypeTable* _params, const std::string& _name)
 {
     //ctor
-    rootWindow = _rootWindow;
     typeTable = _params;
-    factoryName = _factoryName;
+    name = _name;
 }
 
 DynamicEditorVariable::~DynamicEditorVariable()

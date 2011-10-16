@@ -49,3 +49,7 @@ istream& operator>> (istream &in, FactoryParameters &params)
     }
     return in;
 }
+void FactoryParameters::addDynamicValue(const TypeTable::TypeIndex& _type, const TypeTable::ValueIndex& _name, const std::string& _value)
+{
+    table.addDynamicValue(_type, _name, _value);
+}

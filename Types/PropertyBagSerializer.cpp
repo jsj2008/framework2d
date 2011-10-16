@@ -9,4 +9,5 @@ PropertyBagSerializer::PropertyBagSerializer(SerializationTypes* _types)
 PropertyBagSerializer::~PropertyBagSerializer()
 {
     //dtor
+    delete types;
 }

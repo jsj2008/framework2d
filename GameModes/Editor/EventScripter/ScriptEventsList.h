@@ -5,6 +5,7 @@ namespace CEGUI
 {
     class Window;
     class Combobox;
+    class EventArgs;
 }
 class ScriptEvent;
 class ScriptEventFactory;
@@ -18,6 +19,7 @@ class ScriptEventsList
         ScriptEvent* createScriptEvent(ScriptAction* _action);
         void show();
         void hide();
+        bool listBoxSelectionChanged(const CEGUI::EventArgs& _args);
     protected:
     private:
         CEGUI::Window* window;

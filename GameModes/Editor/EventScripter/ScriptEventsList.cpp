@@ -10,6 +10,11 @@ ScriptEventsList::ScriptEventsList()
     //ctor
     window = CEGUI::System::getSingleton().getGUISheet()->getChild("Root/Events");
     eventList = static_cast<CEGUI::Combobox*>(window->getChild("Root/Events/Combobox"));
+    eventList->subscribeEvent(CEGUI::Combobox::EventListSelectionChanged, {&ScriptEventsList::listBoxSelectionChanged, this});
+
+    CEGUI::ListboxItem* item = new CEGUI::ListboxTextItem("Entity death");
+//    item->setUserData(new DeathEvent)
+    eventList->addItem(item);
 }
 
 ScriptEventsList::~ScriptEventsList()
@@ -23,6 +28,11 @@ ScriptEvent* ScriptEventsList::createScriptEvent(ScriptAction* _action)
     auto script = new StandardScriptEvent<FactoryUsageEvent<Entity>>(_action);
     Events::global().registerListener(script, {eBlockQueue});
     return script;
+}
+
+bool ScriptEventsList::listBoxSelectionChanged(const CEGUI::EventArgs& _args)
+{
+    return true;
 }
 
 void ScriptEventsList::show()

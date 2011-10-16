@@ -334,6 +334,59 @@
                 </AutoWindow>
             </Window>
         </Window>
+        <Window Name="Root/EventList" Type="TaharezLook/FrameWindow">
+            <Property Name="UnifiedAreaRect" Value="{{0.698713,0},{0.696506,0},{1.00089,0},{0.996455,0}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Console" />
+            <Property Name="TitlebarFont" Value="DejaVuSans-10" />
+            <Property Name="EWSizingCursorImage" Value="" />
+            <Property Name="NSSizingCursorImage" Value="" />
+            <Property Name="NESWSizingCursorImage" Value="" />
+            <Property Name="NWSESizingCursorImage" Value="" />
+            <AutoWindow NameSuffix="__auto_closebutton__">
+                <Property Name="Font" Value="DejaVuSans-10" />
+            </AutoWindow>
+            <Window Name="Root/EventList/EditBox" Type="TaharezLook/Editbox">
+                <Property Name="UnifiedAreaRect" Value="{{0.0201637,0},{0.793119,0},{0.694549,0},{0.963715,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="MaxTextLength" Value="1073741823" />
+                <Property Name="MouseCursorImage" Value="" />
+            </Window>
+            <Window Name="Root/EventList/SendButton" Type="TaharezLook/Button">
+                <Property Name="UnifiedAreaRect" Value="{{0.752175,0},{0.824368,0},{0.948247,0},{0.958851,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <Property Name="Text" Value="Send" />
+                <Property Name="InheritsTooltipText" Value="False" />
+            </Window>
+            <Window Name="Root/EventList/ChatBox" Type="TaharezLook/Listbox">
+                <Property Name="UnifiedAreaRect" Value="{{0.0236181,0},{0.0194826,0},{0.967906,0},{0.768822,0}}" />
+                <Property Name="Font" Value="DejaVuSans-10" />
+                <AutoWindow NameSuffix="__auto_hscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+                <AutoWindow NameSuffix="__auto_vscrollbar__">
+                    <Property Name="Font" Value="DejaVuSans-10" />
+                    <AutoWindow NameSuffix="__auto_thumb__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_decbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                    <AutoWindow NameSuffix="__auto_incbtn__">
+                        <Property Name="Font" Value="DejaVuSans-10" />
+                    </AutoWindow>
+                </AutoWindow>
+            </Window>
+        </Window>
         <Window Name="Root/UndoHistory" Type="TaharezLook/FrameWindow">
             <Property Name="UnifiedAreaRect" Value="{{0.749187,0},{0.291131,0},{0.99919,0},{0.54113,0}}" />
             <Property Name="Font" Value="DejaVuSans-10" />

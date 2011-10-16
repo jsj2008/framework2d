@@ -7,7 +7,7 @@
 class PointGeometryMode : public DynamicEditorMode
 {
     public:
-        PointGeometryMode(FactoryParameters* _params);
+        PointGeometryMode(CEGUI::Window* _window, FactoryParameters* _params);
         virtual ~PointGeometryMode();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);

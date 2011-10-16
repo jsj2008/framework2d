@@ -107,6 +107,14 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
     Type* type = types[_type];
     if (type == nullptr)
     {
+        /*if (_type.size() > 5 && _type.substr(_type.size()-5, _type.size()) == "Array")
+        {
+            g_Log.error("Need to call the dynamic Array function");
+            /*type = types[_type.substr(0, _type.size()-5)];
+            Value* ret = type->arrayInstance(_value);
+            values[_name] = ret;
+            return ret;* /
+        }*/
         UntypedValue* ret = new UntypedValue(_type, _name);
         untypedValues[_type].push_back(ret);
         return ret;
@@ -118,9 +126,64 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
         return ret;
     }
 }
+
+TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, const ValueIndex& _name, int _size, const std::string* _values)
+{
+    assert(values.find(_name) == values.end());
+    Type* type = types[_type];
+    if (type == nullptr)
+    {
+        g_Log.error("No support for untyped arrays yet");
+        return nullptr;
+    }
+    else
+    {
+        ArrayValue* ret = type->arrayInstance();
+        for (int i = 0; i < _size; i++)
+        {
+            ret->pushValue(_values[i]);
+        }
+        values[_name] = ret;
+        return ret;
+    }
+}
+TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, const ValueIndex& _name, int _size, std::istream* _parseSource)
+{
+    assert(values.find(_name) == values.end());
+    Type* type = types[_type];
+    if (type == nullptr)
+    {
+        g_Log.error("No support for untyped arrays yet");
+        return nullptr;
+    }
+    else
+    {
+        ArrayValue* ret = type->arrayInstance();
+        for (int i = 0; i < _size; i++)
+        {
+            ret->pushValue(_parseSource);
+        }
+        values[_name] = ret;
+        return ret;
+    }
+}
+template <typename T>
+void TypeTable::TemplateArrayValue<T>::pushValue(const std::string& _value)
+{
+    T value;
+    std::stringstream stream(_value);
+    stream >> value;
+    TemplateBaseArrayValue<T>::values.push_back(value);
+}
+template <typename T>
+void TypeTable::TemplateArrayValue<T>::pushValue(std::istream* _parseSource)
+{
+    T value;
+    *_parseSource >> value;
+    TemplateBaseArrayValue<T>::values.push_back(value);
+}
 void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, std::istream* parseSource)
 {
-    char valueString[128];
     /*char token = parseSource->get();
     while (token != '"')
     {
@@ -132,10 +195,20 @@ void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, 
         valueString.push_back(token);
         token = parseSource->get();
     }*/
-    parseSource->getline(&valueString[0], 128);
-    unsigned int offset = 0;
-    while (valueString[offset] == ' ') offset++;
-    addDynamicValue(type,_name, valueString+offset);
+    if (type.size() > 5 && type.substr(type.size()-5, type.size()) == "Array")
+    {
+        int size;
+        *parseSource >> size;
+        addDynamicArrayValue(type.substr(0, type.size()-5),_name, size, parseSource);
+    }
+    else
+    {
+        char valueString[128];
+        parseSource->getline(&valueString[0], 128);
+        unsigned int offset = 0;
+        while (valueString[offset] == ' ') offset++;
+        addDynamicValue(type,_name, valueString+offset);
+    }
 }
 using namespace std;
 ostream& operator<< (ostream &out, const TypeTable &table)
@@ -165,11 +238,10 @@ void TypeTable::output(ostream *out)
 }
 void TypeTable::output(PropertyBagSerializer* _out)
 {
-    _out->startArray(values.size());
+    _out->setNumberOfProperties(values.size());
     for (auto i = values.begin(); i != values.end(); i++)
     {
-        _out->outputString(i->second->getTypeId());
-        _out->outputString(i->first);
+        _out->createProperty(i->second->getTypeId(), i->first);
         i->second->output(_out);
     }
 }

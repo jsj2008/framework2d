@@ -2,7 +2,8 @@
 #define LEVELENTITY_H
 
 #include <Events/EventListener.h>
-#include <Events/Events/EntityDeathEvent.h>
+#include <Events/InstanceEvents/InstanceEventListener.h>
+#include <Events/InstanceEvents/Events/DeathEvent.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <string>
 class EntityList;
@@ -17,7 +18,7 @@ namespace CEGUI
     class EventArgs;
 }
 
-class LevelEntity : public EventsListener<EntityDeathEvent>
+class LevelEntity : public InstanceEventListener<EntityDeathEvent>
 {
     public:
         LevelEntity(EntityList* _entityList, FactoryParameters* _parameters, const std::string& _factoryName);
@@ -33,7 +34,7 @@ class LevelEntity : public EventsListener<EntityDeathEvent>
         CEGUI::ListboxTextItem* getListBoxItem(){return listBoxItem;}
         void show();
         void activateDisplay(CEGUI::Window* _window);
-        void output(std::ofstream* _file, PropertyBagSerializer* _serializer);
+        void output(PropertyBagSerializer* _serializer);
     protected:
     private:
         bool quitButton(const CEGUI::EventArgs& _args);

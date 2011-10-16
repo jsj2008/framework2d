@@ -7,7 +7,7 @@
 class ClickPlaceMode : public DynamicEditorMode
 {
     public:
-        ClickPlaceMode(FactoryParameters* _params);
+        ClickPlaceMode(CEGUI::Window* _window, FactoryParameters* _params);
         virtual ~ClickPlaceMode();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);

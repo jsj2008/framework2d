@@ -13,29 +13,31 @@
 #include <GameModes/Editor/DynamicEditor/EntityList.h>
 
 template <typename mode>
-DynamicEditorMode* DynamicEditor::DerivedModeFactory<mode>::createMode(FactoryParameters* _params)
+DynamicEditorMode* DynamicEditor::DerivedModeFactory<mode>::createMode(CEGUI::Window* _window, FactoryParameters* _params)
 {
-    return new mode(_params);
+    return new mode(_window, _params);
 }
 
 InputContext* DynamicEditor::EditorFactoryType::createEditor(CEGUI::TabControl* _tab, std::string _factoryName, std::string _typeName, DynamicEditor* _editor)
 {
-    FactoryParameters* params = new FactoryParameters(true);
-    DynamicEditorMode* editorMode = modeFactory->createMode(params);
-
     CEGUI::Window* page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityInstanceTab.layout", _factoryName);
+
+    FactoryParameters* params = new FactoryParameters(true);
+    DynamicEditorMode* editorMode = modeFactory->createMode(page, params);
+
     CEGUI::Window* typeNameDisplay = page->getChild(_factoryName + "Tab/EntityTypeName");
     typeNameDisplay->appendText(_typeName);
     page->setProperty("Text",_factoryName);
     _tab->addTab(page);
     page->setUserData(editorMode);
 
-    editorMode->initEditorMode(_factoryName, page, _editor);
+    editorMode->initEditorMode(_factoryName, _editor);
 
+    float uiElementTop = 0.0f;
     for (auto i = instanceVariableFactories.begin(); i != instanceVariableFactories.end(); i++)
     {
-        DynamicEditorVariable* editorVar = (*i)->createVariable(editorMode->getWindow(),params->getTypeTable(), _factoryName);
-        editorMode->addVariable(editorVar);
+        DynamicEditorVariable* editorVar = (*i)->createVariable(editorMode->getWindow(),params->getTypeTable(), _factoryName, &uiElementTop);
+        editorMode->addVariable((*i)->getName(), editorVar);
     }
 
     return editorMode;
@@ -49,7 +51,8 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     loader.setType(factoryTypeName);
     for (auto i = variables.begin(); i != variables.end(); i++)
     {
-        (*i)->addPropertyBagVariable(&loader);
+        DynamicEditorVariable* variable = *i;
+        variable->addPropertyBagVariable(&loader);
     }
     AbstractFactories::global().addFactory<Entity>(&loader);
     for (unsigned int i = 0; i < deadBodies.size(); i++)
@@ -58,10 +61,10 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     editor->activeEditor = createEditor(editor->instanceTab, name, factoryTypeName, editor);
     editor->instanceTab->setSelectedTabAtIndex(editor->instanceTab->getTabCount()-1);
     std::ofstream file ("Resources/EntityFactories.txt", std::ios::app);
-    for (auto i = variables.begin(); i != variables.end(); i++)
+    /*for (auto i = variables.begin(); i != variables.end(); i++)
     {
         (*i)->addPropertyBagVariable(&loader);
-    }
+    }*/
     loader.output(&file);
     return true;
 }
@@ -77,42 +80,55 @@ CEGUI::TabControl* getTabControl(const std::string& _prefix)
 class NameVariableController: public DynamicEditorVariable
 {
     public:
-        NameVariableController(CEGUI::Window* _entityName, TypeTable* _params)
-        :DynamicEditorVariable(_entityName, _params, "name")
+        NameVariableController(CEGUI::Window* _entityName, TypeTable* _params, float* _uiElementTop)
+        :DynamicEditorVariable(_params, "name")
         {
+            entityName = _entityName;
         }
         void finish()
         {
-            std::string string = rootWindow->getProperty("Text").c_str();
+            std::string string = entityName->getProperty("Text").c_str();
             if (string != "")
             {
-                typeTable->addValue<std::string>(factoryName, string.c_str());
+                typeTable->addValue<std::string>(name, string.c_str());
             }
         }
         void addPropertyBagVariable(CppFactoryLoader* _loader)
         {
-            std::string string = rootWindow->getProperty("Text").c_str();
+            std::string string = entityName->getProperty("Text").c_str();
             if (string != "")
             {
-                _loader->addValue<std::string>(factoryName, string.c_str());
+                _loader->addValue<std::string>(name, string.c_str());
             }
         }
     private:
-        //CEGUI::Window* entityName;
+        CEGUI::Window* entityName;
 };
+
 class NameVariableControllerFactory : public DynamicEditor::VariableFactory
 {
     public:
-        NameVariableControllerFactory(CEGUI::Window* _nameEditBox){nameEditBox = _nameEditBox;}
-        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){return new NameVariableController(nameEditBox,_params);}
+        NameVariableControllerFactory(const std::string& _name, CEGUI::Window* _nameEditBox):VariableFactory(_name){nameEditBox = _nameEditBox;}
+        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow,
+            TypeTable* _params, const std::string& _factoryName, float* _uiElementTop){return new NameVariableController(nameEditBox,_params, _uiElementTop);}
     private:
         CEGUI::Window* nameEditBox;
 };
+void DynamicEditor::VariableFactory::createNameDisplay(float _top, float _height, CEGUI::Window* _root)//(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName, float* _uiElementTop)
+{
+    static int uniqueName = 0;
+    CEGUI::Window* variableNameDisplay = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelectionDisplay.layout", _root->getName() + "Show" + uniqueName++);
+    variableNameDisplay->setPosition(CEGUI::UVector2({{0.0f, 0.0f}, {0.0f,_top}}));
+    variableNameDisplay->setHeight({0.0f, _height});
+    variableNameDisplay->setProperty("Text", name);
+    _root->addChildWindow(variableNameDisplay);
+}
 DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 :editorModes
 ({
     {{"position","dimensions"}, new DynamicEditor::DerivedModeFactory<BoxDragMode>()},
     {{"points"}, new DynamicEditor::DerivedModeFactory<PointGeometryMode>()},
+    {{"position", "radius"}, new DynamicEditor::DerivedModeFactory<CircleDragMode>()},
     {{"position"}, new DynamicEditor::DerivedModeFactory<ClickPlaceMode>()},
 }),
 editorVariables
@@ -128,7 +144,7 @@ editorVariables
     typeTab = getTabControl("Root/EntityTypes");
     entityName = CEGUI::System::getSingleton().getGUISheet()->getChildRecursive("Root/Entities/EntityName");
     //nameVariableController = new NameVariableController(entityName, &params);
-    nameVariableControllerFactory = new NameVariableControllerFactory(entityName);
+    nameVariableControllerFactory = new NameVariableControllerFactory("ThisIsAName", entityName);
     assert(entityName);
     instanceTab->getParent()->setEnabled(false);
     typeTab->getParent()->setEnabled(false);
@@ -274,13 +290,20 @@ MATCH_FOUND:
     Events::global().unregisterListener<FactoryGetEvent<Entity>>(&getList, true);
     std::vector<std::string> values = loader.getUndefinedLog();
     FactoryParameters* params = new FactoryParameters();
-    CEGUI::Window *page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
+    CEGUI::Window* page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
+    page = page->getChild(factoryName + "Properties");
+    float uiElementTop = 0.f;
     for (auto value = values.begin(); value != values.end(); value++)
     {
         auto variable = editorVariables.find(*value);
         if (variable != editorVariables.end())
         {
-            editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable(),factoryName));
+            editor->addTypeVariable(variable->second->createVariable(page, params->getTypeTable(),factoryName, &uiElementTop));
+        }
+        else
+        {
+            TextEditBoxFactory factory(*value, "");
+            editor->addTypeVariable(factory.createVariable(page, params->getTypeTable(),factoryName, &uiElementTop));
         }
     }
     page->setProperty("Text",factoryName);

@@ -10,7 +10,8 @@ template <typename Product>
 class ComponentObjectSelectionVariable : public DynamicEditorVariable
 {
     public:
-        ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName);
+        ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params,
+            const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName, float* _uiElementTop);
         virtual ~ComponentObjectSelectionVariable();
         void addPropertyBagVariable(CppFactoryLoader* _loader);
         bool listDisplay(const CEGUI::EventArgs& _args);
@@ -29,10 +30,15 @@ class ComponentObjectSelectionVariableFactory : public DynamicEditor::VariableFa
 {
     public:
         ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue);
-        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName){
-            return new ComponentObjectSelectionVariable<Product>(_rootWindow, itemList,_params,name,defaultValue,_factoryName);}
+        DynamicEditorVariable* createVariable(CEGUI::Window* _rootWindow, TypeTable* _params, const std::string& _factoryName, float* _uiElementTop)
+        {
+            float top = *_uiElementTop;
+            ComponentObjectSelectionVariable<Product>* ret = new ComponentObjectSelectionVariable<Product>(_rootWindow, itemList,_params,name,defaultValue,_factoryName, _uiElementTop);
+            float height = *_uiElementTop - top;
+            createNameDisplay(top, height, _rootWindow);
+            return ret;
+        }
     private:
-        std::string name;
         AbstractFactoryBase<Product>* defaultValue;
         ItemList<Product>* itemList;
 };
@@ -41,17 +47,21 @@ class ComponentObjectSelectionVariableFactory : public DynamicEditor::VariableFa
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
 #include <iostream>
 template <typename Product>
-ComponentObjectSelectionVariable<Product>::ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params, const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName)
-:DynamicEditorVariable(nullptr, _params, _factoryName) /// FIXME base class doesn't need these variables
+ComponentObjectSelectionVariable<Product>::ComponentObjectSelectionVariable(CEGUI::Window* _rootWindow, ItemList<Product>* _itemList, TypeTable* _params,
+    const std::string& _name, AbstractFactoryBase<Product>* _defaultValue, const std::string& _factoryName, float* _uiElementTop)
+:DynamicEditorVariable(_params, _name) /// FIXME base class doesn't need these variables
 {
     //ctor
     name = _name;
     value = _defaultValue;
     itemList = _itemList;
-    displayButton = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelectionDisplay.layout", factoryName + name);
-    displayButton->setProperty("Text","Select component");
+    displayButton = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelectionDisplay.layout", _factoryName + name);
+    displayButton->setPosition(CEGUI::UVector2({{0.5f, 0.0f}, {0.0f,*_uiElementTop}}));
+    *_uiElementTop += displayButton->getHeight().asAbsolute(0);
+    displayButton->setProperty("Text",value->getInstanceName());
     displayButton->subscribeEvent(CEGUI::Window::EventMouseClick, {&ComponentObjectSelectionVariable::listDisplay, this});
     _rootWindow->addChildWindow(displayButton);
+
 }
 
 template <typename Product>
@@ -86,8 +96,8 @@ void ComponentObjectSelectionVariable<Product>::setFactory(AbstractFactoryBase<P
 }
 template <typename Product>
 ComponentObjectSelectionVariableFactory<Product>::ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue)
+:VariableFactory(_name)
 {
-    name = _name;
     defaultValue = AbstractFactories::global().getFactory<Product>(_defaultValue);
     CEGUI::Window* widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelection.layout", name);
     widget->setText(name);

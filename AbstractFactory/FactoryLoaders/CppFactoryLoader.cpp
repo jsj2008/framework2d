@@ -25,3 +25,8 @@ void CppFactoryLoader::output(std::ostream* stream)
     mvalues.output(stream);
     *stream << std::endl << '}' << std::endl;
 }
+
+void CppFactoryLoader::addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value)
+{
+    mvalues.addDynamicValue(_type, _name, _value);
+}

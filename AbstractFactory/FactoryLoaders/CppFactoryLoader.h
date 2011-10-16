@@ -16,6 +16,7 @@ class CppFactoryLoader : public FactoryLoader
         void output(std::ostream* stream);
         void setName(const std::string& _name){name = _name;}
         void setType(const std::string& _type){type = _type;}
+        void addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value);
     protected:
     private:
 };

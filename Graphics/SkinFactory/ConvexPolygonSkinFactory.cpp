@@ -19,7 +19,7 @@ void ConvexPolygonSkinFactory::init(FactoryLoader* _loader, AbstractFactories* f
 
 Skin* ConvexPolygonSkinFactory::useFactory(FactoryParameters* parameters)
 {
-    std::vector<Vec2f> points = parameters->get<std::vector<Vec2f>>("points",{{0,0},{1,1},{-2,1}});
+    std::vector<Vec2f> points = parameters->getArray<Vec2f>("points",{{0,0},{1,1},{-2,1}});
     Skin* skin = new ConvexPolygonSkin(&points[0],points.size());
     skin->material = g_GraphicsManager.getMaterial(materialName.c_str());
     return skin;

@@ -1,8 +1,8 @@
 #include "BoxDragMode.h"
 #include <AbstractFactory/FactoryParameters.h>
 
-BoxDragMode::BoxDragMode(FactoryParameters* _params)
-:DynamicEditorMode(_params)
+BoxDragMode::BoxDragMode(CEGUI::Window* _window, FactoryParameters* _params)
+:DynamicEditorMode(_window, _params)
 {
     //ctor
 }
@@ -26,7 +26,7 @@ void BoxDragMode::mouseMove(Vec2i mouse)
 void BoxDragMode::buttonUp(Vec2i mouse, unsigned char button)
 {
     bottomright = mouse.ScreenToWorldSpace();
-    Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
+    Vec2f dimensions = bottomright - topLeft;
     if (dimensions.x > 1.0f && dimensions.y > 1.0f)
     {
         create();
@@ -36,7 +36,7 @@ void BoxDragMode::buttonUp(Vec2i mouse, unsigned char button)
 void BoxDragMode::finish()
 {
     Vec2f pos(topLeft + (bottomright - topLeft)*0.5);
-    Vec2f dimensions = bottomright - startPos.ScreenToWorldSpace();
+    Vec2f dimensions = bottomright - topLeft;
     typeTable->addValue("position",pos);
     typeTable->addValue("dimensions",dimensions);
 }

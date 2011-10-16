@@ -35,7 +35,7 @@ const Vec2f& Entity::getPosition()
     return mBody->GetPosition();
 }
 
-void Entity::registerDeathListener(EventsListener<EntityDeathEvent>* _listener)
+void Entity::registerDeathListener(InstanceEventListener<EntityDeathEvent>* _listener)
 {
-    deathHandler.registerListener(_listener, {eClearQueue|eBlockQueue});
+    deathHandler.registerListener(_listener);
 }
