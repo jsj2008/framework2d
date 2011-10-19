@@ -46,6 +46,7 @@ void Game::init()
 
 
     UndoStack::global().init();
+
     g_Timer.unPause();
 }
 Game::~Game()

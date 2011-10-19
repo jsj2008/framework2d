@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <Factories Version="1">
-    <levelGeometry />
     <levelGeometry>
         <Vec2fArray Name="points" Value="Array">
             <Member Value="-6.13333 5.13333 " />

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<Model Name="CubeModel">
+  <VertexSpec>
+    <VertexAttribute Name="Position" Array="Cube.xml/PositionIndices" />
+  </VertexSpec>
+</Model>
+<VertexArray Name="PositionArray" Type="Indices" Array="Cube.xml/PositionData">
+  <Element Index="0"/>
+  <Element Index="1"/>
+  <Element Index="2"/>
+
+  <Element Index="1"/>
+  <Element Index="3"/>
+  <Element Index="2"/>
+
+  <Element Index="1"/>
+  <Element Index="5"/>
+  <Element Index="3"/>
+
+  <Element Index="5"/>
+  <Element Index="7"/>
+  <Element Index="3"/>
+
+  <Element Index="4"/>
+  <Element Index="0"/>
+  <Element Index="2"/>
+
+  <Element Index="4"/>
+  <Element Index="2"/>
+  <Element Index="6"/>
+
+  <Element Index="5"/>
+  <Element Index="4"/>
+  <Element Index="6"/>
+
+  <Element Index="5"/>
+  <Element Index="6"/>
+  <Element Index="7"/>
+
+  <Element Index="4"/>
+  <Element Index="5"/>
+  <Element Index="0"/>
+
+  <Element Index="5"/>
+  <Element Index="1"/>
+  <Element Index="0"/>
+
+  <Element Index="3"/>
+  <Element Index="2"/>
+  <Element Index="6"/>
+
+  <Element Index="3"/>
+  <Element Index="6"/>
+  <Element Index="7"/>
+</VertexArray>
+<VertexArray Name="PositionData" Type="float3" >
+  <Element x="-1" y="1" z="-1"/>
+  <Element x="1" y="1" z="-1"/>
+  <Element x="-1" y="-1" z="-1"/>
+  <Element x="1" y="-1" z="-1"/>
+
+  <Element x="-1" y="1" z="1"/>
+  <Element x="1" y="1" z="1"/>
+  <Element x="-1" y="-1" z="1"/>
+  <Element x="1" y="-1" z="1"/>
+</VertexArray>

@@ -22,6 +22,7 @@
 					<Add option="-lGLU" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
+					<Add option="-ltinyxml" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -299,6 +300,8 @@
 		<Unit filename="GameModes/Editor/DynamicEditor/AllDynamicEditorVariableTypes.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/BoxDragMode.h" />
+		<Unit filename="GameModes/Editor/DynamicEditor/CircleDragMode.cpp" />
+		<Unit filename="GameModes/Editor/DynamicEditor/CircleDragMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.cpp" />
 		<Unit filename="GameModes/Editor/DynamicEditor/ClickPlaceMode.h" />
 		<Unit filename="GameModes/Editor/DynamicEditor/ComponenObjectSelectionVariable.cpp" />
@@ -390,6 +393,10 @@
 		<Unit filename="Graphics/GraphicalContentManager.h" />
 		<Unit filename="Graphics/GraphicsManager.cpp" />
 		<Unit filename="Graphics/GraphicsManager.h" />
+		<Unit filename="Graphics/Models/Model.cpp" />
+		<Unit filename="Graphics/Models/Model.h" />
+		<Unit filename="Graphics/Models/ModelLoader.cpp" />
+		<Unit filename="Graphics/Models/ModelLoader.h" />
 		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.cpp" />
 		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.h" />
 		<Unit filename="Graphics/SkinFactory/ConvexPolygonSkinFactory.cpp" />
@@ -512,6 +519,8 @@
 		<Unit filename="Types/MyVector.h" />
 		<Unit filename="Types/PropertyBag.cpp" />
 		<Unit filename="Types/PropertyBag.h" />
+		<Unit filename="Types/PropertyBagLoader.cpp" />
+		<Unit filename="Types/PropertyBagLoader.h" />
 		<Unit filename="Types/PropertyBagSerializer.cpp" />
 		<Unit filename="Types/PropertyBagSerializer.h" />
 		<Unit filename="Types/SerializationTypes.cpp" />
@@ -528,6 +537,10 @@
 		<Unit filename="Types/Vec2i.h" />
 		<Unit filename="Types/Vec3f.cpp" />
 		<Unit filename="Types/Vec3f.h" />
+		<Unit filename="Types/XmlFilePropertyBagSerializer.cpp" />
+		<Unit filename="Types/XmlFilePropertyBagSerializer.h" />
+		<Unit filename="Types/XmlPropertyBagLoader.cpp" />
+		<Unit filename="Types/XmlPropertyBagLoader.h" />
 		<Unit filename="UI/BarDisplay.cpp" />
 		<Unit filename="UI/BarDisplay.h" />
 		<Unit filename="UI/BeatDisplay.cpp" />
