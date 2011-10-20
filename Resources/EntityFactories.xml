@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<FactoryTypes>
+    <CrateFactory>HeavyCrate</CrateFactory>
+    <LevelGeometryFactory>levelGeometry</LevelGeometryFactory>
+</FactoryTypes>

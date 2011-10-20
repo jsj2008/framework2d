@@ -60,12 +60,11 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
     deadBodies.clear();
     editor->activeEditor = createEditor(editor->instanceTab, name, factoryTypeName, editor);
     editor->instanceTab->setSelectedTabAtIndex(editor->instanceTab->getTabCount()-1);
-    std::ofstream file ("Resources/EntityFactories.txt", std::ios::app);
     /*for (auto i = variables.begin(); i != variables.end(); i++)
     {
         (*i)->addPropertyBagVariable(&loader);
     }*/
-    loader.output(&file);
+    loader.output();
     return true;
 }
 CEGUI::TabControl* getTabControl(const std::string& _prefix)

@@ -1,4 +1,5 @@
 #include "CppFactoryLoader.h"
+#include <Types/XmlFilePropertyBagSerializer.h>
 
 CppFactoryLoader::CppFactoryLoader()
 {
@@ -19,11 +20,17 @@ bool CppFactoryLoader::next()
     return false;
 }
 
-void CppFactoryLoader::output(std::ostream* stream)
+void CppFactoryLoader::output()
 {
-    *stream << type << ' ' << name << std::endl << '{' << std::endl;
+    XmlFilePropertyBagSerializer file("Resources/EntityFactories.xml", true);
+    file.startFactoryDefinitions();
+    file.startFactoryDefinition(type, name);
+    mvalues.output(&file);
+    file.endFactoryDefinition();
+    file.endFactoryDefinitions();
+    /**stream << type << ' ' << name << std::endl << '{' << std::endl;
     mvalues.output(stream);
-    *stream << std::endl << '}' << std::endl;
+    *stream << std::endl << '}' << std::endl;*/
 }
 
 void CppFactoryLoader::addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value)

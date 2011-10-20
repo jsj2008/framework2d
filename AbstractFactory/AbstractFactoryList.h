@@ -152,7 +152,7 @@ void AbstractFactoryList<Product>::init(AbstractFactories* _factories)
     {
         i->second->baseInit(i->second->getName(), &emptyConfig, _factories);
     }
-    TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.txt").c_str());
+    TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.xml").c_str());
     while (loader.next())
     {
         assert(factories.find(loader.getName()) == factories.end());

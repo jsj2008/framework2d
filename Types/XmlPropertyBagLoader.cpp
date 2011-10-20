@@ -11,7 +11,6 @@ handle(&doc)
     {
         g_Log.error(std::string("Failed to load XML file ") + _filename);
     }
-    TiXmlHandle handle(&doc);
 }
 
 XmlPropertyBagLoader::~XmlPropertyBagLoader()

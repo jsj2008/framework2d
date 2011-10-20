@@ -13,7 +13,7 @@ class CppFactoryLoader : public FactoryLoader
         bool next();
         template <typename Type>
         void addValue(const std::string& _name, const Type& _value);
-        void output(std::ostream* stream);
+        void output();
         void setName(const std::string& _name){name = _name;}
         void setType(const std::string& _type){type = _type;}
         void addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value);

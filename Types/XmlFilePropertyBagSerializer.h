@@ -9,10 +9,10 @@
 class XmlFilePropertyBagSerializer : public PropertyBagSerializer
 {
     public:
-        XmlFilePropertyBagSerializer(const char* _filename);
+        XmlFilePropertyBagSerializer(const char* _filename, bool _append);
         virtual ~XmlFilePropertyBagSerializer();
-        void startFactories(unsigned int _size, const std::string& _productName);
         void setVersion(int _version);
+        void startFactories(unsigned int _size, const std::string& _productName);
             void startFactory(const std::string& _name);
                 void setNumberOfProperties(unsigned int _size);
                     void createProperty(const std::string& _typeIndex, const std::string& _name);
@@ -22,10 +22,16 @@ class XmlFilePropertyBagSerializer : public PropertyBagSerializer
                         void endArray();
             void endFactory();
         void endFactories();
+
+        void startFactoryDefinitions();
+        void startFactoryDefinition(const std::string& _type, const std::string& _name);
+        void endFactoryDefinition();
+        void endFactoryDefinitions();
     protected:
     private:
         TiXmlDocument output;
         std::stack<TiXmlElement*> elements;
+        const char* filename;
 };
 
 #endif // XMLFILEPROPERTYBAGSERIALIZER_H

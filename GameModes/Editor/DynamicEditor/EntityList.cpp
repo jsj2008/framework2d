@@ -61,13 +61,12 @@ void EntityList::loadLevel(const std::string& _listFileName)
         }
         while (loader.next());
     }
-    else g_Log.error("Level loading from xml failed");
     loader.endFactories();
 }
 
 void EntityList::saveLevel(const std::string& _listFileName)
 {
-    XmlFilePropertyBagSerializer xml("Level.xml");
+    XmlFilePropertyBagSerializer xml("Level.xml", false);
     PropertyBagSerializer* serializer = &xml;
 
     unsigned short size = listBox->getItemCount() + filteredDead.size();

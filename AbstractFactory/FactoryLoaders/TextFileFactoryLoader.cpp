@@ -1,10 +1,18 @@
 #include "TextFileFactoryLoader.h"
 
-TextFileFactoryLoader::TextFileFactoryLoader(const char* filename, bool logUndefined)
+TextFileFactoryLoader::TextFileFactoryLoader(const char* _filename, bool logUndefined)
 :FactoryLoader(logUndefined),
-file(filename)
+handle(nullptr)
 {
     //ctor
+    if (_filename == nullptr) return;
+    doc = TiXmlDocument(_filename);
+    if (!doc.LoadFile())
+    {
+        return;//g_Log.error(std::string("Failed to load XML file ") + _filename);
+    }
+    handle = &doc;
+    handle = handle.FirstChildElement("FactoryTypes").FirstChild();
 }
 
 TextFileFactoryLoader::~TextFileFactoryLoader()
@@ -14,41 +22,34 @@ TextFileFactoryLoader::~TextFileFactoryLoader()
 
 bool TextFileFactoryLoader::isValid()
 {
-    return file.good();
+    return handle.Element()->NextSiblingElement();
 }
 bool TextFileFactoryLoader::next()
 {
-    file >> type;
-    file >> name;
-    std::string token;
-    file >> token;
-    if (token[0] != '{')
+    TiXmlElement* element = handle.Element();
+    if (element == nullptr) return false;
+    type = element->Value();
+    name = element->GetText();
+
+    for (TiXmlElement* property = element->FirstChildElement(); property != nullptr; property = property->NextSiblingElement())
     {
-        if (!file.good()) return false;
-        syntaxError("Syntax error, '{' expected, " + token + " read instead");
-    }
-    while (file.good())
-    {
-        file >> token;
-        if (token[0] == '}')
+        std::string type = property->Value();
+        const char* name = property->Attribute("Name");
+        const char* value = property->Attribute("Value");
+        if (type.size() > 5 && type.substr(type.size()-5, type.size()) == "Array")
         {
-            return true;
+            std::vector<std::string> values;
+            for (TiXmlElement* arrayValue = property->FirstChildElement("Member"); arrayValue != nullptr; arrayValue = arrayValue->NextSiblingElement("Member"))
+            {
+                values.push_back(arrayValue->Attribute("Value"));
+            }
+            mvalues.addDynamicArrayValue(type.substr(0, type.size()-5), name, values.size(), &values[0]);
         }
         else
         {
-            std::string variableName;
-            file >> variableName;
-            /*if (types.find(token) == types.end())
-            {
-                syntaxError("Type " + token + " not defined");
-            }
-            if (values.find(variableName) != values.end())
-            {
-                warning("Variable " + variableName + " already defined, redefining");
-            }
-            values[variableName] = types[token]->instance(&file);*/
-            mvalues.addDynamicValue(token,variableName,&file);
+            mvalues.addDynamicValue(type, name, value);
         }
     }
-    return false;
+    handle = element->NextSiblingElement();
+    return true;
 }

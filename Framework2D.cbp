@@ -494,8 +494,6 @@
 		<Unit filename="SharedContent/ContentManager.h" />
 		<Unit filename="SharedContent/SharedContent.cpp" />
 		<Unit filename="SharedContent/SharedContent.h" />
-		<Unit filename="SharedContent/WeaponContent.cpp" />
-		<Unit filename="SharedContent/WeaponContent.h" />
 		<Unit filename="Sound/NullSoundManager.cpp" />
 		<Unit filename="Sound/NullSoundManager.h" />
 		<Unit filename="Sound/SDLSoundManager.cpp" />

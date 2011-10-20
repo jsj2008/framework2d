@@ -2,7 +2,7 @@
 #ifndef TEXTFILEFACTORYLOADER_H
 #define TEXTFILEFACTORYLOADER_H
 
-
+#include <tinyxml.h>
 
 class TextFileFactoryLoader : public FactoryLoader
 {
@@ -14,7 +14,8 @@ class TextFileFactoryLoader : public FactoryLoader
         std::vector<std::string> getUndefinedLog(){return mvalues.getUndefinedLog();}
     protected:
     private:
-        std::ifstream file;
+        TiXmlDocument doc;
+        TiXmlHandle handle;
 };
 
 #endif // TEXTFILEFACTORYLOADER_H
