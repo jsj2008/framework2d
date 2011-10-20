@@ -1,11 +1,16 @@
 #include "Weapon.h"
 #include <Timer.h>
+#include <Entities/Weapons/FiringMechanism.h>
+#include <Entities/Weapons/WeaponAction.h>
 
-Weapon::Weapon(const ContentHandler<WeaponContent>& _content)
+Weapon::Weapon(const Weapon::ImmutableData& _data, FactoryParameters* _parameters)
+:data(_data)
 {
     //ctor
-    content = _content;
-    lastFireFrame = 0;
+    AutoSelfFactory<Weapon, Weapon>::staticInstantiate();
+
+    mechanism = data.mechanismFactory->use(_parameters);
+    action = data.actionFactory->use(_parameters);
 }
 
 Weapon::~Weapon()
@@ -13,13 +18,17 @@ Weapon::~Weapon()
     //dtor
 }
 
-void Weapon::fire(const Vec2f& source, const Vec2f& direction)
+void Weapon::ImmutableData::init(FactoryLoader* _loader, AbstractFactories * _factories)
 {
-    unsigned int frame = g_Timer.getFrame();
-    unsigned int frames = frame - lastFireFrame;
-    if (frames > content->getReloadFrames())
+    mechanismFactory = _loader->getFactory<FiringMechanism>("firingMechanism", "SemiAutoFireFactory");
+    actionFactory = _loader->getFactory<WeaponAction>("actionFactory", "FireProjectileActionFactory");
+}
+
+void Weapon::fireEnd(const Vec2f& source, const Vec2f& position)
+{
+    if (mechanism->fireEnd(source, position))
     {
-        lastFireFrame = frame;
-        content->fire(source, direction);
+        action->fire(source, position); /// FIXME could insert a control mechanism thing here
     }
 }
+

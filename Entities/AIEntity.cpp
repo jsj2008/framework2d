@@ -25,20 +25,17 @@ AIEntity::~AIEntity()
     //dtor
     delete mBrain;
 }
-void AIEntity::fireAt(Vec2f targetPosition)
+void AIEntity::weaponBegin(Vec2f targetPosition)
 {
-    Vec2f direction = targetPosition - mBody->GetPosition();
-    direction /= direction.Length();
-    fire(direction);
+
 }
-void AIEntity::fire(Vec2f targetDirection)
+void AIEntity::weaponMove(Vec2f targetPosition)
 {
-    /*ProjectileDef def;
-    Vec2f position = mBody->GetPosition();
-    position += targetDirection*3;
-    def.set("Bullet",1.0f,position,targetDirection*30.0f);
-    g_FactoryList.useFactory(def,eProjectileFactory);*/
-    weapon->fire(mBody->GetPosition(),targetDirection);
+
+}
+void AIEntity::weaponEnd(Vec2f targetPosition)
+{
+    weapon->fireEnd(mBody->GetPosition(),targetPosition);
 }
 void AIEntity::damage()
 {

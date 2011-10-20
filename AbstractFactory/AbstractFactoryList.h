@@ -111,7 +111,11 @@ void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, 
 template <typename Product>
 AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference _factory)
 {
-    auto factory = factories.find(_factory)->second;
+    auto factory = factories[_factory];
+    if (factory == nullptr)
+    {
+        g_Log.error("No such factory: " + _factory);
+    }
     FactoryGetEvent<Product> event(factory);
     Events::global().triggerEvent(&event);
     return factory;

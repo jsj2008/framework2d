@@ -30,7 +30,7 @@ ProjectileFactory::~ProjectileFactory()
 Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
 {
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
-    bodyDef.linearVelocity = parameters->get<Vec2f>("v",Vec2f(1,0));
+    bodyDef.linearVelocity = parameters->get<Vec2f>("velocity",Vec2f(1,0));
     Skin* skin = skinFactory->use(parameters);
 
     Entity* entity = new Projectile(explosionFactory, skin);

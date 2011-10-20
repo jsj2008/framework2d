@@ -86,7 +86,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
                 DynamicEditorMode* createMode(CEGUI::Window* _window, FactoryParameters* _params);
         };
     public: /// FIXME
-        class VariableFactory
+        class VariableFactory /// Have a little icon for what goes next to it
         {
             public:
                 VariableFactory(const std::string& _name){name = _name;}

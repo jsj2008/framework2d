@@ -44,6 +44,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
         AbstractFactory();
         ~AbstractFactory();
         void baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories);
+        static void staticInstantiate(){registrar.check();}
     private:
         Product* privateUseFactory(FactoryParameters* parameters);
         const static Registrar<Product, DerivedType> registrar;

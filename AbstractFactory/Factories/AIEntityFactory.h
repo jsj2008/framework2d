@@ -9,6 +9,7 @@ class b2Body;
 class Brain;
 class Skin;
 class CharacterController;
+class Weapon;
 
 class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
 {
@@ -23,7 +24,7 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
         }
     protected:
     private:
-        std::string weapon;
+        AbstractFactoryBase<Weapon>* weaponFactory;
         AbstractFactoryBase<b2Body>* bodyFactory;
         AbstractFactoryBase<Brain>* brainFactory;
         AbstractFactoryBase<Skin>* skinFactory;

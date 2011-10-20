@@ -13,7 +13,6 @@
 #include <AI/AIManager.h>
 #include <AI/CharacterController.h>
 #include <SharedContent/ContentManager.h>
-#include <SharedContent/WeaponContent.h>
 #include <AbstractFactory/AbstractFactories.h>
 
 #include <AbstractFactory/Factories/BubbleFactory.h>
@@ -35,8 +34,6 @@ void Game::init()
     g_Timer.pause();
 
     StaticSoundManager::init();
-
-    g_ContentManager.addSharedContent(new WeaponContent("pistol"));
 
     EditorMode* typedMode = new EditorMode(new ShooterGame());
     gameMode = typedMode;

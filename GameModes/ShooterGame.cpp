@@ -33,10 +33,10 @@ ShooterGame::~ShooterGame()
     delete activeLevel;
 }
 
-void ShooterGame::buttonUp(Vec2i mouse, unsigned char button)
+void ShooterGame::buttonUp(Vec2i mouse, unsigned char button) /// FIXME this needs to be done in a player controller grabber
 {
     Vec2f position = mouse.ScreenToWorldSpace();
-    playerBrain->mEntity->fireAt(position);
+    playerBrain->mEntity->weaponEnd(position);
 }
 
 void ShooterGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)

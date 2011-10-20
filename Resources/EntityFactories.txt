@@ -21,3 +21,7 @@ SkinFactory skin StaticSkinFactory
 CrateFactory HeavyCrate
 {
 }
+ProjectileFactory Grenade
+{
+
+}

@@ -21,7 +21,7 @@ AIEntityFactory::AIEntityFactory()
 void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     //ctor
-    weapon = loader->get<std::string>("weapon","pistol");
+    weaponFactory = loader->getFactory<Weapon>("weapon","WeaponFactory");
 
     bodyFactory = loader->getFactory<b2Body>("body" ,"CharacterBodyFactory");
     skinFactory = loader->getFactory<Skin>("material", "StaticSkinFactory");
@@ -40,8 +40,7 @@ Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
 {
     //damageSprayFactory = AbstractFactories::global().getFactory<Entity>("ParticleFactory");
     Brain* brain = brainFactory->use(parameters);
-    AIEntity* entity = new AIEntity(brain,
-        new Weapon(g_ContentManager.getContent<WeaponContent>(weapon)),damageSprayFactory,skinFactory->use(parameters));
+    AIEntity* entity = new AIEntity(brain, weaponFactory->use(parameters) ,damageSprayFactory,skinFactory->use(parameters));
 
     parameters->add<void*>("userData",entity);
 

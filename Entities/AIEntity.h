@@ -20,7 +20,9 @@ class AIEntity : public Entity
         void walkRight();
         void stopWalking();
         void damage();
-        void fireAt(Vec2f targetPosition);
+        void weaponBegin(Vec2f targetPosition);
+        void weaponMove(Vec2f targetPosition);
+        void weaponEnd(Vec2f targetPosition);
         void setController(CharacterController* _controller){controller = _controller;}
     protected:
     private:

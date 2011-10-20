@@ -113,6 +113,7 @@
 			<Add option="-Wmissing-include-dirs" />
 			<Add option="-Wswitch-enum" />
 			<Add option="-std=c++0x" />
+			<Add option="-Wfatal-errors" />
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
 			<Add directory="." />
@@ -171,6 +172,8 @@
 		<Unit filename="AbstractFactory/AbstractFactory.h" />
 		<Unit filename="AbstractFactory/AbstractFactoryList.cpp" />
 		<Unit filename="AbstractFactory/AbstractFactoryList.h" />
+		<Unit filename="AbstractFactory/AutoSelfFactory.cpp" />
+		<Unit filename="AbstractFactory/AutoSelfFactory.h" />
 		<Unit filename="AbstractFactory/EvaluateTypeName" />
 		<Unit filename="AbstractFactory/EvaluateTypeName.h" />
 		<Unit filename="AbstractFactory/Factories/AIEntityFactory.cpp" />
@@ -233,8 +236,16 @@
 		<Unit filename="Entities/Tile.h" />
 		<Unit filename="Entities/TileMap.cpp" />
 		<Unit filename="Entities/TileMap.h" />
+		<Unit filename="Entities/Weapons/FireProjectileAction.cpp" />
+		<Unit filename="Entities/Weapons/FireProjectileAction.h" />
+		<Unit filename="Entities/Weapons/FiringMechanism.cpp" />
+		<Unit filename="Entities/Weapons/FiringMechanism.h" />
+		<Unit filename="Entities/Weapons/SemiAutoFire.cpp" />
+		<Unit filename="Entities/Weapons/SemiAutoFire.h" />
 		<Unit filename="Entities/Weapons/Weapon.cpp" />
 		<Unit filename="Entities/Weapons/Weapon.h" />
+		<Unit filename="Entities/Weapons/WeaponAction.cpp" />
+		<Unit filename="Entities/Weapons/WeaponAction.h" />
 		<Unit filename="Events/Event.cpp" />
 		<Unit filename="Events/Event.h" />
 		<Unit filename="Events/EventHandler.cpp" />
@@ -397,6 +408,8 @@
 		<Unit filename="Graphics/Models/Model.h" />
 		<Unit filename="Graphics/Models/ModelLoader.cpp" />
 		<Unit filename="Graphics/Models/ModelLoader.h" />
+		<Unit filename="Graphics/Models/VertexArray.cpp" />
+		<Unit filename="Graphics/Models/VertexArray.h" />
 		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.cpp" />
 		<Unit filename="Graphics/SkinFactory/BubbleSkinFactory.h" />
 		<Unit filename="Graphics/SkinFactory/ConvexPolygonSkinFactory.cpp" />
