@@ -32,6 +32,7 @@ void Log::error(const std::string& _message)
 }
 void Log::message(const std::string& _message)
 {
+    std::cout << "Message: " + _message << std::endl;
     logger->outputText("Message: " + _message, SDL_GetTicks(), 0xFFFFFFFF);
 }
 

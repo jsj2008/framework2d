@@ -16,6 +16,7 @@ extern class GraphicsManager
     public:
         GraphicsManager();
         virtual ~GraphicsManager();
+        void init();
         void beginScene();
         void endScene();
         void resize(Vec2i newResolution);

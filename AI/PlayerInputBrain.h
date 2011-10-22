@@ -4,6 +4,7 @@
 #include "Brain.h"
 #include <Input/EventListener.h>
 class PathFollower;
+class NetworkedPlayerControl;
 
 class PlayerInputBrain : public Brain, public EventListener
 {
@@ -12,11 +13,11 @@ class PlayerInputBrain : public Brain, public EventListener
         virtual ~PlayerInputBrain();
         void trigger(InputActions actions);
         void activate();
-        void resetInput();
         void update();
     protected:
     private:
         PathFollower* follower;
+        NetworkedPlayerControl* networkControl;
 };
 
 #endif // PLAYERINPUTBRAIN_H

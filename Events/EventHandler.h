@@ -5,6 +5,7 @@
 template <typename DerivedEvent>
 class EventsListener;
 
+#ifndef SINGLETONEVENTHANDLER_H
 enum EventListenerPropertiesEnum
 {
     eReadQueue = 1 << 0,
@@ -12,6 +13,7 @@ enum EventListenerPropertiesEnum
     eBlockQueue = 1 << 2,
     eListenerPropertiesMax
 };
+
 struct EventListenerProperties
 {
     EventListenerProperties(unsigned char _flags = eBlockQueue)
@@ -24,6 +26,7 @@ struct EventListenerProperties
         return flags & _flags;
     }
 };
+#endif
 
 template <typename DerivedEvent>
 class EventHandler

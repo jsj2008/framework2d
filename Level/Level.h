@@ -23,7 +23,7 @@ class Level
         void renderBackLayers();
         void removeBody(Entity* body, std::pair<std::string,FactoryParameters>* _saveConstruction = nullptr);
         void removeJoint(b2Joint* joint);
-        bool update();
+        void tick();
         PhysicsManager* getWorld(){return world;}
         void loadLevel();
         EntityList* getEntityList(){return entityList;}

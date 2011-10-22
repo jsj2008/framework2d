@@ -39,8 +39,6 @@ void PhysicsManager::init()
     mWorld->SetDebugDraw(debugDraw);
 #endif
     mWorld->SetContactListener(contactListener);
-    stepsTaken = 0;
-    startTime = g_Timer.getTicks();
 }
 void PhysicsManager::clear()
 {
@@ -84,27 +82,15 @@ void PhysicsManager::deleteJoint(b2Joint* joint)
 {
     mWorld->DestroyJoint(joint);
 }
-bool PhysicsManager::update()
+void PhysicsManager::tick()
 {
-    unsigned int currentTime = g_Timer.getTicks();
-    unsigned int totalTimePassed = currentTime - startTime;
-    if (currentTime < startTime) /// FIXME
-        totalTimePassed = 0;
-    unsigned int stepsToTake = totalTimePassed*60.0f/1000.0f;
-    bool ret = false;
-    while (stepsToTake > stepsTaken)
-    {
-        float timestep = 1.0f / 60.0f;
-        int32 velocityIterations = 8;
-        int32 positionIterations = 6;
-        mWorld->Step(timestep, velocityIterations, positionIterations);
-        contactListener->process();
-        updateEntities();
-        stepsTaken++;
-        ret = true;
-        g_Timer.tick();
-    }
-    return ret;
+    float timeStep = 1.0f / 60.0f;
+    int32 velocityIterations = 8;
+    int32 positionIterations = 6;
+    mWorld->Step(timeStep, velocityIterations, positionIterations);
+    contactListener->process();
+    updateEntities();
+    g_Timer.tick();
 }
 void PhysicsManager::updateEntities()
 {

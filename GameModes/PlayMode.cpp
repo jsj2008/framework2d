@@ -9,6 +9,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AI/AIManager.h>
+#include <Networking/Client/SinglePlayerGameServer.h>
 #include <SDL/SDL.h>
 
 PlayMode::PlayMode()
@@ -18,12 +19,15 @@ PlayMode::PlayMode()
     mCamera = nullptr;
     playerBrain = nullptr;
     Events::global().registerListener(this, eBlockQueue);
+    //server = new SinglePlayerGameServer;
+    server = GameServerInterface::singleton();
 }
 
 PlayMode::~PlayMode()
 {
     //dtor
     Events::global().unregisterListener(this, true);
+    //delete server;
 }
 
 void PlayMode::start(unsigned char button)
@@ -56,10 +60,11 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
 bool PlayMode::update()
 {
     bool running = true;
-    if (activeLevel->update())
+    if (server->update())
     {
-        running = g_InputManager.processInput();
+        activeLevel->tick();
     }
+    running = g_InputManager.processInput();
     g_GraphicsManager.beginScene();
     g_InputManager.render();
     activeLevel->render();

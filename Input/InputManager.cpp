@@ -12,7 +12,7 @@ InputManager::InputManager()
     //ctor
     activeEvent = nullptr;
     inputGrabber = nullptr;
-    controls = new ControlStruct[eInputActionsMax]{'w','a','s','d',SDLK_KP_PLUS,SDLK_KP_MINUS};
+    controls = new ControlStruct[eInputActionsMax]{'w','a','s','d',SDLK_KP_PLUS,SDLK_KP_MINUS,';'};
     currentlyActive = false;
 }
 
@@ -184,7 +184,7 @@ bool InputManager::processInput()
     {
         if (controls[i].event != nullptr)
         {
-            controls[i].event->resetInput();
+            controls[i].event->trigger(eResetInput);
         }
     }
     for (int i = 0; i < eInputActionsMax; i++)

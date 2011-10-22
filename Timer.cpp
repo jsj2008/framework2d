@@ -1,8 +1,11 @@
 #include "Timer.h"
-#include <SDL/SDL_timer.h>
+#include <SDL/SDL.h>
+#include <cassert>
 Timer g_Timer;
 void Timer::init()
 {
+    int result = SDL_Init(SDL_INIT_TIMER);
+        assert(result == 0);
     startTime = SDL_GetTicks();
     currentlyPaused = false;
     frame = 0;

@@ -13,6 +13,7 @@ enum InputActions
     eRight,
     ePlus, /// Need to make these the scroll wheel
     eMinus,
+    eResetInput,
     eInputActionsMax
 };
 

@@ -20,7 +20,7 @@ class LevelManager
         void removeJoint(b2Joint* joint){level->removeJoint(joint);}
         Level* loadLevel(const char* name){level = new Level(name); return level;}
         void saveLevel(const char* name){delete level;}
-        bool update(){return level->update();}
+        void tick(){level->tick();}
     protected:
     private:
         Level* level;

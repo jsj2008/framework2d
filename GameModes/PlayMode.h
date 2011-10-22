@@ -10,6 +10,7 @@
 #include <AI/BrainFactory/PlayerInputBrainFactory.h>
 class b2Body;
 class PlayerInputBrain;
+class GameServerInterface;
 
 class PlayMode : public ClickDragEvent, public GameMode, public EventsListener<FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>>
 {
@@ -22,6 +23,7 @@ class PlayMode : public ClickDragEvent, public GameMode, public EventsListener<F
         bool activate(const CEGUI::EventArgs&);
         bool update();
         Level* getLevel(){return activeLevel;}
+        GameServerInterface* server;
     protected:
         Bubble::BubbleType type;
         PlayerInputBrain* playerBrain;

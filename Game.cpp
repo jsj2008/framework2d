@@ -33,6 +33,7 @@ void Game::init()
     g_Timer.init();
     g_Timer.pause();
 
+    g_GraphicsManager.init();
     StaticSoundManager::init();
 
     EditorMode* typedMode = new EditorMode(new ShooterGame());

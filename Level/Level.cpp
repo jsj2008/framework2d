@@ -175,9 +175,9 @@ unsigned int getJointDefSize(b2JointType type)
     }
     return 0;
 }
-bool Level::update()
+void Level::tick()
 {
-    return world->update();
+    return world->tick();
 }
 #include <GL/gl.h>
 void Level::render()

@@ -40,6 +40,7 @@ class PhysicsManager
         void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
         int getNextPositiveCollisionGroup(){return usedPositiveCollisionGroups++;}
         int getNextNegativeCollisionGroup(){return usedNegativeCollisionGroups--;}
+        void tick();
     protected:
     private:
         int usedPositiveCollisionGroups;
@@ -50,8 +51,6 @@ class PhysicsManager
         ContactListener* contactListener;
         RenderCallback* mRenderCallback;
         DebugDraw* debugDraw;
-        unsigned int startTime;
-        unsigned int stepsTaken;
 };
 
 #endif // PHYSICSMANAGER_H

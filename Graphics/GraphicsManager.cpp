@@ -17,8 +17,11 @@ bool function(const CEGUI::EventArgs& e)
 }
 GraphicsManager::GraphicsManager()
 {
+}
+void GraphicsManager::init()
+{
     //ctor
-    int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO);
+    int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
         assert(result == 0);
     SDL_EnableUNICODE(1);
     SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL,0);
