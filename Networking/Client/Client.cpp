@@ -113,17 +113,28 @@ void Client::update(const FrameUpdate& _sendingUpdate)
 		int size = recv(transmissionSocket, buffer, 256, 0);
 		if (size > 0)
 		{
-			DataStream stream(buffer, size);
-			unsigned short messageId = stream.decode<unsigned short>();
-			unsigned short clientId = stream.decode<unsigned short>();
-			if (messageId < serverMessageFactories.size())
-			{
-                auto factory = serverMessageFactories[messageId];
-                ServerToClientMessage* message = factory->create(&stream);
-                assert(message->getServerToClientMessageId() == messageId);
-                message->clientProcess(this, clientId);
-			//readerList->process(&stream);
-			}
+            DataStream stream(buffer, size);
+		    while (true)
+		    {
+                unsigned short messageId;
+                try
+                {
+                    messageId = stream.decode<unsigned short>();
+                }
+                catch (int i)
+                {
+                    break;
+                }
+                unsigned short clientId = stream.decode<unsigned short>();
+                if (messageId < serverMessageFactories.size())
+                {
+                    auto factory = serverMessageFactories[messageId];
+                    ServerToClientMessage* message = factory->create(&stream);
+                    assert(message->getServerToClientMessageId() == messageId);
+                    message->clientProcess(this, clientId);
+                //readerList->process(&stream);
+                }
+		    }
 		}
 		else break;
 	}

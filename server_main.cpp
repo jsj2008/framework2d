@@ -5,7 +5,7 @@ int main(int argv, char* argc[])
     g_Timer.init();
     g_Timer.pause();
 
-    Server server(8000);
+    Server server(8001);
     unsigned int startTime = g_Timer.getTicks();
     unsigned int stepsTaken = 0;
     while (true)

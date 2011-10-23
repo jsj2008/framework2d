@@ -3,7 +3,7 @@
 #include <Networking/Client/NetworkedPlayerControl.h>
 #include <Log/Log.h>
 RemoteGameServer::RemoteGameServer()
-:client("localhost", 8000)
+:client("localhost", 8001)
 {
     //ctor
     SingletonEventHandler<ServerMessageEvent<ClientInitialisationMessage>>::singleton().registerListener(this, {eBlockQueue | eClearQueue});
