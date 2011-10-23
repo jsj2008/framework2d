@@ -18,9 +18,11 @@ class Server
         void multicast(DataStream* _stream);
         void multicast(ServerEntity* _exception, DataStream* _stream);
         void addUpdates(FrameUpdate* _update);
+        void bringUpToSpeed(ServerEntity* _client);
     protected:
     private:
         std::vector<ServerEntity*> clients;
+        std::stack<ServerEntity*> newlyInitedClients;
         std::stack<unsigned int> unusedClients;
         std::vector<ClientToServerMessageFactory*> clientMessageFactories;
         template <typename Message>

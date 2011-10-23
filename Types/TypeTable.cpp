@@ -60,6 +60,7 @@ TypeTable::TypeTable(bool _logUndefined)
 {
     logUndefined = _logUndefined;
     registerType<int>("int");
+    registerType<unsigned short>("ushort");
     registerType<float>("float");
     registerType<std::string>("string"); /// FIXME this a static function call and shouldn't be called every time
     registerType<Vec2f>("Vec2f");

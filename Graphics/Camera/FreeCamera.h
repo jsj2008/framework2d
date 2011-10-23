@@ -13,7 +13,7 @@ class FreeCamera : public Camera, public EventListener, public EventsListener<Sh
         virtual ~FreeCamera();
         void updateTransform(Vec2i resolution);
         void resetInput();
-        void trigger(InputActions actions);
+        void trigger(InputActions actions, bool _pressed);
         void activate();
         bool trigger(ShowEntityEvent* _event);
     protected:

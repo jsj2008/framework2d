@@ -47,7 +47,6 @@ void DataStream::resetIter()
 
 void DataStream::transmit(SOCKET _socket)
 {
-	int length = contentLength-iter;
-	send(_socket, bufferStart + iter, length, 0);
-	iter = contentLength;
+	int length = contentLength;
+	send(_socket, bufferStart, length, 0);
 }

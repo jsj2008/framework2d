@@ -9,9 +9,9 @@ class NetworkedPlayerControl;
 class PlayerInputBrain : public Brain, public EventListener
 {
     public:
-        PlayerInputBrain();
+        PlayerInputBrain(unsigned short _entityKey);
         virtual ~PlayerInputBrain();
-        void trigger(InputActions actions);
+        void trigger(InputActions actions, bool _pressed);
         void activate();
         void update();
     protected:

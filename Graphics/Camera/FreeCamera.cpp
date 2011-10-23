@@ -58,7 +58,7 @@ bool FreeCamera::trigger(ShowEntityEvent* _event) /// FIXME the maths here is wr
     //delete this;
     return true;
 }
-void FreeCamera::trigger(InputActions action)
+void FreeCamera::trigger(InputActions action, bool _pressed)
 {
     switch (action)
     {

@@ -75,7 +75,7 @@ Client::Client(const char* _serverIp, int _serverPort)
 
 	printf("Connected to server\n");
 
-	ClientInitialisationMessage message("Alasdair", {0,0});
+	ClientInitialisationMessage message("Alasdair", {0,0}, 0);
 	ClientToServerMessage* messagePtr = &message;
 	send(messagePtr);
 

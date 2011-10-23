@@ -3,7 +3,7 @@
 #include <Networking/Client/NetworkedPlayerControl.h>
 #include <Log/Log.h>
 RemoteGameServer::RemoteGameServer()
-:client("localhost", 8001)
+:client("localhost", 8000)
 {
     //ctor
     SingletonEventHandler<ServerMessageEvent<ClientInitialisationMessage>>::singleton().registerListener(this, {eBlockQueue | eClearQueue});
@@ -30,7 +30,7 @@ bool RemoteGameServer::update()
         for (unsigned short i = 0; i != receievedUpdate.getActionsSize(); i++)
         {
             FrameUpdate::Action action = receievedUpdate.getAction(i);
-            playerControls[action.entityKey]->actionFromServer(action.action);
+            playerControls[action.entityKey]->actionFromServer(action.action, action.pressed);
         }
         receievedUpdate.clear();
         return true;
@@ -46,7 +46,10 @@ void RemoteGameServer::registerPlayer(NetworkedPlayerControl* _control, unsigned
     }
     assert(playerControls[_entityKey] == nullptr);
     playerControls[_entityKey] = _control;
-    thisClientEntityKey = _entityKey; /// FIXME don't do this every time
+    if (thisClientEntityKey == 0)
+    {
+        thisClientEntityKey = _entityKey;
+    }
 }
 void RemoteGameServer::unregisterPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey)
 {
@@ -54,15 +57,17 @@ void RemoteGameServer::unregisterPlayer(NetworkedPlayerControl* _control, unsign
     playerControls[_entityKey] = nullptr;
 }
 
-void RemoteGameServer::trigger(InputActions action)
+void RemoteGameServer::trigger(InputActions action, bool _pressed)
 {
-    sendingUpdate.addAction({thisClientEntityKey, action});
+    if (thisClientEntityKey != 0)
+        sendingUpdate.addAction({thisClientEntityKey, action, _pressed});
 }
 
 bool RemoteGameServer::trigger(ServerMessageEvent<ClientInitialisationMessage>* event)
 {
     FactoryParameters params;
     params.add<std::string>("name", "player");
+    params.add<unsigned short>("entityKey", event->getMessage()->getEntityKey());
     /// Need to set PlayMode's camera
     AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params);
     return true;

@@ -487,6 +487,10 @@
 		<Unit filename="Networking/Client/NetworkedPlayerControl.h" />
 		<Unit filename="Networking/Client/RemoteGameServer.cpp" />
 		<Unit filename="Networking/Client/RemoteGameServer.h" />
+		<Unit filename="Networking/Client/ServerMessageEvent.cpp" />
+		<Unit filename="Networking/Client/ServerMessageEvent.h" />
+		<Unit filename="Networking/Client/ServerToClientMessageFactory.cpp" />
+		<Unit filename="Networking/Client/ServerToClientMessageFactory.h" />
 		<Unit filename="Networking/Client/SinglePlayerGameServer.cpp" />
 		<Unit filename="Networking/Client/SinglePlayerGameServer.h" />
 		<Unit filename="Networking/ClientToServer/ClientInitialisationMessage.cpp" />
@@ -495,6 +499,10 @@
 		<Unit filename="Networking/ClientToServerMessage.h" />
 		<Unit filename="Networking/DataStream.cpp" />
 		<Unit filename="Networking/DataStream.h" />
+		<Unit filename="Networking/FrameUpdate.cpp" />
+		<Unit filename="Networking/FrameUpdate.h" />
+		<Unit filename="Networking/MultiCastMessage.cpp" />
+		<Unit filename="Networking/MultiCastMessage.h" />
 		<Unit filename="Networking/NetworkMessage.cpp" />
 		<Unit filename="Networking/NetworkMessage.h" />
 		<Unit filename="Networking/Server/ClientToServerMessageFactory.cpp" />
@@ -503,6 +511,8 @@
 		<Unit filename="Networking/Server/Server.h" />
 		<Unit filename="Networking/Server/ServerEntity.cpp" />
 		<Unit filename="Networking/Server/ServerEntity.h" />
+		<Unit filename="Networking/ServerToClient/FrameUpdateMessage.cpp" />
+		<Unit filename="Networking/ServerToClient/FrameUpdateMessage.h" />
 		<Unit filename="Networking/ServerToClientMessage.cpp" />
 		<Unit filename="Networking/ServerToClientMessage.h" />
 		<Unit filename="Physics/CollisionHandlers/AIEntityProjectileCollisionHandler.cpp" />

@@ -5,17 +5,16 @@
 #include <AI/Pathfinding/PathFollower.h>
 #include <Networking/Client/NetworkedPlayerControl.h>
 #include <AI/AIManager.h>
-PlayerInputBrain::PlayerInputBrain()
+PlayerInputBrain::PlayerInputBrain(unsigned short _entityKey)
 :EventListener()
 {
     //ctor
     follower = nullptr;
-    networkControl = new NetworkedPlayerControl(this, 0);
+    networkControl = new NetworkedPlayerControl(this, _entityKey);
     networkControl->registerEvent(eUp);
     networkControl->registerEvent(eLeft);
     networkControl->registerEvent(eDown);
     networkControl->registerEvent(eRight);
-    networkControl->registerEvent(eResetInput);
 }
 
 PlayerInputBrain::~PlayerInputBrain()
@@ -40,40 +39,47 @@ void PlayerInputBrain::update()
 {
     g_AIManager.setPlayerNode(mEntity->getPosition());
 }
-void PlayerInputBrain::trigger(InputActions action)
+void PlayerInputBrain::trigger(InputActions action, bool _pressed)
 {
-    switch (action)
+    if (_pressed)
     {
-        case eUp:
+        switch (action)
         {
-            mEntity->jump();
-            return;
+            case eUp:
+            {
+                mEntity->jump();
+                return;
+            }
+            case eDown:
+            {
+                return;
+            }
+            case eRight:
+            {
+                mEntity->walkRight();
+                return;
+            }
+            case eLeft:
+            {
+                mEntity->walkLeft();
+                return;
+            }
+            /*case eResetInput:
+            {
+                mEntity->stopWalking();
+                return;
+            }*/
+            case ePlus:
+            case eMinus:
+            case eInputActionsMax:
+            {
+                break;
+            }
         }
-        case eDown:
-        {
-            return;
-        }
-        case eRight:
-        {
-            mEntity->walkRight();
-            return;
-        }
-        case eLeft:
-        {
-            mEntity->walkLeft();
-            return;
-        }
-        case eResetInput:
-        {
-            mEntity->stopWalking();
-            return;
-        }
-        case ePlus:
-        case eMinus:
-        case eInputActionsMax:
-        {
-            break;
-        }
+        throw -1;
     }
-    throw -1;
+    else
+    {
+        mEntity->stopWalking();
+    }
 }

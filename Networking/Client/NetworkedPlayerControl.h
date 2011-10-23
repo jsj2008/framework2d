@@ -8,7 +8,7 @@ class NetworkedPlayerControl
     public:
         NetworkedPlayerControl(EventListener* _listener, unsigned short _entityKey);
         virtual ~NetworkedPlayerControl();
-        void actionFromServer(InputActions actions);
+        void actionFromServer(InputActions actions, bool _pressed);
         void registerEvent(InputActions _action);
         void activate();
     protected:

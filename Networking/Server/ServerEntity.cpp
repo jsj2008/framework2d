@@ -10,6 +10,7 @@ ServerEntity::ServerEntity(int _socket, unsigned short _entityKey)
     socket = _socket;
     entityKey = _entityKey;
     name = "Undefined ServerEntity";
+    inited = false;
 }
 
 ServerEntity::~ServerEntity()
@@ -17,9 +18,10 @@ ServerEntity::~ServerEntity()
     //dtor
 }
 
-void ServerEntity::initialise(const std::string& _name)
+void ServerEntity::initialise(const std::string& _name, Server* _server)
 {
     name = _name;
+    _server->bringUpToSpeed(this);
 }
 bool ServerEntity::process(Server* _server)
 {

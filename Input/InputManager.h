@@ -13,7 +13,6 @@ enum InputActions
     eRight,
     ePlus, /// Need to make these the scroll wheel
     eMinus,
-    eResetInput,
     eInputActionsMax
 };
 
@@ -40,10 +39,11 @@ extern class InputManager
     private:
         struct ControlStruct
         {
-            ControlStruct(SDLKey _key){key = _key;event = 0;}
-            ControlStruct(char _key){key = SDLKey(_key);event = 0;}
+            ControlStruct(SDLKey _key){key = _key;event = 0; pressed = false;}
+            ControlStruct(char _key){key = SDLKey(_key);event = 0; pressed = false;}
             SDLKey key;
             EventListener* event;
+            bool pressed;
         };
         ControlStruct* controls;
         InputContext* activeEvent;

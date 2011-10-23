@@ -19,13 +19,13 @@ NetworkedPlayerControl::~NetworkedPlayerControl()
 {
     GameServerInterface::singleton()->trigger(InputActions _action)
 }*/
-void NetworkedPlayerControl::actionFromServer(InputActions _action)
+void NetworkedPlayerControl::actionFromServer(InputActions _action, bool _pressed)
 {
     for (unsigned int i = 0; i < actions.size(); i++)
     {
         if (actions[i] == _action)
         {
-            listener->trigger(_action);
+            listener->trigger(_action, _pressed);
             break;
         }
     }

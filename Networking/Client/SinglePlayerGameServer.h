@@ -12,7 +12,7 @@ class SinglePlayerGameServer : public GameServerInterface
         bool update();
         void registerPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey);
         void unregisterPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey);
-        void trigger(InputActions action);
+        void trigger(InputActions action, bool _pressed);
     protected:
     private:
         unsigned int stepsTaken, startTime;

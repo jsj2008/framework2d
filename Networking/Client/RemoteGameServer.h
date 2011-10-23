@@ -18,7 +18,7 @@ class RemoteGameServer : public GameServerInterface, public SingletonEventListen
         bool update();
         void registerPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey);
         void unregisterPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey);
-        void trigger(InputActions action);
+        void trigger(InputActions action, bool _pressed);
         bool trigger(ServerMessageEvent<ClientInitialisationMessage>* event);
         bool trigger(ServerMessageEvent<FrameUpdateMessage>* event);
     protected:

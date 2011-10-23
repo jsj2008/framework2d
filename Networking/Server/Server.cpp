@@ -31,6 +31,7 @@ class TemplateClientToServerMessageFactory: public ClientToServerMessageFactory
 Server::Server(int _serverPort)
 {
     //ctor
+    clients.push_back(nullptr);
 	sockaddr_in Server;
 	int sa_size = sizeof(sockaddr);
 	/*WSADATA w;
@@ -115,17 +116,19 @@ void Server::update()
             {
                 g_Log.error("Failed to set non-blocking socket");
             }
+            int position;
             if (unusedClients.empty())
             {
-                clients.push_back(new ServerEntity(newSocket, clients.size()));
+                position = clients.size();
+                clients.push_back(new ServerEntity(newSocket, position));
             }
             else
             {
-                int position = unusedClients.top();
+                position = unusedClients.top();
                 unusedClients.pop();
-                clients.push_back(new ServerEntity(newSocket, position));
+                clients[position] = new ServerEntity(newSocket, position);
             }
-            printf("Client has connected\n");
+            printf("Client has connected, key %d\n", position);
         }
         else break;
     }
@@ -138,10 +141,31 @@ void Server::update()
             printf("Client \"%s\" has disconnected\n", entity->getName().c_str());
             delete entity;
             clients[i] = nullptr;
+            unusedClients.push(i);
         }
     }
-
-    if (nextUpdate.getActionsSize() != 0)
+    while (!newlyInitedClients.empty())
+    {
+        ServerEntity* client = newlyInitedClients.top();
+        newlyInitedClients.pop();
+        for (unsigned int i = 0; i != clients.size(); i++)
+        {
+            ServerEntity* entity = clients[i];
+            if (entity != nullptr && entity->isInited())
+            {
+                ClientInitialisationMessage message(entity->getName(), {0,0}, entity->getEntityKey());
+                char buffer[256];
+                DataStream stream(buffer, 0);
+                stream.encode<unsigned short>(message.getServerToClientMessageId());
+                stream.encode<unsigned short>(0);
+                message.encode(&stream);
+                client->send(&stream);
+            }
+        }
+        client->broughtUpToSpeed();
+        printf("Client brought up to speed\n");
+    }
+    //if (nextUpdate.getActionsSize() != 0)
     {
         /*char log[256];
         sprintf(log, "Updates: %d", nextUpdate.getActionsSize());
@@ -160,38 +184,39 @@ void Server::update()
 void Server::process(ServerEntity* _client, DataStream* _stream)
 {
     unsigned short messageType = _stream->decode<unsigned short>();
-    ClientToServerMessageFactory* factory = clientMessageFactories[messageType];
-    int startIter = _stream->getIter();
-    ClientToServerMessage* message = factory->create(_stream);
-    assert(message->getClientToServerMessageId() == messageType);
-    MultiCastMessage* multiCastMessage = dynamic_cast<MultiCastMessage*>(message);
-    if (multiCastMessage != nullptr && multiCastMessage->directCastToClients())
+    if (messageType < clientMessageFactories.size())
     {
+        ClientToServerMessageFactory* factory = clientMessageFactories[messageType];
+        //int startIter = _stream->getIter();
+        ClientToServerMessage* message = factory->create(_stream);
+        assert(message->getClientToServerMessageId() == messageType);
         message->serverProcess(this, _client);
 
-        char buffer[256];
-        DataStream stream(buffer, 0);
-        stream.encode<unsigned short>(multiCastMessage->getServerToClientMessageId());
-        stream.encode<unsigned short>(_client->getEntityKey());
-        //stream.append(_stream, startIter);
-        message->encode(&stream);
-        multicast(&stream);
+        MultiCastMessage* multiCastMessage = dynamic_cast<MultiCastMessage*>(message);
+        if (multiCastMessage != nullptr && multiCastMessage->directCastToClients())
+        {
+            char buffer[256];
+            DataStream stream(buffer, 0);
+            stream.encode<unsigned short>(multiCastMessage->getServerToClientMessageId());
+            stream.encode<unsigned short>(_client->getEntityKey());
+            //stream.append(_stream, startIter);
+            message->encode(&stream);
+            multicast(&stream);
+        }
+        delete message;
     }
-    else
-    {
-        message->serverProcess(this, _client);
-    }
-    delete message;
 }
 
 void Server::multicast(DataStream* _stream)
 {
+    int total = 0;
     for (unsigned int i = 0; i != clients.size(); i++)
     {
         ServerEntity* entity = clients[i];
         if (entity != nullptr)
         {
             entity->send(_stream);
+            total++;
         }
     }
 }
@@ -199,3 +224,25 @@ void Server::addUpdates(FrameUpdate* _update)
 {
     nextUpdate.append(_update);
 }
+
+void Server::bringUpToSpeed(ServerEntity* _client)
+{
+    newlyInitedClients.push(_client);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

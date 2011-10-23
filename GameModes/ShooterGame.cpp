@@ -40,7 +40,7 @@ void ShooterGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
 {
     mCamera = new PhysicsCamera(body);
     playerBrain = _playerBrain;
-    playerBrain->trigger(eUp);
+    playerBrain->trigger(eUp, true);
 }
 
 /*bool ShooterGame::activate(const CEGUI::EventArgs& args)

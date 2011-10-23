@@ -18,6 +18,7 @@ void PlayerInputBrainFactory::init(FactoryLoader* loader, AbstractFactories* fac
 
 Brain* PlayerInputBrainFactory::useFactory(FactoryParameters* parameters)
 {
-    PlayerInputBrain* brain = new PlayerInputBrain;
+    unsigned short entityKey = parameters->get<unsigned short>("entityKey", 0);
+    PlayerInputBrain* brain = new PlayerInputBrain(entityKey);
     return brain;
 }

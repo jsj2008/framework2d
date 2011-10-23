@@ -11,6 +11,7 @@ class FrameUpdate
         {
             unsigned short entityKey;
             InputActions action;
+            bool pressed;
         };
         FrameUpdate();
         FrameUpdate(DataStream* _stream);
