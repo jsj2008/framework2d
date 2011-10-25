@@ -10,8 +10,6 @@ BodyCameraFactory::BodyCameraFactory()
 }
 void BodyCameraFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
-    std::string factoryName = loader->get<std::string>("factoryName", "AIEntityFactory");
-    entityFactory = AbstractFactories::global().getFactory<Entity>(factoryName);
 }
 
 BodyCameraFactory::~BodyCameraFactory()
@@ -21,16 +19,8 @@ BodyCameraFactory::~BodyCameraFactory()
 
 Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
 {
-    body = nullptr;
-    Events::global().registerListener(this, eBlockQueue);
-    entityFactory->use(params);
+    b2Body* body = params->get<b2Body*>("body", nullptr);
     Camera* camera = new PhysicsCamera(body);
     return camera;
 }
 
-bool BodyCameraFactory::trigger(FactoryUsageEvent<b2Body>* _event)
-{
-    FactoryUsageEvent<b2Body>* event = static_cast<FactoryUsageEvent<b2Body>*>(_event);
-    body = event->get();
-    return false;
-}

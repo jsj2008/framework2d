@@ -18,7 +18,7 @@ void ZombieBrain::update()
     AIManager::Operation operation = follower->update(mEntity->getPosition(), g_AIManager.getPlayerNode());
     switch (operation)
     {
-        case AIManager::Operation::eStandStill:
+        /*case AIManager::Operation::eStandStill:
         {
             mEntity->stopWalking();
             break;
@@ -45,7 +45,7 @@ void ZombieBrain::update()
             mEntity->jump();
             break;
         }
-        case AIManager::Operation::eOperationsMax:
+        case AIManager::Operation::eOperationsMax:*/
         default:
             throw -1;
     }

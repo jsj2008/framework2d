@@ -14,6 +14,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-std=c++0x" />
+					<Add option="-Wfatal-errors" />
+					<Add option="-Wextra" />
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
@@ -276,6 +278,10 @@
 		<Unit filename="Events/EventTypeRemover.h" />
 		<Unit filename="Events/Events.cpp" />
 		<Unit filename="Events/Events.h" />
+		<Unit filename="Events/Events/ButtonPressEvent.cpp" />
+		<Unit filename="Events/Events/ButtonPressEvent.h" />
+		<Unit filename="Events/Events/ButtonReleaseEvent.cpp" />
+		<Unit filename="Events/Events/ButtonReleaseEvent.h" />
 		<Unit filename="Events/Events/EntityPlaceEvent.cpp" />
 		<Unit filename="Events/Events/EntityPlaceEvent.h" />
 		<Unit filename="Events/Events/EntityRemoveEvent.cpp" />
@@ -296,6 +302,8 @@
 		<Unit filename="Events/Events/FactoryUsageEvent.h" />
 		<Unit filename="Events/Events/NamedFactoryUsageEvent.cpp" />
 		<Unit filename="Events/Events/NamedFactoryUsageEvent.h" />
+		<Unit filename="Events/Events/PlayerOneCreated.cpp" />
+		<Unit filename="Events/Events/PlayerOneCreated.h" />
 		<Unit filename="Events/Events/ShowEntityEvent.cpp" />
 		<Unit filename="Events/Events/ShowEntityEvent.h" />
 		<Unit filename="Events/GenericEvent.cpp" />

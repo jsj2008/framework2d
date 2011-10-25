@@ -12,7 +12,7 @@ class TypeTableFactoryType : public TypeTable::TemplateBaseType<AbstractFactoryB
     public:
         TypeTableFactoryType(AbstractFactoryList<Product>* _factoryList);
         virtual ~TypeTableFactoryType();
-        TypeTable::Value* instance(const std::string& _value);
+        TypeTable::Value* parseInstance(const std::string& _value);
         TypeTable::ArrayValue* arrayInstance(){throw -1;} /// Don't see why you'd want an array of Factories atm
         TypeTable::Value* instance(AbstractFactoryBase<Product>* _value);
         TypeTable::Type* clone();
@@ -46,7 +46,7 @@ TypeTableFactoryType<Product>::~TypeTableFactoryType()
 }
 
 template <typename Product>
-TypeTable::Value* TypeTableFactoryType<Product>::instance(const std::string& _value)
+TypeTable::Value* TypeTableFactoryType<Product>::parseInstance(const std::string& _value)
 {
     TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>* value = new Value;
     AbstractFactoryBase<Product>* factory = factoryList->getFactory(_value);

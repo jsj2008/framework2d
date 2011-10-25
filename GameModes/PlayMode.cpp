@@ -9,6 +9,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AI/AIManager.h>
+#include <Entities/AIEntity.h>
 #include <Networking/Client/SinglePlayerGameServer.h>
 #include <SDL/SDL.h>
 
@@ -17,16 +18,15 @@ PlayMode::PlayMode()
     //ctor
     type = Bubble::eSuctionBubbleType;
     mCamera = nullptr;
-    playerBrain = nullptr;
-    Events::global().registerListener(this, eBlockQueue);
+    playerOneBrain = nullptr;
+    SingletonEventHandler<PlayerOneCreated>::singleton().registerListener(this, eBlockQueue);
     //server = new SinglePlayerGameServer;
-    server = GameServerInterface::singleton();
 }
 
 PlayMode::~PlayMode()
 {
     //dtor
-    Events::global().unregisterListener(this, true);
+    SingletonEventHandler<PlayerOneCreated>::singleton().unregisterListener(this, eBlockQueue);
     //delete server;
 }
 
@@ -38,10 +38,6 @@ void PlayMode::mouseMove(Vec2i mouse)
 {
 
 }
-void PlayMode::setCamera(Camera* _camera)
-{
-    mCamera = _camera;
-}
 
 bool PlayMode::activate(const CEGUI::EventArgs& args)
 {
@@ -51,8 +47,8 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
         g_GraphicsManager.setCamera(mCamera);
         mCamera->activate();
     }
-    assert(playerBrain);
-    playerBrain->activate();
+    assert(playerOneBrain);
+    playerOneBrain->activate();
     return true;
 }
 
@@ -60,7 +56,7 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
 bool PlayMode::update()
 {
     bool running = true;
-    if (server->update())
+    if (GameServerInterface::singleton()->update())
     {
         activeLevel->tick();
     }
@@ -72,4 +68,14 @@ bool PlayMode::update()
     //SDL_Delay(5);
     g_GraphicsManager.endScene();
     return running;
+}
+
+bool PlayMode::trigger(PlayerOneCreated* event)
+{
+    AIEntity* entity = event->getPlayer();
+    FactoryParameters params;
+    params.add<b2Body*>("body", entity->getBody());
+    mCamera = AbstractFactories::global().useFactory<Camera>("BodyCameraFactory", &params);
+    playerOneBrain = entity->getBrain();
+    return true;
 }

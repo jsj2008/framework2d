@@ -1,7 +1,6 @@
 #include "TypeTable.h"
 #include <Log/Log.h>
 #include <Types/Vec2i.h>
-#include <sstream>
 TypeTable::TypeTable(const TypeTable& _rhs)
 {
     /// FIXME I think this is being called more frequently than it should be
@@ -122,7 +121,7 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
     }
     else
     {
-        Value* ret = type->instance(_value);
+        Value* ret = type->parseInstance(_value);
         values[_name] = ret;
         return ret;
     }
@@ -167,21 +166,6 @@ TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, c
         values[_name] = ret;
         return ret;
     }
-}
-template <typename T>
-void TypeTable::TemplateArrayValue<T>::pushValue(const std::string& _value)
-{
-    T value;
-    std::stringstream stream(_value);
-    stream >> value;
-    TemplateBaseArrayValue<T>::values.push_back(value);
-}
-template <typename T>
-void TypeTable::TemplateArrayValue<T>::pushValue(std::istream* _parseSource)
-{
-    T value;
-    *_parseSource >> value;
-    TemplateBaseArrayValue<T>::values.push_back(value);
 }
 void TypeTable::addDynamicValue(const TypeIndex& type, const ValueIndex& _name, std::istream* parseSource)
 {
@@ -296,13 +280,6 @@ TypeTable::Value* TypeTable::UntypedValue::instance()
 {
     Value* value = new TemplateValue<T>(unparsedValue);
     return value;
-}
-
-template <typename T>
-TypeTable::TemplateValue<T>::TemplateValue(const std::string& _value)
-{
-    std::stringstream stream(_value);
-    stream >> TemplateBaseValue<T>::value;
 }
 std::vector<std::string> TypeTable::getUndefinedLog()
 {

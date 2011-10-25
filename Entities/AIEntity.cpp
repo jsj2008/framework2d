@@ -58,22 +58,6 @@ void AIEntity::update()
     }
     controller->update();
 }
-void AIEntity::jump()
-{
-    controller->jump();
-}
-void AIEntity::walkLeft()
-{
-    controller->walkLeft();
-}
-void AIEntity::walkRight()
-{
-    controller->walkRight();
-}
-void AIEntity::stopWalking()
-{
-    controller->stopWalking();
-}
 
 
 

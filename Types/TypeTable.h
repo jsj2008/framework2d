@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <sstream>
 #include <cassert>
 #include <Types/Vec2f.h>
 #include <Log/Log.h>
@@ -82,7 +83,7 @@ class TypeTable
             public:
                 Type(){}
                 virtual ~Type(){}
-                virtual Value* instance(const std::string& _value)=0;
+                virtual Value* parseInstance(const std::string& _value)=0;
                 virtual ArrayValue* arrayInstance()=0;
                 virtual Type* clone()=0;
         };
@@ -134,6 +135,7 @@ class TypeTable
     template <typename T>
         static void overloadType(const TypeIndex& name, Type* _newFactory);
 
+        bool loggingUndefined(){return logUndefined;}
     protected:
         std::unordered_map<ValueIndex,Value*> values;
 
@@ -168,7 +170,7 @@ class TypeTable
         {
             public:
                 TemplateType(){staticRegister.check();}
-                Value* instance(const std::string& _value){return new TemplateValue<T>(_value);}
+                Value* parseInstance(const std::string& _value){return new TemplateValue<T>(_value);}
                 ArrayValue* arrayInstance(){return new TemplateArrayValue<T>();}
                 Value* instance(T _value){TemplateValue<T>* ret = new TemplateValue<T>; ret->set(_value); return ret;}
                 Type* clone(){return new TemplateType<T>();}
@@ -245,10 +247,19 @@ void TypeTable::addValue(const ValueIndex& _name, const T& _value)
     else
     {
         Type* uncastType = types[name<T>()];
-        assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
-        Value* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
+        if (uncastType == nullptr)
+        {
+            TemplateType<T> type;
+            Value* value = type.instance(_value);
+            values[_name] = value;
+        }
+        else
+        {
+            assert(dynamic_cast<TemplateBaseType<T>*>(uncastType));
+            Value* value = static_cast<TemplateBaseType<T>*>(uncastType)->instance(_value);
 
-        values[_name] = value;
+            values[_name] = value;
+        }
     }
 }
 template <typename T>
@@ -341,6 +352,28 @@ const std::vector<T>& TypeTable::getArray(const ValueIndex& _name, const std::ve
 }
 
 template <typename T>
+std::istream& operator>> (std::istream &in, T*& elements)
+{
+    throw -1;
+    elements = nullptr;
+    return in;
+}
+
+template <typename T>
+TypeTable::TemplateValue<T>::TemplateValue(const std::string& _value)
+{
+    try
+    {
+        std::stringstream stream(_value);
+        stream >> TemplateBaseValue<T>::value;
+    }
+    catch (...)
+    {
+        throw this;
+    }
+}
+
+template <typename T>
 const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
 {
     try
@@ -353,6 +386,21 @@ const T TypeTable::popValue(const ValueIndex& _name, const T& _default)
             static_cast<TemplateBaseValue<T>*>(undefinedLog[_name])->set(_default);
         return _default;
     }
+}
+template <typename T>
+void TypeTable::TemplateArrayValue<T>::pushValue(const std::string& _value)
+{
+    T value;
+    std::stringstream stream(_value);
+    stream >> value;
+    TemplateBaseArrayValue<T>::values.push_back(value);
+}
+template <typename T>
+void TypeTable::TemplateArrayValue<T>::pushValue(std::istream* _parseSource)
+{
+    T value;
+    *_parseSource >> value;
+    TemplateBaseArrayValue<T>::values.push_back(value);
 }
 template <typename T>
 const T TypeTable::popValue(const ValueIndex& _name)
@@ -368,9 +416,17 @@ const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
         {
             if (undefinedLog.find(_name) == undefinedLog.end())
             {
-                TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->instance(_default));
-                undefinedLog[_name] = value;
-                return value->get();
+                try
+                {
+                    TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->parseInstance(_default));
+                    undefinedLog[_name] = value;
+                    return value->get();
+                }
+                catch (TemplateValue<T>* value)
+                {
+                    undefinedLog[_name] = value;
+                    throw -1;
+                }
             }
         }
         else

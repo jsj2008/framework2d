@@ -47,6 +47,15 @@ Client::Client(const char* _serverIp, int _serverPort)
 	sockaddr_in local;
 	hostent* server;
 	transmissionSocket = socket(AF_INET, SOCK_STREAM, 0);
+	/*{
+        int flag = 1;
+        int ret = setsockopt( transmissionSocket, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(flag) );
+        if (ret == -1)
+        {
+            g_Log.error("Couldn't disable Nagle algorithm");
+        }
+	}*/
+
 
 	server = gethostbyname(_serverIp);
 	local.sin_family = AF_INET;

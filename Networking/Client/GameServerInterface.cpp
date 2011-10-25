@@ -19,6 +19,6 @@ void GameServerInterface::activate()
 }
 GameServerInterface* GameServerInterface::singleton()
 {
-    static RemoteGameServer server;
+    static SinglePlayerGameServer server;
     return &server;
 }

@@ -17,7 +17,6 @@ ShooterGame::ShooterGame()
     AbstractFactories::global().init(); /// FIXME these need to not be global
 
     mCamera = nullptr;
-    playerBrain = nullptr;
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>(); /// FIXME these should be in the bubble game
     AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
 
@@ -33,31 +32,5 @@ ShooterGame::~ShooterGame()
 void ShooterGame::buttonUp(Vec2i mouse, unsigned char button) /// FIXME this needs to be done in a player controller grabber
 {
     Vec2f position = mouse.ScreenToWorldSpace();
-    playerBrain->mEntity->weaponEnd(position);
-}
-
-void ShooterGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
-{
-    mCamera = new PhysicsCamera(body);
-    playerBrain = _playerBrain;
-    playerBrain->trigger(eUp, true);
-}
-
-/*bool ShooterGame::activate(const CEGUI::EventArgs& args)
-{
-    g_InputManager.setActiveEvent(this);
-    if (mCamera != nullptr)
-    {
-        g_GraphicsManager.setCamera(mCamera);
-        mCamera->activate();
-    }
-    assert(playerBrain);
-    playerBrain->activate();
-    return true;
-}*/
-
-bool ShooterGame::trigger(FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>* event)
-{
-    playerBrain = static_cast<PlayerInputBrain*>(event->get());
-    return true;
+    //playerBrain->mEntity->weaponEnd(position);
 }

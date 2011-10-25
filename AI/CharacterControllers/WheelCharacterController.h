@@ -18,13 +18,16 @@ class WheelCharacterController : public CharacterController
         WheelCharacterController(AIEntity* _entity, Properties* _properties);
         virtual ~WheelCharacterController();
         void update();
+        void booleanControls(int _button, bool _pressed);
+        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
+    protected:
+    private:
+        void booleanControlStart(int _button);
+        void booleanControlEnd(int _button);
         void walkLeft();
         void walkRight();
         void stopWalking();
         void jump();
-        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
-    protected:
-    private:
         b2RevoluteJoint* wheel;
         unsigned short airbourneCounter;
         unsigned short jumpCounter;

@@ -9,8 +9,15 @@
 #define JUMP_RECHARGE properties->jumpRecharge
 #define FALL_TOLERANCE properties->fallTolerance
 
+#define BOOLEAN_CONTROLS_SIZE 3
+const char* staticBooleanControlNames[BOOLEAN_CONTROLS_SIZE] =
+{
+    "MoveLeft",
+    "MoveRight",
+    "Jump",
+};
 WheelCharacterController::WheelCharacterController(AIEntity* _entity, Properties* _properties)
-:CharacterController(_entity)
+:CharacterController(_entity, BOOLEAN_CONTROLS_SIZE, staticBooleanControlNames)
 {
     //ctor
     wheel = nullptr;
@@ -25,6 +32,58 @@ WheelCharacterController::~WheelCharacterController()
     wheel->GetBodyB()->GetWorld()->DestroyBody(wheel->GetBodyB());
 }
 
+void WheelCharacterController::booleanControls(int _button, bool _pressed)
+{
+    if (_pressed)
+    {
+        booleanControlStart(_button);
+    }
+    else
+    {
+        booleanControlEnd(_button);
+    }
+}
+void WheelCharacterController::booleanControlStart(int _button)
+{
+    switch (_button)
+    {
+        case 0:
+        {
+            walkLeft();
+            break;
+        }
+        case 1:
+        {
+            walkRight();
+            break;
+        }
+        case 2:
+        {
+            break;
+        }
+    }
+}
+void WheelCharacterController::booleanControlEnd(int _button)
+{
+    switch (_button)
+    {
+        case 0:
+        {
+            stopWalking();
+            break;
+        }
+        case 1:
+        {
+            stopWalking();
+            break;
+        }
+        case 2:
+        {
+            jump();
+            break;
+        }
+    }
+}
 void WheelCharacterController::walkLeft()
 {
     wheel->SetMotorSpeed(-WALK_SPEED);
@@ -45,6 +104,7 @@ void WheelCharacterController::jump()
         airbourneCounter = FALL_TOLERANCE;
         jumpCounter = JUMP_RECHARGE;
     }
+    //entity->getBody()->ApplyLinearImpulse(Vec2f(0,-JUMP_HEIGHT*0.5f),Vec2f(0,0));
 }
 void WheelCharacterController::update()
 {
@@ -80,3 +140,4 @@ void WheelCharacterController::update()
     }
     entity->getBody()->ApplyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));
 }
+

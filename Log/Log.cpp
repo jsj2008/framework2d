@@ -22,6 +22,7 @@ void Log::init()
 }
 void Log::warning(const std::string& _message)
 {
+    std::cout << "Warning: " + _message << std::endl;
     logger->outputText("Warning: " + _message, SDL_GetTicks(), 0xFFFFFF00);
 }
 void Log::error(const std::string& _message)

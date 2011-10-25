@@ -15,15 +15,17 @@ class AIEntity : public Entity
         AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin);
         EntityType getType(){return eAIEntityType;}
         void update();
-        void jump();
+        /*void jump();
         void walkLeft();
         void walkRight();
-        void stopWalking();
+        void stopWalking();*/
         void damage();
         void weaponBegin(Vec2f targetPosition);
         void weaponMove(Vec2f targetPosition);
         void weaponEnd(Vec2f targetPosition);
         void setController(CharacterController* _controller){controller = _controller;}
+        CharacterController* getMoveControls(){return controller;}
+        Brain* getBrain(){return mBrain;}
     protected:
     private:
         friend class CharacterController;

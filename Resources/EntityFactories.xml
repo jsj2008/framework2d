@@ -2,4 +2,5 @@
 <FactoryTypes>
     <CrateFactory>HeavyCrate</CrateFactory>
     <LevelGeometryFactory>levelGeometry</LevelGeometryFactory>
+    <TileFactory>balls</TileFactory>
 </FactoryTypes>

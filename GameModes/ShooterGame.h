@@ -19,9 +19,7 @@ class ShooterGame : public PlayMode
     public:
         ShooterGame();
         virtual ~ShooterGame();
-        void setBody(b2Body* body, PlayerInputBrain* _playerBrain);
         void buttonUp(Vec2i mouse, unsigned char button);
-        bool trigger(FactoryTypeUsageEvent<Brain, PlayerInputBrainFactory>* event);
     protected:
     private:
 };

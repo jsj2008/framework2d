@@ -1,5 +1,8 @@
 #include "SinglePlayerGameServer.h"
 #include <Networking/Client/NetworkedPlayerControl.h>
+#include <AbstractFactory/AbstractFactories.h>
+#include <Events/Events/PlayerOneCreated.h>
+#include <Entities/AIEntity.h>
 #include <Timer.h>
 
 SinglePlayerGameServer::SinglePlayerGameServer()
@@ -7,6 +10,7 @@ SinglePlayerGameServer::SinglePlayerGameServer()
     //ctor
     stepsTaken = 0;
     startTime = g_Timer.getTicks();
+    inited = false;
 }
 
 SinglePlayerGameServer::~SinglePlayerGameServer()
@@ -16,6 +20,15 @@ SinglePlayerGameServer::~SinglePlayerGameServer()
 
 bool SinglePlayerGameServer::update()
 {
+    if (!inited)
+    {
+        FactoryParameters params;
+        params.add<std::string>("name", "player");
+        params.add<unsigned short>("entityKey", 0);
+        PlayerOneCreated event(static_cast<AIEntity*>(AbstractFactories::global().useFactory<Entity>("AIEntityFactory",&params)));
+        inited = true;
+        event.trigger();
+    }
     unsigned int currentTime = g_Timer.getTicks();
     unsigned int totalTimePassed = currentTime - startTime;
     if (currentTime < startTime) /// FIXME

@@ -346,13 +346,15 @@ bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent<Entity>* event)
     factories.insert(event->getName());
     return true;
 }
+Level* DynamicEditor::getActiveLevel()
+{
+    return editorMode->getActiveLevel();
+}
 bool DynamicEditor::FactoryUseList::trigger(FactoryUsageEvent<b2Body>* event)
 {
     factories.push_back(event->get());
     return true;
 }
 
-Level* DynamicEditor::getActiveLevel()
-{
-    return editorMode->getActiveLevel();
-}
+
+

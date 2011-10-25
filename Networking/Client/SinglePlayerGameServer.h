@@ -17,6 +17,7 @@ class SinglePlayerGameServer : public GameServerInterface
     private:
         unsigned int stepsTaken, startTime;
         NetworkedPlayerControl* control;
+        bool inited;
 };
 
 #endif // SINGLEPLAYERGAMESERVER_H

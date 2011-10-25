@@ -31,6 +31,8 @@ class FactoryLoader
         T get(const std::string& name, const T& normal);
         template <typename T>
         T get(const std::string& name);
+        template <typename Type>
+        const std::vector<Type>& getArray(const std::string& name, const std::vector<Type>& _default);
         template <typename Product>
         AbstractFactoryBase<Product>* getFactory(const std::string& name, const char* _default);
         template <typename T>
@@ -66,7 +68,17 @@ AbstractFactoryBase<Product>* FactoryLoader::getFactory(const std::string& _name
     }
     catch (int i)
     {
-        return AbstractFactories::global().getFactory<Product>(_default);
+        auto factory = AbstractFactories::global().getFactory<Product>(_default);
+        if (mvalues.loggingUndefined())
+        {
+            mvalues.addValue<AbstractFactoryBase<Product>*>(_name, factory);
+        }
+        return factory;
     }
+}
+template <typename Type>
+const std::vector<Type>& FactoryLoader::getArray(const std::string& name, const std::vector<Type>& _default)
+{
+    return mvalues.getArray(name, _default);
 }
 #endif // FACTORYLOADER_H

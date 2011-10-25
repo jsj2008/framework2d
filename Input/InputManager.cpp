@@ -2,12 +2,30 @@
 #include <Graphics/GraphicsManager.h>
 #include <Input/EventListener.h>
 #include <Input/Mouse/InputContext.h>
+#include <Events/InstanceEvents/InstanceEventHandler.h>
+#include <Events/Events/ButtonPressEvent.h>
+#include <Events/Events/ButtonReleaseEvent.h>
+#include <Log/Log.h>
 #include <CEGUI/CEGUI.h>
 #include <SDL/SDL_thread.h>
 #include <SDL/SDL_timer.h>
+
+struct InputManagerButtonStruct
+{
+    InstanceEventHandler<ButtonPressEvent> press;
+    InstanceEventHandler<ButtonReleaseEvent> release;
+    unsigned int buttonId;
+};
+
 InputManager g_InputManager;
 using namespace std;
+
 InputManager::InputManager()
+:controlMap({
+    {"Left", {'a', nullptr}},
+    {"Right", {'d', nullptr}},
+    {"Up", {'w', nullptr}},
+})
 {
     //ctor
     activeEvent = nullptr;
@@ -19,6 +37,47 @@ InputManager::InputManager()
 InputManager::~InputManager()
 {
     //dtor
+}
+unsigned int InputManager::registerButtonListener(const std::string& buttonName, InstanceEventListener<ButtonPressEvent>* _pressListener, InstanceEventListener<ButtonReleaseEvent>* _releaseListener)
+{
+    InputManagerButtonStruct* buttonStruct = getOrCreateButtonStruct(buttonName);
+    buttonStruct->press.registerListener(_pressListener);
+    buttonStruct->release.registerListener(_releaseListener);
+    return buttonStruct->buttonId;
+}
+unsigned int InputManager::registerButtonDownListener(const std::string& buttonName, InstanceEventListener<ButtonPressEvent>* _listener)
+{
+    InputManagerButtonStruct* buttonStruct = getOrCreateButtonStruct(buttonName);
+    buttonStruct->press.registerListener(_listener);
+    return buttonStruct->buttonId;
+}
+unsigned int InputManager::registerButtonUpListener(const std::string& buttonName, InstanceEventListener<ButtonReleaseEvent>* _listener)
+{
+    InputManagerButtonStruct* buttonStruct = getOrCreateButtonStruct(buttonName);
+    buttonStruct->release.registerListener(_listener);
+    return buttonStruct->buttonId;
+}
+InputManagerButtonStruct* InputManager::getOrCreateButtonStruct(const std::string& _controlName)
+{
+    auto iter = controlMap.find(_controlName);
+    if (iter == controlMap.end())
+    {
+        g_Log.error(std::string("No such control: ") + _controlName);
+        return nullptr;
+    }
+    else
+    {
+        if (iter->second.second == nullptr)
+        {
+            InputManagerButtonStruct* newStruct = new InputManagerButtonStruct;
+            newStruct->buttonId = buttonEvents.size();
+            buttonEvents.push_back(newStruct);
+            buttonMap[iter->second.first] = newStruct;
+            iter->second.second = newStruct;
+            return newStruct;
+        }
+        else return iter->second.second;
+    }
 }
 void InputManager::changeResolution(const Vec2i newResolution)
 {
@@ -109,12 +168,28 @@ bool InputManager::processInput()
                         }
                     }
                 }*/
+                InputManagerButtonStruct* buttons = buttonMap[event.key.keysym.sym];
+                if (buttons != nullptr)
+                {
+                    ButtonPressEvent event(buttons->buttonId);
+                    buttons->press.trigger(&event);
+                }
                 CEGUI::uint kc = SDLKeyToCEGUIKey(event.key.keysym.sym);
 
                 CEGUI::System::getSingleton().injectKeyDown(kc);
                 CEGUI::System::getSingleton().injectChar(event.key.keysym.unicode);
                 //CEGUI::System::getSingleton().injectChar(kc);
 
+                break;
+            }
+            case SDL_KEYUP:
+            {
+                InputManagerButtonStruct* buttons = buttonMap[event.key.keysym.sym];
+                if (buttons != nullptr)
+                {
+                    ButtonReleaseEvent event(buttons->buttonId);
+                    buttons->release.trigger(&event);
+                }
                 break;
             }
             case SDL_VIDEORESIZE:

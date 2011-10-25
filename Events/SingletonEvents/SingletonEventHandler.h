@@ -7,6 +7,7 @@ class SingletonEventListener;
 template <typename EventType>
 class SingletonEvent;
 
+#ifndef EVENTHANDLER_H
 enum EventListenerPropertiesEnum
 {
     eReadQueue = 1 << 0,
@@ -26,6 +27,7 @@ struct EventListenerProperties
         return flags & _flags;
     }
 };
+#endif
 
 template <typename EventType>
 class SingletonEventHandler
@@ -49,6 +51,7 @@ class SingletonEventHandler
         std::vector<EventType>* queuedInstances;
 };
 
+#include <Events/SingletonEvents/SingletonEventListener.h>
 template <typename EventType>
 SingletonEventHandler<EventType>::SingletonEventHandler()
 {

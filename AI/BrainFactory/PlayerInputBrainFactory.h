@@ -18,6 +18,7 @@ class PlayerInputBrainFactory : public AbstractFactory <Brain, PlayerInputBrainF
         Brain* useFactory(FactoryParameters* parameters);
     protected:
     private:
+        std::vector<std::string> controls;
 };
 
 #endif // PLAYERINPUTBRAINFACTORY_H

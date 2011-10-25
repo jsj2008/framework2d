@@ -13,10 +13,6 @@ InputContext::~InputContext()
     //dtor
 }
 
-void InputContext::changeResolution(Vec2i newResolution)
-{
-}
-
 bool InputContext::activate(const CEGUI::EventArgs&)
 {
     g_InputManager.setActiveEvent(this);
