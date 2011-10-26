@@ -1,5 +1,4 @@
 #include "DynamicEditorMode.h"
-#include <Level/LevelManager.h>
 #include <Level/LevelEntity.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityCreateEntry.h>

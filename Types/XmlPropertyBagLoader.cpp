@@ -12,6 +12,12 @@ handle(&doc)
         g_Log.error(std::string("Failed to load XML file ") + _filename);
     }
 }
+XmlPropertyBagLoader::XmlPropertyBagLoader(TiXmlElement* _propertyBag)
+:handle(nullptr)
+{
+    //ctor
+    element = _propertyBag;
+}
 
 XmlPropertyBagLoader::~XmlPropertyBagLoader()
 {

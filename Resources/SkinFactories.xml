@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<FactoryTypes>
+    <StaticSkinFactory>staticSkin</StaticSkinFactory>
+</FactoryTypes>

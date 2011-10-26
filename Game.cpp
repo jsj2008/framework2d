@@ -7,7 +7,7 @@
 #include <GameModes/CarneGame.h>
 #include <Timer.h>
 #include <GameModes/Editor/EditorMode.h>
-#include <Level/LevelManager.h>
+#include <Level/Level.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <Graphics/Camera/FreeCamera.h>
 #include <AI/AIManager.h>
@@ -36,7 +36,9 @@ void Game::init()
     g_GraphicsManager.init();
     StaticSoundManager::init();
 
-    EditorMode* typedMode = new EditorMode(new ShooterGame());
+    //EditorMode* typedMode = new EditorMode(new ShooterGame());
+    ShooterGame* typedMode = new ShooterGame();
+    typedMode->init();
     gameMode = typedMode;
 
     CEGUI::EventArgs args;

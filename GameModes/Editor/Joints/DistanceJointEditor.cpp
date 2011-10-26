@@ -1,6 +1,6 @@
 #include "DistanceJointEditor.h"
 #include <Physics/PhysicsManager.h>
-#include <Level/LevelManager.h>
+#include <Level/Level.h>
 #include <GameModes/Editor/EditorMode.h>
 #include <CEGUI/CEGUI.h>
 

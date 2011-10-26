@@ -8,10 +8,15 @@
 #include <AbstractFactory/Factories/BubbleFactory.h>
 #include <Entities/Bubbles/AllBubbles.h>
 #include <Level/Level.h>
+#include <Level/XmlResourceProvider.h>
+#include <Level/LevelLoader.h>
 
 ShooterGame::ShooterGame()
 {
     //ctor
+    XmlResourceProvider provider;
+    LevelLoader loader(&provider);
+    loader.load("Levels.xml/Level1/Level");
     activeLevel = new Level("default");
     AbstractFactories::global().setWorld(activeLevel->getWorld());
     AbstractFactories::global().init(); /// FIXME these need to not be global

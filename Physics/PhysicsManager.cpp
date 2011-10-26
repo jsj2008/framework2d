@@ -6,7 +6,6 @@
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
-#include <Level/LevelManager.h>
 #include <Timer.h>
 #include <stack>
 #define DEBUG_DRAW

@@ -10,6 +10,7 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <AI/AIManager.h>
 #include <Entities/AIEntity.h>
+#include <Graphics/Camera/FreeCamera.h>
 #include <Networking/Client/SinglePlayerGameServer.h>
 #include <SDL/SDL.h>
 
@@ -20,6 +21,10 @@ PlayMode::PlayMode()
     mCamera = nullptr;
     playerOneBrain = nullptr;
     SingletonEventHandler<PlayerOneCreated>::singleton().registerListener(this, eBlockQueue);
+
+    FreeCamera* mFreeCamera = new FreeCamera();
+    mCamera = mFreeCamera;
+    g_GraphicsManager.setCamera(mCamera);
     //server = new SinglePlayerGameServer;
 }
 
@@ -47,8 +52,8 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
         g_GraphicsManager.setCamera(mCamera);
         mCamera->activate();
     }
-    assert(playerOneBrain);
-    playerOneBrain->activate();
+    if (playerOneBrain)
+        playerOneBrain->activate();
     return true;
 }
 
@@ -58,6 +63,8 @@ bool PlayMode::update()
     bool running = true;
     if (GameServerInterface::singleton()->update())
     {
+        CEGUI::EventArgs args;
+        activate(args);
         activeLevel->tick();
     }
     running = g_InputManager.processInput();

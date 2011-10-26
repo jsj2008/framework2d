@@ -39,7 +39,7 @@ EntityList::~EntityList()
 }
 void EntityList::loadLevel(const std::string& _listFileName)
 {
-    XmlPropertyBagLoader loader("Level.xml");
+    XmlPropertyBagLoader loader("Resources/Level.xml");
     int version = loader.getVersion();
     if (version != 1)
     {
@@ -66,7 +66,7 @@ void EntityList::loadLevel(const std::string& _listFileName)
 
 void EntityList::saveLevel(const std::string& _listFileName)
 {
-    XmlFilePropertyBagSerializer xml("Level.xml", false);
+    XmlFilePropertyBagSerializer xml("Resources/Level.xml", false);
     PropertyBagSerializer* serializer = &xml;
 
     unsigned short size = listBox->getItemCount() + filteredDead.size();

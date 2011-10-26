@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<Root name="Levels.xml">
+
+  <Collection name="Level1">
+    <Level name="Level">
+      
+      <EventListRef>Levels.xml/Level1/Events</EventListRef>
+      
+      <FactoryList name="Factories">
+	<Factory Name="HeavyCrate" Type="CrateFactory">
+	  <PropertyBag>
+	    <float Name="density" Value="10"/>
+	  </PropertyBag>
+	</Factory>
+      </FactoryList>
+      
+      <EntityList name="Entities">
+	<Entity Type="HeavyCrate">
+	  <PropertyBag>
+	    <Vec2f Name="position" Value="0 0"/>
+	  </PropertyBag>
+	</Entity>
+      </EntityList>
+      
+    </Level>
+    
+    <EventList name="Events">
+    </EventList>
+    
+  </Collection>
+
+</Root>

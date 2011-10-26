@@ -9,6 +9,7 @@ class XmlPropertyBagLoader : public PropertyBagLoader
 {
     public:
         XmlPropertyBagLoader(const char* _filename);
+        XmlPropertyBagLoader(TiXmlElement* _propertyBag);
         virtual ~XmlPropertyBagLoader();
         int getVersion();
         bool startFactories();
