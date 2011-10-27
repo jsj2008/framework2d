@@ -45,7 +45,8 @@ InputContext* DynamicEditor::EditorFactoryType::createEditor(CEGUI::TabControl* 
 std::vector<Entity*> deadBodies; /// FIXME
 bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _args)
 {
-    CppFactoryLoader loader;
+    CppFactoryLoader* __loader = nullptr; /// FIXME
+    CppFactoryLoader& loader = *__loader;
     std::string name = instanceNameWidget->getProperty("Text").c_str();
     loader.setName(name);
     loader.setType(factoryTypeName);
@@ -54,7 +55,7 @@ bool DynamicEditor::EditorFactoryType::createButton(const CEGUI::EventArgs& _arg
         DynamicEditorVariable* variable = *i;
         variable->addPropertyBagVariable(&loader);
     }
-    AbstractFactories::global().addFactory<Entity>(&loader);
+    ///AbstractFactories::global().addFactory<Entity>(&loader); FIXME
     for (unsigned int i = 0; i < deadBodies.size(); i++)
         delete deadBodies[i];
     deadBodies.clear();
@@ -236,7 +237,7 @@ void DynamicEditor::deactivate()
 
 DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(const std::string& factoryName)
 {
-    AbstractFactoryBase<Entity>* factory = AbstractFactories::global().getFactory<Entity>(factoryName);
+    AbstractFactoryBase<Entity>* factory = nullptr; /// FIXME AbstractFactories::global().getFactory<Entity>(factoryName);
     EditorFactoryType* editor = nullptr;
     {
         FactoryParameters parameters(true);
@@ -282,11 +283,11 @@ DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(
     }
     return nullptr;
 MATCH_FOUND:
-    TextFileFactoryLoader loader(nullptr, true);
+    TextFileFactoryLoader loader(nullptr, nullptr, true); /// FIXME
     FactoryGetList getList;
-    Events::global().registerListener<FactoryGetEvent<Entity>>(&getList,{eBlockQueue});
-    factory->baseInit(factoryName, &loader, &AbstractFactories::global());
-    Events::global().unregisterListener<FactoryGetEvent<Entity>>(&getList, true);
+    ///Events::global().registerListener<FactoryGetEvent<Entity>>(&getList,{eBlockQueue}); FIXME this is now missing
+    //factory->baseInit(factoryName, &loader, &AbstractFactories::global());
+    ///Events::global().unregisterListener<FactoryGetEvent<Entity>>(&getList, true);
     std::vector<std::string> values = loader.getUndefinedLog();
     FactoryParameters* params = new FactoryParameters();
     CEGUI::Window* page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
@@ -341,11 +342,11 @@ void DynamicEditor::render()
     }
 }
 
-bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent<Entity>* event)
+/*bool DynamicEditor::FactoryGetList::trigger(FactoryGetEvent<Entity>* event) /// FIXME put this back in
 {
     factories.insert(event->getName());
     return true;
-}
+}*/
 Level* DynamicEditor::getActiveLevel()
 {
     return editorMode->getActiveLevel();

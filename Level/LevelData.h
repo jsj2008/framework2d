@@ -13,7 +13,7 @@ class LevelData : public LoadedData
     public:
         LevelData(const std::string& _address);
         virtual ~LevelData();
-        Level* load();
+        Level* build();
 
         void addEntityList(EntityListData* _list)
             {entityLists.push_back(_list);}
@@ -41,6 +41,7 @@ class LevelData : public LoadedData
 
     protected:
     private:
+        void virtualSave(XmlDataSaver* _saver);
         std::vector<EventListData*> eventLists;
         std::vector<EntityListData*> entityLists;
         std::vector<FactoryListData*> factoryLists;

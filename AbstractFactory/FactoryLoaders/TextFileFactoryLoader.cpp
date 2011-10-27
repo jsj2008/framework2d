@@ -1,7 +1,7 @@
 #include "TextFileFactoryLoader.h"
 
-TextFileFactoryLoader::TextFileFactoryLoader(const char* _filename, bool logUndefined)
-:FactoryLoader(logUndefined),
+TextFileFactoryLoader::TextFileFactoryLoader(const char* _filename, AbstractFactories* _factories, bool logUndefined)
+:FactoryLoader(_factories, logUndefined),
 handle(nullptr)
 {
     //ctor

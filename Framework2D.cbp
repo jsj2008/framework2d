@@ -14,7 +14,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-std=c++0x" />
-					<Add option="-Wfatal-errors" />
 					<Add option="-Wextra" />
 					<Add option="-g" />
 				</Compiler>
@@ -135,7 +134,6 @@
 			<Add option="-Wmissing-include-dirs" />
 			<Add option="-Wswitch-enum" />
 			<Add option="-std=c++0x" />
-			<Add option="-Wfatal-errors" />
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
 			<Add directory="." />
@@ -469,6 +467,10 @@
 		<Unit filename="Input/Mouse/ClickReleaseEvent.h" />
 		<Unit filename="Input/Mouse/InputContext.cpp" />
 		<Unit filename="Input/Mouse/InputContext.h" />
+		<Unit filename="Level/DataLoader.cpp" />
+		<Unit filename="Level/DataLoader.h" />
+		<Unit filename="Level/EntityData.cpp" />
+		<Unit filename="Level/EntityData.h" />
 		<Unit filename="Level/EntityListData.cpp" />
 		<Unit filename="Level/EntityListData.h" />
 		<Unit filename="Level/EntityListLoader.cpp" />
@@ -497,6 +499,8 @@
 		<Unit filename="Level/ParallaxLayer.h" />
 		<Unit filename="Level/ParallaxSprite.cpp" />
 		<Unit filename="Level/ParallaxSprite.h" />
+		<Unit filename="Level/XmlDataSaver.cpp" />
+		<Unit filename="Level/XmlDataSaver.h" />
 		<Unit filename="Level/XmlResourceProvider.cpp" />
 		<Unit filename="Level/XmlResourceProvider.h" />
 		<Unit filename="Log/GameConsole.cpp" />

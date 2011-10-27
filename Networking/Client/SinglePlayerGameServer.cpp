@@ -22,12 +22,7 @@ bool SinglePlayerGameServer::update()
 {
     if (!inited)
     {
-        FactoryParameters params;
-        params.add<std::string>("name", "player");
-        params.add<unsigned short>("entityKey", 0);
-        PlayerOneCreated event(static_cast<AIEntity*>(AbstractFactories::global().useFactory<Entity>("AIEntityFactory",&params)));
         inited = true;
-        event.trigger();
     }
     unsigned int currentTime = g_Timer.getTicks();
     unsigned int totalTimePassed = currentTime - startTime;

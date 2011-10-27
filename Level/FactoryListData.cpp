@@ -15,3 +15,16 @@ FactoryListData::~FactoryListData()
         factories[i]->decrement();
     }
 }
+
+void FactoryListData::build(AbstractFactories* _factories)
+{
+    for (unsigned int i = 0; i != factories.size(); i++)
+    {
+        factories[i]->build(_factories);
+    }
+}
+
+void FactoryListData::virtualSave(XmlDataSaver* _saver)
+{
+
+}

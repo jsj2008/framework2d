@@ -1,10 +1,5 @@
 #include "AbstractFactoryList.h"
 
-
-AbstractFactoryListBase::AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& _productName)
-{
-    (*factoryLists)[_productName] = this;
-}
 AbstractFactoryListBase::~AbstractFactoryListBase()
 {
 }

@@ -19,7 +19,8 @@ namespace FactoryLoaderPrivate
 class FactoryLoader
 {
     public:
-        FactoryLoader(bool logUndefined = false);
+        FactoryLoader(AbstractFactories* _factories, bool logUndefined = false);
+        FactoryLoader(const std::string& _type, const std::string& _name, TypeTable* _table, AbstractFactories* _factories);
         virtual ~FactoryLoader();
         virtual bool isValid()=0;
         virtual bool next()=0;
@@ -44,6 +45,7 @@ class FactoryLoader
         void syntaxError(const std::string& message);
         void warning(const std::string& message);
         TypeTable mvalues;
+        AbstractFactories* factories;
     private:
 };
 
@@ -68,7 +70,7 @@ AbstractFactoryBase<Product>* FactoryLoader::getFactory(const std::string& _name
     }
     catch (int i)
     {
-        auto factory = AbstractFactories::global().getFactory<Product>(_default);
+        auto factory = factories->getFactory<Product>(_default);
         if (mvalues.loggingUndefined())
         {
             mvalues.addValue<AbstractFactoryBase<Product>*>(_name, factory);

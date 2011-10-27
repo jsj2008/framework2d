@@ -7,7 +7,7 @@
 class TextFileFactoryLoader : public FactoryLoader
 {
     public:
-        TextFileFactoryLoader(const char* filename, bool logUndefined = false);
+        TextFileFactoryLoader(const char* filename, AbstractFactories* _factories, bool logUndefined = false);
         virtual ~TextFileFactoryLoader();
         bool isValid();
         bool next();

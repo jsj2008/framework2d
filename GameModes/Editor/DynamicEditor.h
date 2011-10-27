@@ -112,12 +112,12 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         //DynamicEditorVariable* nameVariableController;
         VariableFactory* nameVariableControllerFactory;
 
-        class FactoryGetList: public EventsListener<FactoryGetEvent<Entity>>
+        class FactoryGetList //: public EventsListener<FactoryGetEvent<Entity>> /// FIXME this is now missing
         {
             public:
                 std::unordered_set<std::string>& getFactories(){return factories;}
             protected:
-                bool trigger(FactoryGetEvent<Entity>* event);
+                //bool trigger(FactoryGetEvent<Entity>* event);
                 std::unordered_set<std::string> factories;
         };
         class FactoryUseList: public EventsListener<FactoryUsageEvent<b2Body>>

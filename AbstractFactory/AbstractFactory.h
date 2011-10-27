@@ -119,7 +119,7 @@ const Registrar<Product, DerivedType> AbstractFactory<Product, DerivedType>::reg
 template <typename Product, typename DerivedType>
 Registrar<Product, DerivedType>::Registrar()
 {
-    AbstractFactories::global().registerFactoryType<Product, DerivedType>();
+    AbstractFactories::registerFactoryType<Product, DerivedType>();
 }
 
 #endif // ABSTRACTFACTORY_H

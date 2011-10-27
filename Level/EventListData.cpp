@@ -10,3 +10,8 @@ EventListData::~EventListData()
 {
     //dtor
 }
+
+void EventListData::virtualSave(XmlDataSaver* _saver)
+{
+
+}

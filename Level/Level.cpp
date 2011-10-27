@@ -26,7 +26,7 @@ Level::~Level()
 }
 Entity* Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
-    Entity* entity = AbstractFactories::global().useFactory<Entity>(factory, parameters);
+    Entity* entity = factories.useFactory<Entity>(factory, parameters);
     table[entity] = {factory,*parameters};
     return entity;
 }

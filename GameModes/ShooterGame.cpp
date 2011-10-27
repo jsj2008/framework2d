@@ -10,22 +10,31 @@
 #include <Level/Level.h>
 #include <Level/XmlResourceProvider.h>
 #include <Level/LevelLoader.h>
+#include <AI/AIManager.h>
 
 ShooterGame::ShooterGame()
 {
     //ctor
+    AbstractFactories::registerFactoryType<Entity, BubbleFactory<SuctionBubble>>(); /// FIXME these should be in the bubble game
+    AbstractFactories::registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
+
     XmlResourceProvider provider;
     LevelLoader loader(&provider);
-    loader.load("Levels.xml/Level1/Level");
-    activeLevel = new Level("default");
-    AbstractFactories::global().setWorld(activeLevel->getWorld());
-    AbstractFactories::global().init(); /// FIXME these need to not be global
+    LevelData* data = loader.load("Levels.xml/Level1/Level");
+    activeLevel = data->build();
+    //activeLevel = new Level("default");
+    //AbstractFactories::global().init(); /// FIXME these need to not be global
 
     mCamera = nullptr;
-    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<SuctionBubble>>(); /// FIXME these should be in the bubble game
-    AbstractFactories::global().registerFactoryType<Entity, BubbleFactory<UpwardsGravityBubble>>();
 
-    activeLevel->loadLevel();
+    //activeLevel->loadLevel();
+    g_AIManager.init(activeLevel->getWorld()); /// FIXME this shouildn't be global
+    g_AIManager.finalisePathfinding();
+
+    FactoryParameters params;
+    params.add<unsigned short>("entityKey", 0);
+    PlayerOneCreated event(static_cast<AIEntity*>(activeLevel->getFactories()->useFactory<Entity>("PlayerFactory",&params)));
+    event.trigger();
 }
 
 ShooterGame::~ShooterGame()

@@ -2,10 +2,19 @@
 #include <Log/Log.h>
 using namespace FactoryLoaderPrivate;
 
-FactoryLoader::FactoryLoader(bool logUndefined)
+FactoryLoader::FactoryLoader(AbstractFactories* _factories, bool logUndefined)
 :mvalues(logUndefined)
 {
     //ctor
+    factories = _factories;
+}
+
+FactoryLoader::FactoryLoader(const std::string& _type, const std::string& _name, TypeTable* _table, AbstractFactories* _factories)
+:mvalues(*_table)
+{
+    type = _type;
+    name = _name;
+    factories = _factories;
 }
 
 FactoryLoader::~FactoryLoader()

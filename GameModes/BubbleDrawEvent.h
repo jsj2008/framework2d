@@ -3,11 +3,14 @@
 
 #include <Input/Mouse/ClickDragEvent.h>
 class SelectionBox;
+template <typename Product>
+class AbstractFactoryBase;
+class Entity;
 
 class BubbleDrawEvent : public ClickDragEvent
 {
     public:
-        BubbleDrawEvent(SelectionBox* _selectionBox);
+        BubbleDrawEvent(SelectionBox* _selectionBox, AbstractFactoryBase<Entity>* _bubbleFactory);
         virtual ~BubbleDrawEvent();
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
@@ -15,6 +18,7 @@ class BubbleDrawEvent : public ClickDragEvent
     protected:
     private:
         SelectionBox* selectionBox;
+        AbstractFactoryBase<Entity>* bubbleFactory;
 };
 
 #endif // BUBBLEDRAWEVENT_H

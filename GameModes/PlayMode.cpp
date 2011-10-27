@@ -82,7 +82,7 @@ bool PlayMode::trigger(PlayerOneCreated* event)
     AIEntity* entity = event->getPlayer();
     FactoryParameters params;
     params.add<b2Body*>("body", entity->getBody());
-    mCamera = AbstractFactories::global().useFactory<Camera>("BodyCameraFactory", &params);
+    mCamera = activeLevel->getFactories()->useFactory<Camera>("BodyCameraFactory", &params);
     playerOneBrain = entity->getBrain();
     return true;
 }

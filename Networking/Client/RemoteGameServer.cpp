@@ -68,8 +68,8 @@ bool RemoteGameServer::trigger(ServerMessageEvent<ClientInitialisationMessage>* 
     FactoryParameters params;
     params.add<std::string>("name", "player");
     params.add<unsigned short>("entityKey", event->getMessage()->getEntityKey());
-    /// Need to set PlayMode's camera
-    AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params);
+    /// FIXME need to put this back in
+    ///AbstractFactories::global().useFactory<Camera>("BodyCameraFactory",&params);
     return true;
 }
 bool RemoteGameServer::trigger(ServerMessageEvent<FrameUpdateMessage>* event)

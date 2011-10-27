@@ -28,7 +28,6 @@ class TypeTable
 
         TypeTable(bool logUndefined);
         TypeTable(const TypeTable& _rhs);
-        //TypeTable(const TypeTable& rhs);
         virtual ~TypeTable();
 
     template <typename T>

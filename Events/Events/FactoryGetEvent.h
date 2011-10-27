@@ -1,6 +1,6 @@
 #ifndef FACTORYGETEVENT_H
 #define FACTORYGETEVENT_H
-
+/*
 #include <Events/Event.h>
 template <typename Product>
 class AbstractFactoryBase;
@@ -39,5 +39,5 @@ const std::string& FactoryGetEvent<Product>::getName()
 {
     //ctor
     return factory->getInstanceName();
-}
+}*/
 #endif // FACTORYGETEVENT_H

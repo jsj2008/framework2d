@@ -14,7 +14,7 @@ LevelEntity::LevelEntity(EntityList* _entityList, FactoryParameters* _parameters
     entity = nullptr;
     listBoxItem = nullptr;
     entityList = _entityList;
-    factory = AbstractFactories::global().getFactory<Entity>(_factoryName);
+    factory = nullptr; /// FIXME AbstractFactories::global().getFactory<Entity>(_factoryName);
     factoryName = _factoryName;
 }
 

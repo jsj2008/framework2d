@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <string>
-#include <AbstractFactory/FactoryParameters.h>
+#include <AbstractFactory/AbstractFactories.h>
 class Entity;
 class b2Joint;
 class b2JointDef;
@@ -25,6 +25,7 @@ class Level
         void removeJoint(b2Joint* joint);
         void tick();
         PhysicsManager* getWorld(){return world;}
+        AbstractFactories* getFactories(){return &factories;}
         void loadLevel();
         EntityList* getEntityList(){return entityList;}
     protected:
@@ -40,6 +41,7 @@ class Level
 
         PhysicsManager* world;
         EntityList* entityList;
+        AbstractFactories factories;
 };
 
 #endif // LEVEL_H

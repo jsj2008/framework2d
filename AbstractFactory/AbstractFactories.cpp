@@ -18,26 +18,23 @@ void AbstractFactories::setWorld(PhysicsManager* _world)
 }
 void AbstractFactories::init()
 {
-    std::unordered_map<std::string, class AbstractFactoryListBase*>* factoryLists = getFactoryListList();
-    for (auto i = factoryLists->begin(); i != factoryLists->end(); i++)
+    for (auto i = productTypeList().begin(); i != productTypeList().end(); i++)
     {
-        i->second->init(this);
+        ProductType* productType = i->second;
+        unsigned int id = productType->getProductId();
+        while (id >= indexedFactoryLists.size())
+        {
+            indexedFactoryLists.resize(id+1);
+        }
+        indexedFactoryLists[id] = productType->createFactoryList(this);
+        //i->second->init(this);
     }
 }
 
-void AbstractFactories::print()
-{
-    for (auto i = getFactoryListList()->begin(); i != getFactoryListList()->end(); i++)
-    {
-        i->second->print();
-    }
-}
-
-
-UntypedAbstractFactory* AbstractFactories::getUntypedFactory(const std::string& type, const std::string& name)
+/*UntypedAbstractFactory* AbstractFactories::getUntypedFactory(const std::string& type, const std::string& name)
 {
     return (*getFactoryListList())[type]->getUntypedFactory(name);
-}
+}*/
 
 PhysicsManager* AbstractFactories::getWorld()
 {

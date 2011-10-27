@@ -39,6 +39,6 @@ void BubbleGame::buttonUp(Vec2i mouse, unsigned char button)
                 throw -1;
             }
         }
-        AbstractFactories::global().useFactory<Entity>(factory,&parameters);
+        //AbstractFactories::global().useFactory<Entity>(factory,&parameters);
     }
 }

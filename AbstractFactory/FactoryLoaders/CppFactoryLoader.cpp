@@ -1,7 +1,8 @@
 #include "CppFactoryLoader.h"
 #include <Types/XmlFilePropertyBagSerializer.h>
 
-CppFactoryLoader::CppFactoryLoader()
+CppFactoryLoader::CppFactoryLoader(AbstractFactories* _factories)
+:FactoryLoader(_factories)
 {
     //ctor
 }
@@ -11,6 +12,11 @@ CppFactoryLoader::~CppFactoryLoader()
     //dtor
 }
 
+CppFactoryLoader::CppFactoryLoader(const std::string& _type, const std::string& _name, TypeTable* _table, AbstractFactories* _factories)
+:FactoryLoader(_type, _name, _table, _factories)
+{
+
+}
 bool CppFactoryLoader::isValid()
 {
     return true;

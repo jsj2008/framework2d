@@ -19,9 +19,8 @@ class FactoryLoader;
 class AbstractFactoryListBase
 {
     public:
-        AbstractFactoryListBase(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists, const std::string& _productName);
+        AbstractFactoryListBase(){}
         virtual ~AbstractFactoryListBase();
-        virtual void init(AbstractFactories* factories)=0;
         virtual void print()=0;
         virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
     protected:
@@ -29,15 +28,16 @@ class AbstractFactoryListBase
 };
 
 template <typename Product>
-class AbstractFactoryList: private AbstractFactoryListBase
+class AbstractFactoryList: public AbstractFactoryListBase
 {
     public:
-        AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists);
-        void init(AbstractFactories* factories);
+        AbstractFactoryList(AbstractFactories* _factoriesListList);
         virtual ~AbstractFactoryList();
 
         template <typename Factory>
-        void registerFactoryType(const std::string& name, AbstractFactories* factories);
+        static void registerFactoryType(const std::string& _name);
+
+        static void registerFactoryType(const std::string& _name, FactoryCreator<Product>* _creator);
 
         void addFactory(AbstractFactories* _factories, FactoryLoader* _loader);
 
@@ -60,7 +60,12 @@ class AbstractFactoryList: private AbstractFactoryListBase
             static std::string name = EvaluateTypeName<Product>();
             return name;
         }
-        std::unordered_map<std::string,FactoryCreator<Product>*> factoryCreators;
+        AbstractFactories* factoriesListList;
+        static std::unordered_map<std::string,FactoryCreator<Product>*>& factoryCreators()
+        {
+            static std::unordered_map<std::string,FactoryCreator<Product>*> list;
+            return list;
+        }
         std::unordered_map<AbstractFactoryReference,AbstractFactoryBase<Product>*> factories;
 };
 
@@ -70,7 +75,6 @@ class AbstractFactoryList: private AbstractFactoryListBase
 *
 */
 
-#include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
 template <typename Product>
 class FactoryCreator
 {
@@ -85,7 +89,7 @@ class TemplateFactoryCreator : public FactoryCreator<Product>
         AbstractFactoryBase<Product>* createFactory(){return new Factory();}
 };
 
-#include <Events/Events/FactoryTypeRegisterEvent.h>
+#include <AbstractFactory/FactoryLoaders/TextFileFactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactory.h>
 #include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
@@ -93,31 +97,46 @@ class TemplateFactoryCreator : public FactoryCreator<Product>
 #include <Events/Events/FactoryCreateEvent.h>
 #include <Events/Events.h>
 
-template <typename Product>
+/*template <typename Product>
 template <typename Factory>
-void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, AbstractFactories* _factories)
+void AbstractFactoryList<Product>::registerFactoryType(const std::string& name)
 {
     if (factoryCreators.find(name) == factoryCreators.end())
     {
         auto creator = new TemplateFactoryCreator<Product, Factory>;
         factoryCreators[name] = creator;
-        AbstractFactoryBase<Product>* factory = creator->createFactory();
-        factories[name] = factory;
         FactoryTypeRegisterEvent<Product> event(name);
         Events::global().triggerEvent(&event);
     }
+}*/
+template <typename Product>
+void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, FactoryCreator<Product>* _creator)
+{
+    if (factoryCreators().find(name) == factoryCreators().end())
+    {
+        factoryCreators()[name] = _creator;
+    }
+    else delete _creator;
 }
+
 
 template <typename Product>
 AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference _factory)
 {
-    auto factory = factories[_factory];
+    AbstractFactoryBase<Product>* factory = factories[_factory];
     if (factory == nullptr)
     {
+        auto creator = factoryCreators().find(_factory);
+        if (creator != factoryCreators().end())
+        {
+            factory = creator->second->createFactory();
+            factories[_factory] = factory;
+            static TextFileFactoryLoader emptyConfig(nullptr, factoriesListList);
+            factory->baseInit(_factory, &emptyConfig, factoriesListList);
+            return factory;
+        }
         g_Log.error("No such factory: " + _factory);
     }
-    FactoryGetEvent<Product> event(factory);
-    Events::global().triggerEvent(&event);
     return factory;
 }
 
@@ -128,13 +147,11 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
     if (parameters == nullptr)
     {
         static FactoryParameters params;
-        assert(factories[factory]);
-        product = factories[factory]->use(&params);
+        product = getFactory(factory)->use(&params);
     }
     else
     {
-        assert(factories[factory]);
-        product = factories[factory]->use(parameters);
+        product = getFactory(factory)->use(parameters);
         std::string name = parameters->get<std::string>("name", "");
         if (name != "")
         {
@@ -143,26 +160,6 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
         }
     }
     return product;
-}
-template <typename Product>
-void AbstractFactoryList<Product>::init(AbstractFactories* _factories)
-{
-    static TextFileFactoryLoader emptyConfig(nullptr);
-    for (auto i = factories.begin(); i != factories.end(); i++)
-    {
-        i->second->baseInit(i->second->getName(), &emptyConfig, _factories);
-    }
-    TextFileFactoryLoader loader(("Resources/" + productName() + "Factories.xml").c_str());
-    while (loader.next())
-    {
-        assert(factories.find(loader.getName()) == factories.end());
-        AbstractFactoryBase<Product>* factory = factoryCreators[loader.getType()]->createFactory();
-        factory->baseInit(loader.getName(), &loader, _factories);
-        factories[loader.getName()] = factory;
-        loader.end();
-        FactoryCreateEvent<Product> event(factory, loader.getName());
-        Events::global().triggerEvent(&event);
-    }
 }
 template <typename Product>
 UntypedAbstractFactory* AbstractFactoryList<Product>::getUntypedFactory(const std::string& name)
@@ -174,17 +171,17 @@ template <typename Product>
 void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, FactoryLoader* _loader)
 {
     assert(factories.find(_loader->getName()) == factories.end());
-    AbstractFactoryBase<Product>* factory = factoryCreators[_loader->getType()]->createFactory();
+    AbstractFactoryBase<Product>* factory = factoryCreators()[_loader->getType()]->createFactory();
     factory->baseInit(_loader->getName(), _loader, _factories);
     factories[_loader->getName()] = factory;
 }
 
 #include <AbstractFactory/TypeTableFactoryType.h>
 template <typename Product>
-AbstractFactoryList<Product>::AbstractFactoryList(std::unordered_map<std::string, AbstractFactoryListBase*>* factoryLists)
-:AbstractFactoryListBase(factoryLists, productName())
+AbstractFactoryList<Product>::AbstractFactoryList(AbstractFactories* _factoriesListList)
 {
     //ctor
+    factoriesListList = _factoriesListList;
     TypeTable::overloadType<AbstractFactoryBase<Product>*>(getProductName()+"Factory", new TypeTableFactoryType<Product>(this));
 }
 

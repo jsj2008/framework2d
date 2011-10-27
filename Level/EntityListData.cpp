@@ -15,3 +15,15 @@ EntityListData::~EntityListData()
         entities[i]->decrement();
     }
 }
+
+void EntityListData::virtualSave(XmlDataSaver* _saver)
+{
+}
+
+void EntityListData::build(AbstractFactories* _factories)
+{
+    for (unsigned int i = 0; i < entities.size(); i++)
+    {
+        entities[i]->build(_factories);
+    }
+}

@@ -9,6 +9,7 @@ class EventListData : public LoadedData
         virtual ~EventListData();
     protected:
     private:
+        void virtualSave(XmlDataSaver* _saver);
 };
 
 #endif // EVENTLISTDATA_H

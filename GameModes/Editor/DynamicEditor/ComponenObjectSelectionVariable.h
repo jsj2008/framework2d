@@ -98,7 +98,7 @@ template <typename Product>
 ComponentObjectSelectionVariableFactory<Product>::ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue)
 :VariableFactory(_name)
 {
-    defaultValue = AbstractFactories::global().getFactory<Product>(_defaultValue);
+    defaultValue = nullptr; /// FIXME AbstractFactories::global().getFactory<Product>(_defaultValue);
     CEGUI::Window* widget = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelection.layout", name);
     widget->setText(name);
     itemList = new ItemList<Product>(widget, static_cast<CEGUI::Combobox*>(widget->getChildAtIdx(2)));

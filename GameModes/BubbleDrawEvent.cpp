@@ -3,10 +3,11 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/Entity.h>
 
-BubbleDrawEvent::BubbleDrawEvent(SelectionBox* _selectionBox)
+BubbleDrawEvent::BubbleDrawEvent(SelectionBox* _selectionBox, AbstractFactoryBase<Entity>* _bubbleFactory)
 {
     //ctor
     selectionBox = _selectionBox;
+    bubbleFactory = _bubbleFactory;
 }
 
 BubbleDrawEvent::~BubbleDrawEvent()
@@ -33,7 +34,7 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
         parameters.add<float>("radius",radius);
         parameters.add<std::string>("materialName","defaultBubble");
         //def.type = (Bubble::BubbleType)selectionBox->getCurrentSelection();
-        AbstractFactories::global().useFactory<Entity>("suctionBubble",&parameters);
+        bubbleFactory->use(&parameters);
     }
 }
 
