@@ -1,7 +1,8 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include <AbstractFactory/AutoSelfFactory.h>
+#include <GameObject.h>
+#include <AbstractFactory/AbstractFactory.h>
 class Vec2f;
 class FiringMechanism;
 class WeaponAction;
@@ -15,7 +16,7 @@ class WeaponAction;
     Firing mechanism (how the gun operates; full auto, targeting system, create at point)
     Action (fire projectile, teleport, make bubble)
 */
-class Weapon
+class Weapon : public GameObject<Weapon>
 {
     public:
         struct ImmutableData
@@ -34,6 +35,8 @@ class Weapon
         {
             return "WeaponFactory";
         }
+
+        static void registerActions();
     protected:
     private:
         const Weapon::ImmutableData& data;

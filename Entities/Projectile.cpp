@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
@@ -21,7 +22,8 @@ void Projectile::update()
 {
     if (!alive)
     {
-        FactoryParameters parameters({{"position",mBody->GetPosition()}});
+        FactoryParameters parameters;
+        parameters.add<Vec2f>("position", body->getPosition());
         explosion->use(&parameters);
         delete this;
     }

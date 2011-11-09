@@ -6,8 +6,7 @@
 #include <Level/XmlDataSaver.h>
 #include <AbstractFactory/AbstractFactories.h>
 
-LevelData::LevelData(const std::string& _address)
-:LoadedData(_address)
+LevelData::LevelData()
 {
     //ctor
 }
@@ -55,8 +54,21 @@ Level* LevelData::build()
     return level;
 }
 
-void LevelData::virtualSave(XmlDataSaver* _saver)
+void LevelData::virtualSave(XmlDataSaver* _saver, const std::string* _address)
 {
+    TiXmlHandle element = _saver->createElement(address, "Level");
+    for (unsigned int i = 0; i < eventLists.size(); i++)
+    {
+        eventLists[i]->save(_saver, &address);
+    }
+    for (unsigned int i = 0; i < entityLists.size(); i++)
+    {
+        entityLists[i]->save(_saver, &address);
+    }
+    for (unsigned int i = 0; i < factoryLists.size(); i++)
+    {
+        factoryLists[i]->save(_saver, &address);
+    }
 }
 
 

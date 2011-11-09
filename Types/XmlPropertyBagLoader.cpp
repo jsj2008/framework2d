@@ -50,10 +50,9 @@ void XmlPropertyBagLoader::readParameters(FactoryParameters* _params)
 {
     for (TiXmlElement* property = element->FirstChildElement(); property != nullptr; property = property->NextSiblingElement())
     {
-        std::string type = property->Value();
+        std::string type = property->Attribute("Type");
         const char* name = property->Attribute("Name");
-        const char* value = property->Attribute("Value");
-        if (type.size() > 5 && type.substr(type.size()-5, type.size()) == "Array")
+        if (std::string(property->Value()) == "Array")
         {
             std::vector<std::string> values;
             for (TiXmlElement* arrayValue = property->FirstChildElement("Member"); arrayValue != nullptr; arrayValue = arrayValue->NextSiblingElement("Member"))
@@ -61,10 +60,11 @@ void XmlPropertyBagLoader::readParameters(FactoryParameters* _params)
                 values.push_back(arrayValue->Attribute("Value"));
             }
             TypeTable* table = _params->getTypeTable();
-            table->addDynamicArrayValue(type.substr(0, type.size()-5), name, values.size(), &values[0]);
+            table->addDynamicArrayValue(type, name, values.size(), &values[0]);
         }
         else
         {
+            const char* value = property->Attribute("Value");
             _params->addDynamicValue(type, name, value);
         }
     }

@@ -20,7 +20,7 @@ Explosion::~Explosion()
 
 void Explosion::update()
 {
-    b2Fixture* myFixture = mBody->GetFixtureList();
+    /*b2Fixture* myFixture = mBody->GetFixtureList();
     Vec2f myPosition = mBody->GetWorldCenter();
     for (b2ContactEdge* ce = mBody->GetContactList(); ce != nullptr; ce = ce->next)
     {
@@ -37,5 +37,5 @@ void Explosion::update()
     if (expiryFrame == g_Timer.getFrame())
     {
         delete this;
-    }
+    }*/
 }

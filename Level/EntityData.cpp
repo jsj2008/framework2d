@@ -2,8 +2,7 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <Entities/Entity.h>
 
-EntityData::EntityData(const char* _type, FactoryParameters* _params, const std::string& _address)
-:LoadedData(_address)
+EntityData::EntityData(const char* _type, FactoryParameters* _params)
 {
     //ctor
     type = _type;
@@ -16,7 +15,7 @@ EntityData::~EntityData()
     delete params;
 }
 
-void EntityData::virtualSave(XmlDataSaver* _saver)
+void EntityData::virtualSave(XmlDataSaver* _saver, const std::string* _address)
 {
 
 }

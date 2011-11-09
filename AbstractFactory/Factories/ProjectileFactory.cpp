@@ -2,6 +2,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Projectile.h>
 #include <Graphics/Skins/StaticSkin.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
@@ -36,8 +37,8 @@ Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
 
     Entity* entity = new Projectile(explosionFactory, skin);
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    body->createFixture(&fixtureDef);
     return entity;
 }

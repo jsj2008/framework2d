@@ -1,6 +1,8 @@
 #ifndef ABSTRACTFACTORIES_H
 #define ABSTRACTFACTORIES_H
 
+#include <GameObject.h>
+#include <Entities/CollisionDatabase.h>
 #include <string>
 #include <vector>
 #include <cassert>
@@ -18,7 +20,7 @@ class FactoryLoader;
 class AbstractFactoryListBase;
 class PhysicsManager;
 
-class AbstractFactories
+class AbstractFactories : public GameObject<AbstractFactories>
 {
     public:
         AbstractFactories();
@@ -40,6 +42,8 @@ class AbstractFactories
         template <typename Product>
         void addFactory(FactoryLoader* _loader);
 
+        void addFactory(const std::string& _product, FactoryLoader* _loader);
+
         /// For this function, considering storing all untyped factories in one list referenced by one parameter,
         /// if I start to use it enough. These are inefficient to create and use, but it will take a little more
         /// time and memory to maintain a list of all factories
@@ -50,7 +54,9 @@ class AbstractFactories
 
         void setWorld(PhysicsManager* _world);
         PhysicsManager* getWorld();
+        CollisionDatabase* getCollisionDatabase(){return &collisionDatabase;}
 
+        static void registerActions();
     protected:
     private:
         class ProductType
@@ -97,6 +103,7 @@ class AbstractFactories
         }
         std::vector<AbstractFactoryListBase*> indexedFactoryLists;
         PhysicsManager* physicsManager;
+        CollisionDatabase collisionDatabase;
 };
 
 /** Implementation
@@ -106,8 +113,10 @@ class AbstractFactories
 
 
 #include <AbstractFactory/AbstractFactoryList.h>
+#include <AbstractFactory/TypeTableFactoryType.h>
 #include <Events/Events/FactoryTypeRegisterEvent.h>
 #include <Events/Events.h>
+#include <Types/TypeTable.h>
 
 template <typename Product>
 Product* AbstractFactories::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
@@ -129,19 +138,11 @@ void AbstractFactories::registerFactoryType()
     FactoryTypeRegisterEvent<Product> event(Factory::name());
     Events::global().triggerEvent(&event);
 }
-template <typename Product>
-void AbstractFactories::renameProduct(const std::string& name)
-{
-    AbstractFactoryList<Product>* list = getFactoryList<Product>();
-    (*getFactoryListList())[name] = list;
-    getFactoryListList()->erase(list->getProductName());
-    list->setProductName(name);
-}
 
 template <typename Product>
 void AbstractFactories::addFactory(FactoryLoader* _loader)
 {
-    getFactoryList<Product>()->addFactory(this, _loader);
+    getFactoryList<Product>()->AbstractFactoryList<Product>::addFactory(this, _loader);
 }
 
 template <typename Product>
@@ -149,6 +150,7 @@ AbstractFactories::DerivedProductType<Product>::DerivedProductType(unsigned int&
 :ProductType(_productId)
 {
     (*_productTypeList)[EvaluateTypeName<Product>()] = this;
+    TypeTable::overloadType<AbstractFactoryBase<Product>*>(AbstractFactoryList<Product>::getProductName()+"Factory", new TypeTableFactoryType<Product>);
 }
 
 template <typename Product>

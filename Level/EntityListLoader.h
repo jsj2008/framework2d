@@ -11,7 +11,7 @@ class EntityListLoader : public DataLoader<EntityListLoader, EntityListData>
     public:
         EntityListLoader(XmlResourceProvider* _provider);
         virtual ~EntityListLoader();
-        EntityListData* virtualLoad(const std::string& _listName);
+        void virtualLoad(const std::string& _listName, EntityListData* _list);
     protected:
     private:
         XmlResourceProvider* provider;

@@ -3,15 +3,16 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 #include <Box2D/Box2D.h>
+class Body;
 class FactoryLoader;
 
-class CharacterBodyFactory : public AbstractFactory<b2Body, CharacterBodyFactory>
+class CharacterBodyFactory : public AbstractFactory<Body, CharacterBodyFactory>
 {
     public:
         CharacterBodyFactory();
         virtual ~CharacterBodyFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        b2Body* useFactory(FactoryParameters* params);
+        Body* useFactory(FactoryParameters* params);
         static std::string name()
         {
             return "CharacterBodyFactory";
@@ -26,6 +27,7 @@ class CharacterBodyFactory : public AbstractFactory<b2Body, CharacterBodyFactory
         b2CircleShape wheelShape;
         b2RevoluteJointDef wheelJoint;
         PhysicsManager* world;
+        AbstractFactoryBase<CollisionResponse>* collisionResponse;
 
         Vec2f dimensions;
 };

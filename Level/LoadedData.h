@@ -7,15 +7,16 @@ class XmlDataSaver;
 class LoadedData
 {
     public:
-        LoadedData(const std::string& _address);
+        LoadedData();
         virtual ~LoadedData();
+        void init(const std::string& _address);
         void increment(){referenceCount++;}
-        void decrement();
-        void save(XmlDataSaver* _saver);
+        void decrement(); /// Automatically deletes self
+        void save(XmlDataSaver* _saver, const std::string* _address);
     protected:
-    private:
-        virtual void virtualSave(XmlDataSaver* _saver)=0;
         std::string address;
+    private:
+        virtual void virtualSave(XmlDataSaver* _saver, const std::string* _address)=0;
         unsigned short referenceCount;
 };
 

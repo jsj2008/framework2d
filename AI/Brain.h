@@ -1,6 +1,7 @@
 #ifndef BRAIN_H
 #define BRAIN_H
 
+#include <GameObject.h>
 #include <string>
 enum BrainType
 {
@@ -9,7 +10,7 @@ enum BrainType
     eBrainTypesMax
 };
 class AIEntity;
-class Brain
+class Brain : public GameObject<Brain>
 {
     public:
         Brain();
@@ -22,6 +23,7 @@ class Brain
         {
             return "Brain";
         }
+        static void registerActions();
         void registerDeathListener(void*){throw -1;}
     protected:
         friend class ShooterGame; /// FIXME

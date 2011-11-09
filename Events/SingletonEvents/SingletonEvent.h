@@ -28,6 +28,6 @@ SingletonEvent<DerivedEvent>::~SingletonEvent()
 template <typename DerivedEvent>
 void SingletonEvent<DerivedEvent>::trigger()
 {
-    SingletonEventHandler<DerivedEvent>::singleton().trigger(this);
+    SingletonEventHandler<DerivedEvent>::singleton().trigger(static_cast<DerivedEvent*>(this));
 }
 #endif // SINGLETONEVENT_H

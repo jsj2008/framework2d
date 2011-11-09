@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include <AbstractFactory/AbstractFactory.h>
+class Skin;
 class Entity;
 class FactoryLoader;
 
@@ -23,6 +24,7 @@ class CrateFactory : public AbstractFactory<Entity, CrateFactory>
         b2PolygonShape shapeDef;
         AbstractFactoryBase<Skin>* skinFactory;
         PhysicsManager* physicsManager;
+        AbstractFactoryBase<CollisionResponse>* collisionResponse;
     private:
 };
 

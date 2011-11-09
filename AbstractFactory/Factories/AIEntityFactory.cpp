@@ -10,6 +10,7 @@
 #include <Game.h>
 #include <GameModes/PlayMode.h>
 #include <Graphics/Camera/PhysicsCamera.h>
+#include <Physics/Body.h>
 
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/FactoryLoader.h>
@@ -23,7 +24,7 @@ void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     //ctor
     weaponFactory = loader->getFactory<Weapon>("weapon","WeaponFactory");
 
-    bodyFactory = loader->getFactory<b2Body>("body" ,"CharacterBodyFactory");
+    bodyFactory = loader->getFactory<Body>("body" ,"CharacterBodyFactory");
     skinFactory = loader->getFactory<Skin>("material", "StaticSkinFactory");
     brainFactory = loader->getFactory<Brain>("brain", "PlayerInputBrainFactory");
     controllerFactory = loader->getFactory<CharacterController>("characterController", "WheelControllerFactory");

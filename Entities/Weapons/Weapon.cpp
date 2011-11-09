@@ -2,6 +2,7 @@
 #include <Timer.h>
 #include <Entities/Weapons/FiringMechanism.h>
 #include <Entities/Weapons/WeaponAction.h>
+#include <AbstractFactory/AutoSelfFactory.h>
 
 Weapon::Weapon(const Weapon::ImmutableData& _data, FactoryParameters* _parameters)
 :data(_data)
@@ -32,3 +33,7 @@ void Weapon::fireEnd(const Vec2f& source, const Vec2f& position)
     }
 }
 
+void Weapon::registerActions()
+{
+
+}

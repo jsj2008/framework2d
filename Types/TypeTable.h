@@ -9,6 +9,7 @@
 #include <Types/Vec2f.h>
 #include <Log/Log.h>
 #include <AbstractFactory/EvaluateTypeName.h>
+class AbstractFactories;
 
 template <typename T>
 std::string& name()
@@ -26,7 +27,7 @@ class TypeTable
         typedef std::string ValueIndex;
         typedef std::string TypeIndex;
 
-        TypeTable(bool logUndefined);
+        TypeTable(AbstractFactories* _factories, bool logUndefined);
         TypeTable(const TypeTable& _rhs);
         virtual ~TypeTable();
 
@@ -82,7 +83,7 @@ class TypeTable
             public:
                 Type(){}
                 virtual ~Type(){}
-                virtual Value* parseInstance(const std::string& _value)=0;
+                virtual Value* parseInstance(TypeTable* _typeTable, const std::string& _value)=0;
                 virtual ArrayValue* arrayInstance()=0;
                 virtual Type* clone()=0;
         };
@@ -131,6 +132,9 @@ class TypeTable
                 virtual ArrayValue* arrayInstance()=0;
         };
 
+        AbstractFactories* getFactories(){return factories;}
+        void setFactories(AbstractFactories* _factories){factories = _factories;}
+
     template <typename T>
         static void overloadType(const TypeIndex& name, Type* _newFactory);
 
@@ -169,7 +173,7 @@ class TypeTable
         {
             public:
                 TemplateType(){staticRegister.check();}
-                Value* parseInstance(const std::string& _value){return new TemplateValue<T>(_value);}
+                Value* parseInstance(TypeTable* _typeTable, const std::string& _value){return new TemplateValue<T>(_value);}
                 ArrayValue* arrayInstance(){return new TemplateArrayValue<T>();}
                 Value* instance(T _value){TemplateValue<T>* ret = new TemplateValue<T>; ret->set(_value); return ret;}
                 Type* clone(){return new TemplateType<T>();}
@@ -208,6 +212,7 @@ class TypeTable
         std::unordered_map<TypeIndex, std::vector<UntypedValue*>> untypedValues;
         bool logUndefined;
         std::unordered_map<ValueIndex, Value*> undefinedLog;
+        AbstractFactories* factories;
     private:
     template <typename T>
         void registerType(const TypeIndex& name);
@@ -417,7 +422,7 @@ const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
             {
                 try
                 {
-                    TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->parseInstance(_default));
+                    TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->parseInstance(this, _default));
                     undefinedLog[_name] = value;
                     return value->get();
                 }

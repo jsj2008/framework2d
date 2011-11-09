@@ -18,7 +18,7 @@ class CppFactoryLoader : public FactoryLoader
         void setName(const std::string& _name){name = _name;}
         void setType(const std::string& _type){type = _type;}
         void addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value);
-        void setFactories(AbstractFactories* _factories){factories = _factories;}
+        void setFactories(AbstractFactories* _factories){mvalues.setFactories(_factories);}
     protected:
     private:
 };

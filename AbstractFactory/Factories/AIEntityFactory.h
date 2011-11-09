@@ -5,7 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
-class b2Body;
+class Body;
 class Brain;
 class Skin;
 class CharacterController;
@@ -25,7 +25,7 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
     protected:
     private:
         AbstractFactoryBase<Weapon>* weaponFactory;
-        AbstractFactoryBase<b2Body>* bodyFactory;
+        AbstractFactoryBase<Body>* bodyFactory;
         AbstractFactoryBase<Brain>* brainFactory;
         AbstractFactoryBase<Skin>* skinFactory;
         AbstractFactoryBase<CharacterController>* controllerFactory;

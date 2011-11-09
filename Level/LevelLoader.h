@@ -15,7 +15,7 @@ class LevelLoader : public DataLoader<LevelLoader, LevelData>
     public:
         LevelLoader(XmlResourceProvider* _provider);
         virtual ~LevelLoader();
-        LevelData* virtualLoad(const std::string& _levelName);
+        void virtualLoad(const std::string& _levelName, LevelData* _data);
     protected:
     private:
         EventListLoader eventListLoader;

@@ -1,9 +1,11 @@
 #include "CrateFactory.h"
 #include <AbstractFactory/FactoryParameters.h>
 #include <Physics/PhysicsManager.h>
+#include <Physics/Body.h>
 #include <Entities/Crate.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
+#include <Entities/CollisionResponse.h>
 
 CrateFactory::CrateFactory()
 {
@@ -25,6 +27,7 @@ void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     skinFactory = loader->getFactory<Skin>("skin","StaticSkinFactory");
     physicsManager = factories->getWorld();
     fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::CrateCategory);
+    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 Entity* CrateFactory::useFactory(FactoryParameters* parameters)
 {
@@ -38,9 +41,11 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    fixtureDef.userData = collisionResponse->use(parameters);
+    assert(fixtureDef.userData);
+    body->createFixture(&fixtureDef);
 
     return entity;
 }

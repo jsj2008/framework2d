@@ -3,10 +3,9 @@
 using namespace FactoryLoaderPrivate;
 
 FactoryLoader::FactoryLoader(AbstractFactories* _factories, bool logUndefined)
-:mvalues(logUndefined)
+:mvalues(_factories, logUndefined)
 {
     //ctor
-    factories = _factories;
 }
 
 FactoryLoader::FactoryLoader(const std::string& _type, const std::string& _name, TypeTable* _table, AbstractFactories* _factories)
@@ -14,7 +13,6 @@ FactoryLoader::FactoryLoader(const std::string& _type, const std::string& _name,
 {
     type = _type;
     name = _name;
-    factories = _factories;
 }
 
 FactoryLoader::~FactoryLoader()
@@ -28,10 +26,6 @@ FactoryLoader::~FactoryLoader()
 void FactoryLoader::syntaxError(const std::string& message)
 {
     g_Log.error("In class " + name + " of type " + type + ": " + message);
-}
-void FactoryLoader::warning(const std::string& message)
-{
-    g_Log.warning(message);
 }
 
 void FactoryLoader::end()

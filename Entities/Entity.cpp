@@ -1,41 +1,39 @@
 #include "Entity.h"
 #include <Graphics/Skins/Skin.h>
 #include <AbstractFactory/AbstractFactories.h>
-#include <Box2D/Box2D.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 
 Entity::Entity(Skin* _skin)
 {
     //ctor
     mSkin = _skin;
-    mBody = nullptr;
+    body = nullptr;
 }
 
 Entity::~Entity()
 {
     //dtor
-    EntityDeathEvent event(this);
-    deathHandler.trigger(&event);
     delete mSkin;
-    mBody->GetWorld()->DestroyBody(mBody);
+    delete body;
 }
 
 void Entity::render()
 {
-    mSkin->render(mBody);
+    mSkin->render(body);
 }
 
-void Entity::setBody(b2Body* _body)
+void Entity::setBody(Body* _body)
 {
-    assert(mBody == nullptr);
-    mBody = _body;
+    assert(body == nullptr);
+    body = _body;
 }
 const Vec2f& Entity::getPosition()
 {
-    return mBody->GetPosition();
+    return body->getPosition();
 }
 
-void Entity::registerDeathListener(InstanceEventListener<EntityDeathEvent>* _listener)
+void Entity::registerActions()
 {
-    deathHandler.registerListener(_listener);
+
 }

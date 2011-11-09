@@ -1,6 +1,7 @@
 #include "StaticSkinFactory.h"
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
+#include <Graphics/GraphicsManager.h> /// FIXME
 #include <AbstractFactory/FactoryParameters.h>
 
 StaticSkinFactory::StaticSkinFactory()

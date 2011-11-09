@@ -240,6 +240,12 @@
 		<Unit filename="Entities/Bubbles/SuctionBubble.h" />
 		<Unit filename="Entities/Bubbles/UpwardsGravityBubble.cpp" />
 		<Unit filename="Entities/Bubbles/UpwardsGravityBubble.h" />
+		<Unit filename="Entities/CollisionDatabase.cpp" />
+		<Unit filename="Entities/CollisionDatabase.h" />
+		<Unit filename="Entities/CollisionResponse.cpp" />
+		<Unit filename="Entities/CollisionResponse.h" />
+		<Unit filename="Entities/CollisionResponseFactory.cpp" />
+		<Unit filename="Entities/CollisionResponseFactory.h" />
 		<Unit filename="Entities/Crate.cpp" />
 		<Unit filename="Entities/Crate.h" />
 		<Unit filename="Entities/Entity.cpp" />
@@ -322,6 +328,10 @@
 		<Unit filename="Events/SingletonEvents/SingletonEventHandler.h" />
 		<Unit filename="Events/SingletonEvents/SingletonEventListener.cpp" />
 		<Unit filename="Events/SingletonEvents/SingletonEventListener.h" />
+		<Unit filename="Events/StringEvents/StringEventHandler.cpp" />
+		<Unit filename="Events/StringEvents/StringEventHandler.h" />
+		<Unit filename="Events/StringEvents/StringEventListener.cpp" />
+		<Unit filename="Events/StringEvents/StringEventListener.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
@@ -408,6 +418,8 @@
 		<Unit filename="GameModes/PlayMode.h" />
 		<Unit filename="GameModes/ShooterGame.cpp" />
 		<Unit filename="GameModes/ShooterGame.h" />
+		<Unit filename="GameObject.cpp" />
+		<Unit filename="GameObject.h" />
 		<Unit filename="Graphics/Camera/BodyCameraFactory.cpp" />
 		<Unit filename="Graphics/Camera/BodyCameraFactory.h" />
 		<Unit filename="Graphics/Camera/Camera.cpp" />
@@ -501,6 +513,8 @@
 		<Unit filename="Level/ParallaxSprite.h" />
 		<Unit filename="Level/XmlDataSaver.cpp" />
 		<Unit filename="Level/XmlDataSaver.h" />
+		<Unit filename="Level/XmlResourceManager.cpp" />
+		<Unit filename="Level/XmlResourceManager.h" />
 		<Unit filename="Level/XmlResourceProvider.cpp" />
 		<Unit filename="Level/XmlResourceProvider.h" />
 		<Unit filename="Log/GameConsole.cpp" />
@@ -547,6 +561,8 @@
 		<Unit filename="Networking/ServerToClient/FrameUpdateMessage.h" />
 		<Unit filename="Networking/ServerToClientMessage.cpp" />
 		<Unit filename="Networking/ServerToClientMessage.h" />
+		<Unit filename="Physics/Body.cpp" />
+		<Unit filename="Physics/Body.h" />
 		<Unit filename="Physics/CollisionHandlers/AIEntityProjectileCollisionHandler.cpp" />
 		<Unit filename="Physics/CollisionHandlers/AIEntityProjectileCollisionHandler.h" />
 		<Unit filename="Physics/CollisionHandlers/AllCollisionHandlers.h" />

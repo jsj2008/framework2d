@@ -9,14 +9,15 @@ class AbstractFactories;
 class FactoryData : public LoadedData
 {
     public:
-        FactoryData(const char* _type, const char* _name, FactoryParameters* _params, const std::string& _address);
+        FactoryData(const char* _type, const char* _name, const char* _product, FactoryParameters* _params);
         virtual ~FactoryData();
 
         void build(AbstractFactories* _factories);
     protected:
     private:
-        void virtualSave(XmlDataSaver* _saver);
+        void virtualSave(XmlDataSaver* _saver, const std::string* _address);
         CppFactoryLoader loader;
+        std::string product;
 };
 
 #endif // FACTORYDATA_H

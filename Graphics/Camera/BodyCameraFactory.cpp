@@ -19,7 +19,7 @@ BodyCameraFactory::~BodyCameraFactory()
 
 Camera* BodyCameraFactory::useFactory(FactoryParameters* params)
 {
-    b2Body* body = params->get<b2Body*>("body", nullptr);
+    Body* body = params->get<Body*>("body", nullptr);
     Camera* camera = new PhysicsCamera(body);
     return camera;
 }

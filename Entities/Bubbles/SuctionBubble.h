@@ -2,7 +2,7 @@
 #define SUCTIONBUBBLE_H
 
 #include <Entities/Bubble.h>
-
+class Body;
 
 class SuctionBubble : public Bubble
 {
@@ -16,7 +16,7 @@ class SuctionBubble : public Bubble
         }
     protected:
     private:
-        void affectBody(b2Body* body, Vec2f directionTo);
+        void affectBody(Body* body, Vec2f directionTo);
 };
 
 #endif // SUCTIONBUBBLE_H

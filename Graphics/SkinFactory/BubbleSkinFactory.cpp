@@ -1,4 +1,5 @@
 #include "BubbleSkinFactory.h"
+#include <Graphics/GraphicsManager.h> /// FIXME
 #include <Graphics/Skins/BubbleSkin.h>
 
 BubbleSkinFactory::BubbleSkinFactory()

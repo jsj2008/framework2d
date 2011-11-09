@@ -3,16 +3,16 @@
 
 #include <unordered_map>
 #include <string>
+#include <GameObject.h>
 #include <AbstractFactory/AbstractFactories.h>
 class Entity;
 class b2Joint;
 class b2JointDef;
 class TextureContext;
-class ParallaxLayer;
 class PhysicsManager;
 class EntityList;
 
-class Level
+class Level : public GameObject<Level>
 {
     public:
         Level(const char* _name);
@@ -28,14 +28,13 @@ class Level
         AbstractFactories* getFactories(){return &factories;}
         void loadLevel();
         EntityList* getEntityList(){return entityList;}
+
+        static void registerActions();
     protected:
     private:
         const char* name;
         void saveLevel();
         std::unordered_map<b2Joint*, b2JointDef*> jointToDefTable;
-        Vec2f backgroundScale;
-        Vec2f backgroundTransform;
-        std::vector<ParallaxLayer*> parallaxLayers;
 
         std::unordered_map<Entity*, std::pair<std::string,FactoryParameters> > table;
 

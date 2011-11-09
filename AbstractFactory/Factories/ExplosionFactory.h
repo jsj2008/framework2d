@@ -7,6 +7,7 @@
 class FactoryLoader;
 class Entity;
 class PhysicsManager;
+class Skin;
 
 class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
 {

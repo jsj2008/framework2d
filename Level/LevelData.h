@@ -1,17 +1,19 @@
 #ifndef LEVELDATA_H
 #define LEVELDATA_H
 
+#include <AbstractFactory/AbstractFactories.h>
 #include <Level/LoadedData.h>
 #include <vector>
 class EventListData;
 class EntityListData;
 class FactoryListData;
+class CollisionListData;
 class Level;
 
 class LevelData : public LoadedData
 {
     public:
-        LevelData(const std::string& _address);
+        LevelData();
         virtual ~LevelData();
         Level* build();
 
@@ -39,12 +41,15 @@ class LevelData : public LoadedData
             {return eventLists[_index];}
         void removeEventList(unsigned int _index); /// Removes from position and items later on in the list get shuffled down
 
+        AbstractFactories* getFactories(){return &factories;}
+
     protected:
     private:
-        void virtualSave(XmlDataSaver* _saver);
+        void virtualSave(XmlDataSaver* _saver, const std::string* _address);
         std::vector<EventListData*> eventLists;
         std::vector<EntityListData*> entityLists;
         std::vector<FactoryListData*> factoryLists;
+        AbstractFactories factories;
 };
 
 #endif // LEVELDATA_H

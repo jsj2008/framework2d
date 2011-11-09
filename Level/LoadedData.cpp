@@ -1,15 +1,19 @@
 #include "LoadedData.h"
 
-LoadedData::LoadedData(const std::string& _address)
+LoadedData::LoadedData()
 {
     //ctor
-    address = _address;
     referenceCount = 1;
 }
 
 LoadedData::~LoadedData()
 {
     //dtor
+}
+
+void LoadedData::init(const std::string& _address)
+{
+    address = _address;
 }
 
 void LoadedData::decrement()
@@ -19,4 +23,9 @@ void LoadedData::decrement()
     {
         delete this;
     }
+}
+
+void LoadedData::save(XmlDataSaver* _saver, const std::string* _address)
+{
+    virtualSave(_saver, _address);
 }

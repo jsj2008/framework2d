@@ -2,7 +2,7 @@
 #define BUBBLESKINFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-
+class Skin;
 
 class BubbleSkinFactory : public AbstractFactory<Skin, BubbleSkinFactory>
 {

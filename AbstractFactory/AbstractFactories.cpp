@@ -26,9 +26,21 @@ void AbstractFactories::init()
         {
             indexedFactoryLists.resize(id+1);
         }
-        indexedFactoryLists[id] = productType->createFactoryList(this);
+        AbstractFactoryListBase* list = productType->createFactoryList(this);
+        indexedFactoryLists[id] = list;
+        attachChild(list);
         //i->second->init(this);
     }
+}
+
+void AbstractFactories::addFactory(const std::string& _product, FactoryLoader* _loader)
+{
+    ProductType* type = productTypeList()[_product];
+    indexedFactoryLists[type->getProductId()]->addFactory(this, _loader);
+}
+
+void AbstractFactories::registerActions()
+{
 }
 
 /*UntypedAbstractFactory* AbstractFactories::getUntypedFactory(const std::string& type, const std::string& name)

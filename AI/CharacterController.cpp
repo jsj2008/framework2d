@@ -12,3 +12,8 @@ CharacterController::~CharacterController()
 {
     //dtor
 }
+
+void CharacterController::registerActions()
+{
+
+}

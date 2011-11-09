@@ -1,7 +1,8 @@
 #ifndef SKIN_H
 #define SKIN_H
 
-class b2Body;
+#include <GameObject.h>
+class Body;
 class MaterialContext;
 enum SkinType
 {
@@ -10,16 +11,16 @@ enum SkinType
     eBubbleSkinType,
     eSkinTypeMax
 };
-class Skin
+class Skin : public GameObject<Skin>
 {
     public:
         Skin();
         virtual ~Skin();
-        void render(b2Body* body);
+        void render(Body* body);
         virtual void vRender()=0;
         virtual SkinType getType()=0;
+        static void registerActions();
         MaterialContext* material; // FIXME make this private once the entity factory is a concrete type
-        void registerDeathListener(void*){throw -1;}
     protected:
     private:
 };

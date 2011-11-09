@@ -1,6 +1,7 @@
 #ifndef ABSTRACTFACTORYLIST_H
 #define ABSTRACTFACTORYLIST_H
 
+#include <GameObject.h>
 #include <string>
 typedef std::string AbstractFactoryReference;
 #include <unordered_map>
@@ -11,18 +12,20 @@ class AbstractFactoryBase;
 class FactoryParameters;
 class UntypedAbstractFactory;
 class AbstractFactories;
-#include <Events/Events/FactoryUsageEvent.h>
 template <typename Product>
 const std::string EvaluateTypeName();
 class FactoryLoader;
 
-class AbstractFactoryListBase
+class AbstractFactoryListBase : public GameObject<AbstractFactoryListBase>
 {
     public:
         AbstractFactoryListBase(){}
         virtual ~AbstractFactoryListBase();
         virtual void print()=0;
         virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
+        virtual void addFactory(AbstractFactories* _factories, FactoryLoader* _loader)=0;
+
+        static void registerActions();
     protected:
     private:
 };
@@ -44,18 +47,19 @@ class AbstractFactoryList: public AbstractFactoryListBase
         Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
         AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory);
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
-        const std::string& getProductName()
+        static const std::string& getProductName()
         {
             return productName();
         }
-        void setProductName(const std::string& _productName)
+        static void setProductName(const std::string& _productName)
         {
             productName() = _productName;
         }
         void print();
+
     protected:
     private:
-        std::string& productName()
+        static std::string& productName()
         {
             static std::string name = EvaluateTypeName<Product>();
             return name;
@@ -93,9 +97,6 @@ class TemplateFactoryCreator : public FactoryCreator<Product>
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/AbstractFactory.h>
 #include <AbstractFactory/UntypedAbstractFactoryImplementation.h>
-#include <Events/Events/FactoryGetEvent.h>
-#include <Events/Events/FactoryCreateEvent.h>
-#include <Events/Events.h>
 
 /*template <typename Product>
 template <typename Factory>
@@ -146,7 +147,7 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
     Product* product;
     if (parameters == nullptr)
     {
-        static FactoryParameters params;
+        static FactoryParameters params(nullptr);
         product = getFactory(factory)->use(&params);
     }
     else
@@ -155,8 +156,6 @@ Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference facto
         std::string name = parameters->get<std::string>("name", "");
         if (name != "")
         {
-            FactoryUsageEvent<Product> event(product);
-            Events::global().triggerNamedEvent(&event, name);
         }
     }
     return product;
@@ -172,6 +171,7 @@ void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, Fac
 {
     assert(factories.find(_loader->getName()) == factories.end());
     AbstractFactoryBase<Product>* factory = factoryCreators()[_loader->getType()]->createFactory();
+    attachChild(factory);
     factory->baseInit(_loader->getName(), _loader, _factories);
     factories[_loader->getName()] = factory;
 }
@@ -182,7 +182,6 @@ AbstractFactoryList<Product>::AbstractFactoryList(AbstractFactories* _factoriesL
 {
     //ctor
     factoriesListList = _factoriesListList;
-    TypeTable::overloadType<AbstractFactoryBase<Product>*>(getProductName()+"Factory", new TypeTableFactoryType<Product>(this));
 }
 
 template <typename Product>

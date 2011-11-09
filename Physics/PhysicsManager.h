@@ -5,6 +5,7 @@
 class RenderCallback;
 class ContactListener;
 class DebugDraw;
+class Body;
 
 #define BIT(x) (1 << x)
 #define JUMPING
@@ -18,7 +19,7 @@ class PhysicsManager
         virtual ~PhysicsManager();
         void clear();
 
-        b2Body* createBody(b2BodyDef* def);
+        Body* createBody(b2BodyDef* def);
         b2Joint* createJoint(b2JointDef* def);
         /// You create fixtures on the body
         b2MouseJoint* createJoint(b2Body* body, Vec2f& point);

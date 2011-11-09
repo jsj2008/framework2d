@@ -34,8 +34,9 @@ Product* DataLoader<DerivedClass, Product>::load(const std::string& _address)
     auto iter = alreadyLoaded.find(_address);
     if (iter == alreadyLoaded.end())
     {
-        Product* product = static_cast<DerivedClass*>(this)->virtualLoad(_address);
+        Product* product = new Product;
         alreadyLoaded[_address] = product;
+        static_cast<DerivedClass*>(this)->virtualLoad(_address, product);
         return product;
     }
     else

@@ -5,6 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
+class Skin;
 
 template <typename Bubble>
 class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
@@ -32,6 +33,7 @@ class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Bubbles/AllBubbles.h>
 #include <Physics/PhysicsManager.h>
+#include <Physics/Body.h>
 #include <Graphics/Skins/BubbleSkin.h>
 
 template <typename Bubble>
@@ -64,9 +66,9 @@ Entity* BubbleFactory<Bubble>::useFactory(FactoryParameters* parameters)
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     shapeDef.m_radius = parameters->get<float>("radius",1.0f);
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
-    entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    Body* physicsBody = physicsManager->createBody(&bodyDef);
+    physicsBody->createFixture(&fixtureDef);
+    entity->setBody(physicsBody);
 
     return entity;
 }

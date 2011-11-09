@@ -25,12 +25,6 @@ void CarneGame::buttonUp(Vec2i mouse, unsigned char button)
     //g_TileMap->destroy(position,direction);
 }
 
-void CarneGame::setBody(b2Body* body, PlayerInputBrain* _playerBrain)
-{
-    mCamera = new PhysicsCamera(body);
-    playerBrain = _playerBrain;
-}
-
 bool CarneGame::activate(const CEGUI::EventArgs& args)
 {
     g_InputManager.setActiveEvent(this);

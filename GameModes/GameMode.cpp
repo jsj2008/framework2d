@@ -14,3 +14,8 @@ GameMode::~GameMode()
 {
     //dtor
 }
+
+void GameMode::registerActions()
+{
+
+}

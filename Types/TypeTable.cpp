@@ -21,6 +21,7 @@ TypeTable::TypeTable(const TypeTable& _rhs)
     {
         undefinedLog[i->first] = i->second->clone();
     }
+    factories = _rhs.factories;
 }
 TypeTable::~TypeTable()
 {
@@ -55,9 +56,10 @@ void TypeTable::clear()
 }
 
 
-TypeTable::TypeTable(bool _logUndefined)
+TypeTable::TypeTable(AbstractFactories* _factories, bool _logUndefined)
 {
     logUndefined = _logUndefined;
+    factories = _factories;
     registerType<int>("int");
     registerType<unsigned short>("ushort");
     registerType<float>("float");
@@ -121,7 +123,7 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
     }
     else
     {
-        Value* ret = type->parseInstance(_value);
+        Value* ret = type->parseInstance(this, _value);
         values[_name] = ret;
         return ret;
     }

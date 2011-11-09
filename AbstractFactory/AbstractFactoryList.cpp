@@ -4,6 +4,10 @@ AbstractFactoryListBase::~AbstractFactoryListBase()
 {
 }
 
+void AbstractFactoryListBase::registerActions()
+{
+}
+
 void privatePrint(std::ostream* stream, const std::string& factoryType, const std::string& factoryInstance, const std::string& productName, const std::string& realProductName)
 {
     if (productName != realProductName)

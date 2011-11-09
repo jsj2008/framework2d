@@ -14,9 +14,9 @@ Bubble::~Bubble()
 
 void Bubble::update()
 {
-    b2Fixture* myFixture = mBody->GetFixtureList();
-    Vec2f myPosition = mBody->GetWorldCenter();
-    for (b2ContactEdge* ce = mBody->GetContactList(); ce != nullptr; ce = ce->next)
+    /*b2Fixture* myFixture = body->GetFixtureList();
+    Vec2f myPosition = body->GetWorldCenter();
+    for (b2ContactEdge* ce = body->GetContactList(); ce != nullptr; ce = ce->next)
     {
         b2Contact* c = ce->contact;
         b2Fixture* fixture = c->GetFixtureA();
@@ -28,5 +28,5 @@ void Bubble::update()
         Vec2f point;
         point = body->GetWorldCenter();
         affectBody(body,myPosition-point);
-    }
+    }*/
 }

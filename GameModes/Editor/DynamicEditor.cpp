@@ -134,7 +134,8 @@ DynamicEditor::DynamicEditor(FreeCamera* camera, EditorMode* _mode)
 editorVariables
 ({
     {"skin", new ComponentObjectSelectionVariableFactory<Skin>("skin","StaticSkinFactory")},
-})
+}),
+params(nullptr)
 {
     //ctor
     //entityList = new EntityList("Root/EntityList/Listbox");
@@ -289,7 +290,7 @@ MATCH_FOUND:
     //factory->baseInit(factoryName, &loader, &AbstractFactories::global());
     ///Events::global().unregisterListener<FactoryGetEvent<Entity>>(&getList, true);
     std::vector<std::string> values = loader.getUndefinedLog();
-    FactoryParameters* params = new FactoryParameters();
+    FactoryParameters* params = new FactoryParameters(nullptr);
     CEGUI::Window* page = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("EntityTypeTab.layout", factoryName);
     page = page->getChild(factoryName + "Properties");
     float uiElementTop = 0.f;

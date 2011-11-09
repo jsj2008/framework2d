@@ -1,18 +1,9 @@
 #include "FactoryParameters.h"
 
 FactoryParameters::FactoryParameters(bool logUndefined)
-:table(logUndefined)
+:table(nullptr, logUndefined)
 {
     //ctor
-}
-
-FactoryParameters::FactoryParameters(std::initializer_list<std::pair<std::string,Vec2f>> list)
-:table(false)
-{
-    for (auto i = list.begin(); i != list.end(); i++)
-    {
-        add(i->first,i->second);
-    }
 }
 
 FactoryParameters::~FactoryParameters()

@@ -18,12 +18,11 @@ namespace CEGUI
     class EventArgs;
 }
 
-class LevelEntity : public InstanceEventListener<EntityDeathEvent>
+class LevelEntity
 {
     public:
         LevelEntity(EntityList* _entityList, FactoryParameters* _parameters, const std::string& _factoryName);
         virtual ~LevelEntity();
-        bool trigger(EntityDeathEvent* _event);
         bool entityIsAlive(){return entity != nullptr;}
         Entity* getEntity(){return entity;}
         bool isNamed();

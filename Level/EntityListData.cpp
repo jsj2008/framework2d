@@ -1,8 +1,7 @@
 #include "EntityListData.h"
 #include <Level/EntityData.h>
 
-EntityListData::EntityListData(const std::string& _address)
-:LoadedData(_address)
+EntityListData::EntityListData()
 {
     //ctor
 }
@@ -16,7 +15,7 @@ EntityListData::~EntityListData()
     }
 }
 
-void EntityListData::virtualSave(XmlDataSaver* _saver)
+void EntityListData::virtualSave(XmlDataSaver* _saver, const std::string* _address)
 {
 }
 

@@ -4,7 +4,9 @@
 #include <Graphics/Skins/ConvexPolygonSkin.h>
 #include <AI/AIManager.h>
 #include <Physics/PhysicsManager.h>
+#include <Physics/Body.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Entities/CollisionResponse.h>
 
 LevelGeometryFactory::LevelGeometryFactory()
 {
@@ -25,6 +27,8 @@ void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factor
 
     physicsManager = factories->getWorld();
     fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
+    //collisionResponse = factories->getFactory<CollisionResponse>(loader->get<std::string>("collisionResponse", "CollisionResponseFactory"));
+    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 
 Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
@@ -41,9 +45,11 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     shapeDef.Set(&points[0],points.size());
 
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    fixtureDef.userData = collisionResponse->use(parameters);
+    assert(fixtureDef.userData);
+    body->createFixture(&fixtureDef);
 
     return entity;
 }

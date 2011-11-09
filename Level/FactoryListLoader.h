@@ -12,7 +12,7 @@ class FactoryListLoader : public DataLoader<FactoryListLoader, FactoryListData>
     public:
         FactoryListLoader(XmlResourceProvider* _provider);
         virtual ~FactoryListLoader();
-        FactoryListData* virtualLoad(const std::string& _listName);
+        FactoryListData* virtualLoad(const std::string& _listName, FactoryListData* list);
     protected:
     private:
         XmlResourceProvider* provider;

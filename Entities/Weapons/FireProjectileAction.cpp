@@ -24,7 +24,9 @@ void FireProjectileAction::fire(const Vec2f& _source, const Vec2f& _position)
     direction.Normalize();
     Vec2f position = _source;
     position += direction*3;
-    FactoryParameters parameters({{"position",position},{"velocity",direction*100}});
+    FactoryParameters parameters;
+    parameters.add<Vec2f>("position", position);
+    parameters.add<Vec2f>("velocity", direction*100);
     immutableData.projectileFactory->use(&parameters);
 }
 

@@ -29,7 +29,7 @@ void BubbleDrawEvent::buttonUp(Vec2i mouse, unsigned char button)
     float radius = (position-mouse.ScreenToWorldSpace()).Length();
     if (radius != 0.0f)
     {
-        FactoryParameters parameters;
+        FactoryParameters parameters(nullptr);
         parameters.add<Vec2f>("position",position);
         parameters.add<float>("radius",radius);
         parameters.add<std::string>("materialName","defaultBubble");

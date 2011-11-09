@@ -58,18 +58,6 @@ void LevelEntity::activateDisplay(CEGUI::Window* _window)
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, {&LevelEntity::quitButton, this});
 }
 
-bool LevelEntity::trigger(EntityDeathEvent* _event)
-{
-    if(entity == _event->getEntity())
-    {
-        entityList->entityDied(this);
-        entity = nullptr;
-        listBoxItem->setTextColours(0xFFFF0000);
-        return true;
-    }
-    return false;
-}
-
 bool LevelEntity::isNamed()
 {
     const std::string& name = parameters.get<std::string>("name", "");
@@ -80,7 +68,7 @@ Entity* LevelEntity::createEntity()
 {
     assert(entity == nullptr);
     entity = factory->use(&parameters);
-    entity->registerDeathListener(this);
+    //entity->registerDeathListener(this);
     entityList->addEntity(this, getName());
     listBoxItem->setTextColours(0xFF00FF00);
     return entity;

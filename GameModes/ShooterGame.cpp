@@ -10,6 +10,7 @@
 #include <Level/Level.h>
 #include <Level/XmlResourceProvider.h>
 #include <Level/LevelLoader.h>
+#include <Level/XmlDataSaver.h>
 #include <AI/AIManager.h>
 
 ShooterGame::ShooterGame()
@@ -21,30 +22,34 @@ ShooterGame::ShooterGame()
     XmlResourceProvider provider;
     LevelLoader loader(&provider);
     LevelData* data = loader.load("Levels.xml/Level1/Level");
-    activeLevel = data->build();
+    {
+        XmlDataSaver saver;
+        data->save(&saver, &std::string("Levels.xml/Level1/Level"));
+    }
+    setLevel(data->build());
     //activeLevel = new Level("default");
     //AbstractFactories::global().init(); /// FIXME these need to not be global
 
     mCamera = nullptr;
 
     //activeLevel->loadLevel();
-    g_AIManager.init(activeLevel->getWorld()); /// FIXME this shouildn't be global
+    g_AIManager.init(getLevel()->getWorld()); /// FIXME this shouildn't be global
     g_AIManager.finalisePathfinding();
 
-    FactoryParameters params;
+    FactoryParameters params(data->getFactories());
     params.add<unsigned short>("entityKey", 0);
-    PlayerOneCreated event(static_cast<AIEntity*>(activeLevel->getFactories()->useFactory<Entity>("PlayerFactory",&params)));
+    PlayerOneCreated event(static_cast<AIEntity*>(getLevel()->getFactories()->useFactory<Entity>("PlayerFactory",&params)));
     event.trigger();
 }
 
 ShooterGame::~ShooterGame()
 {
     //dtor
-    delete activeLevel;
+    delete getLevel(); /// FIXME not managed properly
 }
 
 void ShooterGame::buttonUp(Vec2i mouse, unsigned char button) /// FIXME this needs to be done in a player controller grabber
 {
-    Vec2f position = mouse.ScreenToWorldSpace();
+    //Vec2f position = mouse.ScreenToWorldSpace();
     //playerBrain->mEntity->weaponEnd(position);
 }

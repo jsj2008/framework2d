@@ -45,7 +45,6 @@ class FactoryLoader
         void syntaxError(const std::string& message);
         void warning(const std::string& message);
         TypeTable mvalues;
-        AbstractFactories* factories;
     private:
 };
 
@@ -66,11 +65,11 @@ AbstractFactoryBase<Product>* FactoryLoader::getFactory(const std::string& _name
 {
     try
     {
-        return mvalues.popValue<AbstractFactoryBase<Product>*>(_name, _default);
+        return mvalues.getFactories()->getFactory<Product>(mvalues.popValue<std::string>(_name, _default));
     }
     catch (int i)
     {
-        auto factory = factories->getFactory<Product>(_default);
+        auto factory = mvalues.getFactories()->getFactory<Product>(_default);
         if (mvalues.loggingUndefined())
         {
             mvalues.addValue<AbstractFactoryBase<Product>*>(_name, factory);

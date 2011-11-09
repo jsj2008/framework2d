@@ -52,7 +52,7 @@ void EntityList::loadLevel(const std::string& _listFileName)
         do
         {
             std::string factory = loader.getFactoryName();
-            FactoryParameters params;
+            FactoryParameters params(nullptr);
             loader.readParameters(&params);
             LevelEntity* entity = new LevelEntity(this, &params, factory);
             Entity* body = entity->createEntity();

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <istream>
-#include <Graphics/GraphicsManager.h> /// FIXME
+#include <GameObject.h>
 #include <Events/InstanceEvents/Events/DeathEvent.h>
 class FactoryParameters;
 class FactoryLoader;
@@ -15,7 +15,7 @@ class AbstractFactories;
 
 
 template <typename Product>
-class AbstractFactoryBase
+class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
 {
     public:
         AbstractFactoryBase(const std::string _name);
@@ -24,10 +24,13 @@ class AbstractFactoryBase
         Product* use(FactoryParameters* paramters);
         const std::string& getName(){return nameCache;}
         const std::string& getInstanceName(){return instanceName;}
+
+        static void registerActions();
     protected:
         virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
         const std::string nameCache;
         std::string instanceName;
+        void attachChild(void* _doNothing){}
     private:
 };
 template <typename Product, typename DerivedType>
@@ -58,8 +61,6 @@ class AbstractFactory: public AbstractFactoryBase<Product>
 
 
 #include <AbstractFactory/AbstractFactories.h>
-#include <Events/Events.h>
-#include <Events/Events/FactoryInstanceUsageEvent.h>
 
 template <typename Product>
 AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string _name)
@@ -78,10 +79,14 @@ template <typename Product>
 Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
 {
     Product* product = privateUseFactory(parameters);
-    FactoryUsageEvent<Product> untypedEvent(product);
-    Events::global().triggerEvent(&untypedEvent);
+    attachChild(product);
     return product;
 }
+template <typename Product>
+void AbstractFactoryBase<Product>::registerActions()
+{
+}
+
 template <typename Product, typename DerivedType>
 AbstractFactory<Product, DerivedType>::AbstractFactory()
 :AbstractFactoryBase<Product>(DerivedType::name())
@@ -107,10 +112,6 @@ template <typename Product, typename DerivedType>
 Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
 {
     Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
-    FactoryTypeUsageEvent<Product, DerivedType> typeEvent(product);
-    Events::global().triggerEvent(&typeEvent);
-    FactoryInstanceUsageEvent<Product, DerivedType> instanceEvent(product, "error this is stupid");
-    Events::global().triggerEvent(&typeEvent);
     return product;
 }
 

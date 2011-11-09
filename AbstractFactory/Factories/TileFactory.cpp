@@ -1,6 +1,7 @@
 #include "TileFactory.h"
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 #include <Graphics/Skins/StaticSkin.h>
@@ -38,9 +39,9 @@ Entity* TileFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position = position;
     //bodyDef.angle = params->rotation;
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    body->createFixture(&fixtureDef);
 
     return entity;
 }

@@ -1,7 +1,9 @@
 #include "CharacterBodyFactory.h"
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Entities/CollisionResponse.h>
 
 CharacterBodyFactory::CharacterBodyFactory()
 {
@@ -32,6 +34,8 @@ void CharacterBodyFactory::init(FactoryLoader* loader, AbstractFactories* factor
     wheelJoint.collideConnected = false;
     wheelJoint.maxMotorTorque = 50.0f;
     wheelJoint.enableMotor = true;
+
+    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 
 CharacterBodyFactory::~CharacterBodyFactory()
@@ -39,7 +43,7 @@ CharacterBodyFactory::~CharacterBodyFactory()
     //dtor
 }
 
-b2Body* CharacterBodyFactory::useFactory(FactoryParameters* parameters)
+Body* CharacterBodyFactory::useFactory(FactoryParameters* parameters)
 {
     Vec2f position = parameters->get<Vec2f>("position",Vec2f(0,0));
     Vec2f anchorPoint(dimensions.x*0.1f,dimensions.y*0.33f);
@@ -53,15 +57,16 @@ b2Body* CharacterBodyFactory::useFactory(FactoryParameters* parameters)
     bodyDef.position.x += dimensions.x*0.1f;
     shapeDef.SetAsBox(dimensions.x*0.4f,dimensions.y*0.33f);
     bodyDef.userData = parameters->get<void*>("userData",nullptr);
-    b2Body* body = world->createBody(&bodyDef);
-    body->CreateFixture(&fixtureDef);
+    Body* body = world->createBody(&bodyDef);
+    fixtureDef.userData = collisionResponse->use(parameters);
+    body->createFixture(&fixtureDef);
 
     wheelBody.position = position;
     wheelBody.position += Vec2f(dimensions.x*0.1f,dimensions.y*0.33f);
-    b2Body* wheel = world->createBody(&wheelBody);
-    wheel->CreateFixture(&wheelFixture);
+    Body* wheel = world->createBody(&wheelBody);
+    wheel->createFixture(&wheelFixture);
 
-    wheelJoint.Initialize(body,wheel,anchorPoint);
+    wheelJoint.Initialize(body->getBody(),wheel->getBody(),anchorPoint);
     b2Joint* joint = world->createJoint(&wheelJoint);
 
     parameters->add<void*>("joint",(void*)joint);

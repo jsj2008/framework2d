@@ -1,4 +1,5 @@
 #include "TileMap.h"
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 
@@ -75,7 +76,7 @@ bool TileMap::destroy(Vec2i tile)
     if (tile.x < dimensions.x && tile.y < dimensions.y && tile.x >= 0 && tile.y >= 0)
     if (tiles[tile.x][tile.y] != nullptr)
     {
-        mBody->GetWorld()->DestroyBody(tiles[tile.x][tile.y]->mBody);
+        delete tiles[tile.x][tile.y]->body;
         tiles[tile.x][tile.y] = nullptr;
         return true;
     }

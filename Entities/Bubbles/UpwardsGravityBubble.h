@@ -16,7 +16,7 @@ class UpwardsGravityBubble : public Bubble
         }
     protected:
     private:
-        void affectBody(b2Body* body, Vec2f directionTo);
+        void affectBody(Body* body, Vec2f directionTo);
 };
 
 #endif // UpwardsGravityBubble_H

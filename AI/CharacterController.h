@@ -1,10 +1,11 @@
 #ifndef CHARACTERCONTROLLER_H
 #define CHARACTERCONTROLLER_H
 
+#include <GameObject.h>
 class AIEntity;
 class b2RevoluteJoint;
 
-class CharacterController
+class CharacterController : public GameObject<CharacterController>
 {
     public:
         CharacterController(AIEntity* _entity, unsigned char _booleanButtonsSize, const char** _booleanButtonsNames);
@@ -18,7 +19,7 @@ class CharacterController
         unsigned char getBooleanButtonsSize(){return booleanButtonsSize;}
         const char* getBoolButtonsName(unsigned char _index){return booleanButtonsNames[_index];}
 
-        void registerDeathListener(void*){throw -1;}
+        static void registerActions();
     protected:
         AIEntity* entity;
     private:

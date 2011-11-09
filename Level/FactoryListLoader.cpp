@@ -16,21 +16,23 @@ FactoryListLoader::~FactoryListLoader()
     //dtor
 }
 
-FactoryListData* FactoryListLoader::virtualLoad(const std::string& _listName)
+FactoryListData* FactoryListLoader::virtualLoad(const std::string& _listName, FactoryListData* list)
 {
-    FactoryListData* list = new FactoryListData(_listName);
+    list->init(_listName);
     TiXmlHandle handle = provider->getHandle(_listName);
     TiXmlElement* element = handle.FirstChildElement("Factory").Element();
     for (; element; element = element->NextSiblingElement("Factory"))
     {
         const char* type = element->Attribute("Type");
         const char* name = element->Attribute("Name");
+        const char* product = element->Attribute("Product");
         TiXmlElement* propertyBag = element->FirstChildElement("PropertyBag");
         FactoryParameters* params = new FactoryParameters;
         XmlPropertyBagLoader loader(propertyBag);
         loader.readParameters(params);
 
-        FactoryData* factory = new FactoryData(type, name, params, _listName + name);
+        FactoryData* factory = new FactoryData(type, name, product, params);
+        factory->init(_listName + name);
         list->addFactory(factory);
     }
     return list;

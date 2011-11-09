@@ -13,9 +13,9 @@ EventListLoader::~EventListLoader()
     //dtor
 }
 
-EventListData* EventListLoader::virtualLoad(const std::string& _listName)
+EventListData* EventListLoader::virtualLoad(const std::string& _listName, EventListData* list)
 {
-    EventListData* list = new EventListData(_listName);
+    list->init(_listName);
     TiXmlHandle handle = provider->getHandle(_listName);
     return list;
 }

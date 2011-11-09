@@ -9,7 +9,7 @@ class AbstractFactories;
 class FactoryListData : public LoadedData
 {
     public:
-        FactoryListData(const std::string& _address);
+        FactoryListData();
         virtual ~FactoryListData();
 
         void addFactory(FactoryData* _list)
@@ -23,7 +23,7 @@ class FactoryListData : public LoadedData
         void build(AbstractFactories* _factories);
     protected:
     private:
-        void virtualSave(XmlDataSaver* _saver);
+        void virtualSave(XmlDataSaver* _saver, const std::string* _address);
         std::vector<FactoryData*> factories;
 };
 

@@ -2,7 +2,7 @@
 #define CONVEXPOLYGONSKINFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-
+class Skin;
 
 class ConvexPolygonSkinFactory : public AbstractFactory<Skin, ConvexPolygonSkinFactory>
 {

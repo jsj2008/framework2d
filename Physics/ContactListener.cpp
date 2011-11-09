@@ -1,5 +1,6 @@
 #include "ContactListener.h"
 #include <Entities/Entity.h>
+#include <Entities/CollisionResponse.h>
 #include <Physics/CollisionHandlers/AllCollisionHandlers.h>
 #include <cstring>
 
@@ -22,14 +23,31 @@ ContactListener::ContactListener()
     }
     handlers[eStaticGeometryEntityType][eAIEntityType] = new StaticGeometryAIEntityCollisionHandler;
     handlers[eAIEntityType][eProjectileEntityType] = new AIEntityProjectileCollisionHandler;
+
 }
 
 ContactListener::~ContactListener()
 {
     //dtor
 }
+#include <iostream>
+void ContactListener::BeginContact(b2Contact* contact)
+{
+    CollisionResponse* a = static_cast<CollisionResponse*>(contact->GetFixtureA()->GetUserData());
+    CollisionResponse* b = static_cast<CollisionResponse*>(contact->GetFixtureB()->GetUserData());
+    if (a != nullptr && b != nullptr)
+    {
+        collidedFixtures.push({contact->GetFixtureA(), contact->GetFixtureB()});
+    }
+}
+void ContactListener::EndContact(b2Contact* contact)
+{
 
-using namespace std;
+}
+void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+{
+}
+
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
     float totalImpulse = impulse->normalImpulses[0];
@@ -62,5 +80,15 @@ void ContactListener::process()
         HighVelocityImpact impact = highVelocityImpacts.front();
         handlers[impact.entityA->getType()][impact.entityB->getType()]->handle(impact.entityA,impact.entityB,impact.totalImpulse);
         highVelocityImpacts.pop();
+    }
+    while (!collidedFixtures.empty())
+    {
+        b2Fixture* fixtureA = collidedFixtures.top().first;
+        b2Fixture* fixtureB = collidedFixtures.top().second;
+        CollisionResponse* a = static_cast<CollisionResponse*>(fixtureA->GetUserData());
+        CollisionResponse* b = static_cast<CollisionResponse*>(fixtureB->GetUserData());
+        a->collide(b->getCategory(), fixtureA, fixtureB);
+        b->collide(a->getCategory(), fixtureB, fixtureA);
+        collidedFixtures.pop();
     }
 }

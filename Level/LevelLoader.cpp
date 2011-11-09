@@ -18,7 +18,7 @@ LevelLoader::~LevelLoader()
 }
 
 #define LIST_FUNCTIONS 3
-LevelData* LevelLoader::virtualLoad(const std::string& _levelName)
+void LevelLoader::virtualLoad(const std::string& _levelName, LevelData* _data)
 {
     static void (LevelLoader::*addListFunctions[LIST_FUNCTIONS])(LevelData* _data, const std::string& _address) =
     {
@@ -33,17 +33,16 @@ LevelData* LevelLoader::virtualLoad(const std::string& _levelName)
         "FactoryList",
     };
 
-    LevelData* data = new LevelData(_levelName);
+    _data->init(_levelName);
     TiXmlHandle handle = provider->getHandle(_levelName);
     for (unsigned int i = 0; i < LIST_FUNCTIONS; i++)
     {
         std::vector<std::string> names = getChildrenOfType(listFunctionNames[i], handle.Element(), _levelName);
         for (unsigned int ii = 0; ii < names.size(); ii++)
         {
-            (this->*addListFunctions[i])(data, names[ii]);
+            (this->*addListFunctions[i])(_data, names[ii]);
         }
     }
-    return data;
 }
 
 std::vector<std::string> LevelLoader::getChildrenOfType(const std::string& _type, TiXmlElement* _root, const std::string& _rootAddress)
@@ -53,7 +52,7 @@ std::vector<std::string> LevelLoader::getChildrenOfType(const std::string& _type
         TiXmlElement* element = _root->FirstChildElement(_type);
         for (; element; element = element->NextSiblingElement(_type))
         {
-            const char* name = element->Attribute("name");
+            const char* name = element->Attribute("Name");
             if (name == nullptr)
                 g_Log.error("Name not specified");
             ret.push_back(_rootAddress + '/' + name);
@@ -87,8 +86,6 @@ void LevelLoader::addFactoryList(LevelData* _data, const std::string& _address)
     FactoryListData* factoryList = factoryListLoader.load(_address);
     _data->addFactoryList(factoryList);
 }
-
-
 
 
 

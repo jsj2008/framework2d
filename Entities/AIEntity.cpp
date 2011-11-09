@@ -1,5 +1,6 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
@@ -35,17 +36,12 @@ void AIEntity::weaponMove(Vec2f targetPosition)
 }
 void AIEntity::weaponEnd(Vec2f targetPosition)
 {
-    weapon->fireEnd(mBody->GetPosition(),targetPosition);
+    weapon->fireEnd(body->getPosition(),targetPosition);
 }
 void AIEntity::damage()
 {
-    /*ParticleDef def;
-    def.density = 1.0f;
-    def.lifetime = 100;
-    def.setMaterial("Spark");
-    def.position = mBody->GetPosition();
-    g_FactoryList.useFactory(def,eParticleFactory);*/
-    FactoryParameters parameters({{"position",mBody->GetPosition()}});
+    FactoryParameters parameters;
+    parameters.add<Vec2f>("position", body->getPosition());
     damageSprayFactory->use(&parameters);
     health--;
 }
@@ -54,7 +50,7 @@ void AIEntity::update()
     mBrain->update();
     if (health  < 1)
     {
-        mBody->GetWorld()->DestroyBody(mBody);
+        delete body; /// FIXME delete this
     }
     controller->update();
 }

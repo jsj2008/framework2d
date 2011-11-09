@@ -6,6 +6,7 @@
 class Entity;
 class FactoryLoader;
 class PhysicsManager;
+class Skin;
 
 class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory>
 {
@@ -24,6 +25,7 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         b2FixtureDef fixtureDef;
         b2PolygonShape shapeDef;
         PhysicsManager* physicsManager;
+        AbstractFactoryBase<CollisionResponse>* collisionResponse;
 
         AbstractFactoryBase<Skin>* skinFactory;
 };

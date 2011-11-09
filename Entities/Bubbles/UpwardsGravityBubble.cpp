@@ -1,5 +1,6 @@
 #include "UpwardsGravityBubble.h"
 #include <Box2D/Dynamics/b2Body.h>
+#include <Physics/Body.h>
 
 UpwardsGravityBubble::UpwardsGravityBubble(Skin* _skin)
 :Bubble(_skin)
@@ -12,7 +13,7 @@ UpwardsGravityBubble::~UpwardsGravityBubble()
     //dtor
 }
 
-void UpwardsGravityBubble::affectBody(b2Body* body, Vec2f directionTo)
+void UpwardsGravityBubble::affectBody(Body* body, Vec2f directionTo)
 {
-    body->ApplyLinearImpulse(Vec2f(0.0,-50), body->GetWorldCenter());
+    body->applyLinearImpulse(Vec2f(0.0,-50), body->getPosition());
 }

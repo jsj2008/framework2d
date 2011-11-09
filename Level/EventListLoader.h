@@ -12,7 +12,7 @@ class EventListLoader : public DataLoader<EventListLoader, EventListData>
     public:
         EventListLoader(XmlResourceProvider* _provider);
         virtual ~EventListLoader();
-        EventListData* virtualLoad(const std::string& _listName);
+        EventListData* virtualLoad(const std::string& _listName, EventListData* list);
     protected:
     private:
         XmlResourceProvider* provider;

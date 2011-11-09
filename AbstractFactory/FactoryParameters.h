@@ -12,7 +12,6 @@ class FactoryParameters
     public:
         FactoryParameters(bool logUndefined = false);
         //FactoryParameters(std::initializer_list<std::pair<std::string,float>> list);
-        FactoryParameters(std::initializer_list<std::pair<std::string,Vec2f>> list);
         ~FactoryParameters();
 
         template <typename Type>

@@ -16,9 +16,9 @@ EntityListLoader::~EntityListLoader()
     //dtor
 }
 
-EntityListData* EntityListLoader::virtualLoad(const std::string& _listName)
+void EntityListLoader::virtualLoad(const std::string& _listName, EntityListData* _list)
 {
-    EntityListData* list = new EntityListData(_listName);
+    _list->init(_listName);
     TiXmlHandle handle = provider->getHandle(_listName);
 
     TiXmlElement* element = handle.FirstChildElement("Entity").Element();
@@ -30,8 +30,8 @@ EntityListData* EntityListLoader::virtualLoad(const std::string& _listName)
         XmlPropertyBagLoader loader(propertyBag);
         loader.readParameters(params);
 
-        EntityData* entity = new EntityData(type, params, _listName);
-        list->addEntity(entity);
+        EntityData* entity = new EntityData(type, params);
+        entity->init(_listName);
+        _list->addEntity(entity);
     }
-    return list;
 }

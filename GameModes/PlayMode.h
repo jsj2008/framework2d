@@ -25,10 +25,11 @@ class PlayMode : public ClickDragEvent, public GameMode, public SingletonEventLi
         Level* getLevel(){return activeLevel;}
         bool trigger(PlayerOneCreated* event);
     protected:
+        void setLevel(Level* _level);
         Bubble::BubbleType type;
-        Level* activeLevel;
         PlayerInputBrain* playerOneBrain;
     private:
+        Level* activeLevel;
 };
 
 #endif // PLAYMODE_H

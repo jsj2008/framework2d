@@ -2,6 +2,7 @@
 #include <Entities/Explosion.h>
 #include <Graphics/Skins/BubbleSkin.h>
 #include <AbstractFactory/FactoryParameters.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
@@ -33,8 +34,8 @@ Entity* ExplosionFactory::useFactory(FactoryParameters* parameters)
     Skin* skin = skinFactory->use(parameters);
     Entity* entity = new Explosion(shapeDef.m_radius,damage,force,time, skin);
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&fixtureDef);
+    body->createFixture(&fixtureDef);
     return entity;
 }

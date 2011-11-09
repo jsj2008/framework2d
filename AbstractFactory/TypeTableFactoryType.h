@@ -10,15 +10,14 @@ template <typename Product>
 class TypeTableFactoryType : public TypeTable::TemplateBaseType<AbstractFactoryBase<Product>*>
 {
     public:
-        TypeTableFactoryType(AbstractFactoryList<Product>* _factoryList);
+        TypeTableFactoryType(); /// FIXME want to use this class, but without the back pointer because its for statics
         virtual ~TypeTableFactoryType();
-        TypeTable::Value* parseInstance(const std::string& _value);
+        TypeTable::Value* parseInstance(TypeTable* _typeTable, const std::string& _value);
         TypeTable::ArrayValue* arrayInstance(){throw -1;} /// Don't see why you'd want an array of Factories atm
         TypeTable::Value* instance(AbstractFactoryBase<Product>* _value);
         TypeTable::Type* clone();
     protected:
     private:
-        AbstractFactoryList<Product>* factoryList;
         class Value : public TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>
         {
             public:
@@ -34,10 +33,9 @@ class TypeTableFactoryType : public TypeTable::TemplateBaseType<AbstractFactoryB
 #include <AbstractFactory/AbstractFactoryList.h>
 
 template <typename Product>
-TypeTableFactoryType<Product>::TypeTableFactoryType(AbstractFactoryList<Product>* _factoryList)
+TypeTableFactoryType<Product>::TypeTableFactoryType()
 {
     //ctor
-    factoryList = _factoryList;
 }
 template <typename Product>
 TypeTableFactoryType<Product>::~TypeTableFactoryType()
@@ -46,10 +44,10 @@ TypeTableFactoryType<Product>::~TypeTableFactoryType()
 }
 
 template <typename Product>
-TypeTable::Value* TypeTableFactoryType<Product>::parseInstance(const std::string& _value)
+TypeTable::Value* TypeTableFactoryType<Product>::parseInstance(TypeTable* _table, const std::string& _value)
 {
     TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>* value = new Value;
-    AbstractFactoryBase<Product>* factory = factoryList->getFactory(_value);
+    AbstractFactoryBase<Product>* factory = _table->getFactories()->getFactory<Product>(_value);
     value->set(factory);
     return value;
 }
@@ -63,7 +61,7 @@ TypeTable::Value* TypeTableFactoryType<Product>::instance(AbstractFactoryBase<Pr
 template <typename Product>
 TypeTable::Type* TypeTableFactoryType<Product>::clone()
 {
-    return new TypeTableFactoryType<Product>(factoryList);
+    return new TypeTableFactoryType<Product>;
 }
 template <typename Product>
 TypeTableFactoryType<Product>::Value::Value()

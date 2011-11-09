@@ -20,7 +20,7 @@ class Bubble : public Entity
     protected:
         virtual ~Bubble();
     private:
-        virtual void affectBody(b2Body* body, Vec2f directionTo)=0;
+        virtual void affectBody(Body* body, Vec2f directionTo)=0;
 };
 
 #endif // BUBBLE_H

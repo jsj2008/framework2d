@@ -1,5 +1,6 @@
 #include "ConvexPolygonSkinFactory.h"
 #include <Graphics/Skins/ConvexPolygonSkin.h>
+#include <Graphics/GraphicsManager.h> /// FIXME
 
 ConvexPolygonSkinFactory::ConvexPolygonSkinFactory()
 {

@@ -7,6 +7,7 @@
 #include <cstring>
 
 EntityDeleteEntry::EntityDeleteEntry(Entity* _entityPtr, Level* _level)
+:saveConstruction({"", nullptr})
 {
     //ctor
     entity = UndoResources::global().getEntrySafely(static_cast<void*>(_entityPtr));

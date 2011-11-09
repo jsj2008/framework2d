@@ -3,6 +3,7 @@
 
 #include <AbstractFactory/AbstractFactory.h>
 class FactoryLoader;
+class Skin;
 
 class StaticSkinFactory : public AbstractFactory<Skin, StaticSkinFactory>
 {

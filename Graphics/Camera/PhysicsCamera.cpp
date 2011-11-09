@@ -1,8 +1,8 @@
 #include "PhysicsCamera.h"
-#include <Box2D/Dynamics/b2Body.h>
+#include <Physics/Body.h>
 #include <Graphics/GraphicsManager.h>
 
-PhysicsCamera::PhysicsCamera(b2Body* _body)
+PhysicsCamera::PhysicsCamera(Body* _body)
 {
     //ctor
     body = _body;
@@ -18,7 +18,7 @@ void PhysicsCamera::updateTransform(Vec2i resolution)
 {
     float xView = resolution.x / (2.0f * scale);
     float yView = resolution.y / (2.0f * scale);
-    Vec2f center = body->GetWorldCenter();
+    Vec2f center = body->getPosition();
 
     translation.x = -center.x + xView;
     translation.y = -center.y + yView;

@@ -1,6 +1,7 @@
 #include "ParticleFactory.h"
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/PhysicsParticle.h>
+#include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <Graphics/GraphicsManager.h>
@@ -31,9 +32,9 @@ Entity* ParticleFactory::useFactory(FactoryParameters* parameters)
 
     bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
     bodyDef.userData = (void*)entity;
-    b2Body* body = physicsManager->createBody(&bodyDef);
+    Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    body->CreateFixture(&shape, density);
+    body->createFixture(&shape, density);
 
     return entity;
 }

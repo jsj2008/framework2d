@@ -22,8 +22,13 @@ Level::Level(const char* _name)
 Level::~Level()
 {
     //dtor
-    saveLevel();
+    //saveLevel();
 }
+
+void Level::registerActions()
+{
+}
+
 Entity* Level::addBody(const std::string& factory, FactoryParameters* parameters)
 {
     Entity* entity = factories.useFactory<Entity>(factory, parameters);

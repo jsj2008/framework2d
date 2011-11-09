@@ -20,6 +20,7 @@ PlayMode::PlayMode()
     type = Bubble::eSuctionBubbleType;
     mCamera = nullptr;
     playerOneBrain = nullptr;
+    activeLevel = nullptr;
     SingletonEventHandler<PlayerOneCreated>::singleton().registerListener(this, eBlockQueue);
 
     FreeCamera* mFreeCamera = new FreeCamera();
@@ -33,6 +34,16 @@ PlayMode::~PlayMode()
     //dtor
     SingletonEventHandler<PlayerOneCreated>::singleton().unregisterListener(this, eBlockQueue);
     //delete server;
+}
+
+void PlayMode::setLevel(Level* _level)
+{
+    if (activeLevel != nullptr)
+    {
+        delete activeLevel; /// FIXME this should just detach
+    }
+    attachChild(_level);
+    activeLevel = _level;
 }
 
 void PlayMode::start(unsigned char button)
@@ -80,9 +91,9 @@ bool PlayMode::update()
 bool PlayMode::trigger(PlayerOneCreated* event)
 {
     AIEntity* entity = event->getPlayer();
-    FactoryParameters params;
-    params.add<b2Body*>("body", entity->getBody());
+    FactoryParameters params(nullptr);
+    params.add<Body*>("body", entity->getBody());
     mCamera = activeLevel->getFactories()->useFactory<Camera>("BodyCameraFactory", &params);
-    playerOneBrain = entity->getBrain();
+    playerOneBrain = static_cast<PlayerInputBrain*>(entity->getBrain());
     return true;
 }

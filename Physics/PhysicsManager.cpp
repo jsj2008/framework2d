@@ -3,6 +3,7 @@
 #include <Timer.h>
 #include <Entities/Entity.h>
 #include <Graphics/GraphicsManager.h>
+#include <Physics/Body.h>
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
@@ -51,9 +52,9 @@ void PhysicsManager::clear()
     delete mWorld;
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
 }
-b2Body* PhysicsManager::createBody(b2BodyDef* def)
+Body* PhysicsManager::createBody(b2BodyDef* def)
 {
-    return mWorld->CreateBody(def);
+    return new Body(mWorld->CreateBody(def));
 }
 b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 {
