@@ -40,9 +40,9 @@ class AbstractFactories : public GameObject<AbstractFactories>
         AbstractFactoryBase<Product>* getFactory(const std::string& name);
 
         template <typename Product>
-        void addFactory(FactoryLoader* _loader);
+        AbstractFactoryBase<Product>* addFactory(FactoryLoader* _loader);
 
-        void addFactory(const std::string& _product, FactoryLoader* _loader);
+        GameObjectBase* addFactory(const std::string& _product, FactoryLoader* _loader);
 
         /// For this function, considering storing all untyped factories in one list referenced by one parameter,
         /// if I start to use it enough. These are inefficient to create and use, but it will take a little more
@@ -140,9 +140,9 @@ void AbstractFactories::registerFactoryType()
 }
 
 template <typename Product>
-void AbstractFactories::addFactory(FactoryLoader* _loader)
+AbstractFactoryBase<Product>* AbstractFactories::addFactory(FactoryLoader* _loader)
 {
-    getFactoryList<Product>()->AbstractFactoryList<Product>::addFactory(this, _loader);
+    return getFactoryList<Product>()->AbstractFactoryList<Product>::addFactory(this, _loader);
 }
 
 template <typename Product>

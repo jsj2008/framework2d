@@ -317,10 +317,6 @@ const T& TypeTable::getValue(const ValueIndex& _name, const T& _default)
                 undefinedLog[_name] = value;
             }
         }
-        else
-        {
-            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
-        }
         return _default;
     }
     Value* value = iter->second;
@@ -342,10 +338,6 @@ const std::vector<T>& TypeTable::getArray(const ValueIndex& _name, const std::ve
                 value->set(_default);
                 undefinedLog[_name] = value;
             }
-        }
-        else
-        {
-            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
         }
         return _default;
     }
@@ -432,10 +424,6 @@ const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
                     throw -1;
                 }
             }
-        }
-        else
-        {
-            g_Log.warning(name<T>() + " value \"" + _name + "\" not defined, defaulting");
         }
         throw -1;
     }

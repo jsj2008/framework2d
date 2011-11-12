@@ -511,6 +511,8 @@
 		<Unit filename="Level/ParallaxLayer.h" />
 		<Unit filename="Level/ParallaxSprite.cpp" />
 		<Unit filename="Level/ParallaxSprite.h" />
+		<Unit filename="Level/PropertyBagData.cpp" />
+		<Unit filename="Level/PropertyBagData.h" />
 		<Unit filename="Level/XmlDataSaver.cpp" />
 		<Unit filename="Level/XmlDataSaver.h" />
 		<Unit filename="Level/XmlResourceManager.cpp" />

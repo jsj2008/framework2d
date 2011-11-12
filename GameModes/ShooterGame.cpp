@@ -23,8 +23,8 @@ ShooterGame::ShooterGame()
     LevelLoader loader(&provider);
     LevelData* data = loader.load("Levels.xml/Level1/Level");
     {
-        XmlDataSaver saver;
-        data->save(&saver, &std::string("Levels.xml/Level1/Level"));
+        //XmlDataSaver saver;
+        //data->save(&saver, &std::string("Levels.xml/Level1/Level"));
     }
     setLevel(data->build());
     //activeLevel = new Level("default");

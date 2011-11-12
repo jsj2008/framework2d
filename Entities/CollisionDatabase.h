@@ -16,6 +16,7 @@ class CollisionDatabaseHandle
         ~CollisionDatabaseHandle();
         void addFilter(const std::string& _collisionName);
         void addEvent(const std::string& _collisionName, const std::string& _actionName);
+        void setDefaultEvent(const std::string& _actionName);
         CollisionResponse* buildResponse();
         unsigned short getId(){return id;}
         void collide(unsigned short _otherCategory, b2Fixture* _thisFixture, b2Fixture* _otherFixture);
@@ -24,8 +25,8 @@ class CollisionDatabaseHandle
         unsigned short id;
         unsigned short collisionCategory;
         unsigned short collisionMask;
-        std::vector<std::pair<CollisionDatabaseHandle*, GameObjectBase::ActionHandle*>> events;
         std::vector<GameObjectBase::ActionHandle*> objectReaction;
+        GameObjectBase::ActionHandle* defaultReaction;
 };
 
 class CollisionDatabase

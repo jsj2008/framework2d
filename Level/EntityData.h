@@ -2,20 +2,21 @@
 #define ENTITYDATA_H
 
 #include <Level/LoadedData.h>
-class FactoryParameters;
+class PropertyBagData;
 class AbstractFactories;
 
 class EntityData : public LoadedData
 {
     public:
-        EntityData(const char* _type, FactoryParameters* _params);
+        EntityData(const char* _type, PropertyBagData* _propertyBag);
         virtual ~EntityData();
 
+        GameObjectBase* get();
         void build(AbstractFactories* _factories);
     protected:
     private:
         void virtualSave(XmlDataSaver* _saver, const std::string* _address);
-        FactoryParameters* params;
+        PropertyBagData* propertyBag;
         std::string type;
 };
 

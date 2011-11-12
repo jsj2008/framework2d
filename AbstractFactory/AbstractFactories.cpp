@@ -33,10 +33,10 @@ void AbstractFactories::init()
     }
 }
 
-void AbstractFactories::addFactory(const std::string& _product, FactoryLoader* _loader)
+GameObjectBase* AbstractFactories::addFactory(const std::string& _product, FactoryLoader* _loader)
 {
     ProductType* type = productTypeList()[_product];
-    indexedFactoryLists[type->getProductId()]->addFactory(this, _loader);
+    return indexedFactoryLists[type->getProductId()]->addFactory(this, _loader);
 }
 
 void AbstractFactories::registerActions()

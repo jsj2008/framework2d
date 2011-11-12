@@ -2,6 +2,7 @@
 #define LOADEDDATA_H
 
 #include <string>
+class GameObjectBase;
 class XmlDataSaver;
 
 class LoadedData

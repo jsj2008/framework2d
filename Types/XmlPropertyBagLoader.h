@@ -4,6 +4,7 @@
 #include <Types/PropertyBagLoader.h>
 #include <tinyxml.h>
 class FactoryParameters;
+class PropertyBagData;
 
 class XmlPropertyBagLoader : public PropertyBagLoader
 {
@@ -16,6 +17,7 @@ class XmlPropertyBagLoader : public PropertyBagLoader
             bool next();
             const char* getFactoryName();
             void readParameters(FactoryParameters* _params);
+            void readParameters(PropertyBagData* _propertyBag);
         void endFactories();
     protected:
     private:

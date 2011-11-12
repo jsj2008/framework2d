@@ -24,6 +24,22 @@ class GameObjectBase
         {
             public:
                 virtual void execute(GameObjectBase* _object)=0;
+                template <typename EventObject>
+                void execute(GameObjectBase* _object, EventObject* _eventObject);
+                virtual void execute(GameObjectBase* _object, void* _eventObject, unsigned int _typeHandle)=0;
+            protected:
+                template <typename EventObject>
+                static unsigned int getObjectHandle()
+                {
+                    static unsigned int handle = newObjectHandle();
+                    return handle;
+                }
+            private:
+                static unsigned int newObjectHandle()
+                {
+                    static unsigned int handle = 0;
+                    return handle++;
+                }
         };
 
         GameObjectBase(unsigned int _eventsSize);
@@ -78,6 +94,8 @@ class GameObject : public GameObjectBase
         static std::vector<EventHandle*> getAllEventHandles();
         static std::vector<ActionHandle*> getAllActionHandles();
         static void createActionHandle(const std::string& _name, void (DerivedObject::*_action)());
+        template <typename EventObject>
+        static void createActionHandle(const std::string& _name, void (DerivedObject::*_action)(EventObject* _object));
     protected:
         static EventHandle* createEventHandle(const char* _name);
     private:
@@ -86,8 +104,19 @@ class GameObject : public GameObjectBase
             public:
                 TemplateActionHandle(void (DerivedObject::*_action)()){action = _action;}
                 void execute(GameObjectBase* _object);
+                void execute(GameObjectBase* _object, void* _eventObject, unsigned int _typeHandle){execute(_object);}
             private:
                 void (DerivedObject::*action)();
+        };
+        template <typename EventObject>
+        class TemplateActionWithObjectHandle : public ActionHandle
+        {
+            public:
+                TemplateActionWithObjectHandle(void (DerivedObject::*_action)(EventObject* _eventObject)){action = _action;}
+                void execute(GameObjectBase* _object);
+                void execute(GameObjectBase* _object, void* _eventObject, unsigned int _typeHandle);
+            private:
+                void (DerivedObject::*action)(EventObject* _eventObject);
         };
 
         friend class AutoInstantiate<DerivedObject>;
@@ -106,7 +135,7 @@ class GameObject : public GameObjectBase
 
 
 template <typename DerivedObject>
-typename GameObject<DerivedObject>::EventHandle* GameObject<DerivedObject>::deathEvent = createEventHandle("Death");
+typename GameObject<DerivedObject>::EventHandle* GameObject<DerivedObject>::deathEvent = createEventHandle("onDeath");
 
 template <typename DerivedObject>
 const AutoInstantiate<DerivedObject> GameObject<DerivedObject>::autoInstantiationPlease;
@@ -179,6 +208,21 @@ void GameObject<DerivedObject>::createActionHandle(const std::string& _name, voi
     ActionHandle* handle = new TemplateActionHandle(_action);
     actionHandles()[_name] = handle;
 }
+template <typename DerivedObject>
+template <typename EventObject>
+void GameObject<DerivedObject>::createActionHandle(const std::string& _name, void (DerivedObject::*_action)(EventObject* _object))
+{
+    assert(actionHandles().find(_name) == actionHandles().end());
+    ActionHandle* handle = new TemplateActionWithObjectHandle<EventObject>(_action);
+    actionHandles()[_name] = handle;
+}
+
+template <typename EventObject>
+void GameObjectBase::ActionHandle::execute(GameObjectBase* _object, EventObject* _eventObject)
+{
+    unsigned int handle = getObjectHandle<EventObject>();
+    execute(_object, static_cast<void*>(_eventObject), handle);
+}
 
 template <typename DerivedObject>
 void GameObject<DerivedObject>::TemplateActionHandle::execute(GameObjectBase* _object)
@@ -189,6 +233,25 @@ void GameObject<DerivedObject>::TemplateActionHandle::execute(GameObjectBase* _o
     }
     DerivedObject* cast = static_cast<DerivedObject*>(_object);
     (cast->*action)();
+}
+template <typename DerivedObject>
+template <typename EventObject>
+void GameObject<DerivedObject>::TemplateActionWithObjectHandle<EventObject>::execute(GameObjectBase* _object)
+{
+    assert(false);
+}
+template <typename DerivedObject>
+template <typename EventObject>
+void GameObject<DerivedObject>::TemplateActionWithObjectHandle<EventObject>::execute(GameObjectBase* _object, void* _eventObject, unsigned int _typeHandle)
+{
+    {
+        DerivedObject* dynCast = dynamic_cast<DerivedObject*>(_object);
+        assert(dynCast);
+        assert(_typeHandle == getObjectHandle<EventObject>());
+    }
+    DerivedObject* object = static_cast<DerivedObject*>(_object);
+    EventObject* eventObject = static_cast<EventObject*>(_eventObject);
+    (object->*action)(eventObject);
 }
 
 #endif // GAMEOBJECT_H

@@ -2,7 +2,7 @@
 #include <Level/XmlResourceProvider.h>
 #include <Level/FactoryListData.h>
 #include <Level/FactoryData.h>
-#include <AbstractFactory/FactoryParameters.h>
+#include <Level/PropertyBagData.h>
 #include <Types/XmlPropertyBagLoader.h>
 
 FactoryListLoader::FactoryListLoader(XmlResourceProvider* _provider)
@@ -27,11 +27,11 @@ FactoryListData* FactoryListLoader::virtualLoad(const std::string& _listName, Fa
         const char* name = element->Attribute("Name");
         const char* product = element->Attribute("Product");
         TiXmlElement* propertyBag = element->FirstChildElement("PropertyBag");
-        FactoryParameters* params = new FactoryParameters;
+        PropertyBagData* propertyBagData = new PropertyBagData;
         XmlPropertyBagLoader loader(propertyBag);
-        loader.readParameters(params);
+        loader.readParameters(propertyBagData);
 
-        FactoryData* factory = new FactoryData(type, name, product, params);
+        FactoryData* factory = new FactoryData(type, name, product, propertyBagData);
         factory->init(_listName + name);
         list->addFactory(factory);
     }

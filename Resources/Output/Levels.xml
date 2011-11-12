@@ -1,6 +1,0 @@
-<Root Name="Levels.xml">
-    <Collection Name="Level1">
-        <Level Name="Level" />
-        <EventListRef Name="Events">Levels.xml/Level1/Events</EventListRef>
-    </Collection>
-</Root>

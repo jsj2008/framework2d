@@ -4,6 +4,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Types/XmlPropertyBagLoader.h>
 #include <Level/EntityData.h>
+#include <Level/PropertyBagData.h>
 
 EntityListLoader::EntityListLoader(XmlResourceProvider* _provider)
 {
@@ -25,12 +26,12 @@ void EntityListLoader::virtualLoad(const std::string& _listName, EntityListData*
     for (; element; element = element->NextSiblingElement("Entity"))
     {
         const char* type = element->Attribute("Type");
-        TiXmlElement* propertyBag = element->FirstChildElement("PropertyBag");
-        FactoryParameters* params = new FactoryParameters;
-        XmlPropertyBagLoader loader(propertyBag);
-        loader.readParameters(params);
+        TiXmlElement* propertyBagElement = element->FirstChildElement("PropertyBag");
+        PropertyBagData* propertyBag = new PropertyBagData;
+        XmlPropertyBagLoader loader(propertyBagElement);
+        loader.readParameters(propertyBag);
 
-        EntityData* entity = new EntityData(type, params);
+        EntityData* entity = new EntityData(type, propertyBag);
         entity->init(_listName);
         _list->addEntity(entity);
     }

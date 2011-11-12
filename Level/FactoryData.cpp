@@ -1,13 +1,16 @@
 #include "FactoryData.h"
-#include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Entity.h>
+#include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
+#include <Level/PropertyBagData.h>
 
-FactoryData::FactoryData(const char* _type, const char* _name, const char* _product, FactoryParameters* _params)
-:loader(_type, _name, _params->getTypeTable(), nullptr)
+FactoryData::FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag)
+:loader(nullptr)
 {
     //ctor
-    delete _params;
     product = _product;
+    propertyBag = _propertyBag;
+    loader.setType(_type);
+    loader.setName(_name);
 }
 
 FactoryData::~FactoryData()
@@ -15,10 +18,11 @@ FactoryData::~FactoryData()
     //dtor
 }
 
-void FactoryData::build(AbstractFactories* _factories)
+GameObjectBase* FactoryData::build(AbstractFactories* _factories)
 {
     loader.setFactories(_factories);
-    _factories->addFactory(product, &loader);
+    propertyBag->build(loader.getTypeTable());
+    return _factories->addFactory(product, &loader);
 }
 
 void FactoryData::virtualSave(XmlDataSaver* _saver, const std::string* _address)

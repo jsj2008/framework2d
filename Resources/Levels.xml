@@ -4,29 +4,64 @@
     <Level Name="Level">
       <EventListRef>Levels.xml/Level1/Events</EventListRef>
       <FactoryList Name="Factories">
-	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
-	  <PropertyBag />
-	</Factory>
-	<Factory Name="WaterCollision" Type="CollisionResponseFactory" Product="CollisionResponse">
+	<Factory Name="Bullet" Type="ProjectileFactory" Product="Entity">
 	  <PropertyBag>
-	    <Property Type="string" Name="name" Value="Water" />
+	    <Property Type="float" Name="radius" Value="0.2" />
+	  </PropertyBag>
+	  <Script>
+	    <Event>
+	      <EventName>onDeath</EventName>
+	    </Event>
+	    <Action>
+	      <ActionName>SpawnAtEntity</ActionName>
+	    </Action>
+	  </Script>
+	</Factory>
+	<Factory Name="FireBulletAction" Type="FireProjectileActionFactory" Product="WeaponAction">
+	  <PropertyBag>
+	    <Property Type="string" Name="projectile" Value="Bullet" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="Pistol" Type="WeaponFactory" Product="Weapon">
+	  <PropertyBag>
+	    <Property Type="string" Name="actionFactory" Value="FireBulletAction" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="string" Name="weapon" Value="Pistol" />
+	  </PropertyBag>
+	</Factory>
+
+	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="string" Name="name" Value="Player" />
 	    <Array Type="string" Name="event__Collisions">
-	      <Member Value="Water" />
+	      <Member Value="Bullet" />
 	    </Array>
 	    <Array Type="string" Name="event__Actions">
 	      <Member Value="Kill" />
 	    </Array>
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="Bullet" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="string" Name="name" Value="Bullet" />
+	    <Property Type="string" Name="defaultAction" Value="Kill" />
+	  </PropertyBag>
+	  <Array Type="string" Name="filters">
+	    <Member Value="Player" />
+	  </Array>
+	</Factory>
+
 	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="float" Name="density" Value="10" />
-	    <Property Type="string" Name="collisionResponse" Value="WaterCollision" />
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
 	  <PropertyBag>
-	    <Property Type="string" Name="collisionResponse" Value="WaterCollision" />
+	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
 	  </PropertyBag>
 	</Factory>
       </FactoryList>

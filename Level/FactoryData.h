@@ -3,20 +3,21 @@
 
 #include <Level/LoadedData.h>
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
-class FactoryParameters;
+class PropertyBagData;
 class AbstractFactories;
 
 class FactoryData : public LoadedData
 {
     public:
-        FactoryData(const char* _type, const char* _name, const char* _product, FactoryParameters* _params);
+        FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag);
         virtual ~FactoryData();
 
-        void build(AbstractFactories* _factories);
+        GameObjectBase* build(AbstractFactories* _factories);
     protected:
     private:
         void virtualSave(XmlDataSaver* _saver, const std::string* _address);
         CppFactoryLoader loader;
+        PropertyBagData* propertyBag;
         std::string product;
 };
 

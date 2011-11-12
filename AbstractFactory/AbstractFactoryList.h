@@ -23,7 +23,7 @@ class AbstractFactoryListBase : public GameObject<AbstractFactoryListBase>
         virtual ~AbstractFactoryListBase();
         virtual void print()=0;
         virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
-        virtual void addFactory(AbstractFactories* _factories, FactoryLoader* _loader)=0;
+        virtual GameObjectBase* addFactory(AbstractFactories* _factories, FactoryLoader* _loader)=0;
 
         static void registerActions();
     protected:
@@ -42,10 +42,12 @@ class AbstractFactoryList: public AbstractFactoryListBase
 
         static void registerFactoryType(const std::string& _name, FactoryCreator<Product>* _creator);
 
-        void addFactory(AbstractFactories* _factories, FactoryLoader* _loader);
+        GameObjectBase* addFactory(AbstractFactories* _factories, FactoryLoader* _loader);
+        GameObjectBase* initializeFactory(AbstractFactories* _factories, FactoryLoader* _loader);
 
         Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
         AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory);
+        AbstractFactoryBase<Product>* getUninitializedFactory(AbstractFactoryReference _factory, const std::string& _type);
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
         static const std::string& getProductName()
         {
@@ -71,6 +73,7 @@ class AbstractFactoryList: public AbstractFactoryListBase
             return list;
         }
         std::unordered_map<AbstractFactoryReference,AbstractFactoryBase<Product>*> factories;
+        std::unordered_map<AbstractFactoryReference,AbstractFactoryBase<Product>*> uninitializedFactories;
 };
 
 
@@ -136,9 +139,32 @@ AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractF
             factory->baseInit(_factory, &emptyConfig, factoriesListList);
             return factory;
         }
+        else
+        {
+            throw -1; /// FIXME NoSuchFactoryException or some shit
+        }
         g_Log.error("No such factory: " + _factory);
     }
     return factory;
+}
+
+template <typename Product>
+AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getUninitializedFactory(AbstractFactoryReference _factory, const std::string& _type)
+{
+    try
+    {
+        return getFactory(_factory);
+    }
+    catch (...)
+    {
+        AbstractFactoryBase<Product>* factory = uninitializedFactories[_factory];
+        if (factory == nullptr)
+        {
+            factory = factoryCreators()[_type]->createFactory();
+            uninitializedFactories[_factory] = factory;
+        }
+        return factory;
+    }
 }
 
 template <typename Product>
@@ -167,14 +193,38 @@ UntypedAbstractFactory* AbstractFactoryList<Product>::getUntypedFactory(const st
 }
 
 template <typename Product>
-void AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, FactoryLoader* _loader)
+GameObjectBase* AbstractFactoryList<Product>::addFactory(AbstractFactories* _factories, FactoryLoader* _loader)
 {
     assert(factories.find(_loader->getName()) == factories.end());
-    AbstractFactoryBase<Product>* factory = factoryCreators()[_loader->getType()]->createFactory();
+    auto iter = uninitializedFactories.find(_loader->getName());
+    AbstractFactoryBase<Product>* factory;
+    if (iter == uninitializedFactories.end())
+    {
+        factory = factoryCreators()[_loader->getType()]->createFactory();
+    }
+    else
+    {
+        factory = iter->second;
+        uninitializedFactories.erase(iter);
+    }
     attachChild(factory);
     factory->baseInit(_loader->getName(), _loader, _factories);
     factories[_loader->getName()] = factory;
+    return factory;
 }
+
+/*template <typename Product>
+GameObjectBase* AbstractFactoryList<Product>::initializeFactory(AbstractFactories* _factories, FactoryLoader* _loader)
+{
+    assert(factories.find(_loader->getName()) == factories.end());
+    auto iter = uninitializedFactories.find(_loader->getName());
+    assert(iter != uninitializedFactories.end());
+    attachChild(iter->second);
+    iter->second->baseInit(_loader->getName(), _loader, _factories);
+    factories[_loader->getName()] = iter->second;
+    uninitializedFactories.erase(iter);
+    return iter->second;
+}*/
 
 #include <AbstractFactory/TypeTableFactoryType.h>
 template <typename Product>
@@ -188,6 +238,10 @@ template <typename Product>
 AbstractFactoryList<Product>::~AbstractFactoryList()
 {
     //dtor
+    for (auto iter = uninitializedFactories.begin(); iter != uninitializedFactories.end(); iter++)
+    {
+        delete iter->second;
+    }
 }
 
 void privatePrint(std::ostream* stream, const std::string& factoryType, const std::string& factoryInstance, const std::string& productName, const std::string& realProductName);

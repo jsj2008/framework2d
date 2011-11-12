@@ -20,6 +20,12 @@ void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* fa
         handle->addFilter(filters[i]);
     }
 
+    std::string defaultAction = loader->get<std::string>("defaultAction", "null");
+    if (defaultAction != "null")
+    {
+        handle->setDefaultEvent(defaultAction);
+    }
+
     std::vector<std::string> handles = loader->getArray<std::string>("event__Collisions", {});
     std::vector<std::string> actions = loader->getArray<std::string>("event__Actions", {});
     for (unsigned int i = 0; i < handles.size(); i++)
