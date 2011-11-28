@@ -66,7 +66,7 @@ void GameObjectBase::EventHandle::fire(GameObjectBase* _object)
     }
 }
 
-void GameObjectBase::killAction()
+void GameObjectBase::killAction(CollisionObject* _object)
 {
     delete this;
 }

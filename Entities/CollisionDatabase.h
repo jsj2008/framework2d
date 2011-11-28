@@ -8,6 +8,7 @@
 class CollisionResponse;
 class b2Fixture;
 class CollisionDatabase;
+class CollisionObject;
 
 class CollisionDatabaseHandle
 {
@@ -19,7 +20,7 @@ class CollisionDatabaseHandle
         void setDefaultEvent(const std::string& _actionName);
         CollisionResponse* buildResponse();
         unsigned short getId(){return id;}
-        void collide(unsigned short _otherCategory, b2Fixture* _thisFixture, b2Fixture* _otherFixture);
+        void collide(CollisionObject* _object);
     private:
         CollisionDatabase* database;
         unsigned short id;

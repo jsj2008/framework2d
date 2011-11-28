@@ -1,6 +1,8 @@
 #include "CollisionDatabase.h"
 #include <Entities/CollisionResponse.h>
 #include <Box2D/Box2D.h>
+#include <Log/Log.h>
+#include <Physics/CollisionObject.h>
 
 CollisionDatabase::CollisionDatabase()
 {
@@ -56,16 +58,18 @@ CollisionResponse* CollisionDatabaseHandle::buildResponse()
 {
     return new CollisionResponse(this);
 }
-#include <iostream>
-void CollisionDatabaseHandle::collide(unsigned short _otherCategory, b2Fixture* _thisFixture, b2Fixture* _otherFixture)
+
+void CollisionDatabaseHandle::collide(CollisionObject* _object)
 {
-    if (_otherCategory < objectReaction.size())
+    unsigned short otherCollisionCategory = _object->getCollisionCategory();
+    if (otherCollisionCategory < objectReaction.size())
     {
-        GameObjectBase::ActionHandle* action = objectReaction[_otherCategory];
+        GameObjectBase::ActionHandle* action = objectReaction[otherCollisionCategory];
         if (action != nullptr)
         {
-            GameObjectBase* object = static_cast<GameObjectBase*>(_thisFixture->GetBody()->GetUserData());
-            action->execute<b2Fixture>(object, _otherFixture);
+            g_Log.message("Action");
+            GameObjectBase* object = static_cast<GameObjectBase*>(_object->getMe()->GetBody()->GetUserData());
+            action->execute<CollisionObject>(object, _object);
         }
     }
 }

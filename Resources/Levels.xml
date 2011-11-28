@@ -30,6 +30,7 @@
 	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="weapon" Value="Pistol" />
+	    <Property Type="string" Name="collisionResponse" Value="Player" /> 
 	  </PropertyBag>
 	</Factory>
 
@@ -38,9 +39,11 @@
 	    <Property Type="string" Name="name" Value="Player" />
 	    <Array Type="string" Name="event__Collisions">
 	      <Member Value="Bullet" />
+	      <Member Value="WaterVolume" />
 	    </Array>
 	    <Array Type="string" Name="event__Actions">
 	      <Member Value="Kill" />
+	      <Member Value="Floatation" />
 	    </Array>
 	  </PropertyBag>
 	</Factory>

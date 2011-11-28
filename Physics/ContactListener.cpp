@@ -1,6 +1,7 @@
 #include "ContactListener.h"
 #include <Entities/Entity.h>
 #include <Entities/CollisionResponse.h>
+#include <Physics/CollisionObject.h>
 #include <Physics/CollisionHandlers/AllCollisionHandlers.h>
 #include <cstring>
 
@@ -37,7 +38,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     CollisionResponse* b = static_cast<CollisionResponse*>(contact->GetFixtureB()->GetUserData());
     if (a != nullptr && b != nullptr)
     {
-        collidedFixtures.push({contact->GetFixtureA(), contact->GetFixtureB()});
+        //collidedFixtures.push({contact->GetFixtureA(), contact->GetFixtureB()});
     }
 }
 void ContactListener::EndContact(b2Contact* contact)
@@ -46,6 +47,18 @@ void ContactListener::EndContact(b2Contact* contact)
 }
 void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
+    b2Fixture* a = contact->GetFixtureA();
+    b2Fixture* b = contact->GetFixtureB();
+    CollisionResponse* rA = static_cast<CollisionResponse*>(a->GetUserData());
+    CollisionResponse* rB = static_cast<CollisionResponse*>(b->GetUserData());
+
+    if (rA != nullptr && rB != nullptr)
+    {
+        CollisionObject cA(a, b);
+        CollisionObject cB(b, a);
+        rA->collide(&cA);
+        rB->collide(&cB);
+    }
 }
 
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
@@ -60,7 +73,7 @@ void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impu
         Entity* a = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData();
         Entity* b = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData();
         if (a != nullptr && b != nullptr) /// FIXME
-            {
+        {
             if (a->getType() > b->getType())
             {
                 Entity* c = b;
@@ -68,7 +81,7 @@ void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impu
                 a = c;
             }
             HighVelocityImpact impact(a,b,totalImpulse);
-            highVelocityImpacts.push(impact);
+            //highVelocityImpacts.push(impact);
         }
     }
 }
@@ -81,7 +94,7 @@ void ContactListener::process()
         handlers[impact.entityA->getType()][impact.entityB->getType()]->handle(impact.entityA,impact.entityB,impact.totalImpulse);
         highVelocityImpacts.pop();
     }
-    while (!collidedFixtures.empty())
+    /*while (!collidedFixtures.empty())
     {
         b2Fixture* fixtureA = collidedFixtures.top().first;
         b2Fixture* fixtureB = collidedFixtures.top().second;
@@ -90,5 +103,5 @@ void ContactListener::process()
         a->collide(b->getCategory(), fixtureA, fixtureB);
         b->collide(a->getCategory(), fixtureB, fixtureA);
         collidedFixtures.pop();
-    }
+    }*/
 }

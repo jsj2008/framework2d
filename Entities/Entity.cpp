@@ -35,5 +35,9 @@ const Vec2f& Entity::getPosition()
 
 void Entity::registerActions()
 {
+    createActionHandle("Floatation", &Entity::floatationAction);
+}
 
+void Entity::floatationAction(CollisionObject* _object)
+{
 }

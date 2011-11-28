@@ -36,6 +36,7 @@ class Entity : public GameObject<Entity>
         Body* getBody(){return body;}
 
         static void registerActions();
+        void floatationAction(CollisionObject* _object);
     protected:
         Body* body;
         Skin* mSkin;

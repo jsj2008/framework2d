@@ -4,13 +4,14 @@
 #include <GameObject.h>
 class b2Fixture;
 class CollisionDatabaseHandle;
+class CollisionObject;
 
 class CollisionResponse : public GameObject<CollisionResponse>
 {
     public:
         CollisionResponse(CollisionDatabaseHandle* _databaseHandle);
         virtual ~CollisionResponse();
-        void collide(unsigned short _otherCategory, b2Fixture* _fixture, b2Fixture* _other);
+        void collide(CollisionObject* _object);
         unsigned short getCategory();
         static void registerActions();
         static std::string name()

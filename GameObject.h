@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <cassert>
 class GameObjectEventListener;
+class CollisionObject;
 
 class GameObjectBase
 {
@@ -51,7 +52,7 @@ class GameObjectBase
         //virtual ActionHandle* getActionHandle(const std::string& _name)=0;
         static ActionHandle* getActionHandle(const std::string& _name){return actionHandles()[_name];}
 
-        void killAction(); /// Will trigger deathEvent
+        void killAction(CollisionObject* _object); /// Will trigger deathEvent
         static void registerBaseActions();
     protected:
         void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}

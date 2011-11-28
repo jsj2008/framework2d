@@ -11,9 +11,9 @@ CollisionResponse::~CollisionResponse()
     //dtor
 }
 
-void CollisionResponse::collide(unsigned short _otherCategory, b2Fixture* _fixture, b2Fixture* _other)
+void CollisionResponse::collide(CollisionObject* _object)
 {
-    databaseHandle->collide(_otherCategory, _fixture, _other);
+    databaseHandle->collide(_object);
 }
 
 unsigned short CollisionResponse::getCategory()
