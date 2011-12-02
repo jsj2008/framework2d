@@ -27,7 +27,6 @@
 
 b2Fixture::b2Fixture()
 {
-	m_userData = NULL;
 	m_body = NULL;
 	m_next = NULL;
 	m_proxyId = b2BroadPhase::e_nullProxy;
@@ -43,7 +42,6 @@ b2Fixture::~b2Fixture()
 
 void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2FixtureDef* def)
 {
-	m_userData = def->userData;
 	m_friction = def->friction;
 	m_restitution = def->restitution;
 
@@ -115,7 +113,7 @@ void b2Fixture::DestroyProxy(b2BroadPhase* broadPhase)
 void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
 {
 	if (m_proxyId == b2BroadPhase::e_nullProxy)
-	{	
+	{
 		return;
 	}
 
@@ -123,7 +121,7 @@ void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transfo
 	b2AABB aabb1, aabb2;
 	m_shape->ComputeAABB(&aabb1, transform1);
 	m_shape->ComputeAABB(&aabb2, transform2);
-	
+
 	m_aabb.Combine(aabb1, aabb2);
 
 	b2Vec2 displacement = transform2.position - transform1.position;

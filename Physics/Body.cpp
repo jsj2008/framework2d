@@ -1,5 +1,6 @@
 #include "Body.h"
 #include <Box2D/Box2D.h>
+#include <Physics/PhysicsManager.h>
 
 Body::Body(b2Body* _body)
 {
@@ -10,7 +11,8 @@ Body::Body(b2Body* _body)
 Body::~Body()
 {
     //dtor
-    body->GetWorld()->DestroyBody(body);
+    PhysicsManager* physics = static_cast<PhysicsManager*>(body->GetWorld()->GetUserData());
+    physics->destroyBody(body);
 }
 
 const Vec2f& Body::getPosition()

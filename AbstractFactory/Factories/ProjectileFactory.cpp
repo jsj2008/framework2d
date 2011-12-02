@@ -5,10 +5,12 @@
 #include <Physics/Body.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
+#include <Entities/CollisionDatabase.h>
 
 ProjectileFactory::ProjectileFactory()
 {
     bodyDef.type = b2_dynamicBody;
+    bodyDef.bullet = true;
     fixtureDef.shape = &shapeDef;
 }
 void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
@@ -21,6 +23,8 @@ void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories
     skinFactory = loader->getFactory<Skin>("skins", "StaticSkinFactory");
     assert(skinFactory);
     physicsManager = factories->getWorld();
+
+    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 
 ProjectileFactory::~ProjectileFactory()
@@ -39,6 +43,7 @@ Entity* ProjectileFactory::useFactory(FactoryParameters* parameters)
     bodyDef.userData = (void*)entity;
     Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
+    fixtureDef.filter.response = collisionResponse->use(parameters);
     body->createFixture(&fixtureDef);
     return entity;
 }

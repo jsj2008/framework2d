@@ -2,10 +2,13 @@
 #define PHYSICSMANAGER_H
 
 #include <Box2D/Box2D.h>
+#include <stack>
 class RenderCallback;
 class ContactListener;
 class DebugDraw;
 class Body;
+class ContactFilter;
+class CollisionDatabase;
 
 #define BIT(x) (1 << x)
 #define JUMPING
@@ -14,8 +17,8 @@ class Body;
 class PhysicsManager
 {
     public:
-        PhysicsManager();
-        void init();
+        PhysicsManager(CollisionDatabase* _database);
+        void init(CollisionDatabase* _database);
         virtual ~PhysicsManager();
         void clear();
 
@@ -24,34 +27,21 @@ class PhysicsManager
         /// You create fixtures on the body
         b2MouseJoint* createJoint(b2Body* body, Vec2f& point);
         void deleteJoint(b2Joint* joint);
+        void destroyBody(b2Body* _body);
         bool update();
         void render();
         b2Body* select(Vec2f& position, void* _ignore = (void*)0xBAADF00D);
-        enum CollisionCategory
-        {
-            PlayerCategory = BIT(0),
-            CrateCategory = BIT(1),
-            StaticGeometryCategory = BIT(2),
-            BubbleCategory = BIT(3),
-            EnemyCategory = BIT(4),
-            ProjectileCategory = BIT(5),
-            CollisionCategoriesMax
-        };
-        unsigned short getCollisionMask(CollisionCategory category){return collisionMasks[category];}
         void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
-        int getNextPositiveCollisionGroup(){return usedPositiveCollisionGroups++;}
-        int getNextNegativeCollisionGroup(){return usedNegativeCollisionGroups--;}
         void tick();
     protected:
     private:
-        int usedPositiveCollisionGroups;
-        int usedNegativeCollisionGroups;
-        unsigned short collisionMasks[CollisionCategoriesMax];
         void updateEntities();
         b2World* mWorld;
         ContactListener* contactListener;
+        ContactFilter* contactFilter;
         RenderCallback* mRenderCallback;
         DebugDraw* debugDraw;
+        std::stack<b2Body*> destroyedThisFrame;
 };
 
 #endif // PHYSICSMANAGER_H

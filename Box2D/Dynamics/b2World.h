@@ -51,11 +51,6 @@ public:
 	/// remain in scope.
 	void SetDestructionListener(b2DestructionListener* listener);
 
-	/// Register a contact filter to provide specific control over collision.
-	/// Otherwise the default filter is used (b2_defaultFilter). The listener is
-	/// owned by you and must remain in scope. 
-	void SetContactFilter(b2ContactFilter* filter);
-
 	/// Register a contact event listener. The listener is owned by you and must
 	/// remain in scope.
 	void SetContactListener(b2ContactListener* listener);
@@ -130,7 +125,7 @@ public:
 	/// Get the world contact list. With the returned contact, use b2Contact::GetNext to get
 	/// the next contact in the world list. A NULL contact indicates the end of the list.
 	/// @return the head of the world contact list.
-	/// @warning contacts are 
+	/// @warning contacts are
 	b2Contact* GetContactList();
 
 	/// Enable/disable warm starting. For testing.
@@ -153,7 +148,7 @@ public:
 
 	/// Change the global gravity vector.
 	void SetGravity(const b2Vec2& gravity);
-	
+
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
 
@@ -165,6 +160,12 @@ public:
 
 	/// Get the flag that controls automatic clearing of forces after each time step.
 	bool GetAutoClearForces() const;
+
+	/// Get the user data pointer that was provided in the body definition.
+	void* GetUserData() const;
+
+	/// Set the user data. Use this to store your application specific data.
+	void SetUserData(void* data);
 
 private:
 
@@ -217,6 +218,8 @@ private:
 
 	// This is for debugging the solver.
 	bool m_continuousPhysics;
+
+	void* m_userData;
 };
 
 inline b2Body* b2World::GetBodyList()

@@ -11,7 +11,6 @@
 TileFactory::TileFactory()
 {
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
     physicsManager = nullptr;
 }
 void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
@@ -19,7 +18,6 @@ void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     //ctor
     skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
     physicsManager = factories->getWorld();
-    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
 }
 
 TileFactory::~TileFactory()

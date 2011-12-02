@@ -15,7 +15,7 @@ Level::Level(const char* _name)
 {
     //ctor
     name = _name;
-    world = new PhysicsManager();
+    world = new PhysicsManager(factories.getCollisionDatabase());
     entityList = nullptr;
 }
 

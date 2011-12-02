@@ -6,14 +6,13 @@
 #include <Physics/PhysicsManager.h>
 #include <Physics/Body.h>
 #include <AbstractFactory/FactoryParameters.h>
-#include <Entities/CollisionResponse.h>
+#include <Entities/CollisionDatabase.h>
 
 LevelGeometryFactory::LevelGeometryFactory()
 {
     //ctor
     physicsManager = nullptr;
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::StaticGeometryCategory;
 }
 
 LevelGeometryFactory::~LevelGeometryFactory()
@@ -26,8 +25,6 @@ void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factor
     skinFactory = loader->getFactory<Skin>("skin", "ConvexPolygonSkinFactory");
 
     physicsManager = factories->getWorld();
-    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::StaticGeometryCategory);
-    //collisionResponse = factories->getFactory<CollisionResponse>(loader->get<std::string>("collisionResponse", "CollisionResponseFactory"));
     collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 
@@ -47,8 +44,8 @@ Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
     bodyDef.userData = (void*)entity;
     Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    fixtureDef.userData = collisionResponse->use(parameters);
-    assert(fixtureDef.userData);
+    fixtureDef.filter.response = collisionResponse->use(parameters);
+    assert(fixtureDef.filter.response);
     body->createFixture(&fixtureDef);
 
     return entity;

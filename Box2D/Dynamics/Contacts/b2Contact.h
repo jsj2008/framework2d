@@ -94,6 +94,13 @@ public:
 	b2Fixture* GetFixtureB();
 	const b2Fixture* GetFixtureB() const;
 
+	/// Get the user data pointer in this contact.
+	void* GetUserData();
+	const void* GetUserData() const;
+
+	/// Set the user data pointer of this contact.
+	void SetUserData(void* _userData);
+
 	/// Evaluate this contact with your own manifold and transforms.
 	virtual void Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB) = 0;
 
@@ -160,6 +167,9 @@ protected:
 
 	int32 m_toiCount;
 //	float32 m_toi;
+
+    // User data
+    void* m_userData;
 };
 
 inline b2Manifold* b2Contact::GetManifold()

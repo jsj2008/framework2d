@@ -5,7 +5,7 @@
 #include <Entities/Crate.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
-#include <Entities/CollisionResponse.h>
+#include <Entities/CollisionDatabase.h>
 
 CrateFactory::CrateFactory()
 {
@@ -13,7 +13,6 @@ CrateFactory::CrateFactory()
     physicsManager = nullptr;
     bodyDef.type = b2_dynamicBody;
     fixtureDef.shape = &shapeDef;
-    fixtureDef.filter.categoryBits = PhysicsManager::CrateCategory;
 }
 
 CrateFactory::~CrateFactory()
@@ -26,7 +25,6 @@ void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     fixtureDef.density = loader->get<float>("density",1.0f);
     skinFactory = loader->getFactory<Skin>("skin","StaticSkinFactory");
     physicsManager = factories->getWorld();
-    fixtureDef.filter.maskBits = physicsManager->getCollisionMask(PhysicsManager::CrateCategory);
     collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 Entity* CrateFactory::useFactory(FactoryParameters* parameters)
@@ -43,8 +41,8 @@ Entity* CrateFactory::useFactory(FactoryParameters* parameters)
     bodyDef.userData = (void*)entity;
     Body* body = physicsManager->createBody(&bodyDef);
     entity->setBody(body);
-    fixtureDef.userData = collisionResponse->use(parameters);
-    assert(fixtureDef.userData);
+    fixtureDef.filter.response = collisionResponse->use(parameters);
+    assert(fixtureDef.filter.response);
     body->createFixture(&fixtureDef);
 
     return entity;

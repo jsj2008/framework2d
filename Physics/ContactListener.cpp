@@ -1,107 +1,90 @@
 #include "ContactListener.h"
 #include <Entities/Entity.h>
-#include <Entities/CollisionResponse.h>
 #include <Physics/CollisionObject.h>
-#include <Physics/CollisionHandlers/AllCollisionHandlers.h>
+#include <Entities/CollisionDatabase.h>
+#include <Physics/ContactFactory.h>
+#include <Physics/Contact.h>
 #include <cstring>
 
-ContactListener::ContactListener()
+ContactListener::ContactListener(CollisionDatabase* _database)
 {
     //ctor
-    memset(handlers,0,sizeof(CollisionHandler*)*eEntityTypeMax*eEntityTypeMax);
-    CollisionHandler* noResponseHandler = new NoResponseHandler;
-    for (unsigned int i = 0; i < eEntityTypeMax; i++)
-    {
-        for (unsigned int ii = i; ii < eEntityTypeMax; ii++)
-        {
-            handlers[i][ii] = noResponseHandler;
-        }
-    }
-    CollisionHandler* wildcardProjectileHandler = new WildcardProjectileCollisionHandler;
-    for (unsigned int i = 0; i < eEntityTypeMax; i++)
-    {
-        handlers[i][eProjectileEntityType] = wildcardProjectileHandler;
-    }
-    handlers[eStaticGeometryEntityType][eAIEntityType] = new StaticGeometryAIEntityCollisionHandler;
-    handlers[eAIEntityType][eProjectileEntityType] = new AIEntityProjectileCollisionHandler;
-
+    contactList = nullptr;
+    database = _database;
 }
 
 ContactListener::~ContactListener()
 {
     //dtor
 }
-#include <iostream>
-void ContactListener::BeginContact(b2Contact* contact)
+
+void ContactListener::BeginContact(b2Contact* _contact)
 {
-    CollisionResponse* a = static_cast<CollisionResponse*>(contact->GetFixtureA()->GetUserData());
-    CollisionResponse* b = static_cast<CollisionResponse*>(contact->GetFixtureB()->GetUserData());
+    CollisionResponse* a = _contact->GetFixtureA()->GetFilterData().response;
+    CollisionResponse* b = _contact->GetFixtureB()->GetFilterData().response;
     if (a != nullptr && b != nullptr)
     {
-        //collidedFixtures.push({contact->GetFixtureA(), contact->GetFixtureB()});
-    }
-}
-void ContactListener::EndContact(b2Contact* contact)
-{
-
-}
-void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-{
-    b2Fixture* a = contact->GetFixtureA();
-    b2Fixture* b = contact->GetFixtureB();
-    CollisionResponse* rA = static_cast<CollisionResponse*>(a->GetUserData());
-    CollisionResponse* rB = static_cast<CollisionResponse*>(b->GetUserData());
-
-    if (rA != nullptr && rB != nullptr)
-    {
-        CollisionObject cA(a, b);
-        CollisionObject cB(b, a);
-        rA->collide(&cA);
-        rB->collide(&cB);
-    }
-}
-
-void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-{
-    float totalImpulse = impulse->normalImpulses[0];
-    if (contact->GetManifold()->pointCount == 2)
-    {
-        totalImpulse += impulse->normalImpulses[1];
-    }
-    if (totalImpulse > 1)
-    {
-        Entity* a = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData();
-        Entity* b = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData();
-        if (a != nullptr && b != nullptr) /// FIXME
+        unsigned short catA = a->getId();
+        unsigned short catB = b->getId();
+        //ContactFactory* factory = contactFactories[catA][catB];
+        //if (factory != nullptr)
         {
-            if (a->getType() > b->getType())
+            //Contact* contact = factory->createContact(_contact, catA > catB);
+            Contact* contact = database->createContact(catA, catB);
+            if (contact != nullptr)
             {
-                Entity* c = b;
-                b = a;
-                a = c;
+                contact->setContact(_contact);
+                _contact->SetUserData(contact);
+                contact->insertInFront(contactList);
+                contactList = contact;
             }
-            HighVelocityImpact impact(a,b,totalImpulse);
-            //highVelocityImpacts.push(impact);
         }
     }
 }
+void ContactListener::EndContact(b2Contact* _contact)
+{
+    Contact* contact = static_cast<Contact*>(_contact->GetUserData());
+    if (contact != nullptr)
+    {
+        if (contact == contactList)
+        {
+            contactList = contactList->next;
+            if (contactList != nullptr)
+                contactList->prev = nullptr;
+        }
+        else
+        {
+            if (contact->prev != nullptr)
+                contact->prev->next = contact->next;
+            else
+                contactList = contact->next;
+            if (contact->next != nullptr)
+                contact->next->prev = contact->prev;
+        }
+        delete contact;
+    }
+}
+void ContactListener::PreSolve(b2Contact* _contact, const b2Manifold* oldManifold)
+{
+    Contact* contact = static_cast<Contact*>(_contact->GetUserData());
+    if (contact != nullptr)
+    {
+        _contact->SetEnabled(contact->preSolveInterface(oldManifold));
+    }
+}
 
+void ContactListener::PostSolve(b2Contact* _contact, const b2ContactImpulse* _impulse)
+{
+    Contact* contact = static_cast<Contact*>(_contact->GetUserData());
+    if (contact != nullptr)
+    {
+        contact->postSolveInterface(_impulse);
+    }
+}
 void ContactListener::process()
 {
-    while (!highVelocityImpacts.empty())
+    for (Contact* contact = contactList; contact != nullptr; contact = contact->next)
     {
-        HighVelocityImpact impact = highVelocityImpacts.front();
-        handlers[impact.entityA->getType()][impact.entityB->getType()]->handle(impact.entityA,impact.entityB,impact.totalImpulse);
-        highVelocityImpacts.pop();
+        contact->update();
     }
-    /*while (!collidedFixtures.empty())
-    {
-        b2Fixture* fixtureA = collidedFixtures.top().first;
-        b2Fixture* fixtureB = collidedFixtures.top().second;
-        CollisionResponse* a = static_cast<CollisionResponse*>(fixtureA->GetUserData());
-        CollisionResponse* b = static_cast<CollisionResponse*>(fixtureB->GetUserData());
-        a->collide(b->getCategory(), fixtureA, fixtureB);
-        b->collide(a->getCategory(), fixtureB, fixtureA);
-        collidedFixtures.pop();
-    }*/
 }

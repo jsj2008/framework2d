@@ -5,29 +5,30 @@
 #include <vector>
 #include <unordered_map>
 #include <GameObject.h>
-class CollisionResponse;
 class b2Fixture;
 class CollisionDatabase;
 class CollisionObject;
+class ContactFactory;
+class Contact;
+class b2Contact;
 
-class CollisionDatabaseHandle
+class CollisionResponse : public GameObject<CollisionResponse>
 {
     public:
-        CollisionDatabaseHandle(CollisionDatabase* _database, unsigned short _id);
-        ~CollisionDatabaseHandle();
+        CollisionResponse(CollisionDatabase* _database, unsigned short _id);
+        ~CollisionResponse();
         void addFilter(const std::string& _collisionName);
         void addEvent(const std::string& _collisionName, const std::string& _actionName);
         void setDefaultEvent(const std::string& _actionName);
-        CollisionResponse* buildResponse();
         unsigned short getId(){return id;}
-        void collide(CollisionObject* _object);
+        static void registerActions();
+        static std::string name()
+        {
+            return "CollisionResponse";
+        }
     private:
         CollisionDatabase* database;
         unsigned short id;
-        unsigned short collisionCategory;
-        unsigned short collisionMask;
-        std::vector<GameObjectBase::ActionHandle*> objectReaction;
-        GameObjectBase::ActionHandle* defaultReaction;
 };
 
 class CollisionDatabase
@@ -35,11 +36,17 @@ class CollisionDatabase
     public:
         CollisionDatabase();
         virtual ~CollisionDatabase();
-        CollisionDatabaseHandle* getHandle(const std::string& _collisionName);
+        CollisionResponse* getHandle(const std::string& _collisionName);
+        Contact* createContact(unsigned short _categoryA, unsigned short _categoryB);
     protected:
     private:
-        friend class CollisionDatabaseHandle;
-        std::unordered_map<std::string, CollisionDatabaseHandle*> database;
+        std::unordered_map<std::string, CollisionResponse*> database;
+        ContactFactory*** contactFactories;
+
+        friend class CollisionResponse;
+        void addFilter(unsigned short _a, unsigned short _b);
+        void addEvent(unsigned short _a, unsigned short _b, GameObjectBase::ActionHandle* _action);
+        void setDefaultEvent(unsigned short _a, GameObjectBase::ActionHandle* _action);
 };
 
 #endif // COLLISIONDATABASE_H

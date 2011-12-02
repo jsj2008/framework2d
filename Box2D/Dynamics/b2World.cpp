@@ -64,11 +64,6 @@ void b2World::SetDestructionListener(b2DestructionListener* listener)
 	m_destructionListener = listener;
 }
 
-void b2World::SetContactFilter(b2ContactFilter* filter)
-{
-	m_contactManager.m_contactFilter = filter;
-}
-
 void b2World::SetContactListener(b2ContactListener* listener)
 {
 	m_contactManager.m_contactListener = listener;
@@ -1073,4 +1068,14 @@ void b2World::DrawDebugData()
 int32 b2World::GetProxyCount() const
 {
 	return m_contactManager.m_broadPhase.GetProxyCount();
+}
+
+void b2World::SetUserData(void* data)
+{
+	m_userData = data;
+}
+
+void* b2World::GetUserData() const
+{
+	return m_userData;
 }

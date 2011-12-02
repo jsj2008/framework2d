@@ -4,18 +4,36 @@
     <Level Name="Level">
       <EventListRef>Levels.xml/Level1/Events</EventListRef>
       <FactoryList Name="Factories">
+
+	<Factory Name="Projectile" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Projectile" />
+	    <Property Type="string" Name="defaultAction" Value="Kill" />
+	    <Array Type="string" Name="filters">
+	      <Member Value="Projectile" />
+	    </Array>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Player" />
+	    <Array Type="string" Name="event__Collisions">
+	      <Member Value="WaterVolume" />
+	    </Array>
+	    <Array Type="string" Name="event__Actions">
+	      <Member Value="Floatation" />
+	    </Array>
+	    <Array Type="string" Name="filters">
+	      <Member Value="Projectile" />
+	    </Array>
+	  </PropertyBag>
+	</Factory>
+
 	<Factory Name="Bullet" Type="ProjectileFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="float" Name="radius" Value="0.2" />
+	    <Property Type="string" Name="collisionResponse" Value="Projectile" /> 
 	  </PropertyBag>
-	  <Script>
-	    <Event>
-	      <EventName>onDeath</EventName>
-	    </Event>
-	    <Action>
-	      <ActionName>SpawnAtEntity</ActionName>
-	    </Action>
-	  </Script>
 	</Factory>
 	<Factory Name="FireBulletAction" Type="FireProjectileActionFactory" Product="WeaponAction">
 	  <PropertyBag>
@@ -27,36 +45,17 @@
 	    <Property Type="string" Name="actionFactory" Value="FireBulletAction" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
+	<Factory Name="PlayerBody" Type="CharacterBodyFactory" Product="Body">
 	  <PropertyBag>
-	    <Property Type="string" Name="weapon" Value="Pistol" />
 	    <Property Type="string" Name="collisionResponse" Value="Player" /> 
 	  </PropertyBag>
 	</Factory>
-
-	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
+	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
 	  <PropertyBag>
-	    <Property Type="string" Name="name" Value="Player" />
-	    <Array Type="string" Name="event__Collisions">
-	      <Member Value="Bullet" />
-	      <Member Value="WaterVolume" />
-	    </Array>
-	    <Array Type="string" Name="event__Actions">
-	      <Member Value="Kill" />
-	      <Member Value="Floatation" />
-	    </Array>
+	    <Property Type="string" Name="weapon" Value="Pistol" />
+	    <Property Type="string" Name="body" Value="PlayerBody" /> 
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="Bullet" Type="CollisionResponseFactory" Product="CollisionResponse">
-	  <PropertyBag>
-	    <Property Type="string" Name="name" Value="Bullet" />
-	    <Property Type="string" Name="defaultAction" Value="Kill" />
-	  </PropertyBag>
-	  <Array Type="string" Name="filters">
-	    <Member Value="Player" />
-	  </Array>
-	</Factory>
-
 	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="float" Name="density" Value="10" />

@@ -133,6 +133,8 @@ b2Contact::b2Contact(b2Fixture* fA, b2Fixture* fB)
 	m_nodeB.other = NULL;
 
 	m_toiCount = 0;
+
+    m_userData = 0;
 }
 
 // Update the contact manifold and touching status.
@@ -223,4 +225,18 @@ void b2Contact::Update(b2ContactListener* listener)
 	{
 		listener->PreSolve(this, &oldManifold);
 	}
+}
+
+void* b2Contact::GetUserData()
+{
+    return m_userData;
+}
+const void* b2Contact::GetUserData() const
+{
+    return m_userData;
+}
+
+void b2Contact::SetUserData(void* _userData)
+{
+    m_userData = _userData;
 }

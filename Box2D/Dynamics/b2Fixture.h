@@ -26,11 +26,13 @@
 class b2BlockAllocator;
 class b2Body;
 class b2BroadPhase;
+class CollisionResponse;
 
 /// This holds contact filtering data.
 struct b2Filter
 {
-	/// The collision category bits. Normally you would just set one bit.
+    CollisionResponse* response;
+	/*/// The collision category bits. Normally you would just set one bit.
 	uint16 categoryBits;
 
 	/// The collision mask bits. This states the categories that this
@@ -40,7 +42,7 @@ struct b2Filter
 	/// Collision groups allow a certain group of objects to never collide (negative)
 	/// or always collide (positive). Zero means no collision group. Non-zero group
 	/// filtering always wins against the mask bits.
-	int16 groupIndex;
+	int16 groupIndex;*/
 };
 
 /// A fixture definition is used to create a fixture. This class defines an
@@ -51,13 +53,10 @@ struct b2FixtureDef
 	b2FixtureDef()
 	{
 		shape = NULL;
-		userData = NULL;
 		friction = 0.2f;
 		restitution = 0.0f;
 		density = 0.0f;
-		filter.categoryBits = 0x0001;
-		filter.maskBits = 0xFFFF;
-		filter.groupIndex = 0;
+		filter.response = 0;
 		isSensor = false;
 	}
 
@@ -66,9 +65,6 @@ struct b2FixtureDef
 	/// The shape, this must be set. The shape will be cloned, so you
 	/// can create the shape on the stack.
 	const b2Shape* shape;
-
-	/// Use this to store application specific fixture data.
-	void* userData;
 
 	/// The friction coefficient, usually in the range [0,1].
 	float32 friction;
@@ -129,13 +125,6 @@ public:
 	/// @return the next shape.
 	b2Fixture* GetNext();
 	const b2Fixture* GetNext() const;
-
-	/// Get the user data that was assigned in the fixture definition. Use this to
-	/// store your application specific data.
-	void* GetUserData() const;
-
-	/// Set the user data. Use this to store your application specific data.
-	void SetUserData(void* data);
 
 	/// Test a point for containment in this fixture.
 	/// @param xf the shape world transform.
@@ -213,8 +202,6 @@ protected:
 	b2Filter m_filter;
 
 	bool m_isSensor;
-
-	void* m_userData;
 };
 
 inline b2Shape::Type b2Fixture::GetType() const
@@ -240,16 +227,6 @@ inline bool b2Fixture::IsSensor() const
 inline const b2Filter& b2Fixture::GetFilterData() const
 {
 	return m_filter;
-}
-
-inline void* b2Fixture::GetUserData() const
-{
-	return m_userData;
-}
-
-inline void b2Fixture::SetUserData(void* data)
-{
-	m_userData = data;
 }
 
 inline b2Body* b2Fixture::GetBody()

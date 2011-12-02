@@ -11,29 +11,21 @@
 #include <stack>
 #define DEBUG_DRAW
 
-PhysicsManager::PhysicsManager()
+PhysicsManager::PhysicsManager(CollisionDatabase* _database)
 {
     //ctor
-    collisionMasks[PlayerCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-    collisionMasks[CrateCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-    collisionMasks[StaticGeometryCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-    collisionMasks[BubbleCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-    collisionMasks[EnemyCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-    collisionMasks[ProjectileCategory] = PlayerCategory|CrateCategory|StaticGeometryCategory|BubbleCategory|EnemyCategory|ProjectileCategory;
-
-    usedPositiveCollisionGroups = 1;
-    usedNegativeCollisionGroups = -1;
-    init();
+    init(_database);
 }
 PhysicsManager::~PhysicsManager()
 {
     //dtor
 }
-void PhysicsManager::init()
+void PhysicsManager::init(CollisionDatabase* _database)
 {
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
+    mWorld->SetUserData(this);
     mRenderCallback = new RenderCallback;
-    contactListener = new ContactListener;
+    contactListener = new ContactListener(_database);
 #ifdef DEBUG_DRAW
     debugDraw = new DebugDraw;
     mWorld->SetDebugDraw(debugDraw);
@@ -88,6 +80,12 @@ void PhysicsManager::tick()
     int32 velocityIterations = 8;
     int32 positionIterations = 6;
     mWorld->Step(timeStep, velocityIterations, positionIterations);
+    while (!destroyedThisFrame.empty())
+    {
+        b2Body* body = destroyedThisFrame.top();
+        destroyedThisFrame.pop();
+        mWorld->DestroyBody(body);
+    }
     contactListener->process();
     updateEntities();
     g_Timer.tick();
@@ -97,7 +95,7 @@ void PhysicsManager::updateEntities()
     b2Body* body = mWorld->GetBodyList();
     while (body != nullptr)
     {
-        Entity* entity = (Entity*)body->GetUserData();
+        Entity* entity = static_cast<Entity*>(body->GetUserData());
         body = body->GetNext();
         if (entity != nullptr)
             entity->update();
@@ -170,6 +168,22 @@ void PhysicsManager::AABBQuery(b2QueryCallback* callback, const Vec2f& point)
     mWorld->QueryAABB(callback,aabb);
 }
 
+void PhysicsManager::destroyBody(b2Body* _body)
+{
+    if (mWorld->IsLocked())
+    {
+        destroyedThisFrame.push(_body);
+        for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+        {
+            fixture->SetFilterData({nullptr});
+        }
+        _body->SetUserData(nullptr);
+    }
+    else
+    {
+        mWorld->DestroyBody(_body);
+    }
+}
 
 
 

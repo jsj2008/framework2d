@@ -6,12 +6,14 @@
 #include <Box2D/Box2D.h>
 #include <Entities/Entity.h>
 class Entity;
-class CollisionHandler;
+class Contact;
+class ContactFactory;
+class CollisionDatabase;
 
 class ContactListener : public b2ContactListener
 {
     public:
-        ContactListener();
+        ContactListener(CollisionDatabase* _database);
         virtual ~ContactListener();
         void process();
     protected:
@@ -20,16 +22,9 @@ class ContactListener : public b2ContactListener
         void EndContact(b2Contact* contact);
         void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
         void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
-        struct HighVelocityImpact
-        {
-            HighVelocityImpact(Entity* a, Entity* b, float tI):entityA(a),entityB(b),totalImpulse(tI){}
-            Entity* entityA;
-            Entity* entityB;
-            float totalImpulse;
-        };
-        std::queue<HighVelocityImpact> highVelocityImpacts;
-        CollisionHandler* handlers[eEntityTypeMax][eEntityTypeMax];
-        std::stack<std::pair<b2Fixture*, b2Fixture*>> collidedFixtures;
+
+        Contact* contactList;
+        CollisionDatabase* database;
 };
 
 #endif // CONTACTLISTENER_H

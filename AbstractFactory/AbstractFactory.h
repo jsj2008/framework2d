@@ -24,7 +24,6 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         Product* use(FactoryParameters* paramters);
         const std::string& getName(){return nameCache;}
         const std::string& getInstanceName(){return instanceName;}
-
         static void registerActions();
     protected:
         virtual Product* privateUseFactory(FactoryParameters* parameters)=0;

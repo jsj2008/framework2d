@@ -22,14 +22,12 @@
 #include <Box2D/Dynamics/b2WorldCallbacks.h>
 #include <Box2D/Dynamics/Contacts/b2Contact.h>
 
-b2ContactFilter b2_defaultFilter;
 b2ContactListener b2_defaultListener;
 
 b2ContactManager::b2ContactManager()
 {
 	m_contactList = NULL;
 	m_contactCount = 0;
-	m_contactFilter = &b2_defaultFilter;
 	m_contactListener = &b2_defaultListener;
 	m_allocator = NULL;
 }
@@ -132,7 +130,7 @@ void b2ContactManager::Collide()
 			}
 
 			// Check user filtering.
-			if (m_contactFilter && m_contactFilter->ShouldCollide(fixtureA, fixtureB) == false)
+			if (false)
 			{
 				b2Contact* cNuke = c;
 				c = cNuke->GetNext();
@@ -213,7 +211,7 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 	}
 
 	// Check user filtering.
-	if (m_contactFilter && m_contactFilter->ShouldCollide(fixtureA, fixtureB) == false)
+	if (false)
 	{
 		return;
 	}

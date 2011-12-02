@@ -35,6 +35,7 @@ class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
         float expiryTime;
         float maximumImpact;
         float proximity;
+        AbstractFactoryBase<CollisionResponse>* collisionResponse;
 };
 
 #endif // PROJECTILEFACTORY_H

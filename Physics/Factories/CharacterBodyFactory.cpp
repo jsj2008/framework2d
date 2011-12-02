@@ -3,7 +3,6 @@
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
-#include <Entities/CollisionResponse.h>
 
 CharacterBodyFactory::CharacterBodyFactory()
 {
@@ -19,16 +18,12 @@ void CharacterBodyFactory::init(FactoryLoader* loader, AbstractFactories* factor
     bodyDef.fixedRotation = true;
     fixtureDef.shape = &shapeDef;
     fixtureDef.density = 1.0f;
-    fixtureDef.filter.categoryBits = PhysicsManager::EnemyCategory;
-    fixtureDef.filter.maskBits = world->getCollisionMask(PhysicsManager::EnemyCategory);
 
     wheelBody.type = b2_dynamicBody;
     wheelBody.userData = nullptr;
     wheelFixture.shape = &wheelShape;
     wheelFixture.density = 1.0f;
     wheelFixture.friction = 50.0f;
-    wheelFixture.filter.categoryBits = PhysicsManager::PlayerCategory;
-    wheelFixture.filter.maskBits = world->getCollisionMask(PhysicsManager::PlayerCategory);
     wheelShape.m_radius = 0.5f;
 
     wheelJoint.collideConnected = false;
@@ -49,16 +44,12 @@ Body* CharacterBodyFactory::useFactory(FactoryParameters* parameters)
     Vec2f anchorPoint(dimensions.x*0.1f,dimensions.y*0.33f);
     anchorPoint += position;
 
-    int collisionGroup = world->getNextNegativeCollisionGroup();
-    fixtureDef.filter.groupIndex = collisionGroup;
-    wheelFixture.filter.groupIndex = collisionGroup;
-
     bodyDef.position = position;
     bodyDef.position.x += dimensions.x*0.1f;
     shapeDef.SetAsBox(dimensions.x*0.4f,dimensions.y*0.33f);
     bodyDef.userData = parameters->get<void*>("userData",nullptr);
     Body* body = world->createBody(&bodyDef);
-    fixtureDef.userData = collisionResponse->use(parameters);
+    wheelFixture.filter.response = fixtureDef.filter.response = collisionResponse->use(parameters);
     body->createFixture(&fixtureDef);
 
     wheelBody.position = position;

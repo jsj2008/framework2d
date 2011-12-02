@@ -127,13 +127,13 @@ void AbstractFactoryList<Product>::registerFactoryType(const std::string& name, 
 template <typename Product>
 AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractFactoryReference _factory)
 {
-    AbstractFactoryBase<Product>* factory = factories[_factory];
-    if (factory == nullptr)
+    auto iter = factories.find(_factory);
+    if (iter == factories.end())
     {
         auto creator = factoryCreators().find(_factory);
         if (creator != factoryCreators().end())
         {
-            factory = creator->second->createFactory();
+            AbstractFactoryBase<Product>* factory = creator->second->createFactory();
             factories[_factory] = factory;
             static TextFileFactoryLoader emptyConfig(nullptr, factoriesListList);
             factory->baseInit(_factory, &emptyConfig, factoriesListList);
@@ -143,9 +143,8 @@ AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractF
         {
             throw -1; /// FIXME NoSuchFactoryException or some shit
         }
-        g_Log.error("No such factory: " + _factory);
     }
-    return factory;
+    return iter->second;
 }
 
 template <typename Product>

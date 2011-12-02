@@ -21,7 +21,7 @@ void PropertyBagData::build(TypeTable* _params)
 
 void PropertyBagData::addDynamicValue(const std::string& _type, const std::string& _name, const std::string& _value)
 {
-    properties.push_back(new StandardProperty(_type, _name, _value));
+    properties.push_back(new StandardProperty(_name, _type, _value));
 }
 
 void PropertyBagData::addDynamicArrayValue(const std::string& _type, const std::string& _name, int _size, const std::string* _values)
