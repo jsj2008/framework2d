@@ -4,15 +4,13 @@
 #include <Graphics/Skins/ConvexPolygonSkin.h>
 #include <AI/AIManager.h>
 #include <Physics/PhysicsManager.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/CollisionDatabase.h>
 
 LevelGeometryFactory::LevelGeometryFactory()
 {
     //ctor
-    physicsManager = nullptr;
-    fixtureDef.shape = &shapeDef;
 }
 
 LevelGeometryFactory::~LevelGeometryFactory()
@@ -23,30 +21,17 @@ LevelGeometryFactory::~LevelGeometryFactory()
 void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     skinFactory = loader->getFactory<Skin>("skin", "ConvexPolygonSkinFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
 
-    physicsManager = factories->getWorld();
-    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
 }
 
-Entity* LevelGeometryFactory::useFactory(FactoryParameters* parameters)
+Entity* LevelGeometryFactory::useFactory(FactoryParameters* _parameters)
 {
-    std::vector<Vec2f> points = parameters->getArray<Vec2f>("points",{{0,0},{1,1},{-2,1}});
-
     //g_AIManager.addStaticGeometry(&points[0],points.size());
-    Skin* skin = skinFactory->use(parameters);
-
-    StaticGeometry* entity = new StaticGeometry(skin);
-
-    assert(points.size() <= b2_maxPolygonVertices);
-
-    shapeDef.Set(&points[0],points.size());
-
-    bodyDef.userData = (void*)entity;
-    Body* body = physicsManager->createBody(&bodyDef);
-    entity->setBody(body);
-    fixtureDef.filter.response = collisionResponse->use(parameters);
-    assert(fixtureDef.filter.response);
-    body->createFixture(&fixtureDef);
+    StaticGeometry* entity = new StaticGeometry;
+    entity->baseInit(skinFactory->use(_parameters, entity));
+    BodyPart* body = bodyFactory->use(_parameters, entity);
+    entity->setRootBody(body);
 
     return entity;
 }

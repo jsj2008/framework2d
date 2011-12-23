@@ -11,7 +11,7 @@ class UntypedAbstractFactoryImplementation : public UntypedAbstractFactory
     public:
         UntypedAbstractFactoryImplementation(AbstractFactoryBase<Product>* _factory);
         virtual ~UntypedAbstractFactoryImplementation();
-        void* use(FactoryParameters* parameters);
+        void* use(FactoryParameters* _parameters);
         const std::string& getName();
     protected:
     private:
@@ -34,9 +34,9 @@ UntypedAbstractFactoryImplementation<Product>::~UntypedAbstractFactoryImplementa
 {
 }
 template <typename Product>
-void* UntypedAbstractFactoryImplementation<Product>::use(FactoryParameters* parameters)
+void* UntypedAbstractFactoryImplementation<Product>::use(FactoryParameters* _parameters)
 {
-    return factory->use(parameters);
+    return factory->use(_parameters, nullptr);
 }
 template <typename Product>
 const std::string& UntypedAbstractFactoryImplementation<Product>::getName()

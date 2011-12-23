@@ -3,7 +3,7 @@
 AbstractFactories::AbstractFactories()
 {
     //ctor
-    physicsManager = nullptr;
+
 }
 
 AbstractFactories::~AbstractFactories()
@@ -36,6 +36,7 @@ void AbstractFactories::init()
 GameObjectBase* AbstractFactories::addFactory(const std::string& _product, FactoryLoader* _loader)
 {
     ProductType* type = productTypeList()[_product];
+    assert(type);
     return indexedFactoryLists[type->getProductId()]->addFactory(this, _loader);
 }
 

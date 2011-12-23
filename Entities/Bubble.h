@@ -7,7 +7,7 @@
 class Bubble : public Entity
 {
     public:
-        Bubble(Skin* _skin);
+        Bubble();
         void update();
         enum BubbleType
         {
@@ -15,12 +15,11 @@ class Bubble : public Entity
             eUpwardsGravityBubbleType,
             eBubbleTypesMax
         };
-        virtual BubbleType getBubbleType()=0; /// Should I combine these types? Its odd, but its useful
-        EntityType getType(){return eBubbleEntityType;}
+        virtual BubbleType getBubbleType()=0;
     protected:
         virtual ~Bubble();
     private:
-        virtual void affectBody(Body* body, Vec2f directionTo)=0;
+        virtual void affectBody(BodyPart* body, Vec2f directionTo)=0;
 };
 
 #endif // BUBBLE_H

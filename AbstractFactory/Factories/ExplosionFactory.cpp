@@ -2,15 +2,12 @@
 #include <Entities/Explosion.h>
 #include <Graphics/Skins/BubbleSkin.h>
 #include <AbstractFactory/FactoryParameters.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 
 ExplosionFactory::ExplosionFactory()
 {
-    fixtureDef.isSensor = true;
-    fixtureDef.shape = &shapeDef;
-    physicsManager = nullptr;
 }
 void ExplosionFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
@@ -18,8 +15,8 @@ void ExplosionFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     damage = loader->get<float>("damage",0.0f);
     force = loader->get<float>("force",2.0f);
     time = loader->get<float>("time",10.0f);
-    shapeDef.m_radius = loader->get<float>("radius",2.0f);
-    physicsManager = factories->getWorld();
+    radius = loader->get<float>("radius",1.0f);
+    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
 
     skinFactory = loader->getFactory<Skin>("skin", "BubbleSkinFactory");
 }
@@ -28,14 +25,11 @@ ExplosionFactory::~ExplosionFactory()
 {
     //dtor
 }
-Entity* ExplosionFactory::useFactory(FactoryParameters* parameters)
+Entity* ExplosionFactory::useFactory(FactoryParameters* _parameters)
 {
-    bodyDef.position = parameters->get<Vec2f>("position",Vec2f(0,0));
-    Skin* skin = skinFactory->use(parameters);
-    Entity* entity = new Explosion(shapeDef.m_radius,damage,force,time, skin);
-    bodyDef.userData = (void*)entity;
-    Body* body = physicsManager->createBody(&bodyDef);
-    entity->setBody(body);
-    body->createFixture(&fixtureDef);
+    Entity* entity = new Explosion(radius,damage,force,time);
+    entity->baseInit(skinFactory->use(_parameters, entity));
+    BodyPart* body = bodyFactory->use(_parameters, entity);
+    entity->setRootBody(body);
     return entity;
 }

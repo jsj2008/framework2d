@@ -241,9 +241,9 @@ DynamicEditor::EditorFactoryType* DynamicEditor::searchExistingFactoryInstances(
     AbstractFactoryBase<Entity>* factory = nullptr; /// FIXME AbstractFactories::global().getFactory<Entity>(factoryName);
     EditorFactoryType* editor = nullptr;
     {
-        FactoryParameters parameters(true);
-        deadBodies.push_back(factory->use(&parameters));
-        std::vector<std::string> values = parameters.getUndefinedLog(); /// FIXME this could be faster, its stored as a map internally, we could sort it
+        FactoryParameters _parameters(true);
+        deadBodies.push_back(factory->use(&_parameters, nullptr));
+        std::vector<std::string> values = _parameters.getUndefinedLog(); /// FIXME this could be faster, its stored as a map internally, we could sort it
         for (auto editorMode = editorModes.begin(); editorMode != editorModes.end(); editorMode++)
         {
             unsigned int matches = 0;

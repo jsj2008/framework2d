@@ -34,5 +34,5 @@ void DistanceJointEditor::createJoint(b2Body* bodyB, Vec2f& localPointB)
 	def.collideConnected = collideConnected();
 	def.dampingRatio = dampingRatio->getCurrentValue();
 	def.frequencyHz = frequencyHz->getCurrentValue();
-    editorMode->getActiveLevel()->addJoint(&def);
+    //editorMode->getActiveLevel()->addJoint(&def);
 }

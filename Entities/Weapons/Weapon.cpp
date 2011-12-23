@@ -10,8 +10,8 @@ Weapon::Weapon(const Weapon::ImmutableData& _data, FactoryParameters* _parameter
     //ctor
     AutoSelfFactory<Weapon, Weapon>::staticInstantiate();
 
-    mechanism = data.mechanismFactory->use(_parameters);
-    action = data.actionFactory->use(_parameters);
+    mechanism = data.mechanismFactory->use(_parameters, this);
+    action = data.actionFactory->use(_parameters, this);
 }
 
 Weapon::~Weapon()

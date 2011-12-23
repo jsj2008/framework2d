@@ -1,7 +1,7 @@
 #include "TileFactory.h"
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 #include <Graphics/Skins/StaticSkin.h>
@@ -10,36 +10,27 @@
 
 TileFactory::TileFactory()
 {
-    fixtureDef.shape = &shapeDef;
-    physicsManager = nullptr;
-}
-void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
-{
-    //ctor
-    skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
-    physicsManager = factories->getWorld();
-}
 
+
+}
 TileFactory::~TileFactory()
 {
     //dtor
 }
-
-Entity* TileFactory::useFactory(FactoryParameters* parameters)
+void TileFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
-    Skin* skin = skinFactory->use(parameters);
-    Vec2f position(parameters->get<Vec2f>("position", Vec2f(0,0)));
-    Vec2f readDimensions = parameters->get<Vec2f>("size",Vec2f(1,1));
-    shapeDef.SetAsBox(readDimensions.x*0.5f,readDimensions.y*0.5f);
+    skinFactory = loader->getFactory<Skin>("skin", "StaticSkinFactory");
+}
 
-    Entity* entity = new Tile(skin);
 
-    bodyDef.position = position;
-    //bodyDef.angle = params->rotation;
-    bodyDef.userData = (void*)entity;
-    Body* body = physicsManager->createBody(&bodyDef);
-    entity->setBody(body);
-    body->createFixture(&fixtureDef);
+Entity* TileFactory::useFactory(FactoryParameters* _parameters)
+{
+    Entity* entity = new Tile;
+    entity->baseInit(skinFactory->use(_parameters, entity));
+
+    BodyPart* body = bodyFactory->use(_parameters, entity);
+    entity->setRootBody(body);
+
 
     return entity;
 }

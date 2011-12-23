@@ -1,12 +1,15 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <GameObject.h>
 #include <Types/Vec2i.h>
-class Camera
+
+class Camera : public GameObject<Camera>
 {
     public:
         Camera();
         virtual ~Camera();
+        static void registerActions();
         void updateView(Vec2i resolution);
         const Vec2i& getView(){return view;}
         float getPixelsPerMeter(){return scale;}

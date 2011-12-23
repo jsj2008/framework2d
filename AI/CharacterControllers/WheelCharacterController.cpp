@@ -1,6 +1,6 @@
 #include "WheelCharacterController.h"
 #include <Entities/AIEntity.h>
-#include <Physics/Body.h>
+#include <Physics/MotorPart.h>
 #include <Physics/PhysicsManager.h>
 
 #define WALK_SPEED properties->walkSpeed
@@ -29,7 +29,7 @@ WheelCharacterController::WheelCharacterController(AIEntity* _entity, Properties
 WheelCharacterController::~WheelCharacterController()
 {
     //dtor
-    wheel->GetBodyB()->GetWorld()->DestroyBody(wheel->GetBodyB());
+    //wheel->GetBodyB()->GetWorld()->DestroyBody(wheel->GetBodyB());
 }
 
 void WheelCharacterController::booleanControls(int _button, bool _pressed)
@@ -86,21 +86,21 @@ void WheelCharacterController::booleanControlEnd(int _button)
 }
 void WheelCharacterController::walkLeft()
 {
-    wheel->SetMotorSpeed(-WALK_SPEED);
+    wheel->setMotorSpeed(-WALK_SPEED);
 }
 void WheelCharacterController::walkRight()
 {
-    wheel->SetMotorSpeed(WALK_SPEED);
+    wheel->setMotorSpeed(WALK_SPEED);
 }
 void WheelCharacterController::stopWalking()
 {
-    wheel->SetMotorSpeed(0.0f);
+    wheel->setMotorSpeed(0.0f);
 }
 void WheelCharacterController::jump()
 {
     if (airbourneCounter != FALL_TOLERANCE && jumpCounter == 0)
     {
-        entity->getBody()->applyLinearImpulse(Vec2f(0,-JUMP_HEIGHT),Vec2f(0,0));
+        entity->getRootBody()->applyLinearImpulse(Vec2f(0,-JUMP_HEIGHT),Vec2f(0,0));
         airbourneCounter = FALL_TOLERANCE;
         jumpCounter = JUMP_RECHARGE;
     }
@@ -109,7 +109,7 @@ void WheelCharacterController::jump()
 void WheelCharacterController::update()
 {
     bool colliding;
-    if (wheel->GetBodyB()->GetContactList() == nullptr)
+    /*if (wheel->GetBodyB()->GetContactList() == nullptr)
     {
         colliding = false;
     }
@@ -138,6 +138,6 @@ void WheelCharacterController::update()
     {
         jumpCounter--;
     }
-    entity->getBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));
+    entity->getRootBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));*/
 }
 

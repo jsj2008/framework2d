@@ -2,8 +2,9 @@
 #include <Box2D/Box2D.h>
 #include <Timer.h>
 #include <Entities/Entity.h>
+#include <AbstractFactory/AbstractFactory.h>
 #include <Graphics/GraphicsManager.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
@@ -37,16 +38,16 @@ void PhysicsManager::clear()
     b2Body* body = mWorld->GetBodyList();
     while (body != nullptr)
     {
-        Entity* entity = (Entity*)body->GetUserData();
+        Entity* entity = body->getBodyPart()->getEntity();
         delete entity;
         body = body->GetNext();
     }
     delete mWorld;
     mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
 }
-Body* PhysicsManager::createBody(b2BodyDef* def)
+b2Body* PhysicsManager::createBody(b2BodyDef* _bodyDef)
 {
-    return new Body(mWorld->CreateBody(def));
+    return mWorld->CreateBody(_bodyDef);
 }
 b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 {
@@ -59,8 +60,9 @@ b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
     static b2Body* groundBody = nullptr;
     if (groundBody == nullptr)
     {
-        b2BodyDef bodyDef;
-        groundBody = mWorld->CreateBody(&bodyDef);
+        //AbstractFactoryBase<BodyPart>* bodyFactory;
+        //groundBody = mWorld->CreateBody(&bodyDef);
+        assert(false);
     }
     body->SetAwake(true);
     b2MouseJointDef def;
@@ -95,7 +97,7 @@ void PhysicsManager::updateEntities()
     b2Body* body = mWorld->GetBodyList();
     while (body != nullptr)
     {
-        Entity* entity = static_cast<Entity*>(body->GetUserData());
+        Entity* entity = static_cast<Entity*>(body->getBodyPart()->getEntity());
         body = body->GetNext();
         if (entity != nullptr)
             entity->update();
@@ -135,7 +137,7 @@ public:
     {
         if (fixture->TestPoint(position))
         {
-            if (fixture->GetBody()->GetUserData() != ignore)
+            if (fixture->GetBody()->getBodyPart()->getEntity() != ignore)
             {
                 ret = fixture->GetBody();
                 if (ret->GetType() != b2_dynamicBody)
@@ -177,7 +179,8 @@ void PhysicsManager::destroyBody(b2Body* _body)
         {
             fixture->SetFilterData({nullptr});
         }
-        _body->SetUserData(nullptr);
+        //_body->SetUserData(nullptr);
+        assert(false); /// FIXME Need to make sure whatever this was for is clear
     }
     else
     {

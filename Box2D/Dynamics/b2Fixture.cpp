@@ -50,11 +50,12 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 
 	m_filter = def->filter;
 
-	m_isSensor = def->isSensor;
-
 	m_shape = def->shape->Clone(allocator);
 
 	m_density = def->density;
+
+	bodyPart = def->bodyPart;
+	assert(bodyPart);
 }
 
 void b2Fixture::Destroy(b2BlockAllocator* allocator)
@@ -159,3 +160,7 @@ void b2Fixture::SetSensor(bool sensor)
 	m_isSensor = sensor;
 }
 
+BodyPart* b2Fixture::getBodyPart() const
+{
+    return bodyPart;
+}

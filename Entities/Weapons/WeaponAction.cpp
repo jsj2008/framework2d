@@ -9,3 +9,8 @@ WeaponAction::~WeaponAction()
 {
     //dtor
 }
+
+void WeaponAction::registerActions()
+{
+
+}

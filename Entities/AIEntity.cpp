@@ -1,6 +1,6 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
@@ -9,16 +9,24 @@
 #include <cassert>
 #define JUMP_IMPULSE -0.5f*WORLD_GRAVITY
 
-AIEntity::AIEntity(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin)
-:Entity(_skin),
-controller(nullptr)
+AIEntity::AIEntity()
+:controller(nullptr)
 {
     //ctor
+    mBrain = nullptr;
+    weapon = nullptr;
+    health = 2;
+    damageSprayFactory = nullptr;
+}
+
+void AIEntity::init(Brain* _Brain, Weapon* _weapon, AbstractFactoryBase<Entity>* _damageSprayFactory, Skin* _skin)
+{
+    assert(!mBrain);
     mBrain = _Brain;
     weapon = _weapon;
     mBrain->setEntity(this);
-    health = 2;
     damageSprayFactory = _damageSprayFactory;
+    baseInit(_skin);
 }
 
 AIEntity::~AIEntity()
@@ -36,13 +44,13 @@ void AIEntity::weaponMove(Vec2f targetPosition)
 }
 void AIEntity::weaponEnd(Vec2f targetPosition)
 {
-    weapon->fireEnd(body->getPosition(),targetPosition);
+    weapon->fireEnd(rootBody->getPosition(),targetPosition);
 }
 void AIEntity::damage()
 {
-    FactoryParameters parameters;
-    parameters.add<Vec2f>("position", body->getPosition());
-    damageSprayFactory->use(&parameters);
+    FactoryParameters _parameters;
+    _parameters.add<Vec2f>("position", rootBody->getPosition());
+    damageSprayFactory->use(&_parameters, nullptr);
     health--;
 }
 void AIEntity::update()
@@ -50,7 +58,7 @@ void AIEntity::update()
     mBrain->update();
     if (health  < 1)
     {
-        delete body; /// FIXME delete this
+        delete rootBody; /// FIXME delete this
     }
     controller->update();
 }

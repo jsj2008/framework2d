@@ -1,9 +1,9 @@
 #include "Sprite.h"
 
-Sprite::Sprite(Skin* _skin)
+Sprite::Sprite()
 {
     //ctor
-    skin = _skin;
+    skin = nullptr;
     next = prev = nullptr;
 }
 

@@ -7,7 +7,7 @@
 class UpwardsGravityBubble : public Bubble
 {
     public:
-        UpwardsGravityBubble(Skin* _skin);
+        UpwardsGravityBubble();
         virtual ~UpwardsGravityBubble();
         BubbleType getBubbleType(){return eUpwardsGravityBubbleType;}
         static std::string name()
@@ -16,7 +16,7 @@ class UpwardsGravityBubble : public Bubble
         }
     protected:
     private:
-        void affectBody(Body* body, Vec2f directionTo);
+        void affectBody(BodyPart* body, Vec2f directionTo);
 };
 
 #endif // UpwardsGravityBubble_H

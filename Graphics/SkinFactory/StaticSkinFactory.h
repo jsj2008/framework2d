@@ -15,7 +15,7 @@ class StaticSkinFactory : public AbstractFactory<Skin, StaticSkinFactory>
         {
             return "StaticSkinFactory";
         }
-        Skin* useFactory(FactoryParameters* parameters);
+        Skin* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         std::string materialName;

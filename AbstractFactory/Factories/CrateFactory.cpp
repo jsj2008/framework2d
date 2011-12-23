@@ -1,7 +1,7 @@
 #include "CrateFactory.h"
 #include <AbstractFactory/FactoryParameters.h>
 #include <Physics/PhysicsManager.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Entities/Crate.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>
@@ -10,9 +10,6 @@
 CrateFactory::CrateFactory()
 {
     //ctor
-    physicsManager = nullptr;
-    bodyDef.type = b2_dynamicBody;
-    fixtureDef.shape = &shapeDef;
 }
 
 CrateFactory::~CrateFactory()
@@ -22,28 +19,17 @@ CrateFactory::~CrateFactory()
 
 void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
-    fixtureDef.density = loader->get<float>("density",1.0f);
     skinFactory = loader->getFactory<Skin>("skin","StaticSkinFactory");
-    physicsManager = factories->getWorld();
-    collisionResponse = loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
+    //
 }
-Entity* CrateFactory::useFactory(FactoryParameters* parameters)
+Entity* CrateFactory::useFactory(FactoryParameters* _parameters)
 {
-    //PositionParameters* params = (PositionParameters*)parameters;
-    Vec2f position(parameters->get<Vec2f>("position", Vec2f(0,0)));
-    Vec2f dimensions = parameters->get<Vec2f>("dimensions",Vec2f(2,2));
+    Entity* entity = new Crate;
+    entity->baseInit(skinFactory->use(_parameters, entity));
 
-    shapeDef.SetAsBox(dimensions.x*0.5f,dimensions.y*0.5f);
-    Entity* entity = new Crate(skinFactory->use(parameters));
-
-    bodyDef.position = position;
-    //bodyDef.angle = params->rotation;
-    bodyDef.userData = (void*)entity;
-    Body* body = physicsManager->createBody(&bodyDef);
-    entity->setBody(body);
-    fixtureDef.filter.response = collisionResponse->use(parameters);
-    assert(fixtureDef.filter.response);
-    body->createFixture(&fixtureDef);
+    BodyPart* body = bodyFactory->use(_parameters, entity);
+    entity->setRootBody(body);
 
     return entity;
 }

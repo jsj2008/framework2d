@@ -2,12 +2,12 @@
 #define SUCTIONBUBBLE_H
 
 #include <Entities/Bubble.h>
-class Body;
+class BodyPart;
 
 class SuctionBubble : public Bubble
 {
     public:
-        SuctionBubble(Skin* _skin);
+        SuctionBubble();
         virtual ~SuctionBubble();
         BubbleType getBubbleType(){return eSuctionBubbleType;}
         static std::string name()
@@ -16,7 +16,7 @@ class SuctionBubble : public Bubble
         }
     protected:
     private:
-        void affectBody(Body* body, Vec2f directionTo);
+        void affectBody(BodyPart* body, Vec2f directionTo);
 };
 
 #endif // SUCTIONBUBBLE_H

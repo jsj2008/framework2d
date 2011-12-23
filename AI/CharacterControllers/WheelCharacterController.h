@@ -2,7 +2,7 @@
 #define WHEELCHARACTERCONTROLLER_H
 
 #include <AI/CharacterController.h>
-
+class MotorPart;
 
 class WheelCharacterController : public CharacterController
 {
@@ -19,7 +19,7 @@ class WheelCharacterController : public CharacterController
         virtual ~WheelCharacterController();
         void update();
         void booleanControls(int _button, bool _pressed);
-        void setWheel(b2RevoluteJoint* _wheel){wheel = _wheel;}
+        void setWheel(MotorPart* _wheel){wheel = _wheel;}
     protected:
     private:
         void booleanControlStart(int _button);
@@ -28,7 +28,7 @@ class WheelCharacterController : public CharacterController
         void walkRight();
         void stopWalking();
         void jump();
-        b2RevoluteJoint* wheel;
+        MotorPart* wheel;
         unsigned short airbourneCounter;
         unsigned short jumpCounter;
         Properties* properties;

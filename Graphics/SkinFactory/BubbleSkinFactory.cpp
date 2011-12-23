@@ -19,7 +19,7 @@ void BubbleSkinFactory::init(FactoryLoader* _loader, AbstractFactories* factorie
     radius = _loader->get<float>("radius",2.0f);
 }
 
-Skin* BubbleSkinFactory::useFactory(FactoryParameters* parameters)
+Skin* BubbleSkinFactory::useFactory(FactoryParameters* _parameters)
 {
     Skin* skin = new BubbleSkin(radius);
     skin->material = g_GraphicsManager.getMaterial(materialName.c_str());

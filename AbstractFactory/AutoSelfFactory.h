@@ -14,7 +14,7 @@ class AutoSelfFactory : public AbstractFactory<Product, AutoSelfFactory<Product,
             return DerivedType::factoryName();
         }
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Product* useFactory(FactoryParameters* parameters);
+        Product* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         typename DerivedType::ImmutableData immutableData;
@@ -40,8 +40,8 @@ void AutoSelfFactory<Product, DerivedType>::init(FactoryLoader* loader, Abstract
 }
 
 template <typename Product, typename DerivedType>
-Product* AutoSelfFactory<Product, DerivedType>::useFactory(FactoryParameters* parameters)
+Product* AutoSelfFactory<Product, DerivedType>::useFactory(FactoryParameters* _parameters)
 {
-    return new DerivedType(immutableData, parameters);
+    return new DerivedType(immutableData, _parameters);
 }
 #endif // AUTOSELFFACTORY_H

@@ -38,7 +38,7 @@ ShooterGame::ShooterGame()
 
     FactoryParameters params(data->getFactories());
     params.add<unsigned short>("entityKey", 0);
-    PlayerOneCreated event(static_cast<AIEntity*>(getLevel()->getFactories()->useFactory<Entity>("PlayerFactory",&params)));
+    PlayerOneCreated event(static_cast<AIEntity*>(getLevel()->getFactories()->useFactory<Entity>("PlayerFactory",&params, this)));
     event.trigger();
 }
 

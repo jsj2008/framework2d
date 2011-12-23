@@ -1,5 +1,6 @@
 #include "Level.h"
 #include <Physics/PhysicsManager.h>
+#include <Physics/BodyPart.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
 #include <AbstractFactory/AbstractFactories.h>
@@ -29,13 +30,13 @@ void Level::registerActions()
 {
 }
 
-Entity* Level::addBody(const std::string& factory, FactoryParameters* parameters)
+/*Entity* Level::addBody(const std::string& factory, FactoryParameters* _parameters)
 {
-    Entity* entity = factories.useFactory<Entity>(factory, parameters);
-    table[entity] = {factory,*parameters};
+    Entity* entity = factories.useFactory<Entity>(factory, _parameters);
+    table[entity] = {factory,*_parameters};
     return entity;
-}
-void Level::addJoint(b2JointDef* def)
+}*/
+/*void Level::addJoint(b2JointDef* def)
 {
     b2JointDef* copy;
     switch (def->type)
@@ -87,15 +88,15 @@ void Level::addJoint(b2JointDef* def)
             g_Log.error(std::string("Unrecognised joint type: " + def->type));
         }
     }
-    Entity* bodyA = static_cast<Entity*>(def->bodyA->GetUserData());
-    Entity* bodyB = static_cast<Entity*>(def->bodyB->GetUserData());
+    Entity* bodyA = def->bodyA->getBodyPart()->getEntity();
+    Entity* bodyB = def->bodyB->getBodyPart()->getEntity();
     auto crateIter = table.find(bodyA);
     auto geometryIter = table.find(bodyB);
     if (crateIter != table.end() && geometryIter != table.end())
     {
         jointToDefTable[world->createJoint(copy)] = copy;
     }
-}
+}*/
 #define CREATE_FILE_NAME \
     char filename[strlen(name)+strlen("Resources/Levels/")+strlen(".lvl")];\
     strcpy(filename,"Resources/Levels/");\

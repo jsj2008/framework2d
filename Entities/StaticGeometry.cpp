@@ -1,7 +1,6 @@
 #include "StaticGeometry.h"
 
-StaticGeometry::StaticGeometry(Skin* _skin)
-:Entity(_skin)
+StaticGeometry::StaticGeometry()
 {
     //ctor
 

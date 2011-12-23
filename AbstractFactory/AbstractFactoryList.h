@@ -45,7 +45,7 @@ class AbstractFactoryList: public AbstractFactoryListBase
         GameObjectBase* addFactory(AbstractFactories* _factories, FactoryLoader* _loader);
         GameObjectBase* initializeFactory(AbstractFactories* _factories, FactoryLoader* _loader);
 
-        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
+        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* _parameters, GameObjectBase* _parent);
         AbstractFactoryBase<Product>* getFactory(AbstractFactoryReference factory);
         AbstractFactoryBase<Product>* getUninitializedFactory(AbstractFactoryReference _factory, const std::string& _type);
         UntypedAbstractFactory* getUntypedFactory(const std::string& name);
@@ -167,18 +167,18 @@ AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getUninitializedFact
 }
 
 template <typename Product>
-Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
+Product* AbstractFactoryList<Product>::useFactory(AbstractFactoryReference factory, FactoryParameters* _parameters, GameObjectBase* _parent)
 {
     Product* product;
-    if (parameters == nullptr)
+    if (_parameters == nullptr)
     {
         static FactoryParameters params(nullptr);
-        product = getFactory(factory)->use(&params);
+        product = getFactory(factory)->use(&params, _parent);
     }
     else
     {
-        product = getFactory(factory)->use(parameters);
-        std::string name = parameters->get<std::string>("name", "");
+        product = getFactory(factory)->use(_parameters, _parent);
+        std::string name = _parameters->get<std::string>("name", "");
         if (name != "")
         {
         }

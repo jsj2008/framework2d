@@ -10,7 +10,7 @@
 #include <Game.h>
 #include <GameModes/PlayMode.h>
 #include <Graphics/Camera/PhysicsCamera.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 
 #include <AbstractFactory/FactoryParameters.h>
 #include <AbstractFactory/FactoryLoader.h>
@@ -24,7 +24,7 @@ void AIEntityFactory::init(FactoryLoader* loader, AbstractFactories* factories)
     //ctor
     weaponFactory = loader->getFactory<Weapon>("weapon","WeaponFactory");
 
-    bodyFactory = loader->getFactory<Body>("body" ,"CharacterBodyFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body" ,"CharacterBodyFactory");
     skinFactory = loader->getFactory<Skin>("material", "StaticSkinFactory");
     brainFactory = loader->getFactory<Brain>("brain", "PlayerInputBrainFactory");
     controllerFactory = loader->getFactory<CharacterController>("characterController", "WheelControllerFactory");
@@ -37,18 +37,18 @@ AIEntityFactory::~AIEntityFactory()
 }
 #include <AI/CharacterController.h>
 
-Entity* AIEntityFactory::useFactory(FactoryParameters* parameters)
+Entity* AIEntityFactory::useFactory(FactoryParameters* _parameters)
 {
     //damageSprayFactory = AbstractFactories::global().getFactory<Entity>("ParticleFactory");
-    Brain* brain = brainFactory->use(parameters);
-    AIEntity* entity = new AIEntity(brain, weaponFactory->use(parameters) ,damageSprayFactory,skinFactory->use(parameters));
+    AIEntity* entity = new AIEntity;
+    entity->init(brainFactory->use(_parameters, entity), weaponFactory->use(_parameters, entity) ,damageSprayFactory,skinFactory->use(_parameters, entity));
 
-    parameters->add<void*>("userData",entity);
+    _parameters->add<void*>("userData",entity);
 
-    entity->setBody(bodyFactory->use(parameters));
-    CharacterController* controller = controllerFactory->use(parameters);
+    entity->setRootBody(bodyFactory->use(_parameters, entity));
+    CharacterController* controller = controllerFactory->use(_parameters, entity);
     entity->setController(controller);
-    //entity->setWheel((b2RevoluteJoint*)parameters->get<void*>("joint",nullptr));
+    //entity->setWheel((b2RevoluteJoint*)_parameters->get<void*>("joint",nullptr));
 
     return entity;
 }

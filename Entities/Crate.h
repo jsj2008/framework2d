@@ -7,9 +7,8 @@
 class Crate : public Entity
 {
     public:
-        Crate(Skin* _skin);
+        Crate();
         void update();
-        EntityType getType(){return eCrateEntityType;}
     protected:
     private:
         virtual ~Crate();

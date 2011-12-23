@@ -6,7 +6,7 @@ class Skin;
 class Sprite
 {
     public:
-        Sprite(Skin* _skin);
+        Sprite();
         void render();
     protected:
     private:

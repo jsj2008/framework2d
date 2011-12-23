@@ -11,7 +11,7 @@ class TileMapFactory : public AbstractFactory<Entity, TileMapFactory>
         TileMapFactory();
         virtual ~TileMapFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "TileMapFactory";

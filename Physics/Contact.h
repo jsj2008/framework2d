@@ -2,7 +2,7 @@
 #define CONTACT_H
 
 #include <GameObject.h>
-class GameObjectBase;
+class BodyPart;
 class b2Contact;
 class b2Manifold;
 class b2ContactImpulse;
@@ -15,8 +15,8 @@ class Contact
         virtual ~Contact();
     protected:
         /// These flip if inverted is true
-        GameObjectBase* getObjectA();
-        GameObjectBase* getObjectB();
+        BodyPart* getObjectA();
+        BodyPart* getObjectB();
         void setCollides(bool _collides);
         class ManifoldInterface
         {

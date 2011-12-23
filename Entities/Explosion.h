@@ -7,10 +7,9 @@
 class Explosion : public Entity
 {
     public:
-        Explosion(float _radius, float _damage, float _force, unsigned short _frames, Skin* _skin);
+        Explosion(float _radius, float _damage, float _force, unsigned short _frames);
         virtual ~Explosion();
         void update();
-        EntityType getType(){return eExplosionEntityType;};
     protected:
     private:
         float radius;

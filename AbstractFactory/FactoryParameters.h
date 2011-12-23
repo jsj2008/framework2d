@@ -42,7 +42,7 @@ class FactoryParameters
 
     protected:
     private:
-        //std::unordered_map<std::string, float> parameters;
+        //std::unordered_map<std::string, float> _parameters;
         TypeTable table;
 };
 
