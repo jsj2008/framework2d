@@ -14,28 +14,23 @@ class ProjectileFactory : public AbstractFactory<Entity, ProjectileFactory>
         ProjectileFactory();
         virtual ~ProjectileFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "ProjectileFactory";
         }
     protected:
     private:
-        b2BodyDef bodyDef;
-        b2FixtureDef fixtureDef;
-        b2CircleShape shapeDef;
-        PhysicsManager* physicsManager;
-
+        AbstractFactoryBase<BodyPart>* bodyFactory;
         AbstractFactoryBase<Skin>* skinFactory;
         float radius;
 
         short damage;
         AbstractFactoryBase<Entity>* explosionFactory;
-        /// Expiry parameters
+        /// Expiry _parameters
         float expiryTime;
         float maximumImpact;
         float proximity;
-        AbstractFactoryBase<CollisionResponse>* collisionResponse;
 };
 
 #endif // PROJECTILEFACTORY_H

@@ -54,16 +54,24 @@ class GameObjectBase
 
         void killAction(CollisionObject* _object); /// Will trigger deathEvent
         static void registerBaseActions();
-    protected:
-        void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}
+
+        GameObjectBase* getNext();
+        GameObjectBase* getPrev();
+        GameObjectBase* getChildren();
+        GameObjectBase* getParent();
         void attachChild(GameObjectBase* _child);
+        void attachChild(void* _fake){} /// Fake for non game objects
+        void detach(GameObjectBase* _child);
+    protected:
+        void setParent(GameObjectBase* _parent);
+        void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}
         static std::unordered_map<std::string,ActionHandle*>& actionHandles()
         {
             static std::unordered_map<std::string,ActionHandle*> handles;
             return handles;
         }
     private:
-        GameObjectBase* next,* prev,* children;
+        GameObjectBase* next,* prev,* children,* parent;
 
         friend class EventHandle;
         std::vector<std::vector<GameObjectEventListener*>> eventListenerLists;

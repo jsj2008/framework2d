@@ -7,9 +7,8 @@
 class Tile : public Entity
 {
     public:
-        Tile(Skin* _skin);
+        Tile();
         void update();
-        EntityType getType(){return eTileEntityType;}
     protected:
     private:
         friend class TileMap;

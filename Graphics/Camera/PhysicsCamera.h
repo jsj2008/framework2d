@@ -2,18 +2,18 @@
 #define PHYSICSCAMERA_H
 
 #include "Camera.h"
-class Body;
+class BodyPart;
 
 class PhysicsCamera : public Camera
 {
     public:
-        PhysicsCamera(Body* _body);
+        PhysicsCamera(BodyPart* _body);
         virtual ~PhysicsCamera();
         void updateTransform(Vec2i resolution);
         void activate();
     protected:
     private:
-        Body* body;
+        BodyPart* body;
 };
 
 #endif // PHYSICSCAMERA_H

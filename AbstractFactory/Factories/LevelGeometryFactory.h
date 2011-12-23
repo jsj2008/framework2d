@@ -14,20 +14,17 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         LevelGeometryFactory();
         virtual ~LevelGeometryFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "LevelGeometryFactory";
         }
     protected:
     private:
-        b2BodyDef bodyDef;
-        b2FixtureDef fixtureDef;
-        b2PolygonShape shapeDef;
-        PhysicsManager* physicsManager;
         AbstractFactoryBase<CollisionResponse>* collisionResponse;
 
         AbstractFactoryBase<Skin>* skinFactory;
+        AbstractFactoryBase<BodyPart>* bodyFactory;
 };
 
 #endif // LEVELGEOMETRYFACTORY_H

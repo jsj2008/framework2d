@@ -34,7 +34,7 @@ void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* fa
         handle->addEvent(handles[i], actions[i]);
     }
 }
-CollisionResponse* CollisionResponseFactory::useFactory(FactoryParameters* parameters)
+CollisionResponse* CollisionResponseFactory::useFactory(FactoryParameters* _parameters)
 {
     return handle;
 }

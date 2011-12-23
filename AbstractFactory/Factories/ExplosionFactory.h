@@ -15,7 +15,7 @@ class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
         ExplosionFactory();
         virtual ~ExplosionFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "ExplosionFactory";
@@ -25,13 +25,10 @@ class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
         float damage;
         float force;
         float time;
-
-        b2BodyDef bodyDef;
-        b2FixtureDef fixtureDef;
-        b2CircleShape shapeDef;
-        PhysicsManager* physicsManager;
+        float radius;
 
         AbstractFactoryBase<Skin>* skinFactory;
+        AbstractFactoryBase<BodyPart>* bodyFactory;
 };
 
 #endif // EXPLOSIONFACTORY_H

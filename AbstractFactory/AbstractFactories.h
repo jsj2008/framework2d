@@ -28,7 +28,7 @@ class AbstractFactories : public GameObject<AbstractFactories>
         void init();
 
         template <typename Product>
-        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* parameters = nullptr);
+        Product* useFactory(AbstractFactoryReference factory, FactoryParameters* _parameters, GameObjectBase* _parent);
 
         template <typename Product, typename Factory>
         static void registerFactoryType();
@@ -119,9 +119,9 @@ class AbstractFactories : public GameObject<AbstractFactories>
 #include <Types/TypeTable.h>
 
 template <typename Product>
-Product* AbstractFactories::useFactory(AbstractFactoryReference factory, FactoryParameters* parameters)
+Product* AbstractFactories::useFactory(AbstractFactoryReference factory, FactoryParameters* _parameters, GameObjectBase* _parent)
 {
-    return getFactoryList<Product>()->useFactory(factory,parameters);
+    return getFactoryList<Product>()->useFactory(factory,_parameters, _parent);
 }
 template <typename Product>
 AbstractFactoryBase<Product>* AbstractFactories::getFactory(const std::string& name)

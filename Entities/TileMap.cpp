@@ -1,10 +1,10 @@
 #include "TileMap.h"
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 
 TileMap::TileMap(const Vec2i& _dimensions, const Vec2f& _offset, const Vec2f& _tileSize)
-:Entity(nullptr)
+
 {
     //ctor
     dimensions = _dimensions;
@@ -76,7 +76,7 @@ bool TileMap::destroy(Vec2i tile)
     if (tile.x < dimensions.x && tile.y < dimensions.y && tile.x >= 0 && tile.y >= 0)
     if (tiles[tile.x][tile.y] != nullptr)
     {
-        delete tiles[tile.x][tile.y]->body;
+        delete tiles[tile.x][tile.y]->rootBody;
         tiles[tile.x][tile.y] = nullptr;
         return true;
     }

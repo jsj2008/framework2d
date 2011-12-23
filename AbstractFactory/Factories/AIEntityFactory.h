@@ -5,7 +5,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 class Entity;
 class FactoryLoader;
-class Body;
+class BodyPart;
 class Brain;
 class Skin;
 class CharacterController;
@@ -17,7 +17,7 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
         AIEntityFactory();
         virtual ~AIEntityFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "AIEntityFactory";
@@ -25,7 +25,7 @@ class AIEntityFactory : public AbstractFactory<Entity, AIEntityFactory>
     protected:
     private:
         AbstractFactoryBase<Weapon>* weaponFactory;
-        AbstractFactoryBase<Body>* bodyFactory;
+        AbstractFactoryBase<BodyPart>* bodyFactory;
         AbstractFactoryBase<Brain>* brainFactory;
         AbstractFactoryBase<Skin>* skinFactory;
         AbstractFactoryBase<CharacterController>* controllerFactory;

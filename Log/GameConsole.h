@@ -11,7 +11,7 @@ class GameConsoleCommand
     public:
         GameConsoleCommand(std::string _name);
         const std::string& getName(){return name;}
-        virtual void execute(const std::string& parameters)=0;
+        virtual void execute(const std::string& _parameters)=0;
     protected:
         void outputText(std::string _msg, unsigned int _colour = -1);
     private:

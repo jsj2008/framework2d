@@ -2,7 +2,7 @@
 #define SKIN_H
 
 #include <GameObject.h>
-class Body;
+class BodyPart;
 class MaterialContext;
 enum SkinType
 {
@@ -16,7 +16,7 @@ class Skin : public GameObject<Skin>
     public:
         Skin();
         virtual ~Skin();
-        void render(Body* body);
+        void render(BodyPart* body);
         virtual void vRender()=0;
         virtual SkinType getType()=0;
         static void registerActions();

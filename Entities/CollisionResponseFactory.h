@@ -14,7 +14,7 @@ class CollisionResponseFactory : public AbstractFactory<CollisionResponse, Colli
         {
             return "CollisionResponseFactory";
         }
-        CollisionResponse* useFactory(FactoryParameters* parameters);
+        CollisionResponse* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         CollisionResponse* handle;

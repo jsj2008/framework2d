@@ -2,7 +2,7 @@
 #include <GL/gl.h>
 #include <Box2D/Box2D.h>
 #include <Graphics/Contexts/MaterialContext.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #define M_PI 3.14159265358979323846
 Skin::Skin()
 {
@@ -16,7 +16,7 @@ Skin::~Skin()
     material->release();
 }
 
-void Skin::render(Body* body)
+void Skin::render(BodyPart* body)
 {
     material->bind();
     const Vec2f & center = body->getPosition();

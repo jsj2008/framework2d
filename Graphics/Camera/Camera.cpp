@@ -22,3 +22,8 @@ void Camera::updateView(Vec2i resolution)
     view.x = (-translation.x)*scale;
     view.y = (-translation.y)*scale;
 }
+
+void Camera::registerActions()
+{
+
+}

@@ -9,3 +9,8 @@ FiringMechanism::~FiringMechanism()
 {
     //dtor
 }
+
+void FiringMechanism::registerActions()
+{
+
+}

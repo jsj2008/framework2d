@@ -5,40 +5,27 @@
 #include <Events/InstanceEvents/InstanceEventHandler.h>
 #include <Events/InstanceEvents/Events/DeathEvent.h>
 class Skin;
-class Body;
+class BodyPart;
 class Vec2f;
-enum EntityType
-{
-    eCrateEntityType,
-    eStaticGeometryEntityType,
-    eAIEntityType,
-    eBubbleEntityType,
-    ePhysicsParticleEntityType,
-    eProjectileEntityType,
-    eExplosionEntityType,
-    eTileMapEntityType,
-    eTileEntityType,
-    eEntityTypeMax,
-};
 
 class Entity : public GameObject<Entity>
 {
     public:
-        Entity(Skin* _skin);
+        Entity();
+        void baseInit(Skin* _skin);
         virtual ~Entity();
         virtual void render();
         virtual void update()=0;
-        virtual EntityType getType()=0;
         virtual void damage(){}
         const Vec2f& getPosition();
         /// FIXME should think of a better way to do this (its for the factories)
-        void setBody(Body* _body);
-        Body* getBody(){return body;}
+        void setRootBody(BodyPart* _body);
+        BodyPart* getRootBody();
 
         static void registerActions();
         void floatationAction(CollisionObject* _object);
     protected:
-        Body* body;
+        BodyPart* rootBody;
         Skin* mSkin;
     private:
 };

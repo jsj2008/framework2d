@@ -27,12 +27,12 @@ Entity* TileMapFactory::useFactory(FactoryParameters* params)
 
     std::vector<Vec2i> solidTiles = params->get<std::vector<Vec2i>>("solidTiles",{Vec2i(0,0),Vec2i(2,0),Vec2i(3,0)});
 
-    FactoryParameters parameters;
+    FactoryParameters _parameters;
 
     for (unsigned int i = 0; i < solidTiles.size(); i++)
     {
-        parameters.add("position",Vec2f(solidTiles[i].x*tileSize.x,solidTiles[i].y*tileSize.y));
-        entity->tiles[solidTiles[i].x][solidTiles[i].y] = static_cast<Tile*>(AbstractFactories::global().useFactory<Entity>(tileType, &parameters));
+        _parameters.add("position",Vec2f(solidTiles[i].x*tileSize.x,solidTiles[i].y*tileSize.y));
+        entity->tiles[solidTiles[i].x][solidTiles[i].y] = static_cast<Tile*>(AbstractFactories::global().useFactory<Entity>(tileType, &_parameters));
     }
     g_TileMap = entity;
     return entity;

@@ -1,11 +1,13 @@
 #include "Body.h"
 #include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
-
-Body::Body(b2Body* _body)
+#include <Physics/SingleFixtureBodyPart.h>
+/*
+Body::Body(BodyPart* _root)
 {
     //ctor
-    body = _body;
+    body = static_cast<SingleFixtureBodyPart*>(_root)->getBody();
+    root = _root;
 }
 
 Body::~Body()
@@ -40,3 +42,4 @@ void Body::registerActions()
 {
 
 }
+*/

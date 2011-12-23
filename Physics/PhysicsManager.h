@@ -6,7 +6,8 @@
 class RenderCallback;
 class ContactListener;
 class DebugDraw;
-class Body;
+class BodyPart;
+class BodyPart;
 class ContactFilter;
 class CollisionDatabase;
 
@@ -22,7 +23,7 @@ class PhysicsManager
         virtual ~PhysicsManager();
         void clear();
 
-        Body* createBody(b2BodyDef* def);
+        b2Body* createBody(b2BodyDef* _bodyDef);
         b2Joint* createJoint(b2JointDef* def);
         /// You create fixtures on the body
         b2MouseJoint* createJoint(b2Body* body, Vec2f& point);

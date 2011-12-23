@@ -14,17 +14,14 @@ class TileFactory : public AbstractFactory<Entity, TileFactory>
         TileFactory();
         virtual ~TileFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "TileFactory";
         }
     protected:
     private:
-        b2BodyDef bodyDef;
-        b2FixtureDef fixtureDef;
-        b2PolygonShape shapeDef;
-        PhysicsManager* physicsManager;
+        AbstractFactoryBase<BodyPart>* bodyFactory;
 
         AbstractFactoryBase<Skin>* skinFactory;
 };

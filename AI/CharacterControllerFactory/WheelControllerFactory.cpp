@@ -30,6 +30,6 @@ CharacterController* WheelControllerFactory::useFactory(FactoryParameters* _para
     void* userData = _parameters->get<void*>("userData", nullptr);
     assert(userData);
     WheelCharacterController* controller = new WheelCharacterController(static_cast<AIEntity*>(userData), &properties);
-    controller->setWheel(static_cast<b2RevoluteJoint*>(_parameters->get<void*>("joint",nullptr)));
+    controller->setWheel(static_cast<MotorPart*>(_parameters->get<void*>("joint",nullptr)));
     return controller;
 }

@@ -8,7 +8,7 @@
 #include <cassert>
 
 LevelEntity::LevelEntity(EntityList* _entityList, FactoryParameters* _parameters, const std::string& _factoryName)
-:parameters(*_parameters)
+:_parameters(*_parameters)
 {
     //ctor
     entity = nullptr;
@@ -45,7 +45,7 @@ void LevelEntity::activateDisplay(CEGUI::Window* _window)
 
     CEGUI::MultiColumnList* properties = static_cast<CEGUI::MultiColumnList*>(_window->getChild("Root/EntityList/Properties"));
     properties->resetList();
-    for (auto i = parameters.begin(); i != parameters.end(); i++)
+    for (auto i = _parameters.begin(); i != _parameters.end(); i++)
     {
         unsigned int row = properties->addRow(new CEGUI::ListboxTextItem(i->first), 0);
         properties->setItem(new CEGUI::ListboxTextItem(i->second->getTypeId()),1, row);
@@ -60,14 +60,14 @@ void LevelEntity::activateDisplay(CEGUI::Window* _window)
 
 bool LevelEntity::isNamed()
 {
-    const std::string& name = parameters.get<std::string>("name", "");
+    const std::string& name = _parameters.get<std::string>("name", "");
     return name != "";
 }
 
 Entity* LevelEntity::createEntity()
 {
     assert(entity == nullptr);
-    entity = factory->use(&parameters);
+    entity = factory->use(&_parameters, nullptr);
     //entity->registerDeathListener(this);
     entityList->addEntity(this, getName());
     listBoxItem->setTextColours(0xFF00FF00);
@@ -96,7 +96,7 @@ bool LevelEntity::quitButton(const CEGUI::EventArgs& _args)
 std::string LevelEntity::getName()
 {
     //return factory->getFactoryName(); /// FIXME make this check for "name"
-    const std::string& name = parameters.get<std::string>("name", "");
+    const std::string& name = _parameters.get<std::string>("name", "");
     if (name != "")
     {
         return '\"' + name + '\"';
@@ -107,7 +107,7 @@ std::string LevelEntity::getName()
 void LevelEntity::output(PropertyBagSerializer* _serializer)
 {
     _serializer->startFactory(factoryName);
-    parameters.output(_serializer);
+    _parameters.output(_serializer);
     _serializer->endFactory();
 }
 

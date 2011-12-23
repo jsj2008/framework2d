@@ -1,5 +1,6 @@
 #include "GeometrySelector.h"
 #include <Graphics/GraphicsManager.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
@@ -43,7 +44,7 @@ void GeometrySelector::start(unsigned char button)
             if (button == 1)
             {
                 mouseJoint = editorMode->getActiveWorld()->createJoint(body,point);
-                Entity* entity = static_cast<Entity*>(body->GetUserData());
+                Entity* entity = nullptr; /// FIXME body->getBodyPart()->getEntity();
                 EntitySelectEvent event(entity);
                 Events::global().triggerEvent(&event);
                 // This is code to prevent the attached body from dying
@@ -71,7 +72,8 @@ void GeometrySelector::start(unsigned char button)
                 }
                 if (!mouseJointRemoved)
                 {
-                    UndoStack::global().addEntry(new EntityDeleteEntry(static_cast<Entity*>(body->GetUserData()), editorMode->getActiveLevel()));
+                    //UndoStack::global().addEntry(new EntityDeleteEntry(body->getBodyPart()->getEntity(), editorMode->getActiveLevel()));
+                    ///FIXME put me back in
                     //g_LevelManager.getLevel()->removeBody(static_cast<Entity*>(body->GetUserData()));
                 }
             }
@@ -90,7 +92,7 @@ void GeometrySelector::buttonUp(Vec2i mouse, unsigned char button)
 {
     if (mouseJoint != nullptr)
     {
-        AIEntity* entity = dynamic_cast<AIEntity*>((Entity*)(mouseJoint->GetBodyB()->GetUserData()));
+        AIEntity* entity = nullptr; //dynamic_cast<AIEntity*>(mouseJoint->GetBodyB()->getBodyPart()->getEntity());
         if (entity != nullptr)
             entity->health = bodyHealth;
         editorMode->getActiveWorld()->deleteJoint(mouseJoint);
