@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Box2D/Collision/Shapes/b2PolygonShape.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3471" topLine="130" />
+	</File>
+	<File name="Box2D/Collision/b2BroadPhase.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="9" />
+	</File>
+	<File name="Box2D/Collision/b2BroadPhase.h" open="0" top="0" tabpos="0">
+		<Cursor position="5611" topLine="170" />
+	</File>
+	<File name="Box2D/Collision/b2CollidePolygon.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1833" topLine="41" />
+	</File>
+	<File name="Box2D/Collision/b2Collision.h" open="0" top="0" tabpos="0">
+		<Cursor position="3373" topLine="59" />
+	</File>
+	<File name="Box2D/Collision/b2DynamicTree.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3745" topLine="89" />
+	</File>
+	<File name="Box2D/Collision/b2TimeOfImpact.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5301" topLine="177" />
+	</File>
+	<File name="Box2D/Common/b2BlockAllocator.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2513" topLine="107" />
+	</File>
+	<File name="Box2D/Common/b2Math.h" open="0" top="0" tabpos="1">
+		<Cursor position="9569" topLine="364" />
+	</File>
+	<File name="Box2D/Common/b2StackAllocator.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1801" topLine="28" />
+	</File>
+	<File name="Box2D/Dynamics/Contacts/b2Contact.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="6138" topLine="197" />
+	</File>
+	<File name="Box2D/Dynamics/Contacts/b2Contact.h" open="0" top="0" tabpos="0">
+		<Cursor position="6707" topLine="199" />
+	</File>
+	<File name="Box2D/Dynamics/Contacts/b2ContactSolver.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="7103" topLine="173" />
+	</File>
+	<File name="Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1762" topLine="0" />
+	</File>
+	<File name="Box2D/Dynamics/Joints/b2Joint.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3212" topLine="109" />
+	</File>
+	<File name="Box2D/Dynamics/Joints/b2Joint.h" open="0" top="0" tabpos="0">
+		<Cursor position="5332" topLine="186" />
+	</File>
+	<File name="Box2D/Dynamics/Joints/b2RevoluteJoint.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="10610" topLine="362" />
+	</File>
+	<File name="Box2D/Dynamics/b2Body.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2509" topLine="21" />
+	</File>
+	<File name="Box2D/Dynamics/b2Body.h" open="0" top="0" tabpos="1">
+		<Cursor position="19680" topLine="676" />
+	</File>
+	<File name="Box2D/Dynamics/b2ContactManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3056" topLine="108" />
+	</File>
+	<File name="Box2D/Dynamics/b2ContactManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="1386" topLine="5" />
+	</File>
+	<File name="Box2D/Dynamics/b2Fixture.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1548" topLine="20" />
+	</File>
+	<File name="Box2D/Dynamics/b2Fixture.h" open="0" top="0" tabpos="0">
+		<Cursor position="6832" topLine="202" />
+	</File>
+	<File name="Box2D/Dynamics/b2Island.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="9354" topLine="187" />
+	</File>
+	<File name="Box2D/Dynamics/b2World.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="18008" topLine="842" />
+	</File>
+	<File name="Box2D/Dynamics/b2World.h" open="0" top="0" tabpos="2">
+		<Cursor position="7699" topLine="204" />
+	</File>
+	<File name="Box2D/Dynamics/b2WorldCallbacks.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1468" topLine="6" />
+	</File>
+	<File name="Box2D/Dynamics/b2WorldCallbacks.h" open="0" top="0" tabpos="0">
+		<Cursor position="4791" topLine="100" />
+	</File>
+</CodeBlocks_layout_file>

@@ -26,7 +26,8 @@ Entity* BodyPart::getEntity()
     {
         parent = parent->getParent();
     }
-    return parent;
+    assert(dynamic_cast<Entity*>(parent));
+    return static_cast<Entity*>(parent);
     return static_cast<Entity*>(getParent());
 }
 void BodyPart::setFixture(b2Fixture* _fixture)
@@ -34,7 +35,7 @@ void BodyPart::setFixture(b2Fixture* _fixture)
     assert(!fixture);
     fixture = _fixture;
 }
-const Vec2f& BodyPart::getPosition()
+Vec2f BodyPart::getPosition()
 {
     //assert(fixture);
     if (!fixture)

@@ -675,6 +675,10 @@
 		<Unit filename="UI/ItemList.h" />
 		<Unit filename="UI/ListDisplay.cpp" />
 		<Unit filename="UI/ListDisplay.h" />
+		<Unit filename="UnitTesting/UnitTest.cpp" />
+		<Unit filename="UnitTesting/UnitTest.h" />
+		<Unit filename="UnitTesting/UnitTesting.cpp" />
+		<Unit filename="UnitTesting/UnitTesting.h" />
 		<Unit filename="main.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

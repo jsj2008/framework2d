@@ -75,7 +75,7 @@ CollisionResponse* CollisionDatabase::getHandle(const std::string& _collisionNam
         newContactFactories = new ContactFactory**[size];
         for (unsigned int i = 0; i < size; i++)
         {
-            newContactFactories[i] = new ContactFactory*[size](nullptr);
+            newContactFactories[i] = new ContactFactory*[size];
         }
         for (unsigned int i = 0; i < size-1; i++)
         {
