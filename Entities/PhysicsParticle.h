@@ -7,10 +7,9 @@
 class PhysicsParticle : public Entity
 {
     public:
-        PhysicsParticle(int _timer, Skin* _skin);
+        PhysicsParticle(int _timer);
         virtual ~PhysicsParticle();
         void update();
-        EntityType getType(){return ePhysicsParticleEntityType;}
     protected:
     private:
         int timer;

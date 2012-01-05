@@ -14,7 +14,7 @@ class WheelControllerFactory : public AbstractFactory <CharacterController, Whee
         {
             return "WheelControllerFactory";
         }
-        CharacterController* useFactory(FactoryParameters* parameters);
+        CharacterController* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         WheelCharacterController::Properties properties;

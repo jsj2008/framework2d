@@ -92,8 +92,8 @@ bool PlayMode::trigger(PlayerOneCreated* event)
 {
     AIEntity* entity = event->getPlayer();
     FactoryParameters params(nullptr);
-    params.add<Body*>("body", entity->getBody());
-    mCamera = activeLevel->getFactories()->useFactory<Camera>("BodyCameraFactory", &params);
+    params.add<BodyPart*>("body", entity->getRootBody());
+    mCamera = activeLevel->getFactories()->useFactory<Camera>("BodyCameraFactory", &params, this);
     playerOneBrain = static_cast<PlayerInputBrain*>(entity->getBrain());
     return true;
 }

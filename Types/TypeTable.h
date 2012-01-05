@@ -208,7 +208,11 @@ class TypeTable
             protected:
         };
 
-        static std::unordered_map<TypeIndex,Type*> types;
+        static std::unordered_map<TypeIndex,Type*>& types()
+        {
+            static std::unordered_map<TypeIndex,Type*> _types;
+            return _types;
+        }
         std::unordered_map<TypeIndex, std::vector<UntypedValue*>> untypedValues;
         bool logUndefined;
         std::unordered_map<ValueIndex, Value*> undefinedLog;
@@ -250,7 +254,7 @@ void TypeTable::addValue(const ValueIndex& _name, const T& _value)
     }
     else
     {
-        Type* uncastType = types[name<T>()];
+        Type* uncastType = types()[name<T>()];
         if (uncastType == nullptr)
         {
             TemplateType<T> type;
@@ -414,7 +418,7 @@ const T TypeTable::popValue(const ValueIndex& _name, const char* _default)
             {
                 try
                 {
-                    TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types[name<T>()]->parseInstance(this, _default));
+                    TemplateValue<T>* value = static_cast<TemplateValue<T>*>(types()[name<T>()]->parseInstance(this, _default));
                     undefinedLog[_name] = value;
                     return value->get();
                 }
@@ -464,14 +468,14 @@ std::istream& operator>> (std::istream &in, std::vector<T> &elements)
 template <typename T>
 void TypeTable::overloadType(const TypeIndex& _name, Type* _newFactory)
 {
-    types[_name] = _newFactory;
+    types()[_name] = _newFactory;
     name<T>() = _name;
 }
 template <typename T>
 TypeTable::AutomaticRegister<T>::AutomaticRegister()
 {
-    delete types[name<T>()];
-    types[name<T>()] = new TemplateType<T>();
+    delete types()[name<T>()];
+    types()[name<T>()] = new TemplateType<T>();
 }
 template <typename T>
 void TypeTable::AutomaticRegister<T>::check()

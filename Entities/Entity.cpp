@@ -1,36 +1,47 @@
 #include "Entity.h"
 #include <Graphics/Skins/Skin.h>
 #include <AbstractFactory/AbstractFactories.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 
-Entity::Entity(Skin* _skin)
+Entity::Entity()
 {
-    //ctor
+    rootBody = nullptr;
+    mSkin = nullptr;
+}
+
+void Entity::baseInit(Skin* _skin)
+{
+    assert(!mSkin);
     mSkin = _skin;
-    body = nullptr;
 }
 
 Entity::~Entity()
 {
     //dtor
     delete mSkin;
-    delete body;
+    delete rootBody;
 }
 
 void Entity::render()
 {
-    mSkin->render(body);
+    assert(mSkin);
+    assert(rootBody);
+    mSkin->render(rootBody);
 }
 
-void Entity::setBody(Body* _body)
+void Entity::setRootBody(BodyPart* _rootBody)
 {
-    assert(body == nullptr);
-    body = _body;
+    assert(rootBody == nullptr);
+    rootBody = _rootBody;
+}
+BodyPart* Entity::getRootBody()
+{
+    return rootBody;
 }
 const Vec2f& Entity::getPosition()
 {
-    return body->getPosition();
+    return rootBody->getPosition();
 }
 
 void Entity::registerActions()

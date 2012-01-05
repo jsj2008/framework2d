@@ -250,6 +250,8 @@
 		<Unit filename="Entities/Entity.h" />
 		<Unit filename="Entities/Explosion.cpp" />
 		<Unit filename="Entities/Explosion.h" />
+		<Unit filename="Entities/FluidParticle.cpp" />
+		<Unit filename="Entities/FluidParticle.h" />
 		<Unit filename="Entities/PhysicsParticle.cpp" />
 		<Unit filename="Entities/PhysicsParticle.h" />
 		<Unit filename="Entities/Projectile.cpp" />
@@ -563,6 +565,8 @@
 		<Unit filename="Networking/ServerToClientMessage.h" />
 		<Unit filename="Physics/Body.cpp" />
 		<Unit filename="Physics/Body.h" />
+		<Unit filename="Physics/BodyPart.cpp" />
+		<Unit filename="Physics/BodyPart.h" />
 		<Unit filename="Physics/CollisionObject.cpp" />
 		<Unit filename="Physics/CollisionObject.h" />
 		<Unit filename="Physics/Contact.cpp" />
@@ -575,10 +579,18 @@
 		<Unit filename="Physics/DebugDraw.h" />
 		<Unit filename="Physics/Factories/CharacterBodyFactory.cpp" />
 		<Unit filename="Physics/Factories/CharacterBodyFactory.h" />
+		<Unit filename="Physics/Factories/FluidParticleBodyFactory.cpp" />
+		<Unit filename="Physics/Factories/FluidParticleBodyFactory.h" />
+		<Unit filename="Physics/Factories/ShapeFactory.cpp" />
+		<Unit filename="Physics/Factories/ShapeFactory.h" />
+		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.cpp" />
+		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.h" />
 		<Unit filename="Physics/PhysicsManager.cpp" />
 		<Unit filename="Physics/PhysicsManager.h" />
 		<Unit filename="Physics/RenderCallback.cpp" />
 		<Unit filename="Physics/RenderCallback.h" />
+		<Unit filename="Physics/SingleFixtureBodyPart.cpp" />
+		<Unit filename="Physics/SingleFixtureBodyPart.h" />
 		<Unit filename="Resources/CEGUI/layouts/DistanceJoints.layout" />
 		<Unit filename="Resources/CEGUI/layouts/DynamicEditor.layout" />
 		<Unit filename="Resources/CEGUI/layouts/EditBox.layout" />

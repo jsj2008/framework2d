@@ -25,5 +25,5 @@ void EntityData::build(AbstractFactories* _factories)
 {
     FactoryParameters params;
     propertyBag->build(params.getTypeTable());
-    _factories->useFactory<Entity>(type, &params);
+    _factories->useFactory<Entity>(type, &params, nullptr);
 }

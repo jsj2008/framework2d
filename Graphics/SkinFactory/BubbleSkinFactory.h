@@ -14,7 +14,7 @@ class BubbleSkinFactory : public AbstractFactory<Skin, BubbleSkinFactory>
         {
             return "BubbleSkinFactory";
         }
-        Skin* useFactory(FactoryParameters* parameters);
+        Skin* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         std::string materialName;

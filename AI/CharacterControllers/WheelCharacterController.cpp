@@ -1,6 +1,6 @@
 #include "WheelCharacterController.h"
 #include <Entities/AIEntity.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 
 #define WALK_SPEED properties->walkSpeed
@@ -100,7 +100,7 @@ void WheelCharacterController::jump()
 {
     if (airbourneCounter != FALL_TOLERANCE && jumpCounter == 0)
     {
-        entity->getBody()->applyLinearImpulse(Vec2f(0,-JUMP_HEIGHT),Vec2f(0,0));
+        entity->getRootBody()->applyLinearImpulse(Vec2f(0,-JUMP_HEIGHT),Vec2f(0,0));
         airbourneCounter = FALL_TOLERANCE;
         jumpCounter = JUMP_RECHARGE;
     }
@@ -138,6 +138,6 @@ void WheelCharacterController::update()
     {
         jumpCounter--;
     }
-    entity->getBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));
+    entity->getRootBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));
 }
 

@@ -75,17 +75,17 @@ void TypeTable::registerType(const TypeIndex& _name)
     //std::string oldName = EvaluateTypeName<T>();
     if (name<T>() != _name)
     {
-        Type* uncastType = types[name<T>()];
+        Type* uncastType = types()[name<T>()];
         assert(dynamic_cast<TemplateType<T>*>(uncastType));
         TemplateType<T>* oldType = static_cast<TemplateType<T>*>(uncastType);
         if (oldType != nullptr)
         {
-            assert(dynamic_cast<TemplateType<T>*>(types[name<T>()]));
-            types[_name] = oldType; /// Its still in the old location too
+            assert(dynamic_cast<TemplateType<T>*>(types()[name<T>()]));
+            types()[_name] = oldType; /// Its still in the old location too
         }
         else
         {
-            types[_name] = new TemplateType<T>();
+            types()[_name] = new TemplateType<T>();
         }
         name<T>() = _name;
     }
@@ -106,13 +106,13 @@ void TypeTable::registerType(const TypeIndex& _name)
 TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const ValueIndex& _name, const std::string& _value)
 {
     assert(values.find(_name) == values.end());
-    Type* type = types[_type];
+    Type* type = types()[_type];
     if (type == nullptr)
     {
         /*if (_type.size() > 5 && _type.substr(_type.size()-5, _type.size()) == "Array")
         {
             g_Log.error("Need to call the dynamic Array function");
-            /*type = types[_type.substr(0, _type.size()-5)];
+            /*type = types()[_type.substr(0, _type.size()-5)];
             Value* ret = type->arrayInstance(_value);
             values[_name] = ret;
             return ret;* /
@@ -132,7 +132,7 @@ TypeTable::Value* TypeTable::addDynamicValue(const TypeIndex& _type, const Value
 TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, const ValueIndex& _name, int _size, const std::string* _values)
 {
     assert(values.find(_name) == values.end());
-    Type* type = types[_type];
+    Type* type = types()[_type];
     if (type == nullptr)
     {
         g_Log.error("No support for untyped arrays yet");
@@ -152,7 +152,7 @@ TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, c
 TypeTable::ArrayValue* TypeTable::addDynamicArrayValue(const TypeIndex& _type, const ValueIndex& _name, int _size, std::istream* _parseSource)
 {
     assert(values.find(_name) == values.end());
-    Type* type = types[_type];
+    Type* type = types()[_type];
     if (type == nullptr)
     {
         g_Log.error("No support for untyped arrays yet");
@@ -298,7 +298,6 @@ TypeTable::AutomaticRegister<T>::AutomaticRegister()
 {
 
 }*/
-std::unordered_map<TypeTable::TypeIndex,TypeTable::Type*> TypeTable::types;
 
 
 //#include <AbstractFactory/EvaluateTypeName.h>

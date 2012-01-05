@@ -3,8 +3,7 @@
 #include <Timer.h>
 #include <Physics/PhysicsManager.h>
 
-Explosion::Explosion(float _radius, float _damage, float _force, unsigned short _frames, Skin* _skin)
-:Entity(_skin)
+Explosion::Explosion(float _radius, float _damage, float _force, unsigned short _frames)
 {
     //ctor
     radius = _radius;

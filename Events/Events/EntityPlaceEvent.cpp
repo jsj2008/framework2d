@@ -9,7 +9,7 @@ EntityPlaceEvent::EntityPlaceEvent(Entity* _entity, std::string& _factoryName, F
     factoryName = _factoryName;
     parameters = _parameters;
     char buffer[64];
-    const char* name = _parameters->get<std::string>("name", "error").c_str();
+    const char* name = parameters->get<std::string>("name", "error").c_str();
     sprintf(buffer, "%s placed %p", name, _entity);
     g_Log.message(buffer);
 }

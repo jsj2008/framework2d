@@ -21,12 +21,12 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         AbstractFactoryBase(const std::string _name);
         virtual ~AbstractFactoryBase();
         virtual void baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)=0;
-        Product* use(FactoryParameters* paramters);
+        Product* use(FactoryParameters* paramters, GameObjectBase* _parent);
         const std::string& getName(){return nameCache;}
         const std::string& getInstanceName(){return instanceName;}
         static void registerActions();
     protected:
-        virtual Product* privateUseFactory(FactoryParameters* parameters)=0;
+        virtual Product* privateUseFactory(FactoryParameters* _parameters, GameObjectBase* _parent)=0;
         const std::string nameCache;
         std::string instanceName;
         void attachChild(void* _doNothing){}
@@ -48,7 +48,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
         void baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories);
         static void staticInstantiate(){registrar.check();}
     private:
-        Product* privateUseFactory(FactoryParameters* parameters);
+        Product* privateUseFactory(FactoryParameters* _parameters, GameObjectBase* _parent);
         const static Registrar<Product, DerivedType> registrar;
 };
 
@@ -75,9 +75,9 @@ AbstractFactoryBase<Product>::~AbstractFactoryBase()
 }
 
 template <typename Product>
-Product* AbstractFactoryBase<Product>::use(FactoryParameters* parameters)
+Product* AbstractFactoryBase<Product>::use(FactoryParameters* _parameters, GameObjectBase* _parent)
 {
-    Product* product = privateUseFactory(parameters);
+    Product* product = privateUseFactory(_parameters, _parent);
     attachChild(product);
     return product;
 }
@@ -108,9 +108,11 @@ void AbstractFactory<Product, DerivedType>::baseInit(const std::string& _name, F
 }
 
 template <typename Product, typename DerivedType>
-Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* parameters)
+Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParameters* _parameters, GameObjectBase* _parent)
 {
-    Product* product = static_cast<DerivedType*>(this)->useFactory(parameters);
+    Product* product = static_cast<DerivedType*>(this)->useFactory(_parameters);
+    if (_parent != nullptr)
+        _parent->attachChild(product);
     return product;
 }
 

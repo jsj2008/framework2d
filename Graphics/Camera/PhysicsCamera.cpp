@@ -1,8 +1,8 @@
 #include "PhysicsCamera.h"
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Graphics/GraphicsManager.h>
 
-PhysicsCamera::PhysicsCamera(Body* _body)
+PhysicsCamera::PhysicsCamera(BodyPart* _body)
 {
     //ctor
     body = _body;

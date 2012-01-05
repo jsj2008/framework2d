@@ -3,7 +3,7 @@
 GameObjectBase::GameObjectBase(unsigned int _eventsSize)
 {
     eventListenerLists.resize(_eventsSize);
-    prev = next = children = nullptr;
+    prev = next = children = parent = nullptr;
 }
 GameObjectBase::~GameObjectBase()
 {
@@ -55,6 +55,7 @@ void GameObjectBase::attachChild(GameObjectBase* _child)
         children->prev = _child;
     }
     children = _child;
+    _child->parent = this;
 }
 
 void GameObjectBase::EventHandle::fire(GameObjectBase* _object)
@@ -64,6 +65,22 @@ void GameObjectBase::EventHandle::fire(GameObjectBase* _object)
     {
         (*listener)->fire();
     }
+}
+GameObjectBase* GameObjectBase::getNext()
+{
+    return next;
+}
+GameObjectBase* GameObjectBase::getPrev()
+{
+    return prev;
+}
+GameObjectBase* GameObjectBase::getChildren()
+{
+    return children;
+}
+GameObjectBase* GameObjectBase::getParent()
+{
+    return parent;
 }
 
 void GameObjectBase::killAction(CollisionObject* _object)

@@ -38,7 +38,7 @@ class LevelEntity
     private:
         bool quitButton(const CEGUI::EventArgs& _args);
         EntityList* entityList;
-        FactoryParameters parameters;
+        FactoryParameters _parameters;
         AbstractFactoryBase<Entity>* factory;
         std::string factoryName;
         Entity* entity;

@@ -1,9 +1,9 @@
 #include "SuctionBubble.h"
 #include <Box2D/Dynamics/b2Body.h>
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 
-SuctionBubble::SuctionBubble(Skin* _skin)
-:Bubble(_skin)
+SuctionBubble::SuctionBubble()
+
 {
     //ctor
 }
@@ -14,7 +14,7 @@ SuctionBubble::~SuctionBubble()
 }
 
 
-void SuctionBubble::affectBody(Body* body, Vec2f directionTo)
+void SuctionBubble::affectBody(BodyPart* _body, Vec2f directionTo)
 {
-    body->applyLinearImpulse(directionTo,body->getPosition());
+    _body->applyLinearImpulse(directionTo,_body->getPosition());
 }

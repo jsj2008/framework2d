@@ -16,10 +16,10 @@ void BubbleGame::buttonUp(Vec2i mouse, unsigned char button)
     float radius = (position-mouse.ScreenToWorldSpace()).Length();
     if (radius != 0.0f)
     {
-        FactoryParameters parameters(nullptr);
-        parameters.add<Vec2f>("position",position);
-        parameters.add<float>("radius",radius);
-        parameters.add<std::string>("materialName","defaultBubble");
+        FactoryParameters _parameters(nullptr);
+        _parameters.add<Vec2f>("position",position);
+        _parameters.add<float>("radius",radius);
+        _parameters.add<std::string>("materialName","defaultBubble");
         std::string factory;
         switch (type)
         {
@@ -39,6 +39,6 @@ void BubbleGame::buttonUp(Vec2i mouse, unsigned char button)
                 throw -1;
             }
         }
-        //AbstractFactories::global().useFactory<Entity>(factory,&parameters);
+        //AbstractFactories::global().useFactory<Entity>(factory,&_parameters);
     }
 }

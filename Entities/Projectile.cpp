@@ -1,12 +1,11 @@
 #include "Projectile.h"
-#include <Physics/Body.h>
+#include <Physics/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Box2D/Box2D.h>
 
-Projectile::Projectile(AbstractFactoryBase<Entity>* _explosion, Skin* _skin)
-:Entity(_skin)
+Projectile::Projectile(AbstractFactoryBase<Entity>* _explosion)
 {
     //ctor
     alive = true;
@@ -22,9 +21,9 @@ void Projectile::update()
 {
     if (!alive)
     {
-        FactoryParameters parameters;
-        parameters.add<Vec2f>("position", body->getPosition());
-        explosion->use(&parameters);
+        FactoryParameters _parameters;
+        _parameters.add<Vec2f>("position", rootBody->getPosition());
+        explosion->use(&_parameters, nullptr);
         delete this;
     }
 }

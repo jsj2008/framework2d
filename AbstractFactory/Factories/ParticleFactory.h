@@ -14,7 +14,7 @@ class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
         ParticleFactory();
         virtual ~ParticleFactory();
         void init(FactoryLoader* loader, AbstractFactories* factories);
-        Entity* useFactory(FactoryParameters* parameters);
+        Entity* useFactory(FactoryParameters* _parameters);
         static std::string name()
         {
             return "ParticleFactory";
@@ -25,9 +25,7 @@ class ParticleFactory : public AbstractFactory<Entity, ParticleFactory>
         int lifetime;
         std::string materialName;
 
-        b2BodyDef bodyDef;
-        b2CircleShape shape;
-        PhysicsManager* physicsManager;
+        AbstractFactoryBase<BodyPart>* bodyFactory;
         AbstractFactoryBase<Skin>* skinFactory;
 };
 

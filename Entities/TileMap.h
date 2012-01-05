@@ -11,7 +11,6 @@ class TileMap : public Entity
     public:
         TileMap(const Vec2i& _dimensions, const Vec2f& _offset, const Vec2f& _tileSize);
         void update();
-        EntityType getType(){return eTileMapEntityType;}
         void destroy(Vec2f position, Vec2f direction);
     protected:
     private:

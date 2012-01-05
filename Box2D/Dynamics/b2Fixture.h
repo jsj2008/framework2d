@@ -53,11 +53,11 @@ struct b2FixtureDef
 	b2FixtureDef()
 	{
 		shape = NULL;
+		bodyPart = NULL;
 		friction = 0.2f;
 		restitution = 0.0f;
 		density = 0.0f;
 		filter.response = 0;
-		isSensor = false;
 	}
 
 	virtual ~b2FixtureDef() {}
@@ -75,12 +75,10 @@ struct b2FixtureDef
 	/// The density, usually in kg/m^2.
 	float32 density;
 
-	/// A sensor shape collects contact information but never generates a collision
-	/// response.
-	bool isSensor;
-
 	/// Contact filtering data.
 	b2Filter filter;
+
+	BodyPart* bodyPart;
 };
 
 
@@ -165,6 +163,8 @@ public:
 	/// the body transform.
 	const b2AABB& GetAABB() const;
 
+	BodyPart* getBodyPart() const;
+
 protected:
 
 	friend class b2Body;
@@ -194,6 +194,8 @@ protected:
 	b2Body* m_body;
 
 	b2Shape* m_shape;
+
+	BodyPart* bodyPart;
 
 	float32 m_friction;
 	float32 m_restitution;

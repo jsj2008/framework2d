@@ -45,7 +45,7 @@
 	    <Property Type="string" Name="actionFactory" Value="FireBulletAction" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="PlayerBody" Type="CharacterBodyFactory" Product="Body">
+	<Factory Name="PlayerBody" Type="CharacterBodyFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="Player" /> 
 	  </PropertyBag>
@@ -66,7 +66,17 @@
 	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="WaterParticleBody" Type="FluidParticleBodyFactory" Product="BodyPart">
+	  <PropertyBag>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticle" Type="FluidParticleFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="WaterParticleBody" />
+	  </PropertyBag>
+	</Factory>
       </FactoryList>
+      
       <EntityList Name="Entities">
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
@@ -79,6 +89,11 @@
 	  </PropertyBag>
 	</Entity>
 	<Entity Type="DenseCrate">
+	  <PropertyBag>
+	    <Property Type="Vec2f" Name="position" Value="0 0" />
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="WaterParticle"> Fix this, its product is a body
 	  <PropertyBag>
 	    <Property Type="Vec2f" Name="position" Value="0 0" />
 	  </PropertyBag>

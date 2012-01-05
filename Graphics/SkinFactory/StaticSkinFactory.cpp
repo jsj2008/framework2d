@@ -19,9 +19,9 @@ void StaticSkinFactory::init(FactoryLoader* _loader, AbstractFactories* factorie
     materialName = _loader->get<std::string>("materialName","player");
 }
 
-Skin* StaticSkinFactory::useFactory(FactoryParameters* parameters)
+Skin* StaticSkinFactory::useFactory(FactoryParameters* _parameters)
 {
-    Vec2f dimensions = parameters->get("dimensions", Vec2f(2,2));
+    Vec2f dimensions = _parameters->get("dimensions", Vec2f(2,2));
     Skin* skin = new StaticSkin(dimensions.x,dimensions.y);
     skin->material = g_GraphicsManager.getMaterial(materialName.c_str());
     return skin;

@@ -17,7 +17,7 @@ class Level : public GameObject<Level>
     public:
         Level(const char* _name);
         virtual ~Level();
-        Entity* addBody(const std::string& factory, FactoryParameters* parameters);
+        Entity* addBody(const std::string& factory, FactoryParameters* _parameters);
         void addJoint(b2JointDef* def);
         void render();
         void renderBackLayers();

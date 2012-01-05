@@ -14,7 +14,7 @@ class ConvexPolygonSkinFactory : public AbstractFactory<Skin, ConvexPolygonSkinF
         {
             return "ConvexPolygonSkinFactory";
         }
-        Skin* useFactory(FactoryParameters* parameters);
+        Skin* useFactory(FactoryParameters* _parameters);
     protected:
     private:
         std::string materialName;
