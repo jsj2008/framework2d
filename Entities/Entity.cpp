@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include <Graphics/Skins/Skin.h>
 #include <AbstractFactory/AbstractFactories.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 
 Entity::Entity()

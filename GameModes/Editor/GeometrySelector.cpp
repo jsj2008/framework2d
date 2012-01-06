@@ -1,6 +1,6 @@
 #include "GeometrySelector.h"
 #include <Graphics/GraphicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>

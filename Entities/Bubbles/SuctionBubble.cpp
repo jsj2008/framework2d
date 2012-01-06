@@ -1,6 +1,6 @@
 #include "SuctionBubble.h"
 #include <Box2D/Dynamics/b2Body.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 
 SuctionBubble::SuctionBubble()
 

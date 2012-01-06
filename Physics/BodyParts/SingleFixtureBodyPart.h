@@ -1,7 +1,7 @@
 #ifndef SINGLEFIXTUREBODYPORT_H
 #define SINGLEFIXTUREBODYPORT_H
 
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 class b2Body;
 class b2Fixture;
 

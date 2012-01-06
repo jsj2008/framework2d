@@ -1,6 +1,6 @@
 #include "Level.h"
 #include <Physics/PhysicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Graphics/GraphicsManager.h>
 #include <Graphics/Contexts/TextureContext.h>
 #include <AbstractFactory/AbstractFactories.h>

@@ -30,7 +30,7 @@ class BubbleFactory : public AbstractFactory<Entity, BubbleFactory<Bubble>>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Bubbles/AllBubbles.h>
 #include <Physics/PhysicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Graphics/Skins/BubbleSkin.h>
 
 template <typename Bubble>

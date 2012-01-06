@@ -1,6 +1,6 @@
 #include "WheelCharacterController.h"
 #include <Entities/AIEntity.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/JointBodyPart.h>
 #include <Physics/PhysicsManager.h>
 
 #define WALK_SPEED properties->walkSpeed
@@ -16,20 +16,20 @@ const char* staticBooleanControlNames[BOOLEAN_CONTROLS_SIZE] =
     "MoveRight",
     "Jump",
 };
-WheelCharacterController::WheelCharacterController(AIEntity* _entity, Properties* _properties)
-:CharacterController(_entity, BOOLEAN_CONTROLS_SIZE, staticBooleanControlNames)
+WheelCharacterController::WheelCharacterController(JointBodyPart* _joint, Properties* _properties)
+:CharacterController(BOOLEAN_CONTROLS_SIZE, staticBooleanControlNames)
 {
     //ctor
-    wheel = nullptr;
     airbourneCounter = 0;
     jumpCounter = 0;
     properties = _properties;
+    joint = _joint;
 }
 
 WheelCharacterController::~WheelCharacterController()
 {
     //dtor
-    wheel->GetBodyB()->GetWorld()->DestroyBody(wheel->GetBodyB());
+    delete joint;
 }
 
 void WheelCharacterController::booleanControls(int _button, bool _pressed)
@@ -86,15 +86,15 @@ void WheelCharacterController::booleanControlEnd(int _button)
 }
 void WheelCharacterController::walkLeft()
 {
-    wheel->SetMotorSpeed(-WALK_SPEED);
+    joint->setMotorSpeed(-WALK_SPEED);
 }
 void WheelCharacterController::walkRight()
 {
-    wheel->SetMotorSpeed(WALK_SPEED);
+    joint->setMotorSpeed(WALK_SPEED);
 }
 void WheelCharacterController::stopWalking()
 {
-    wheel->SetMotorSpeed(0.0f);
+    joint->setMotorSpeed(0.0f);
 }
 void WheelCharacterController::jump()
 {
@@ -108,7 +108,7 @@ void WheelCharacterController::jump()
 }
 void WheelCharacterController::update()
 {
-    bool colliding;
+    /*bool colliding;
     if (wheel->GetBodyB()->GetContactList() == nullptr)
     {
         colliding = false;
@@ -138,6 +138,6 @@ void WheelCharacterController::update()
     {
         jumpCounter--;
     }
-    entity->getRootBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));
+    entity->getRootBody()->applyLinearImpulse(Vec2f(0,EXTRA_GRAVITY),Vec2f(0,0));*/
 }
 

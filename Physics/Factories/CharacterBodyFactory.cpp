@@ -1,5 +1,5 @@
 #include "CharacterBodyFactory.h"
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
@@ -17,7 +17,7 @@ void CharacterBodyFactory::init(FactoryLoader* loader, AbstractFactories* factor
 {
     bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
     wheelFactory = loader->getFactory<BodyPart>("wheel", "SingleFixtureBodyPartFactory");
-    jointFactory = loader->getFactory<BodyPart>("joint", "SingleFixtureBodyPartFactory");
+    jointFactory = loader->getFactory<BodyPart>("joint", "JointBodyPartFactory");
 }
 
 BodyPart* CharacterBodyFactory::useFactory(FactoryParameters* _parameters)
@@ -27,5 +27,6 @@ BodyPart* CharacterBodyFactory::useFactory(FactoryParameters* _parameters)
     _parameters->add<BodyPart*>("bodyA", body);
     _parameters->add<BodyPart*>("bodyB", wheel);
     BodyPart* joint = jointFactory->use(_parameters, wheel);
+    _parameters->add<BodyPart*>("joint", joint);
     return body;
 }

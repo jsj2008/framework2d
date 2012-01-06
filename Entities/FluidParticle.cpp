@@ -1,7 +1,7 @@
 #include "FluidParticle.h"
 #include <AbstractFactory/AutoSelfFactory.h>
 #include <Graphics/Skins/Skin.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 
 FluidParticle::FluidParticle(const ImmutableData& _data, FactoryParameters* _parameters)
 :data(_data)

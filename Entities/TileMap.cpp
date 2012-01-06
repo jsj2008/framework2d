@@ -1,5 +1,5 @@
 #include "TileMap.h"
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 

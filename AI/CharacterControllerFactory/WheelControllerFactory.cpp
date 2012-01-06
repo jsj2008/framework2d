@@ -1,5 +1,6 @@
 #include "WheelControllerFactory.h"
 #include <AI/CharacterControllers/WheelCharacterController.h>
+#include <Physics/BodyParts/JointBodyPart.h>
 
 WheelControllerFactory::WheelControllerFactory()
 {
@@ -27,9 +28,12 @@ void WheelControllerFactory::init(FactoryLoader* loader, AbstractFactories* fact
 }
 CharacterController* WheelControllerFactory::useFactory(FactoryParameters* _parameters)
 {
-    void* userData = _parameters->get<void*>("userData", nullptr);
-    assert(userData);
-    WheelCharacterController* controller = new WheelCharacterController(static_cast<AIEntity*>(userData), &properties);
-    controller->setWheel(static_cast<b2RevoluteJoint*>(_parameters->get<void*>("joint",nullptr)));
+    /*void* userData = _parameters->get<void*>("userData", nullptr);
+    assert(userData);*/
+    BodyPart* joint = _parameters->get<BodyPart*>("joint", nullptr);
+    assert(joint);
+    assert(dynamic_cast<JointBodyPart*>(joint));
+    JointBodyPart* castJoint = static_cast<JointBodyPart*>(joint);
+    WheelCharacterController* controller = new WheelCharacterController(castJoint, &properties);
     return controller;
 }

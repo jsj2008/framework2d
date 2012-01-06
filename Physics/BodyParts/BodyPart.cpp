@@ -18,6 +18,11 @@ void BodyPart::registerActions()
 
 }
 
+b2Body* BodyPart::getBody()
+{
+    return fixture->GetBody();
+}
+
 Entity* BodyPart::getEntity()
 {
     assert(getParent()); /// FIXME this needs to be less stupid

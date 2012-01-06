@@ -4,7 +4,7 @@
 #include <Entities/Entity.h>
 #include <AbstractFactory/AbstractFactory.h>
 #include <Graphics/GraphicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
@@ -51,7 +51,10 @@ b2Body* PhysicsManager::createBody(b2BodyDef* _bodyDef)
 }
 b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 {
-    return mWorld->CreateJoint(def);
+    //if (mWorld)
+        return mWorld->CreateJoint(def);
+    /*else
+        return nullptr;*/
 }
 
 using namespace std;

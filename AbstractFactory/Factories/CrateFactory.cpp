@@ -1,7 +1,7 @@
 #include "CrateFactory.h"
 #include <AbstractFactory/FactoryParameters.h>
 #include <Physics/PhysicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Entities/Crate.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <AbstractFactory/FactoryLoader.h>

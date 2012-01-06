@@ -141,6 +141,7 @@ AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractF
         }
         else
         {
+            g_Log.error(std::string("No such factory: ") + _factory);
             throw -1; /// FIXME NoSuchFactoryException or some shit
         }
     }

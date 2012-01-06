@@ -1,5 +1,5 @@
 #include "PhysicsCamera.h"
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Graphics/GraphicsManager.h>
 
 PhysicsCamera::PhysicsCamera(BodyPart* _body)

@@ -1,6 +1,6 @@
 #include "SingleFixtureBodyPartFactory.h"
 #include <Physics/PhysicsManager.h>
-#include <Physics/SingleFixtureBodyPart.h>
+#include <Physics/BodyParts/SingleFixtureBodyPart.h>
 
 SingleFixtureBodyPartFactory::SingleFixtureBodyPartFactory()
 {
@@ -18,7 +18,7 @@ void SingleFixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactorie
 
     bodyDef.bullet = _loader->get<bool>("bullet", false);
     bodyDef.fixedRotation = _loader->get<bool>("fixedRotation", false);
-    bodyDef.type = _loader->get<int>("bodyType", b2_staticBody); /// FIXME loader needs to accept enums
+    bodyDef.type = _loader->get<int>("bodyType", b2_dynamicBody); /// FIXME loader needs to accept enums
 
     responseFactory = _loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
     fixtureDef.density = _loader->get<float>("density", 1.0f);

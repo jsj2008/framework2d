@@ -1,9 +1,9 @@
 #include "CharacterController.h"
 
-CharacterController::CharacterController(AIEntity* _entity, unsigned char _booleanButtonsSize, const char** _booleanButtonsNames)
+CharacterController::CharacterController(unsigned char _booleanButtonsSize, const char** _booleanButtonsNames)
 {
     //ctor
-    entity = _entity;
+    entity = nullptr;
     booleanButtonsSize = _booleanButtonsSize;
     booleanButtonsNames = _booleanButtonsNames;
 }
@@ -16,4 +16,10 @@ CharacterController::~CharacterController()
 void CharacterController::registerActions()
 {
 
+}
+
+void CharacterController::setAIEntity(AIEntity* _entity)
+{
+    assert(!entity);
+    entity = _entity;
 }

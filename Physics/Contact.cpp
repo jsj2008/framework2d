@@ -1,6 +1,6 @@
 #include "Contact.h"
 #include <Physics/CollisionObject.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Box2D/Box2D.h>
 
 Contact::Contact(bool _inverted, bool _collides, GameObjectBase::ActionHandle* _actionA, GameObjectBase::ActionHandle* _actionB)

@@ -3,6 +3,7 @@
 
 #include <GameObject.h>
 class b2Fixture;
+class b2Body;
 class Entity;
 class Vec2f;
 
@@ -17,6 +18,7 @@ class BodyPart : public GameObject<BodyPart>
         void applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point);
         Entity* getEntity();
         void setFixture(b2Fixture* _fixture);
+        b2Body* getBody();
     protected:
     private:
         b2Fixture* fixture;

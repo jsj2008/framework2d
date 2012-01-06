@@ -5,7 +5,7 @@ Timer g_Timer;
 void Timer::init()
 {
     int result = SDL_Init(SDL_INIT_TIMER);
-        assert(result == 0);
+    assert(result == 0);
     startTime = SDL_GetTicks();
     currentlyPaused = false;
     frame = 0;

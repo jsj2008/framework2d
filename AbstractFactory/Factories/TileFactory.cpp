@@ -1,7 +1,7 @@
 #include "TileFactory.h"
 #include <AbstractFactory/FactoryLoader.h>
 #include <AbstractFactory/FactoryParameters.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Entities/Tile.h>
 #include <Graphics/Skins/StaticSkin.h>

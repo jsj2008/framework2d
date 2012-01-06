@@ -2,7 +2,7 @@
 #include <GL/gl.h>
 #include <Box2D/Box2D.h>
 #include <Graphics/Contexts/MaterialContext.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #define M_PI 3.14159265358979323846
 Skin::Skin()
 {

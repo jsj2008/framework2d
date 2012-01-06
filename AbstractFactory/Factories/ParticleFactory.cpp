@@ -1,7 +1,7 @@
 #include "ParticleFactory.h"
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/PhysicsParticle.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <Graphics/Skins/StaticSkin.h>
 #include <Graphics/GraphicsManager.h>

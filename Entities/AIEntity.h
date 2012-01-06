@@ -23,9 +23,9 @@ class AIEntity : public Entity
         void weaponBegin(Vec2f targetPosition);
         void weaponMove(Vec2f targetPosition);
         void weaponEnd(Vec2f targetPosition);
-        void setController(CharacterController* _controller){controller = _controller;}
         CharacterController* getMoveControls(){return controller;}
         Brain* getBrain(){return mBrain;}
+        void setController(CharacterController* _controller);
     protected:
     private:
         friend class CharacterController;

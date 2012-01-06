@@ -4,7 +4,7 @@
 #include <Graphics/Skins/ConvexPolygonSkin.h>
 #include <AI/AIManager.h>
 #include <Physics/PhysicsManager.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/CollisionDatabase.h>
 

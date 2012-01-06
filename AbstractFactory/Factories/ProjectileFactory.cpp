@@ -2,7 +2,7 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Projectile.h>
 #include <Graphics/Skins/StaticSkin.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <Entities/CollisionDatabase.h>
@@ -18,9 +18,6 @@ void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories
     explosionFactory = loader->getFactory<Entity>("explosion","ExplosionFactory");
     skinFactory = loader->getFactory<Skin>("skins", "StaticSkinFactory");
     assert(skinFactory);
-
-
-
 }
 
 ProjectileFactory::~ProjectileFactory()

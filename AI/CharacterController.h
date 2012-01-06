@@ -8,7 +8,7 @@ class b2RevoluteJoint;
 class CharacterController : public GameObject<CharacterController>
 {
     public:
-        CharacterController(AIEntity* _entity, unsigned char _booleanButtonsSize, const char** _booleanButtonsNames);
+        CharacterController(unsigned char _booleanButtonsSize, const char** _booleanButtonsNames);
         virtual ~CharacterController();
         virtual void update()=0;
         /*virtual void walkLeft()=0;
@@ -20,6 +20,7 @@ class CharacterController : public GameObject<CharacterController>
         const char* getBoolButtonsName(unsigned char _index){return booleanButtonsNames[_index];}
 
         static void registerActions();
+        void setAIEntity(AIEntity* _entity);
     protected:
         AIEntity* entity;
     private:

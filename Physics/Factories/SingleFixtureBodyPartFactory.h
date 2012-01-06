@@ -2,7 +2,7 @@
 #define SINGLEFIXTUREBODYPARTFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Box2D/Box2D.h>
 
 class SingleFixtureBodyPartFactory : public AbstractFactory<BodyPart, SingleFixtureBodyPartFactory>
@@ -16,8 +16,6 @@ class SingleFixtureBodyPartFactory : public AbstractFactory<BodyPart, SingleFixt
         {
             return "SingleFixtureBodyPartFactory";
         }
-
-        void createFixture(const b2FixtureDef* _def, CollisionResponse* _response);
     protected:
     private:
         b2BodyDef bodyDef;

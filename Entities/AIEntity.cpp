@@ -1,6 +1,6 @@
 #include "AIEntity.h"
 #include <AI/Brain.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 #include <AbstractFactory/FactoryParameters.h>
@@ -33,6 +33,11 @@ AIEntity::~AIEntity()
 {
     //dtor
     delete mBrain;
+}
+void AIEntity::setController(CharacterController* _controller)
+{
+    controller = _controller;
+    controller->setAIEntity(this);
 }
 void AIEntity::weaponBegin(Vec2f targetPosition)
 {

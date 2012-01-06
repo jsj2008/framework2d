@@ -2,7 +2,7 @@
 #define WATERPARTICLEBODYFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-#include <Physics/BodyPart.h>
+#include <Physics/BodyParts/BodyPart.h>
 
 class FluidParticleBodyFactory : public AbstractFactory<BodyPart, FluidParticleBodyFactory>
 {
