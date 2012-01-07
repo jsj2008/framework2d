@@ -2,7 +2,11 @@
 #define WATERPARTICLEBODYFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
+<<<<<<< HEAD
 #include <Physics/BodyParts/BodyPart.h>
+=======
+#include <Physics/BodyPart.h>
+>>>>>>> FETCH_HEAD
 
 class FluidParticleBodyFactory : public AbstractFactory<BodyPart, FluidParticleBodyFactory>
 {

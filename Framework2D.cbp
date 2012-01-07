@@ -24,6 +24,7 @@
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
 					<Add option="-ltinyxml" />
+					<Add option="-lGLEW" />
 					<Add library="bin/Debug/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -44,6 +45,7 @@
 					<Add option="-lGLU" />
 					<Add option="-lCEGUIBase" />
 					<Add option="-lCEGUIOpenGLRenderer" />
+					<Add option="-lGLEW" />
 					<Add library="bin/Release/libBox2D.a" />
 				</Linker>
 			</Target>
@@ -579,12 +581,6 @@
 		<Unit filename="Physics/ContactListener.h" />
 		<Unit filename="Physics/DebugDraw.cpp" />
 		<Unit filename="Physics/DebugDraw.h" />
-		<Unit filename="Physics/Factories/CharacterBodyFactory.cpp" />
-		<Unit filename="Physics/Factories/CharacterBodyFactory.h" />
-		<Unit filename="Physics/Factories/FluidParticleBodyFactory.cpp" />
-		<Unit filename="Physics/Factories/FluidParticleBodyFactory.h" />
-		<Unit filename="Physics/Factories/JointBodyPartFactory.cpp" />
-		<Unit filename="Physics/Factories/JointBodyPartFactory.h" />
 		<Unit filename="Physics/Factories/ShapeFactory.cpp" />
 		<Unit filename="Physics/Factories/ShapeFactory.h" />
 		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.cpp" />
@@ -673,6 +669,10 @@
 		<Unit filename="UI/ItemList.h" />
 		<Unit filename="UI/ListDisplay.cpp" />
 		<Unit filename="UI/ListDisplay.h" />
+		<Unit filename="UnitTesting/UnitTest.cpp" />
+		<Unit filename="UnitTesting/UnitTest.h" />
+		<Unit filename="UnitTesting/UnitTesting.cpp" />
+		<Unit filename="UnitTesting/UnitTesting.h" />
 		<Unit filename="main.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

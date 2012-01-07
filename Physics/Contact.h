@@ -32,7 +32,7 @@ class Contact
             public:
                 ImpulseInterface(const b2ContactImpulse* _impulse, bool _inverted);
             private:
-                b2ContactImpulse* impulse;
+                const b2ContactImpulse* impulse;
                 bool inverted;
         };
         virtual void postSolve(ImpulseInterface* _impulse);

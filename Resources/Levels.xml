@@ -98,6 +98,11 @@
 	    <Property Type="Vec2f" Name="position" Value="0 0" />
 	  </PropertyBag>
 	</Entity>
+	<Entity Type="WaterParticle"> Fix this, its product is a body
+	  <PropertyBag>
+	    <Property Type="Vec2f" Name="position" Value="0 0" />
+	  </PropertyBag>
+	</Entity>
       </EntityList>
     </Level>
     <EventList Name="Events" />

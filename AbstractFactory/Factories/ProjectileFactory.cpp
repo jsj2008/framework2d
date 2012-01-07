@@ -2,7 +2,6 @@
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/Projectile.h>
 #include <Graphics/Skins/StaticSkin.h>
-#include <Physics/BodyParts/BodyPart.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <Entities/CollisionDatabase.h>
