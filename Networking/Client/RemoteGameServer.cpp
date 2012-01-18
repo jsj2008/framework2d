@@ -21,7 +21,7 @@ RemoteGameServer::~RemoteGameServer()
 
 bool RemoteGameServer::update()
 {
-    client.update(sendingUpdate);
+    /*client.update(sendingUpdate);
     sendingUpdate.clear();
     if (frameUpdated)
     {
@@ -35,7 +35,8 @@ bool RemoteGameServer::update()
         receievedUpdate.clear();
         return true;
     }
-    return false;
+    return false;*/
+    throw -1;
 }
 
 void RemoteGameServer::registerPlayer(NetworkedPlayerControl* _control, unsigned short _entityKey)
@@ -59,8 +60,9 @@ void RemoteGameServer::unregisterPlayer(NetworkedPlayerControl* _control, unsign
 
 void RemoteGameServer::trigger(InputActions action, bool _pressed)
 {
-    if (thisClientEntityKey != 0)
-        sendingUpdate.addAction({thisClientEntityKey, action, _pressed});
+    /*if (thisClientEntityKey != 0)
+        sendingUpdate.addAction({thisClientEntityKey, action, _pressed});*/
+    throw -1;
 }
 
 bool RemoteGameServer::trigger(ServerMessageEvent<ClientInitialisationMessage>* event)
@@ -74,7 +76,8 @@ bool RemoteGameServer::trigger(ServerMessageEvent<ClientInitialisationMessage>* 
 }
 bool RemoteGameServer::trigger(ServerMessageEvent<FrameUpdateMessage>* event)
 {
-    frameUpdated = true;
+    /*frameUpdated = true;
     receievedUpdate.append(event->getMessage()->getUpdate());
-    return true;
+    return true;*/
+    throw -1;
 }

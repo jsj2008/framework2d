@@ -2,6 +2,7 @@
 #include <Entities/AIEntity.h>
 #include <Physics/BodyParts/JointBodyPart.h>
 #include <Physics/PhysicsManager.h>
+#include <Types/Vec2f.h>
 
 #define WALK_SPEED properties->walkSpeed
 #define JUMP_HEIGHT properties->jumpHeight

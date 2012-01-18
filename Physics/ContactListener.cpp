@@ -41,6 +41,7 @@ void ContactListener::BeginContact(b2Contact* _contact)
         }
     }
 }
+
 void ContactListener::EndContact(b2Contact* _contact)
 {
     Contact* contact = static_cast<Contact*>(_contact->GetUserData());

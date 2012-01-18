@@ -23,8 +23,8 @@ PhysicsManager::~PhysicsManager()
 }
 void PhysicsManager::init(CollisionDatabase* _database)
 {
-    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
-    mWorld->SetUserData(this);
+    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY));
+    //mWorld->SetUserData(this);
     mRenderCallback = new RenderCallback;
     contactListener = new ContactListener(_database);
 #ifdef DEBUG_DRAW
@@ -43,7 +43,7 @@ void PhysicsManager::clear()
         body = body->GetNext();
     }
     delete mWorld;
-    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY),true);
+    mWorld = new b2World(Vec2f(0,WORLD_GRAVITY));
 }
 b2Body* PhysicsManager::createBody(b2BodyDef* _bodyDef)
 {

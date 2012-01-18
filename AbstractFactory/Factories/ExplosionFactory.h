@@ -8,6 +8,7 @@ class FactoryLoader;
 class Entity;
 class PhysicsManager;
 class Skin;
+class BodyPart;
 
 class ExplosionFactory : public AbstractFactory<Entity, ExplosionFactory>
 {

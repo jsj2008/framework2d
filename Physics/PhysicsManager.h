@@ -1,7 +1,6 @@
 #ifndef PHYSICSMANAGER_H
 #define PHYSICSMANAGER_H
 
-#include <Box2D/Box2D.h>
 #include <stack>
 class RenderCallback;
 class ContactListener;
@@ -10,6 +9,14 @@ class BodyPart;
 class BodyPart;
 class ContactFilter;
 class CollisionDatabase;
+class b2World;
+class b2Body;
+class b2BodyDef;
+class b2Joint;
+class b2JointDef;
+class b2MouseJoint;
+class b2QueryCallback;
+class Vec2f;
 
 #define BIT(x) (1 << x)
 #define JUMPING

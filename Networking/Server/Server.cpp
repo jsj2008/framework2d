@@ -170,14 +170,14 @@ void Server::update()
         /*char log[256];
         sprintf(log, "Updates: %d", nextUpdate.getActionsSize());
         g_Log.message(log);*/
-        FrameUpdateMessage message(nextUpdate);
+        /*FrameUpdateMessage message(nextUpdate);
         char buffer[256];
         DataStream stream(buffer, 0);
         stream.encode<unsigned short>(message.getServerToClientMessageId());
         stream.encode<unsigned short>(0);
         message.encode(&stream);
         multicast(&stream);
-        nextUpdate.clear();
+        nextUpdate.clear();*/
     }
 }
 
@@ -222,7 +222,7 @@ void Server::multicast(DataStream* _stream)
 }
 void Server::addUpdates(FrameUpdate* _update)
 {
-    nextUpdate.append(_update);
+    //nextUpdate.append(_update);
 }
 
 void Server::bringUpToSpeed(ServerEntity* _client)

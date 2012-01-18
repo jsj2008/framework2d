@@ -4,7 +4,7 @@
 #include <Box2D/Box2D.h>
 
 
-class DebugDraw : public b2DebugDraw
+class DebugDraw : public b2Draw
 {
     public:
         DebugDraw();

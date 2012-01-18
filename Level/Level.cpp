@@ -158,10 +158,6 @@ unsigned int getJointDefSize(b2JointType type)
         {
             return sizeof(b2GearJointDef);
         }
-        case e_lineJoint:
-        {
-            return sizeof(b2LineJointDef);
-        }
         case e_weldJoint:
         {
             return sizeof(b2WeldJointDef);

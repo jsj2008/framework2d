@@ -4,7 +4,7 @@
 #include <Physics/PhysicsManager.h>
 #include <Input/InputManager.h>
 #include <Graphics/Camera/FreeCamera.h>
-#include <Box2D/Common/b2Math.h>
+#include <Box2D/Box2D.h>
 #include <Entities/AIEntity.h>
 #include <GameModes/Editor/Undo/UndoStack.h>
 #include <GameModes/Editor/Undo/Entries/EntityDeleteEntry.h>

@@ -61,18 +61,14 @@
 	    <Property Type="float" Name="density" Value="10" />
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="LevelGeometryBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="int" Name="bodyType" Value="2" />
+	  </PropertyBag>
+	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
-	  </PropertyBag>
-	</Factory>
-	<Factory Name="WaterParticleBody" Type="FluidParticleBodyFactory" Product="BodyPart">
-	  <PropertyBag>
-	  </PropertyBag>
-	</Factory>
-	<Factory Name="WaterParticle" Type="FluidParticleFactory" Product="Entity">
-	  <PropertyBag>
-	    <Property Type="string" Name="body" Value="WaterParticleBody" />
 	  </PropertyBag>
 	</Factory>
       </FactoryList>
@@ -93,14 +89,9 @@
 	    <Property Type="Vec2f" Name="position" Value="10 0" />
 	  </PropertyBag>
 	</Entity>
-	<Entity Type="WaterParticle"> Fix this, its product is a body
+	<Entity Type="DenseCrate">
 	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="0 0" />
-	  </PropertyBag>
-	</Entity>
-	<Entity Type="WaterParticle"> Fix this, its product is a body
-	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="0 0" />
+	    <Property Type="Vec2f" Name="position" Value="10 0" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

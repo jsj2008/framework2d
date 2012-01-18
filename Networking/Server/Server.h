@@ -28,7 +28,7 @@ class Server
         template <typename Message>
         void addClientMessageFactory();
         int newClientListen;
-        FrameUpdate nextUpdate;
+        //FrameUpdate nextUpdate;
 };
 
 #endif // SERVER_H

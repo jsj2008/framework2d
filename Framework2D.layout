@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="AI/AIManager.cpp" open="0" top="0" tabpos="12">
-		<Cursor position="269" topLine="0" />
+		<Cursor position="97" topLine="0" />
 	</File>
 	<File name="AI/AIManager.h" open="0" top="0" tabpos="13">
 		<Cursor position="795" topLine="0" />
@@ -28,20 +28,20 @@
 	<File name="AI/CharacterController.h" open="0" top="0" tabpos="8">
 		<Cursor position="828" topLine="0" />
 	</File>
-	<File name="AI/CharacterControllerFactory/WheelControllerFactory.cpp" open="1" top="0" tabpos="2">
+	<File name="AI/CharacterControllerFactory/WheelControllerFactory.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1083" topLine="0" />
 	</File>
 	<File name="AI/CharacterControllerFactory/WheelControllerFactory.h" open="0" top="0" tabpos="2">
 		<Cursor position="365" topLine="0" />
 	</File>
-	<File name="AI/CharacterControllers/WheelCharacterController.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="2497" topLine="79" />
+	<File name="AI/CharacterControllers/WheelCharacterController.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="174" topLine="0" />
 	</File>
-	<File name="AI/CharacterControllers/WheelCharacterController.h" open="1" top="0" tabpos="1">
+	<File name="AI/CharacterControllers/WheelCharacterController.h" open="0" top="0" tabpos="1">
 		<Cursor position="911" topLine="0" />
 	</File>
-	<File name="AI/PathGeneration/PathGraph.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="6612" topLine="230" />
+	<File name="AI/PathGeneration/PathGraph.cpp" open="0" top="0" tabpos="38">
+		<Cursor position="3744" topLine="104" />
 	</File>
 	<File name="AI/PathGeneration/PathGraph.h" open="0" top="0" tabpos="9">
 		<Cursor position="205" topLine="0" />
@@ -101,67 +101,67 @@
 		<Cursor position="29" topLine="0" />
 	</File>
 	<File name="AbstractFactory/AbstractFactory.h" open="0" top="0" tabpos="7">
-		<Cursor position="3517" topLine="82" />
+		<Cursor position="2271" topLine="70" />
 	</File>
 	<File name="AbstractFactory/AbstractFactoryList.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="140" topLine="0" />
 	</File>
 	<File name="AbstractFactory/AbstractFactoryList.h" open="0" top="0" tabpos="1">
-		<Cursor position="1619" topLine="25" />
+		<Cursor position="7040" topLine="193" />
 	</File>
 	<File name="AbstractFactory/AutoSelfFactory.h" open="0" top="0" tabpos="4">
 		<Cursor position="1047" topLine="2" />
 	</File>
-	<File name="AbstractFactory/EvaluateTypeName.h" open="1" top="0" tabpos="27">
+	<File name="AbstractFactory/EvaluateTypeName.h" open="0" top="0" tabpos="27">
 		<Cursor position="245" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/AIEntityFactory.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="442" topLine="0" />
+	<File name="AbstractFactory/Factories/AIEntityFactory.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="1236" topLine="4" />
 	</File>
-	<File name="AbstractFactory/Factories/AIEntityFactory.h" open="1" top="0" tabpos="28">
+	<File name="AbstractFactory/Factories/AIEntityFactory.h" open="0" top="0" tabpos="28">
 		<Cursor position="743" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/BubbleFactory.cpp" open="0" top="0" tabpos="15">
 		<Cursor position="28" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/BubbleFactory.h" open="1" top="0" tabpos="5">
+	<File name="AbstractFactory/Factories/BubbleFactory.h" open="0" top="0" tabpos="5">
 		<Cursor position="905" topLine="12" />
 	</File>
-	<File name="AbstractFactory/Factories/CrateFactory.cpp" open="1" top="0" tabpos="6">
+	<File name="AbstractFactory/Factories/CrateFactory.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="108" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/CrateFactory.h" open="0" top="0" tabpos="19">
 		<Cursor position="727" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/ExplosionFactory.cpp" open="1" top="0" tabpos="7">
+	<File name="AbstractFactory/Factories/ExplosionFactory.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="188" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/ExplosionFactory.h" open="0" top="0" tabpos="21">
-		<Cursor position="214" topLine="0" />
+		<Cursor position="230" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/LevelGeometryFactory.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="216" topLine="0" />
+	<File name="AbstractFactory/Factories/LevelGeometryFactory.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="735" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/LevelGeometryFactory.h" open="0" top="0" tabpos="23">
-		<Cursor position="837" topLine="0" />
+		<Cursor position="220" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/ParticleFactory.cpp" open="1" top="0" tabpos="9">
+	<File name="AbstractFactory/Factories/ParticleFactory.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="113" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/ParticleFactory.h" open="0" top="0" tabpos="25">
 		<Cursor position="195" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/ProjectileFactory.cpp" open="1" top="0" tabpos="10">
-		<Cursor position="673" topLine="0" />
+	<File name="AbstractFactory/Factories/ProjectileFactory.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="710" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/ProjectileFactory.h" open="0" top="0" tabpos="27">
-		<Cursor position="1076" topLine="0" />
+		<Cursor position="216" topLine="0" />
 	</File>
-	<File name="AbstractFactory/Factories/TileFactory.cpp" open="1" top="0" tabpos="11">
+	<File name="AbstractFactory/Factories/TileFactory.cpp" open="0" top="0" tabpos="11">
 		<Cursor position="114" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/TileFactory.h" open="0" top="0" tabpos="29">
-		<Cursor position="629" topLine="0" />
+		<Cursor position="204" topLine="0" />
 	</File>
 	<File name="AbstractFactory/Factories/TileMapFactory.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="27" topLine="0" />
@@ -214,7 +214,7 @@
 	<File name="AbstractFactory/UntypedAbstractFactoryImplementation.h" open="0" top="0" tabpos="3">
 		<Cursor position="304" topLine="0" />
 	</File>
-	<File name="Entities/AIEntity.cpp" open="1" top="0" tabpos="12">
+	<File name="Entities/AIEntity.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="44" topLine="0" />
 	</File>
 	<File name="Entities/AIEntity.h" open="0" top="0" tabpos="1">
@@ -226,29 +226,29 @@
 	<File name="Entities/Bubble.h" open="0" top="0" tabpos="0">
 		<Cursor position="148" topLine="0" />
 	</File>
-	<File name="Entities/Bubbles/SuctionBubble.cpp" open="1" top="0" tabpos="13">
+	<File name="Entities/Bubbles/SuctionBubble.cpp" open="0" top="0" tabpos="13">
 		<Cursor position="61" topLine="0" />
 	</File>
 	<File name="Entities/Bubbles/SuctionBubble.h" open="0" top="0" tabpos="0">
 		<Cursor position="167" topLine="0" />
 	</File>
-	<File name="Entities/Bubbles/UpwardsGravityBubble.cpp" open="1" top="0" tabpos="14">
+	<File name="Entities/Bubbles/UpwardsGravityBubble.cpp" open="0" top="0" tabpos="14">
 		<Cursor position="68" topLine="0" />
 	</File>
 	<File name="Entities/Bubbles/UpwardsGravityBubble.h" open="0" top="0" tabpos="0">
 		<Cursor position="180" topLine="0" />
 	</File>
-	<File name="Entities/CollisionDatabase.cpp" open="1" top="0" tabpos="30">
+	<File name="Entities/CollisionDatabase.cpp" open="0" top="0" tabpos="29">
 		<Cursor position="801" topLine="15" />
 	</File>
-	<File name="Entities/CollisionDatabase.h" open="0" top="0" tabpos="1">
-		<Cursor position="297" topLine="0" />
+	<File name="Entities/CollisionDatabase.h" open="1" top="0" tabpos="3">
+		<Cursor position="262" topLine="7" />
 	</File>
 	<File name="Entities/CollisionResponseFactory.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="1105" topLine="0" />
 	</File>
-	<File name="Entities/CollisionResponseFactory.h" open="0" top="0" tabpos="0">
-		<Cursor position="649" topLine="0" />
+	<File name="Entities/CollisionResponseFactory.h" open="1" top="0" tabpos="2">
+		<Cursor position="546" topLine="0" />
 	</File>
 	<File name="Entities/Crate.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="36" topLine="0" />
@@ -256,8 +256,8 @@
 	<File name="Entities/Crate.h" open="0" top="0" tabpos="0">
 		<Cursor position="120" topLine="0" />
 	</File>
-	<File name="Entities/Entity.cpp" open="1" top="0" tabpos="15">
-		<Cursor position="99" topLine="0" />
+	<File name="Entities/Entity.cpp" open="0" top="0" tabpos="15">
+		<Cursor position="461" topLine="0" />
 	</File>
 	<File name="Entities/Entity.h" open="0" top="0" tabpos="1">
 		<Cursor position="316" topLine="0" />
@@ -268,7 +268,7 @@
 	<File name="Entities/Explosion.h" open="0" top="0" tabpos="0">
 		<Cursor position="238" topLine="0" />
 	</File>
-	<File name="Entities/FluidParticle.cpp" open="1" top="0" tabpos="16">
+	<File name="Entities/FluidParticle.cpp" open="0" top="0" tabpos="16">
 		<Cursor position="104" topLine="0" />
 	</File>
 	<File name="Entities/FluidParticle.h" open="0" top="0" tabpos="1">
@@ -280,7 +280,7 @@
 	<File name="Entities/PhysicsParticle.h" open="0" top="0" tabpos="0">
 		<Cursor position="170" topLine="0" />
 	</File>
-	<File name="Entities/Projectile.cpp" open="1" top="0" tabpos="17">
+	<File name="Entities/Projectile.cpp" open="0" top="0" tabpos="17">
 		<Cursor position="23" topLine="0" />
 	</File>
 	<File name="Entities/Projectile.h" open="0" top="0" tabpos="0">
@@ -298,8 +298,8 @@
 	<File name="Entities/Tile.h" open="0" top="0" tabpos="0">
 		<Cursor position="125" topLine="0" />
 	</File>
-	<File name="Entities/TileMap.cpp" open="1" top="0" tabpos="18">
-		<Cursor position="20" topLine="0" />
+	<File name="Entities/TileMap.cpp" open="0" top="0" tabpos="18">
+		<Cursor position="1172" topLine="17" />
 	</File>
 	<File name="Entities/TileMap.h" open="0" top="0" tabpos="4">
 		<Cursor position="285" topLine="0" />
@@ -473,7 +473,7 @@
 		<Cursor position="58" topLine="0" />
 	</File>
 	<File name="Game.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="308" topLine="21" />
+		<Cursor position="1266" topLine="24" />
 	</File>
 	<File name="Game.h" open="0" top="0" tabpos="4">
 		<Cursor position="78" topLine="0" />
@@ -631,8 +631,8 @@
 	<File name="GameModes/Editor/EventScripter/ScriptEventsList.h" open="0" top="0" tabpos="4">
 		<Cursor position="131" topLine="0" />
 	</File>
-	<File name="GameModes/Editor/GeometrySelector.cpp" open="1" top="0" tabpos="19">
-		<Cursor position="67" topLine="0" />
+	<File name="GameModes/Editor/GeometrySelector.cpp" open="0" top="0" tabpos="19">
+		<Cursor position="237" topLine="0" />
 	</File>
 	<File name="GameModes/Editor/GeometrySelector.h" open="0" top="0" tabpos="0">
 		<Cursor position="788" topLine="0" />
@@ -650,7 +650,7 @@
 		<Cursor position="490" topLine="0" />
 	</File>
 	<File name="GameModes/Editor/Joints/DistanceJointEditor.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="656" topLine="0" />
+		<Cursor position="184" topLine="0" />
 	</File>
 	<File name="GameModes/Editor/Joints/DistanceJointEditor.h" open="0" top="0" tabpos="0">
 		<Cursor position="192" topLine="0" />
@@ -692,7 +692,7 @@
 		<Cursor position="332" topLine="0" />
 	</File>
 	<File name="GameModes/PlayMode.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="2409" topLine="54" />
+		<Cursor position="1989" topLine="54" />
 	</File>
 	<File name="GameModes/PlayMode.h" open="0" top="0" tabpos="3">
 		<Cursor position="450" topLine="0" />
@@ -727,7 +727,7 @@
 	<File name="Graphics/Camera/FreeCamera.h" open="0" top="0" tabpos="0">
 		<Cursor position="467" topLine="0" />
 	</File>
-	<File name="Graphics/Camera/PhysicsCamera.cpp" open="1" top="0" tabpos="20">
+	<File name="Graphics/Camera/PhysicsCamera.cpp" open="0" top="0" tabpos="20">
 		<Cursor position="26" topLine="0" />
 	</File>
 	<File name="Graphics/Camera/PhysicsCamera.h" open="0" top="0" tabpos="0">
@@ -781,8 +781,8 @@
 	<File name="Graphics/Skins/ConvexPolygonSkin.h" open="0" top="0" tabpos="0">
 		<Cursor position="187" topLine="0" />
 	</File>
-	<File name="Graphics/Skins/Skin.cpp" open="1" top="0" tabpos="21">
-		<Cursor position="108" topLine="0" />
+	<File name="Graphics/Skins/Skin.cpp" open="0" top="0" tabpos="21">
+		<Cursor position="501" topLine="0" />
 	</File>
 	<File name="Graphics/Skins/Skin.h" open="0" top="0" tabpos="11">
 		<Cursor position="536" topLine="0" />
@@ -883,8 +883,8 @@
 	<File name="Level/FactoryListLoader.h" open="0" top="0" tabpos="10">
 		<Cursor position="419" topLine="0" />
 	</File>
-	<File name="Level/Level.cpp" open="1" top="0" tabpos="22">
-		<Cursor position="54" topLine="0" />
+	<File name="Level/Level.cpp" open="0" top="0" tabpos="22">
+		<Cursor position="4332" topLine="137" />
 	</File>
 	<File name="Level/Level.h" open="0" top="0" tabpos="6">
 		<Cursor position="956" topLine="0" />
@@ -935,7 +935,7 @@
 		<Cursor position="237" topLine="0" />
 	</File>
 	<File name="Log/GameConsole.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="641" topLine="0" />
+		<Cursor position="1212" topLine="33" />
 	</File>
 	<File name="Log/GameConsole.h" open="0" top="0" tabpos="1">
 		<Cursor position="1450" topLine="0" />
@@ -955,112 +955,43 @@
 	<File name="Log/UninitialisedLogger.h" open="0" top="0" tabpos="0">
 		<Cursor position="548" topLine="0" />
 	</File>
-	<File name="Networking/Client/Client.cpp" open="0" top="0" tabpos="9">
-		<Cursor position="2495" topLine="58" />
-	</File>
-	<File name="Networking/Client/Client.h" open="0" top="0" tabpos="2">
-		<Cursor position="162" topLine="0" />
-	</File>
-	<File name="Networking/Client/GameServerInterface.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="516" topLine="0" />
-	</File>
-	<File name="Networking/Client/GameServerInterface.h" open="0" top="0" tabpos="0">
-		<Cursor position="489" topLine="0" />
-	</File>
-	<File name="Networking/Client/NetworkedPlayerControl.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1094" topLine="0" />
-	</File>
-	<File name="Networking/Client/NetworkedPlayerControl.h" open="0" top="0" tabpos="0">
-		<Cursor position="101" topLine="0" />
-	</File>
-	<File name="Networking/Client/RemoteGameServer.cpp" open="1" top="1" tabpos="32">
-		<Cursor position="189" topLine="0" />
-	</File>
-	<File name="Networking/Client/RemoteGameServer.h" open="1" top="0" tabpos="33">
-		<Cursor position="1357" topLine="0" />
-	</File>
-	<File name="Networking/Client/ServerMessageEvent.h" open="0" top="0" tabpos="7">
-		<Cursor position="329" topLine="0" />
-	</File>
 	<File name="Networking/Client/SinglePlayerGameServer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="524" topLine="0" />
+		<Cursor position="881" topLine="8" />
 	</File>
-	<File name="Networking/Client/SinglePlayerGameServer.h" open="0" top="0" tabpos="0">
-		<Cursor position="658" topLine="0" />
+	<File name="Physics/BodyParts/BodyPart.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="786" topLine="13" />
 	</File>
-	<File name="Networking/ClientToServer/ClientInitialisationMessage.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="514" topLine="0" />
-	</File>
-	<File name="Networking/ClientToServer/ClientInitialisationMessage.h" open="0" top="0" tabpos="8">
-		<Cursor position="735" topLine="0" />
-	</File>
-	<File name="Networking/ClientToServerMessage.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="205" topLine="0" />
-	</File>
-	<File name="Networking/ClientToServerMessage.h" open="0" top="0" tabpos="6">
+	<File name="Physics/CollisionObject.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="421" topLine="0" />
 	</File>
-	<File name="Networking/DataStream.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="1157" topLine="7" />
+	<File name="Physics/Contact.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="2787" topLine="76" />
 	</File>
-	<File name="Networking/DataStream.h" open="0" top="0" tabpos="0">
-		<Cursor position="208" topLine="0" />
+	<File name="Physics/ContactListener.cpp" open="1" top="1" tabpos="17">
+		<Cursor position="1053" topLine="22" />
 	</File>
-	<File name="Networking/FrameUpdate.cpp" open="1" top="0" tabpos="34">
-		<Cursor position="0" topLine="0" />
+	<File name="Physics/DebugDraw.h" open="1" top="0" tabpos="11">
+		<Cursor position="221" topLine="0" />
 	</File>
-	<File name="Networking/FrameUpdate.h" open="1" top="0" tabpos="35">
-		<Cursor position="551" topLine="0" />
-	</File>
-	<File name="Networking/MultiCastMessage.h" open="0" top="0" tabpos="0">
-		<Cursor position="140" topLine="0" />
-	</File>
-	<File name="Networking/Server/ClientToServerMessageFactory.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="102" topLine="0" />
-	</File>
-	<File name="Networking/Server/ClientToServerMessageFactory.h" open="0" top="0" tabpos="0">
-		<Cursor position="464" topLine="0" />
-	</File>
-	<File name="Networking/Server/Server.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="4291" topLine="144" />
-	</File>
-	<File name="Networking/Server/Server.h" open="0" top="0" tabpos="3">
-		<Cursor position="678" topLine="0" />
-	</File>
-	<File name="Networking/Server/ServerEntity.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="25" topLine="0" />
-	</File>
-	<File name="Networking/Server/ServerEntity.h" open="0" top="0" tabpos="0">
-		<Cursor position="607" topLine="0" />
-	</File>
-	<File name="Networking/ServerToClient/FrameUpdateMessage.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="251" topLine="0" />
-	</File>
-	<File name="Networking/ServerToClient/FrameUpdateMessage.h" open="0" top="0" tabpos="0">
-		<Cursor position="336" topLine="0" />
-	</File>
-	<File name="Networking/ServerToClientMessage.h" open="0" top="0" tabpos="0">
-		<Cursor position="119" topLine="0" />
-	</File>
-	<File name="Physics/Contact.cpp" open="1" top="0" tabpos="31">
-		<Cursor position="57" topLine="0" />
+	<File name="Physics/Factories/CharacterBodyFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1106" topLine="0" />
 	</File>
 	<File name="Physics/Factories/ShapeFactory.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1020" topLine="9" />
 	</File>
-	<File name="Physics/Factories/SingleFixtureBodyPartFactory.cpp" open="1" top="0" tabpos="24">
-		<Cursor position="559" topLine="0" />
+	<File name="Physics/Factories/SingleFixtureBodyPartFactory.cpp" open="1" top="0" tabpos="12">
+		<Cursor position="1367" topLine="2" />
 	</File>
-	<File name="Physics/Factories/SingleFixtureBodyPartFactory.h" open="1" top="0" tabpos="23">
+	<File name="Physics/Factories/SingleFixtureBodyPartFactory.h" open="0" top="0" tabpos="23">
 		<Cursor position="633" topLine="0" />
 	</File>
-	<File name="Physics/PhysicsManager.cpp" open="1" top="0" tabpos="25">
-		<Cursor position="183" topLine="0" />
+	<File name="Physics/PhysicsManager.cpp" open="1" top="0" tabpos="14">
+		<Cursor position="5369" topLine="160" />
 	</File>
-	<File name="Physics/PhysicsManager.h" open="0" top="0" tabpos="2">
-		<Cursor position="747" topLine="0" />
+	<File name="Physics/PhysicsManager.h" open="1" top="0" tabpos="13">
+		<Cursor position="342" topLine="0" />
 	</File>
-	<File name="Physics/RenderCallback.cpp" open="1" top="0" tabpos="26">
+	<File name="Physics/RenderCallback.cpp" open="0" top="0" tabpos="26">
 		<Cursor position="81" topLine="0" />
 	</File>
 	<File name="Physics/RenderCallback.h" open="0" top="0" tabpos="0">
@@ -1088,7 +1019,7 @@
 		<Cursor position="250" topLine="0" />
 	</File>
 	<File name="Sound/NullSoundManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="314" topLine="0" />
+		<Cursor position="379" topLine="0" />
 	</File>
 	<File name="Sound/SDLSoundManager.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="2079" topLine="26" />
@@ -1142,7 +1073,7 @@
 		<Cursor position="163" topLine="0" />
 	</File>
 	<File name="Timer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="58" topLine="0" />
+		<Cursor position="715" topLine="0" />
 	</File>
 	<File name="Timer.h" open="0" top="0" tabpos="0">
 		<Cursor position="339" topLine="0" />
@@ -1193,13 +1124,13 @@
 		<Cursor position="3889" topLine="91" />
 	</File>
 	<File name="Types/TypeTable.h" open="0" top="0" tabpos="4">
-		<Cursor position="4523" topLine="122" />
+		<Cursor position="6751" topLine="166" />
 	</File>
 	<File name="Types/Vec2f.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="253" topLine="0" />
 	</File>
-	<File name="Types/Vec2f.h" open="0" top="0" tabpos="0">
-		<Cursor position="186" topLine="0" />
+	<File name="Types/Vec2f.h" open="1" top="0" tabpos="15">
+		<Cursor position="2783" topLine="71" />
 	</File>
 	<File name="Types/Vec2i.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="330" topLine="0" />
@@ -1243,8 +1174,11 @@
 	<File name="UI/ListDisplay.h" open="0" top="0" tabpos="1">
 		<Cursor position="409" topLine="0" />
 	</File>
+	<File name="UnitTesting/UnitTesting.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1096" topLine="33" />
+	</File>
 	<File name="main.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="20" topLine="0" />
+		<Cursor position="51" topLine="0" />
 	</File>
 	<File name="server_main.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="688" topLine="0" />

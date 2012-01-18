@@ -1,10 +1,9 @@
 # depslib dependency file v1.0
-1325908254 source:/home/alasdair/Development/framework2d/AI/AIManager.cpp
+1326842896 source:/home/alasdair/Development/framework2d/AI/AIManager.cpp
 	"AIManager.h"
 	"AllBrains.h"
 	<Game.h>
 	<GameModes/GameMode.h>
-	<Box2D/Box2D.h>
 	<AI/Pathfinding/Paths.h>
 
 1325908254 /home/alasdair/Development/framework2d/AI/AIManager.h
@@ -21,18 +20,15 @@
 
 1325908254 /home/alasdair/Development/framework2d/AI/Pathfinding/Node.h
 
-1325908254 /home/alasdair/Development/framework2d/Types/Vec2f.h
+1326845286 /home/alasdair/Development/framework2d/Types/Vec2f.h
 	<math.h>
-	<Box2D/Common/b2Settings.h>
+	<Box2D/Common/b2Math.h>
 	<istream>
 	<ostream>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Common/b2Settings.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2Settings.h
 	<cassert>
 	<cmath>
-	<cfloat>
-	<cstddef>
-	<limits>
 
 1325908254 /home/alasdair/Development/framework2d/AI/AllBrains.h
 	"PlayerInputBrain.h"
@@ -81,9 +77,13 @@
 1325908254 /home/alasdair/Development/framework2d/GameModes/GameMode.h
 	<GameObject.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Box2D.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Box2D.h
 	<Box2D/Common/b2Settings.h>
+	<Box2D/Common/b2Draw.h>
+	<Box2D/Common/b2Timer.h>
 	<Box2D/Collision/Shapes/b2CircleShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 	<Box2D/Collision/b2BroadPhase.h>
 	<Box2D/Collision/b2Distance.h>
@@ -98,121 +98,120 @@
 	<Box2D/Dynamics/Joints/b2DistanceJoint.h>
 	<Box2D/Dynamics/Joints/b2FrictionJoint.h>
 	<Box2D/Dynamics/Joints/b2GearJoint.h>
-	<Box2D/Dynamics/Joints/b2LineJoint.h>
+	<Box2D/Dynamics/Joints/b2WheelJoint.h>
 	<Box2D/Dynamics/Joints/b2MouseJoint.h>
 	<Box2D/Dynamics/Joints/b2PrismaticJoint.h>
 	<Box2D/Dynamics/Joints/b2PulleyJoint.h>
 	<Box2D/Dynamics/Joints/b2RevoluteJoint.h>
+	<Box2D/Dynamics/Joints/b2RopeJoint.h>
 	<Box2D/Dynamics/Joints/b2WeldJoint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2Shape.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2Shape.h
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.h
 	<Box2D/Common/b2Settings.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Common/b2Math.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2Math.h
 	<Box2D/Common/b2Settings.h>
 	<cmath>
 	<cfloat>
 	<cstddef>
 	<limits>
-	<Types/Vec2f.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.h
 	<Box2D/Common/b2Math.h>
 	<climits>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.h
 	<Box2D/Common/b2Settings.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2DynamicTree.h>
 	<algorithm>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.h
 	<Box2D/Collision/b2Collision.h>
+	<Box2D/Common/b2GrowableStack.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.h
 	<Box2D/Common/b2Math.h>
-	<climits>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Distance.h>
-	<climits>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 	<memory>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.h
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.h
 	<Box2D/Common/b2Settings.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2TimeStep.h
-	<Box2D/Common/b2Settings.h>
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2TimeStep.h
+	<Box2D/Common/b2Math.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2StackAllocator.h>
 	<Box2D/Dynamics/b2ContactManager.h>
 	<Box2D/Dynamics/b2WorldCallbacks.h>
+	<Box2D/Dynamics/b2TimeStep.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.h
 	<Box2D/Common/b2Settings.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.h
 	<Box2D/Collision/b2BroadPhase.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
-	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/b2Fixture.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.h
 	<Box2D/Common/b2Math.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
 1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2LineJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.h
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
 1325908254 /home/alasdair/Development/framework2d/AI/Pathfinding/Paths.h
@@ -374,11 +373,12 @@
 1325909251 /home/alasdair/Development/framework2d/AI/CharacterControllers/WheelCharacterController.h
 	<AI/CharacterController.h>
 
-1325909382 source:/home/alasdair/Development/framework2d/AI/CharacterControllers/WheelCharacterController.cpp
+1326843021 source:/home/alasdair/Development/framework2d/AI/CharacterControllers/WheelCharacterController.cpp
 	"WheelCharacterController.h"
 	<Entities/AIEntity.h>
 	<Physics/BodyParts/JointBodyPart.h>
 	<Physics/PhysicsManager.h>
+	<Types/Vec2f.h>
 
 1325908254 /home/alasdair/Development/framework2d/Entities/AIEntity.h
 	"Entity.h"
@@ -396,11 +396,10 @@
 1324345361 /home/alasdair/Development/framework2d/Physics/Body.h
 	<GameObject.h>
 
-1325908254 /home/alasdair/Development/framework2d/Physics/PhysicsManager.h
-	<Box2D/Box2D.h>
+1326845088 /home/alasdair/Development/framework2d/Physics/PhysicsManager.h
 	<stack>
 
-1325908254 source:/home/alasdair/Development/framework2d/AI/PathGeneration/PathGraph.cpp
+1326843044 source:/home/alasdair/Development/framework2d/AI/PathGeneration/PathGraph.cpp
 	"PathGraph.h"
 	<AI/PathGeneration/PathSegment.h>
 	<AI/PathGeneration/PathNodeDynamic.h>
@@ -719,7 +718,7 @@
 	<Physics/PhysicsManager.h>
 	<AbstractFactory/FactoryLoader.h>
 
-1325908254 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ExplosionFactory.h
+1326843565 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ExplosionFactory.h
 	<string>
 	<AbstractFactory/AbstractFactory.h>
 	<Box2D/Box2D.h>
@@ -739,7 +738,7 @@
 	<AbstractFactory/FactoryParameters.h>
 	<Entities/CollisionDatabase.h>
 
-1325908254 /home/alasdair/Development/framework2d/AbstractFactory/Factories/LevelGeometryFactory.h
+1326843575 /home/alasdair/Development/framework2d/AbstractFactory/Factories/LevelGeometryFactory.h
 	<Box2D/Box2D.h>
 	<AbstractFactory/AbstractFactory.h>
 
@@ -760,14 +759,14 @@
 	<Graphics/GraphicsManager.h>
 	<AbstractFactory/FactoryLoader.h>
 
-1325908254 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ParticleFactory.h
+1326843582 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ParticleFactory.h
 	<Box2D/Box2D.h>
 	<AbstractFactory/AbstractFactory.h>
 
 1325908254 /home/alasdair/Development/framework2d/Entities/PhysicsParticle.h
 	<Entities/Entity.h>
 
-1325909451 source:/home/alasdair/Development/framework2d/AbstractFactory/Factories/ProjectileFactory.cpp
+1326838149 source:/home/alasdair/Development/framework2d/AbstractFactory/Factories/ProjectileFactory.cpp
 	"ProjectileFactory.h"
 	<AbstractFactory/FactoryParameters.h>
 	<Entities/Projectile.h>
@@ -776,7 +775,7 @@
 	<AbstractFactory/FactoryLoader.h>
 	<Entities/CollisionDatabase.h>
 
-1325908254 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ProjectileFactory.h
+1326843586 /home/alasdair/Development/framework2d/AbstractFactory/Factories/ProjectileFactory.h
 	<AbstractFactory/AbstractFactory.h>
 	<Box2D/Box2D.h>
 
@@ -795,7 +794,7 @@
 	<AbstractFactory/FactoryLoader.h>
 	<Types/Vec2i.h>
 
-1325908254 /home/alasdair/Development/framework2d/AbstractFactory/Factories/TileFactory.h
+1326843590 /home/alasdair/Development/framework2d/AbstractFactory/Factories/TileFactory.h
 	<Box2D/Box2D.h>
 	<AbstractFactory/AbstractFactory.h>
 
@@ -1521,14 +1520,14 @@
 	"DeathScriptEvent.h"
 	"StandardScriptEvent.h"
 
-1325909523 source:/home/alasdair/Development/framework2d/GameModes/Editor/GeometrySelector.cpp
+1326843879 source:/home/alasdair/Development/framework2d/GameModes/Editor/GeometrySelector.cpp
 	"GeometrySelector.h"
 	<Graphics/GraphicsManager.h>
 	<Physics/BodyParts/BodyPart.h>
 	<Physics/PhysicsManager.h>
 	<Input/InputManager.h>
 	<Graphics/Camera/FreeCamera.h>
-	<Box2D/Common/b2Math.h>
+	<Box2D/Box2D.h>
 	<Entities/AIEntity.h>
 	<GameModes/Editor/Undo/UndoStack.h>
 	<GameModes/Editor/Undo/Entries/EntityDeleteEntry.h>
@@ -1563,18 +1562,20 @@
 1325908254 /home/alasdair/Development/framework2d/Input/Mouse/ClickReleaseEvent.h
 	"InputContext.h"
 
-1325908254 source:/home/alasdair/Development/framework2d/GameModes/Editor/Joints/BaseJointEditor.cpp
+1326843894 source:/home/alasdair/Development/framework2d/GameModes/Editor/Joints/BaseJointEditor.cpp
 	"BaseJointEditor.h"
 	<Graphics/Camera/FreeCamera.h>
 	<Physics/PhysicsManager.h>
 	<GameModes/Editor/EditorMode.h>
+	<Box2D/Box2D.h>
 
-1325908254 source:/home/alasdair/Development/framework2d/GameModes/Editor/Joints/DistanceJointEditor.cpp
+1326843897 source:/home/alasdair/Development/framework2d/GameModes/Editor/Joints/DistanceJointEditor.cpp
 	"DistanceJointEditor.h"
 	<Physics/PhysicsManager.h>
 	<Level/Level.h>
 	<GameModes/Editor/EditorMode.h>
 	<CEGUI/CEGUI.h>
+	<Box2D/Box2D.h>
 
 1325908254 source:/home/alasdair/Development/framework2d/GameModes/Editor/Undo/Entries/EntityCreateEntry.cpp
 	"EntityCreateEntry.h"
@@ -1967,7 +1968,7 @@
 	<Level/PropertyBagData.h>
 	<Types/XmlPropertyBagLoader.h>
 
-1325909560 source:/home/alasdair/Development/framework2d/Level/Level.cpp
+1326843926 source:/home/alasdair/Development/framework2d/Level/Level.cpp
 	"Level.h"
 	<Physics/PhysicsManager.h>
 	<Physics/BodyParts/BodyPart.h>
@@ -2130,7 +2131,7 @@
 	<Networking/Client/SinglePlayerGameServer.h>
 	<Networking/Client/RemoteGameServer.h>
 
-1325908254 /home/alasdair/Development/framework2d/Networking/Client/RemoteGameServer.h
+1326819602 /home/alasdair/Development/framework2d/Networking/Client/RemoteGameServer.h
 	<Networking/Client/GameServerInterface.h>
 	<Networking/Client/Client.h>
 	<Events/SingletonEvents/SingletonEventListener.h>
@@ -2143,7 +2144,7 @@
 	"NetworkedPlayerControl.h"
 	<Networking/Client/GameServerInterface.h>
 
-1325908254 source:/home/alasdair/Development/framework2d/Networking/Client/RemoteGameServer.cpp
+1326819663 source:/home/alasdair/Development/framework2d/Networking/Client/RemoteGameServer.cpp
 	"RemoteGameServer.h"
 	<AbstractFactory/AbstractFactories.h>
 	<Networking/Client/NetworkedPlayerControl.h>
@@ -2155,7 +2156,7 @@
 1325908254 source:/home/alasdair/Development/framework2d/Networking/Client/ServerToClientMessageFactory.cpp
 	"ServerToClientMessageFactory.h"
 
-1325908254 source:/home/alasdair/Development/framework2d/Networking/Client/SinglePlayerGameServer.cpp
+1326819759 source:/home/alasdair/Development/framework2d/Networking/Client/SinglePlayerGameServer.cpp
 	"SinglePlayerGameServer.h"
 	<Networking/Client/NetworkedPlayerControl.h>
 	<AbstractFactory/AbstractFactories.h>
@@ -2196,7 +2197,7 @@
 
 1325908254 /home/alasdair/Development/framework2d/Networking/Server/ClientToServerMessageFactory.h
 
-1325908254 source:/home/alasdair/Development/framework2d/Networking/Server/Server.cpp
+1326819683 source:/home/alasdair/Development/framework2d/Networking/Server/Server.cpp
 	"Server.h"
 	<Networking/Server/ServerEntity.h>
 	<Networking/DataStream.h>
@@ -2212,7 +2213,7 @@
 	<netinet/in.h>
 	<fcntl.h>
 
-1325908254 /home/alasdair/Development/framework2d/Networking/Server/Server.h
+1326819672 /home/alasdair/Development/framework2d/Networking/Server/Server.h
 	<Networking/FrameUpdate.h>
 	<vector>
 	<stack>
@@ -2299,20 +2300,20 @@
 	"DebugDraw.h"
 	<GL/gl.h>
 
-1325908254 /home/alasdair/Development/framework2d/Physics/DebugDraw.h
+1326844902 /home/alasdair/Development/framework2d/Physics/DebugDraw.h
 	<Box2D/Box2D.h>
 
-1324363850 source:/home/alasdair/Development/framework2d/Physics/Factories/CharacterBodyFactory.cpp
+1326820175 source:/home/alasdair/Development/framework2d/Physics/Factories/CharacterBodyFactory.cpp
 	"CharacterBodyFactory.h"
-	<Physics/BodyPart.h>
+	<Physics/BodyParts/BodyPart.h>
 	<Physics/PhysicsManager.h>
 	<AbstractFactory/FactoryLoader.h>
 	<AbstractFactory/FactoryParameters.h>
 
-1324357578 /home/alasdair/Development/framework2d/Physics/Factories/CharacterBodyFactory.h
+1325908254 /home/alasdair/Development/framework2d/Physics/Factories/CharacterBodyFactory.h
 	<AbstractFactory/AbstractFactory.h>
 
-1325909590 source:/home/alasdair/Development/framework2d/Physics/PhysicsManager.cpp
+1326845174 source:/home/alasdair/Development/framework2d/Physics/PhysicsManager.cpp
 	"PhysicsManager.h"
 	<Box2D/Box2D.h>
 	<Timer.h>
@@ -2355,7 +2356,7 @@
 1325908254 source:/home/alasdair/Development/framework2d/Sound/NullSoundManager.cpp
 	"NullSoundManager.h"
 
-1325908254 /home/alasdair/Development/framework2d/Sound/NullSoundManager.h
+1326819707 /home/alasdair/Development/framework2d/Sound/NullSoundManager.h
 	<Sound/SoundManager.h>
 
 1325908254 source:/home/alasdair/Development/framework2d/Sound/SDLSoundManager.cpp
@@ -2522,10 +2523,10 @@
 	"ListDisplay.h"
 	<CEGUI/CEGUI.h>
 
-1325908254 source:/home/alasdair/Development/framework2d/main.cpp
+1326819792 source:/home/alasdair/Development/framework2d/main.cpp
 	<Game.h>
 
-1325908254 source:/home/alasdair/Development/framework2d/Physics/ContactListener.cpp
+1326846551 source:/home/alasdair/Development/framework2d/Physics/ContactListener.cpp
 	"ContactListener.h"
 	<Entities/Entity.h>
 	<Physics/CollisionObject.h>
@@ -5279,7 +5280,7 @@
 
 1325908254 /home/alasdair/Development/framework2d/UnitTesting/UnitTest.h
 
-1325908254 source:/home/alasdair/Development/framework2d/UnitTesting/UnitTesting.cpp
+1326819810 source:/home/alasdair/Development/framework2d/UnitTesting/UnitTesting.cpp
 	"UnitTesting.h"
 	<UnitTesting/UnitTest.h>
 	<cassert>
@@ -5289,4 +5290,80 @@
 	<unordered_map>
 	<string>
 	<vector>
+
+1325891561 source:/home/alasdair/Development/framework2d/Physics/Factories/JointBodyPartFactory.cpp
+	"JointBodyPartFactory.h"
+	<Physics/PhysicsManager.h>
+	<Physics/BodyParts/JointBodyPart.h>
+
+1325890667 /home/alasdair/Development/framework2d/Physics/Factories/JointBodyPartFactory.h
+	<AbstractFactory/AbstractFactory.h>
+	<Physics/BodyParts/BodyPart.h>
+	<Box2D/Box2D.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2Draw.h
+	<Box2D/Common/b2Math.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2Timer.h
+	<Box2D/Common/b2Settings.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2EdgeShape.h
+	<Box2D/Collision/Shapes/b2Shape.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2ChainShape.h
+	<Box2D/Collision/Shapes/b2Shape.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Common/b2GrowableStack.h
+	<Box2D/Common/b2Settings.h>
+	<cstring>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WheelJoint.h
+	<Box2D/Dynamics/Joints/b2Joint.h>
+
+1326847309 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RopeJoint.h
+	<Box2D/Dynamics/Joints/b2Joint.h>
+
+1326846574 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.cpp
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+	<Box2D/Dynamics/Contacts/b2CircleContact.h>
+	<Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h>
+	<Box2D/Dynamics/Contacts/b2PolygonContact.h>
+	<Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h>
+	<Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h>
+	<Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h>
+	<Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h>
+	<Box2D/Dynamics/Contacts/b2ContactSolver.h>
+	<Box2D/Collision/b2Collision.h>
+	<Box2D/Collision/b2TimeOfImpact.h>
+	<Box2D/Collision/Shapes/b2Shape.h>
+	<Box2D/Common/b2BlockAllocator.h>
+	<Box2D/Dynamics/b2Body.h>
+	<Box2D/Dynamics/b2Fixture.h>
+	<Box2D/Dynamics/b2World.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2CircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ContactSolver.h
+	<Box2D/Common/b2Math.h>
+	<Box2D/Collision/b2Collision.h>
+	<Box2D/Dynamics/b2TimeStep.h>
 

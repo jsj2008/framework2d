@@ -26,9 +26,9 @@ class RemoteGameServer : public GameServerInterface, public SingletonEventListen
         std::vector<NetworkedPlayerControl*> playerControls;
         unsigned short thisClientEntityKey;
         Client client;
-        FrameUpdate receievedUpdate;
+        //FrameUpdate receievedUpdate;
         static bool frameUpdated;
-        FrameUpdate sendingUpdate;
+        //FrameUpdate sendingUpdate;
 };
 
 #endif // REMOTEGAMESERVER_H

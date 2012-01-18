@@ -2,6 +2,7 @@
 #include <AI/PathGeneration/PathSegment.h>
 #include <AI/PathGeneration/PathNodeDynamic.h>
 #include <AI/Pathfinding/Paths.h>
+#include <Box2D/Box2D.h>
 
 PathGraph::PathGraph(PhysicsManager* _physicsManager)
 {
@@ -64,7 +65,6 @@ void PathGraph::tempRender()
         (*i)->tempRender();
     }
 }
-#include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
 class PathNodeDynamicGeometryCallback : public b2QueryCallback
 {

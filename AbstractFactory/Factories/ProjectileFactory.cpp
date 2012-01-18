@@ -16,6 +16,7 @@ void ProjectileFactory::init(FactoryLoader* loader, AbstractFactories* factories
     radius = loader->get<float>("radius",1.0f);
     explosionFactory = loader->getFactory<Entity>("explosion","ExplosionFactory");
     skinFactory = loader->getFactory<Skin>("skins", "StaticSkinFactory");
+    bodyFactory = nullptr; /// FIXME
     assert(skinFactory);
 }
 

@@ -49,5 +49,5 @@ void SinglePlayerGameServer::unregisterPlayer(NetworkedPlayerControl* _control, 
 
 void SinglePlayerGameServer::trigger(InputActions action, bool _pressed)
 {
-    control->actionFromServer(action, _pressed);
+    //control->actionFromServer(action, _pressed);
 }

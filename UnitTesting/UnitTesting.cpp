@@ -66,7 +66,7 @@ void UnitTesting::run(const std::vector<std::string>& _args)
     }
 }
 
-int main(int _argc, const char** _argv)
+/*int main(int _argc, const char** _argv)
 {
     std::vector<std::string> args;
     for (int i = 1; i != _argc; i++)
@@ -75,4 +75,4 @@ int main(int _argc, const char** _argv)
     }
     g_UnitTesting.run(args);
     return 0;
-}
+}*/

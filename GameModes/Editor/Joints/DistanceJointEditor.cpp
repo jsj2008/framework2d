@@ -3,6 +3,7 @@
 #include <Level/Level.h>
 #include <GameModes/Editor/EditorMode.h>
 #include <CEGUI/CEGUI.h>
+#include <Box2D/Box2D.h>
 
 DistanceJointEditor::DistanceJointEditor(FreeCamera* _camera, EditorMode* _editorMode)
 :BaseJointEditor(_camera, _editorMode)

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -23,7 +23,7 @@
 // If you implement your own collision filter you may want to build from this implementation.
 bool b2ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 {
-	/*const b2Filter& filterA = fixtureA->GetFilterData();
+	const b2Filter& filterA = fixtureA->GetFilterData();
 	const b2Filter& filterB = fixtureB->GetFilterData();
 
 	if (filterA.groupIndex == filterB.groupIndex && filterA.groupIndex != 0)
@@ -32,31 +32,5 @@ bool b2ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 	}
 
 	bool collide = (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
-	return collide;*/
-	return false;
-}
-
-b2DebugDraw::b2DebugDraw()
-{
-	m_drawFlags = 0;
-}
-
-void b2DebugDraw::SetFlags(uint32 flags)
-{
-	m_drawFlags = flags;
-}
-
-uint32 b2DebugDraw::GetFlags() const
-{
-	return m_drawFlags;
-}
-
-void b2DebugDraw::AppendFlags(uint32 flags)
-{
-	m_drawFlags |= flags;
-}
-
-void b2DebugDraw::ClearFlags(uint32 flags)
-{
-	m_drawFlags &= ~flags;
+	return collide;
 }

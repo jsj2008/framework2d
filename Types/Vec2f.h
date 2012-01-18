@@ -2,12 +2,11 @@
 #define VEC2F_H
 
 #include <math.h>
-#include <Box2D/Common/b2Settings.h>
+#include <Box2D/Common/b2Math.h>
 #include <istream>
 #include <ostream>
 bool b2IsValid(float32 x);
-#define b2Vec2 Vec2f
-struct Vec2f
+/*struct Vec2f
 {
 	Vec2f operator*( float s ) const{ return Vec2f( x*s, y*s ); }
 	Vec2f operator/( float s ) const{ return Vec2f( x/s, y/s ); }
@@ -101,7 +100,18 @@ struct Vec2f
     friend std::istream& operator>> (std::istream &in, Vec2f &vec);
 
 	float32 x, y;
-};
+};*/
+
+//float operator*(Vec2f A, Vec2f B ){ return A.x*B.x + A.y*B.y; }
+
+inline Vec2f operator*(Vec2f a, float s ){ return Vec2f( a.x*s, a.y*s ); }
+
+std::ostream& operator<< (std::ostream &out, Vec2f &vec);
+std::istream& operator>> (std::istream &in, Vec2f &vec);
+
+inline void operator/=(Vec2f& a, float s ) { a.x /= s; a.y /= s; }
+inline void operator/=(Vec2f& a,  Vec2f B ) { a.x /= B.x; a.y /= B.y; }
+
 #endif // VEC2F_H
 
 

@@ -2,6 +2,7 @@
 #include <Graphics/Camera/FreeCamera.h>
 #include <Physics/PhysicsManager.h>
 #include <GameModes/Editor/EditorMode.h>
+#include <Box2D/Box2D.h>
 
 BaseJointEditor::BaseJointEditor(FreeCamera* camera, EditorMode* _editorMode)
 {

@@ -1,92 +1,90 @@
 # depslib dependency file v1.0
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.cpp
 	<Box2D/Collision/Shapes/b2CircleShape.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2CircleShape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2Shape.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2Shape.h
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.h
 	<Box2D/Common/b2Settings.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Common/b2Settings.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2Settings.h
 	<cassert>
 	<cmath>
-	<cfloat>
-	<cstddef>
-	<limits>
 
-1309028874 /home/alasdair/Development/framework2d/Box2D/Common/b2Math.h
+1326843335 /home/alasdair/Development/framework2d/Box2D/Common/b2Math.h
 	<Box2D/Common/b2Settings.h>
 	<cmath>
 	<cfloat>
 	<cstddef>
 	<limits>
-	<Types/Vec2f.h>
 
-1309028873 /home/alasdair/Development/framework2d/Types/Vec2f.h
+1325908254 /home/alasdair/Development/framework2d/Types/Vec2f.h
 	<math.h>
 	<Box2D/Common/b2Settings.h>
 	<istream>
 	<ostream>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.h
+1326843273 /home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.h
 	<Box2D/Common/b2Math.h>
 	<climits>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.cpp
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2PolygonShape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.cpp
 	<Box2D/Collision/b2BroadPhase.h>
 	<cstring>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/b2BroadPhase.h
 	<Box2D/Common/b2Settings.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2DynamicTree.h>
 	<algorithm>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.h
 	<Box2D/Collision/b2Collision.h>
+	<Box2D/Common/b2GrowableStack.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2CollideCircle.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2CollideCircle.cpp
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2CircleShape.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2CollidePolygon.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2CollidePolygon.cpp
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2Collision.cpp
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2Distance.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.h
 	<Box2D/Common/b2Math.h>
-	<climits>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2Distance.cpp
 	<Box2D/Collision/b2Distance.h>
 	<Box2D/Collision/Shapes/b2CircleShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2DynamicTree.cpp
 	<Box2D/Collision/b2DynamicTree.h>
 	<cstring>
 	<cfloat>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.cpp
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2Distance.h>
 	<Box2D/Collision/b2TimeOfImpact.h>
@@ -94,33 +92,34 @@
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 	<cstdio>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/b2TimeOfImpact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Distance.h>
-	<climits>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2BlockAllocator.cpp
 	<Box2D/Common/b2BlockAllocator.h>
 	<cstdlib>
 	<climits>
 	<cstring>
 	<memory>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Math.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Math.cpp
 	<Box2D/Common/b2Math.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Settings.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Settings.cpp
 	<Box2D/Common/b2Settings.h>
 	<cstdlib>
+	<cstdio>
+	<cstdarg>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.cpp
 	<Box2D/Common/b2StackAllocator.h>
 	<Box2D/Common/b2Math.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2StackAllocator.h
 	<Box2D/Common/b2Settings.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2CircleContact.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2CircleContact.cpp
 	<Box2D/Dynamics/Contacts/b2CircleContact.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
@@ -129,30 +128,29 @@
 	<Box2D/Collision/b2TimeOfImpact.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2CircleContact.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2CircleContact.h
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 
-1322455506 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.h
+1326846543 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
-	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/b2Fixture.h>
 
-1324351195 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.h
+1326845205 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.h
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1324353771 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.h
+1326846675 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 	<memory>
 
-1309028872 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.h
 	<Box2D/Common/b2Settings.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ContactSolver.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ContactSolver.cpp
 	<Box2D/Dynamics/Contacts/b2ContactSolver.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/b2Body.h>
@@ -160,42 +158,40 @@
 	<Box2D/Dynamics/b2World.h>
 	<Box2D/Common/b2StackAllocator.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ContactSolver.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ContactSolver.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
-	<Box2D/Dynamics/b2Island.h>
+	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Island.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2Island.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2TimeStep.h
-	<Box2D/Common/b2Settings.h>
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2TimeStep.h
+	<Box2D/Common/b2Math.h>
 
-1322824926 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2StackAllocator.h>
 	<Box2D/Dynamics/b2ContactManager.h>
 	<Box2D/Dynamics/b2WorldCallbacks.h>
+	<Box2D/Dynamics/b2TimeStep.h>
 
-1322822285 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.h
 	<Box2D/Collision/b2BroadPhase.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp
 	<Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h>
 	<Box2D/Common/b2BlockAllocator.h>
-	<Box2D/Collision/b2TimeOfImpact.h>
-	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
-	<Box2D/Dynamics/b2WorldCallbacks.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonContact.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonContact.cpp
 	<Box2D/Dynamics/Contacts/b2PolygonContact.h>
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Collision/b2TimeOfImpact.h>
@@ -204,58 +200,58 @@
 	<Box2D/Dynamics/b2WorldCallbacks.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonContact.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2PolygonContact.h
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2TOISolver.cpp
+1325908254 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2TOISolver.cpp
 	<Box2D/Dynamics/Contacts/b2TOISolver.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
 	<Box2D/Common/b2StackAllocator.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2TOISolver.h
+1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2TOISolver.h
 	<Box2D/Common/b2Math.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.cpp
 	<Box2D/Dynamics/Joints/b2DistanceJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2DistanceJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.h
 	<Box2D/Common/b2Math.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.cpp
 	<Box2D/Dynamics/Joints/b2FrictionJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2FrictionJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.cpp
 	<Box2D/Dynamics/Joints/b2GearJoint.h>
 	<Box2D/Dynamics/Joints/b2RevoluteJoint.h>
 	<Box2D/Dynamics/Joints/b2PrismaticJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2GearJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2Joint.cpp
 	<Box2D/Dynamics/Joints/b2Joint.h>
 	<Box2D/Dynamics/Joints/b2DistanceJoint.h>
-	<Box2D/Dynamics/Joints/b2LineJoint.h>
+	<Box2D/Dynamics/Joints/b2WheelJoint.h>
 	<Box2D/Dynamics/Joints/b2MouseJoint.h>
 	<Box2D/Dynamics/Joints/b2RevoluteJoint.h>
 	<Box2D/Dynamics/Joints/b2PrismaticJoint.h>
@@ -263,77 +259,82 @@
 	<Box2D/Dynamics/Joints/b2GearJoint.h>
 	<Box2D/Dynamics/Joints/b2WeldJoint.h>
 	<Box2D/Dynamics/Joints/b2FrictionJoint.h>
+	<Box2D/Dynamics/Joints/b2RopeJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2World.h>
 	<Box2D/Common/b2BlockAllocator.h>
 	<new>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2LineJoint.h
+1325908254 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2LineJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.h
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2LineJoint.cpp
+1325908254 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2LineJoint.cpp
 	<Box2D/Dynamics/Joints/b2LineJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2MouseJoint.cpp
 	<Box2D/Dynamics/Joints/b2MouseJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp
 	<Box2D/Dynamics/Joints/b2PrismaticJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2PulleyJoint.cpp
 	<Box2D/Dynamics/Joints/b2PulleyJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp
 	<Box2D/Dynamics/Joints/b2RevoluteJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WeldJoint.cpp
 	<Box2D/Dynamics/Joints/b2WeldJoint.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1324351544 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.cpp
+1326845525 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Body.cpp
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
 	<Box2D/Dynamics/b2World.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1322822481 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2ContactManager.cpp
 	<Box2D/Dynamics/b2ContactManager.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
 	<Box2D/Dynamics/b2WorldCallbacks.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 
-1324351193 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.cpp
+1326844705 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Fixture.cpp
 	<Box2D/Dynamics/b2Fixture.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
+	<Box2D/Dynamics/b2World.h>
 	<Box2D/Collision/Shapes/b2CircleShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
 	<Box2D/Collision/b2BroadPhase.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Common/b2BlockAllocator.h>
 
-1307079646 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Island.cpp
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2Island.cpp
+	<Box2D/Collision/b2Distance.h>
 	<Box2D/Dynamics/b2Island.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
@@ -342,8 +343,9 @@
 	<Box2D/Dynamics/Contacts/b2ContactSolver.h>
 	<Box2D/Dynamics/Joints/b2Joint.h>
 	<Box2D/Common/b2StackAllocator.h>
+	<Box2D/Common/b2Timer.h>
 
-1322825314 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.cpp
+1326844318 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2World.cpp
 	<Box2D/Dynamics/b2World.h>
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
@@ -351,23 +353,30 @@
 	<Box2D/Dynamics/Joints/b2PulleyJoint.h>
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/Contacts/b2ContactSolver.h>
-	<Box2D/Dynamics/Contacts/b2TOISolver.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2BroadPhase.h>
 	<Box2D/Collision/Shapes/b2CircleShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
 	<Box2D/Collision/Shapes/b2PolygonShape.h>
 	<Box2D/Collision/b2TimeOfImpact.h>
+	<Box2D/Common/b2Draw.h>
+	<Box2D/Common/b2Timer.h>
 	<new>
 
-1322474149 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.cpp
+1326844566 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/b2WorldCallbacks.cpp
 	<Box2D/Dynamics/b2WorldCallbacks.h>
 	<Box2D/Dynamics/b2Fixture.h>
 
-1322455633 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.cpp
+1326846574 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2Contact.cpp
 	<Box2D/Dynamics/Contacts/b2Contact.h>
 	<Box2D/Dynamics/Contacts/b2CircleContact.h>
 	<Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h>
 	<Box2D/Dynamics/Contacts/b2PolygonContact.h>
+	<Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h>
+	<Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h>
+	<Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h>
+	<Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h>
 	<Box2D/Dynamics/Contacts/b2ContactSolver.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2TimeOfImpact.h>
@@ -376,4 +385,107 @@
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Dynamics/b2Fixture.h>
 	<Box2D/Dynamics/b2World.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2ChainShape.cpp
+	<Box2D/Collision/Shapes/b2ChainShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<new>
+	<cstring>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2ChainShape.h
+	<Box2D/Collision/Shapes/b2Shape.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2EdgeShape.h
+	<Box2D/Collision/Shapes/b2Shape.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/Shapes/b2EdgeShape.cpp
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<new>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2GrowableStack.h
+	<Box2D/Common/b2Settings.h>
+	<cstring>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Collision/b2CollideEdge.cpp
+	<Box2D/Collision/b2Collision.h>
+	<Box2D/Collision/Shapes/b2CircleShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<Box2D/Collision/Shapes/b2PolygonShape.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Draw.cpp
+	<Box2D/Common/b2Draw.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2Draw.h
+	<Box2D/Common/b2Math.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Common/b2Timer.cpp
+	<Box2D/Common/b2Timer.h>
+	<windows.h>
+	<sys/time.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Common/b2Timer.h
+	<Box2D/Common/b2Settings.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp
+	<Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h>
+	<Box2D/Common/b2BlockAllocator.h>
+	<Box2D/Dynamics/b2Fixture.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<new>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp
+	<Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h>
+	<Box2D/Common/b2BlockAllocator.h>
+	<Box2D/Dynamics/b2Fixture.h>
+	<Box2D/Collision/Shapes/b2ChainShape.h>
+	<Box2D/Collision/Shapes/b2EdgeShape.h>
+	<new>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h
+	<Box2D/Dynamics/Contacts/b2Contact.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp
+	<Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h>
+	<Box2D/Common/b2BlockAllocator.h>
+	<Box2D/Dynamics/b2Fixture.h>
+	<new>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp
+	<Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h>
+	<Box2D/Common/b2BlockAllocator.h>
+	<Box2D/Dynamics/b2Fixture.h>
+	<new>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WheelJoint.h
+	<Box2D/Dynamics/Joints/b2Joint.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RopeJoint.h
+	<Box2D/Dynamics/Joints/b2Joint.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2RopeJoint.cpp
+	<Box2D/Dynamics/Joints/b2RopeJoint.h>
+	<Box2D/Dynamics/b2Body.h>
+	<Box2D/Dynamics/b2TimeStep.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Dynamics/Joints/b2WheelJoint.cpp
+	<Box2D/Dynamics/Joints/b2WheelJoint.h>
+	<Box2D/Dynamics/b2Body.h>
+	<Box2D/Dynamics/b2TimeStep.h>
+
+1326842131 source:/home/alasdair/Development/framework2d/Box2D/Rope/b2Rope.cpp
+	<Box2D/Rope/b2Rope.h>
+	<Box2D/Common/b2Draw.h>
+
+1326842131 /home/alasdair/Development/framework2d/Box2D/Rope/b2Rope.h
+	<Box2D/Common/b2Math.h>
 
