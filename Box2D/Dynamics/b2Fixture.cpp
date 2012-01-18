@@ -29,7 +29,6 @@
 
 b2Fixture::b2Fixture()
 {
-	m_userData = NULL;
 	m_body = NULL;
 	m_next = NULL;
 	m_proxies = NULL;
@@ -40,7 +39,6 @@ b2Fixture::b2Fixture()
 
 void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2FixtureDef* def)
 {
-	m_userData = def->userData;
 	m_friction = def->friction;
 	m_restitution = def->restitution;
 
@@ -48,8 +46,6 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 	m_next = NULL;
 
 	m_filter = def->filter;
-
-	m_isSensor = def->isSensor;
 
 	m_shape = def->shape->Clone(allocator);
 
@@ -152,7 +148,7 @@ void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
 void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
 {
 	if (m_proxyCount == 0)
-	{	
+	{
 		return;
 	}
 
@@ -164,7 +160,7 @@ void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transfo
 		b2AABB aabb1, aabb2;
 		m_shape->ComputeAABB(&aabb1, transform1, proxy->childIndex);
 		m_shape->ComputeAABB(&aabb2, transform2, proxy->childIndex);
-	
+
 		proxy->aabb.Combine(aabb1, aabb2);
 
 		b2Vec2 displacement = transform2.p - transform1.p;
@@ -217,25 +213,13 @@ void b2Fixture::Refilter()
 	}
 }
 
-void b2Fixture::SetSensor(bool sensor)
-{
-	if (sensor != m_isSensor)
-	{
-		m_body->SetAwake(true);
-		m_isSensor = sensor;
-	}
-}
-
 void b2Fixture::Dump(int32 bodyIndex)
 {
 	b2Log("    b2FixtureDef fd;\n");
 	b2Log("    fd.friction = %.15lef;\n", m_friction);
 	b2Log("    fd.restitution = %.15lef;\n", m_restitution);
 	b2Log("    fd.density = %.15lef;\n", m_density);
-	b2Log("    fd.isSensor = bool(%d);\n", m_isSensor);
-	b2Log("    fd.filter.categoryBits = uint16(%d);\n", m_filter.categoryBits);
-	b2Log("    fd.filter.maskBits = uint16(%d);\n", m_filter.maskBits);
-	b2Log("    fd.filter.groupIndex = int16(%d);\n", m_filter.groupIndex);
+	b2Log("    fd.filter.response = address(%x);\n", m_filter.response);
 
 	switch (m_shape->m_type)
 	{
@@ -300,4 +284,8 @@ void b2Fixture::Dump(int32 bodyIndex)
 	b2Log("    fd.shape = &shape;\n");
 	b2Log("\n");
 	b2Log("    bodies[%d]->CreateFixture(&fd);\n", bodyIndex);
+}
+BodyPart* b2Fixture::getBodyPart() const
+{
+    return bodyPart;
 }

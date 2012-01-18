@@ -166,7 +166,7 @@ struct b2AABB
 	/// Get the center of the AABB.
 	b2Vec2 GetCenter() const
 	{
-		return 0.5f * (lowerBound + upperBound);
+		return 0.5f * lowerBound + upperBound;
 	}
 
 	/// Get the extents of the AABB (half-widths).

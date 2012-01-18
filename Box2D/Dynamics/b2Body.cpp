@@ -99,7 +99,7 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 	m_I = 0.0f;
 	m_invI = 0.0f;
 
-	m_userData = bd->userData;
+	bodyPart = bd->bodyPart;
 
 	m_fixtureList = NULL;
 	m_fixtureCount = 0;
@@ -511,4 +511,14 @@ void b2Body::Dump()
 		b2Log("  }\n");
 	}
 	b2Log("}\n");
+}
+
+void b2Body::setBodyPart(BodyPart* _bodyPart)
+{
+    bodyPart = _bodyPart;
+}
+
+BodyPart* b2Body::getBodyPart() const
+{
+    return bodyPart;
 }

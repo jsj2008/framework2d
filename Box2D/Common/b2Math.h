@@ -59,6 +59,7 @@ inline float32 b2InvSqrt(float32 x)
 
 #define	b2Sqrt(x)	std::sqrt(x)
 #define	b2Atan2(y, x)	std::atan2(y, x)
+#define b2Vec2 Vec2f
 
 /// A 2D column vector.
 struct b2Vec2
@@ -77,7 +78,7 @@ struct b2Vec2
 
 	/// Negate this vector.
 	b2Vec2 operator -() const { b2Vec2 v; v.Set(-x, -y); return v; }
-	
+
 	/// Read from and indexed element.
 	float32 operator () (int32 i) const
 	{
@@ -95,7 +96,7 @@ struct b2Vec2
 	{
 		x += v.x; y += v.y;
 	}
-	
+
 	/// Subtract a vector from this vector.
 	void operator -= (const b2Vec2& v)
 	{

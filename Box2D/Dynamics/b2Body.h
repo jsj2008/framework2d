@@ -28,6 +28,7 @@ class b2Joint;
 class b2Contact;
 class b2Controller;
 class b2World;
+class BodyPart;
 struct b2FixtureDef;
 struct b2JointEdge;
 struct b2ContactEdge;
@@ -53,7 +54,6 @@ struct b2BodyDef
 	/// This constructor sets the body definition default values.
 	b2BodyDef()
 	{
-		userData = NULL;
 		position.Set(0.0f, 0.0f);
 		angle = 0.0f;
 		linearVelocity.Set(0.0f, 0.0f);
@@ -67,6 +67,7 @@ struct b2BodyDef
 		type = b2_staticBody;
 		active = true;
 		gravityScale = 1.0f;
+		bodyPart = nullptr;
 	}
 
 	/// The body type: static, kinematic, or dynamic.
@@ -115,8 +116,7 @@ struct b2BodyDef
 	/// Does this body start out active?
 	bool active;
 
-	/// Use this to store application specific body data.
-	void* userData;
+	BodyPart* bodyPart;
 
 	/// Scale the gravity applied to this body.
 	float32 gravityScale;
@@ -365,11 +365,11 @@ public:
 	b2Body* GetNext();
 	const b2Body* GetNext() const;
 
-	/// Get the user data pointer that was provided in the body definition.
-	void* GetUserData() const;
+    /// Get the user data pointer that was provided in the body definition.
+    BodyPart* getBodyPart() const;
 
-	/// Set the user data. Use this to store your application specific data.
-	void SetUserData(void* data);
+    /// Set the user data. Use this to store your application specific data.
+    void setBodyPart(BodyPart* _bodyPart);
 
 	/// Get the parent world of this body.
 	b2World* GetWorld();
@@ -385,7 +385,7 @@ private:
 	friend class b2ContactManager;
 	friend class b2ContactSolver;
 	friend class b2Contact;
-	
+
 	friend class b2DistanceJoint;
 	friend class b2GearJoint;
 	friend class b2WheelJoint;
@@ -457,7 +457,7 @@ private:
 
 	float32 m_sleepTime;
 
-	void* m_userData;
+	BodyPart* bodyPart;
 };
 
 inline b2BodyType b2Body::GetType() const
@@ -725,21 +725,6 @@ inline const b2ContactEdge* b2Body::GetContactList() const
 inline b2Body* b2Body::GetNext()
 {
 	return m_next;
-}
-
-inline const b2Body* b2Body::GetNext() const
-{
-	return m_next;
-}
-
-inline void b2Body::SetUserData(void* data)
-{
-	m_userData = data;
-}
-
-inline void* b2Body::GetUserData() const
-{
-	return m_userData;
 }
 
 inline void b2Body::ApplyForce(const b2Vec2& force, const b2Vec2& point)

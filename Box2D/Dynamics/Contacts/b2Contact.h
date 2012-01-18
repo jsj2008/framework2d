@@ -138,6 +138,12 @@ public:
 	/// Evaluate this contact with your own manifold and transforms.
 	virtual void Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB) = 0;
 
+    /// Get the user data pointer in this contact.
+    void* GetUserData();
+
+    /// Set the user data pointer of this contact.
+    void SetUserData(void* _userData);
+
 protected:
 	friend class b2ContactManager;
 	friend class b2World;
@@ -209,6 +215,8 @@ protected:
 
 	float32 m_friction;
 	float32 m_restitution;
+
+	void* m_userData;
 };
 
 inline b2Manifold* b2Contact::GetManifold()

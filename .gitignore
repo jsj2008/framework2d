@@ -2,5 +2,8 @@
 gmon.out
 gprofout.txt
 CEGUI.log
-.dep
-.obj
+*.dep
+*.obj
+bin
+*.depend
+*.layout

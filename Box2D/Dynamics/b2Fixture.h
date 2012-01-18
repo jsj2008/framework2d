@@ -27,18 +27,23 @@ class b2BlockAllocator;
 class b2Body;
 class b2BroadPhase;
 class b2Fixture;
+class BodyPart;
+class CollisionResponse;
 
 /// This holds contact filtering data.
 struct b2Filter
 {
+    CollisionResponse* response;
 	b2Filter()
 	{
-		categoryBits = 0x0001;
-		maskBits = 0xFFFF;
-		groupIndex = 0;
+		response = nullptr;
+	}
+	b2Filter(CollisionResponse* _response)
+	{
+		response = _response;
 	}
 
-	/// The collision category bits. Normally you would just set one bit.
+	/*/// The collision category bits. Normally you would just set one bit.
 	uint16 categoryBits;
 
 	/// The collision mask bits. This states the categories that this
@@ -48,7 +53,7 @@ struct b2Filter
 	/// Collision groups allow a certain group of objects to never collide (negative)
 	/// or always collide (positive). Zero means no collision group. Non-zero group
 	/// filtering always wins against the mask bits.
-	int16 groupIndex;
+	int16 groupIndex;*/
 };
 
 /// A fixture definition is used to create a fixture. This class defines an
@@ -63,7 +68,6 @@ struct b2FixtureDef
 		friction = 0.2f;
 		restitution = 0.0f;
 		density = 0.0f;
-		isSensor = false;
 	}
 
 	/// The shape, this must be set. The shape will be cloned, so you
@@ -82,12 +86,10 @@ struct b2FixtureDef
 	/// The density, usually in kg/m^2.
 	float32 density;
 
-	/// A sensor shape collects contact information but never generates a collision
-	/// response.
-	bool isSensor;
-
 	/// Contact filtering data.
 	b2Filter filter;
+
+    BodyPart* bodyPart;
 };
 
 /// This proxy is used internally to connect fixtures to the broad-phase.
@@ -117,13 +119,6 @@ public:
 	b2Shape* GetShape();
 	const b2Shape* GetShape() const;
 
-	/// Set if this fixture is a sensor.
-	void SetSensor(bool sensor);
-
-	/// Is this fixture a sensor (non-solid)?
-	/// @return the true if the shape is a sensor.
-	bool IsSensor() const;
-
 	/// Set the contact filtering data. This will not update contacts until the next time
 	/// step when either parent body is active and awake.
 	/// This automatically calls Refilter.
@@ -144,13 +139,6 @@ public:
 	/// @return the next shape.
 	b2Fixture* GetNext();
 	const b2Fixture* GetNext() const;
-
-	/// Get the user data that was assigned in the fixture definition. Use this to
-	/// store your application specific data.
-	void* GetUserData() const;
-
-	/// Set the user data. Use this to store your application specific data.
-	void SetUserData(void* data);
 
 	/// Test a point for containment in this fixture.
 	/// @param p a point in world coordinates.
@@ -192,8 +180,12 @@ public:
 	/// the body transform.
 	const b2AABB& GetAABB(int32 childIndex) const;
 
+    BodyPart* getBodyPart() const;
+
 	/// Dump this fixture to the log file.
 	void Dump(int32 bodyIndex);
+
+	bool IsSensor(){return false;} /// Might want to add this functionality back later FIXME
 
 protected:
 
@@ -222,6 +214,8 @@ protected:
 
 	b2Shape* m_shape;
 
+    BodyPart* bodyPart;
+
 	float32 m_friction;
 	float32 m_restitution;
 
@@ -229,10 +223,6 @@ protected:
 	int32 m_proxyCount;
 
 	b2Filter m_filter;
-
-	bool m_isSensor;
-
-	void* m_userData;
 };
 
 inline b2Shape::Type b2Fixture::GetType() const
@@ -250,24 +240,9 @@ inline const b2Shape* b2Fixture::GetShape() const
 	return m_shape;
 }
 
-inline bool b2Fixture::IsSensor() const
-{
-	return m_isSensor;
-}
-
 inline const b2Filter& b2Fixture::GetFilterData() const
 {
 	return m_filter;
-}
-
-inline void* b2Fixture::GetUserData() const
-{
-	return m_userData;
-}
-
-inline void b2Fixture::SetUserData(void* data)
-{
-	m_userData = data;
 }
 
 inline b2Body* b2Fixture::GetBody()
