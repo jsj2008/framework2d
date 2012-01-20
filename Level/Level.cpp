@@ -12,10 +12,9 @@
 #include <cstring>
 #include <fstream>
 using namespace std;
-Level::Level(const char* _name)
+Level::Level()
 {
     //ctor
-    name = _name;
     world = new PhysicsManager(factories.getCollisionDatabase());
     entityList = nullptr;
 }

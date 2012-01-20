@@ -2,6 +2,7 @@
 #include <AbstractFactory/AbstractFactories.h>
 #include <Level/PropertyBagData.h>
 #include <Entities/Entity.h>
+#include <Level/Level.h>
 
 EntityData::EntityData(const char* _type, PropertyBagData* _propertyBag)
 {
@@ -21,9 +22,9 @@ void EntityData::virtualSave(XmlDataSaver* _saver, const std::string* _address)
 
 }
 
-void EntityData::build(AbstractFactories* _factories)
+void EntityData::build(AbstractFactories* _factories, Level* _level)
 {
     FactoryParameters params;
     propertyBag->build(params.getTypeTable());
-    _factories->useFactory<Entity>(type, &params, nullptr);
+    _factories->useFactory<Entity>(type, &params, _level);
 }

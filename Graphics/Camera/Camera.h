@@ -16,6 +16,10 @@ class Camera : public GameObject<Camera>
         const Vec2f& getTranslation(){return translation;}
         virtual void activate()=0;
         void registerDeathListener(void*){throw -1;}
+        static std::string name()
+        {
+            return "Camera";
+        }
     protected:
         virtual void updateTransform(Vec2i resolution)=0;
         Vec2f translation;

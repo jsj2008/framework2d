@@ -35,6 +35,10 @@ class Weapon : public GameObject<Weapon>
         {
             return "WeaponFactory";
         }
+        static std::string name()
+        {
+            return "Weapon";
+        }
 
         static void registerActions();
     protected:

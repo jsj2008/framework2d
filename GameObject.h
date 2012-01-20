@@ -1,6 +1,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <Filesystem/FilesystemNode.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -8,7 +9,7 @@
 class GameObjectEventListener;
 class CollisionObject;
 
-class GameObjectBase
+class GameObjectBase : public FilesystemNode
 {
     public:
         class EventHandle /// Template event object
@@ -43,9 +44,10 @@ class GameObjectBase
                 }
         };
 
-        GameObjectBase(unsigned int _eventsSize);
+        GameObjectBase(const std::string& _name, unsigned int _eventsSize);
         virtual ~GameObjectBase();
 
+        std::string nodeName(){return objectName;}
         const std::string& getObjectName(){return objectName;}
 
         virtual EventHandle* getEventHandle(const std::string& _name)=0;
@@ -60,7 +62,6 @@ class GameObjectBase
         GameObjectBase* getChildren();
         GameObjectBase* getParent();
         void attachChild(GameObjectBase* _child);
-        void attachChild(void* _fake){} /// Fake for non game objects
         void detach(GameObjectBase* _child);
     protected:
         void setParent(GameObjectBase* _parent);
@@ -70,7 +71,11 @@ class GameObjectBase
             static std::unordered_map<std::string,ActionHandle*> handles;
             return handles;
         }
+        FilesystemIter* firstChild();
+        FilesystemIter* nextChild(FilesystemIter* _prevChild);
+        void orphaned();
     private:
+        friend class OrphanList;
         GameObjectBase* next,* prev,* children,* parent;
 
         friend class EventHandle;
@@ -180,11 +185,20 @@ AutoInstantiate<DerivedObject>::AutoInstantiate()
     GameObject<DerivedObject>::baseRegisterActions();
 }
 
+template <typename T>
+const std::string& generateName()
+{
+    static unsigned int count = 0;
+    static std::string ret = T::name();
+    ret += count;
+    return ret;
+}
 template <typename DerivedObject>
 GameObject<DerivedObject>::GameObject()
-:GameObjectBase(eventHandles().size())
+:GameObjectBase(generateName<DerivedObject>(), eventHandles().size())
 {
     autoInstantiationPlease.check();
+    orphaned();
 }
 template <typename DerivedObject>
 GameObject<DerivedObject>::~GameObject()

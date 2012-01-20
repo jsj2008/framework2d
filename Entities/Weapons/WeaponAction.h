@@ -11,6 +11,11 @@ class WeaponAction: public GameObject<WeaponAction>
         virtual ~WeaponAction();
         static void registerActions();
         virtual void fire(const Vec2f& _source, const Vec2f& _position)=0;
+
+        static std::string name()
+        {
+            return "WeaponAction";
+        }
     protected:
     private:
 };

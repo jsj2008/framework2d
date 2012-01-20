@@ -334,6 +334,12 @@
 		<Unit filename="Events/StringEvents/StringEventHandler.h" />
 		<Unit filename="Events/StringEvents/StringEventListener.cpp" />
 		<Unit filename="Events/StringEvents/StringEventListener.h" />
+		<Unit filename="Filesystem/Filesystem.cpp" />
+		<Unit filename="Filesystem/Filesystem.h" />
+		<Unit filename="Filesystem/FilesystemNode.cpp" />
+		<Unit filename="Filesystem/FilesystemNode.h" />
+		<Unit filename="Filesystem/OrphanList.cpp" />
+		<Unit filename="Filesystem/OrphanList.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameModes/BubbleDrawEvent.cpp" />
@@ -553,8 +559,6 @@
 		<Unit filename="Physics/Factories/CharacterBodyFactory.h" />
 		<Unit filename="Physics/Factories/JointBodyPartFactory.cpp" />
 		<Unit filename="Physics/Factories/JointBodyPartFactory.h" />
-		<Unit filename="Physics/Factories/ShapeFactory.cpp" />
-		<Unit filename="Physics/Factories/ShapeFactory.h" />
 		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.cpp" />
 		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.h" />
 		<Unit filename="Physics/PhysicsManager.cpp" />

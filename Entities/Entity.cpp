@@ -19,8 +19,6 @@ void Entity::baseInit(Skin* _skin)
 Entity::~Entity()
 {
     //dtor
-    delete mSkin;
-    delete rootBody;
 }
 
 void Entity::render()

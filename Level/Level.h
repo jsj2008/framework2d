@@ -15,7 +15,7 @@ class EntityList;
 class Level : public GameObject<Level>
 {
     public:
-        Level(const char* _name);
+        Level();
         virtual ~Level();
         Entity* addBody(const std::string& factory, FactoryParameters* _parameters);
         void addJoint(b2JointDef* def);
@@ -30,9 +30,12 @@ class Level : public GameObject<Level>
         EntityList* getEntityList(){return entityList;}
 
         static void registerActions();
+        static std::string name()
+        {
+            return "Level";
+        }
     protected:
     private:
-        const char* name;
         void saveLevel();
         std::unordered_map<b2Joint*, b2JointDef*> jointToDefTable;
 

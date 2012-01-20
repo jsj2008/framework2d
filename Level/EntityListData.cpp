@@ -19,10 +19,10 @@ void EntityListData::virtualSave(XmlDataSaver* _saver, const std::string* _addre
 {
 }
 
-void EntityListData::build(AbstractFactories* _factories)
+void EntityListData::build(AbstractFactories* _factories, Level* _level)
 {
     for (unsigned int i = 0; i < entities.size(); i++)
     {
-        entities[i]->build(_factories);
+        entities[i]->build(_factories, _level);
     }
 }

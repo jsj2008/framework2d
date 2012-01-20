@@ -23,7 +23,8 @@ void SingleFixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactorie
     responseFactory = _loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
     fixtureDef.density = _loader->get<float>("density", 1.0f);
     fixtureDef.restitution = _loader->get<float>("restitution", 1.0f);
-    shapeFactory = _loader->getFactory<b2Shape>("shape", "ShapeFactory");
+    //shapeFactory = _loader->getFactory<b2Shape>("shape", "ShapeFactory");
+    type = static_cast<ShapeType>(_loader->get<int>("shapeType", e_Circle)); /// FIXME loader needs to accept enums
 }
 
 BodyPart* SingleFixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)
@@ -35,7 +36,37 @@ BodyPart* SingleFixtureBodyPartFactory::useFactory(FactoryParameters* _parameter
     b2Body* body = physicsManager->createBody(&bodyDef);
 
     fixtureDef.filter.response = responseFactory->use(_parameters, bodyPart);
-    fixtureDef.shape = shapeFactory->use(_parameters, bodyPart);
+    switch (type)
+    {
+        case e_Circle:
+        {
+            b2CircleShape* shape = new b2CircleShape;
+            shape->m_radius = _parameters->get<float>("radius", 1.0f);
+            fixtureDef.shape = shape;
+            break;
+        }
+        case e_Polygon:
+        {
+            b2PolygonShape* shape = new b2PolygonShape;
+            std::vector<Vec2f> points = _parameters->getArray<Vec2f>("points", {{0,0}, {0, 1}, {1, 0}});
+            shape->Set(&points[0], points.size());
+            fixtureDef.shape = shape;
+            break;
+        }
+        case e_Rect:
+        {
+            b2PolygonShape* shape = new b2PolygonShape;
+            Vec2f dimensions = _parameters->get<Vec2f>("dimensions", {1,1});
+            shape->SetAsBox(dimensions.x*0.5f, dimensions.y*0.5f);
+            fixtureDef.shape = shape;
+            break;
+        }
+        case e_ShapeTypeMax:
+        default:
+        {
+            throw -1;
+        }
+    }
 
     bodyPart->setBody(body);
     fixtureDef.bodyPart = bodyPart;

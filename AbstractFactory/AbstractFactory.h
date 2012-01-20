@@ -25,11 +25,14 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         const std::string& getName(){return nameCache;}
         const std::string& getInstanceName(){return instanceName;}
         static void registerActions();
+        static std::string name()
+        {
+            return Product::name() + "Factory";
+        }
     protected:
         virtual Product* privateUseFactory(FactoryParameters* _parameters, GameObjectBase* _parent)=0;
         const std::string nameCache;
         std::string instanceName;
-        void attachChild(void* _doNothing){}
     private:
 };
 template <typename Product, typename DerivedType>
@@ -78,7 +81,6 @@ template <typename Product>
 Product* AbstractFactoryBase<Product>::use(FactoryParameters* _parameters, GameObjectBase* _parent)
 {
     Product* product = privateUseFactory(_parameters, _parent);
-    attachChild(product);
     return product;
 }
 template <typename Product>
@@ -113,6 +115,8 @@ Product* AbstractFactory<Product, DerivedType>::privateUseFactory(FactoryParamet
     Product* product = static_cast<DerivedType*>(this)->useFactory(_parameters);
     if (_parent != nullptr)
         _parent->attachChild(product);
+    else
+        attachChild(product);
     return product;
 }
 

@@ -1,5 +1,6 @@
 #include "GameConsole.h"
 #include <Log/Log.h>
+#include <Filesystem/Filesystem.h>
 
 GameConsoleCommand::GameConsoleCommand(std::string _name)
 {
@@ -27,10 +28,39 @@ class SayCommand: public GameConsoleCommand
             outputText(outString);
         }
 };
+class PrintCommand: public GameConsoleCommand
+{
+    public:
+        PrintCommand()
+        :GameConsoleCommand("print")
+        {
+            node = Filesystem::global();
+        }
+        void execute(const std::string& _parameters)
+        {
+            try
+            {
+                FilesystemNode* _node = node->getNode(_parameters);
+                std::string outString = _node->nodeName() + ":\n";
+
+                for (FilesystemIter* iter = _node->firstChild(); iter; iter = _node->nextChild(iter))
+                {
+                    outString.append(iter->get()->nodeName() + ",\n");
+                }
+                outputText(outString);
+            }
+            catch (int i)
+            {
+            }
+        }
+    private:
+        FilesystemNode* node;
+};
 GameConsole::GameConsole()
 {
     createCEGUIWindow();
     addCommand(new SayCommand());
+    addCommand(new PrintCommand());
 }
 
 GameConsole::~GameConsole()
@@ -40,6 +70,8 @@ GameConsole::~GameConsole()
 
 void GameConsole::addCommand(GameConsoleCommand* _command)
 {
+    if (commands.find((_command->getName())) != commands.end())
+        throw -1;
     _command->console = this;
     commands[_command->getName()] = _command;
 }
@@ -57,7 +89,6 @@ void GameConsole::registerHandlers()
                         CEGUI::Event::Subscriber(
                             &GameConsole::handleSendButtonPressed,
                         this));
-    consoleWindow->getChild("Root/Console/SendButton")->setTooltipText("Suck ma boab");
     consoleWindow->getChild("Root/Console/EditBox")->subscribeEvent(CEGUI::Editbox::EventMouseClick,
                         CEGUI::Event::Subscriber(&GameConsole::handleTextSubmitted,this));
 }

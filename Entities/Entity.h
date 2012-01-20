@@ -24,6 +24,11 @@ class Entity : public GameObject<Entity>
 
         static void registerActions();
         void floatationAction(CollisionObject* _object);
+
+        static std::string name()
+        {
+            return "Entity";
+        }
     protected:
         BodyPart* rootBody;
         Skin* mSkin;

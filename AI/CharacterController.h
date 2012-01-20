@@ -21,6 +21,10 @@ class CharacterController : public GameObject<CharacterController>
 
         static void registerActions();
         void setAIEntity(AIEntity* _entity);
+        static std::string name()
+        {
+            return "CharacterController";
+        }
     protected:
         AIEntity* entity;
     private:

@@ -21,6 +21,11 @@ class Skin : public GameObject<Skin>
         virtual SkinType getType()=0;
         static void registerActions();
         MaterialContext* material; // FIXME make this private once the entity factory is a concrete type
+
+        static std::string name()
+        {
+            return "Skin";
+        }
     protected:
     private:
 };

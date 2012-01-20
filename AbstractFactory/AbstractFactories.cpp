@@ -28,7 +28,6 @@ void AbstractFactories::init()
         }
         AbstractFactoryListBase* list = productType->createFactoryList(this);
         indexedFactoryLists[id] = list;
-        attachChild(list);
         //i->second->init(this);
     }
 }

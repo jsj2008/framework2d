@@ -5,6 +5,7 @@
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/FactoryLoader.h>
 #include <Entities/CollisionDatabase.h>
+#include <Physics/BodyParts/BodyPart.h>
 
 ProjectileFactory::ProjectileFactory()
 {

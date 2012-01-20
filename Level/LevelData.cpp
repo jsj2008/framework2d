@@ -36,10 +36,11 @@ void LevelData::removeEntityList(unsigned int _index)
 
 Level* LevelData::build()
 {
-    Level* level = new Level(nullptr);
+    Level* level = new Level;
     /// Process event lists
     AbstractFactories* factories = level->getFactories();
     factories->init();
+    level->attachChild(factories);
     factories->setWorld(level->getWorld());
 
     for (unsigned int i = 0; i < factoryLists.size(); i++)
@@ -49,7 +50,7 @@ Level* LevelData::build()
 
     for (unsigned int i = 0; i < entityLists.size(); i++)
     {
-        entityLists[i]->build(factories);
+        entityLists[i]->build(factories, level);
     }
     return level;
 }

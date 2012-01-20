@@ -29,6 +29,8 @@ Entity* BodyPart::getEntity()
     GameObjectBase* parent = getParent();
     while(!dynamic_cast<Entity*>(parent))
     {
+        if (!parent)
+            return nullptr;
         parent = parent->getParent();
     }
     return parent;

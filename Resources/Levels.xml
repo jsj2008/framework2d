@@ -63,12 +63,14 @@
 	</Factory>
 	<Factory Name="LevelGeometryBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
-	    <Property Type="int" Name="bodyType" Value="2" />
+	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
+	    <Property Type="int" Name="bodyType" Value="0" />
+	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
 	  <PropertyBag>
-	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
+	    <Property Type="string" Name="body" Value="LevelGeometryBody" />
 	  </PropertyBag>
 	</Factory>
       </FactoryList>

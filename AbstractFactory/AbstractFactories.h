@@ -57,6 +57,11 @@ class AbstractFactories : public GameObject<AbstractFactories>
         CollisionDatabase* getCollisionDatabase(){return &collisionDatabase;}
 
         static void registerActions();
+
+        static std::string name()
+        {
+            return "AbstractFactories";
+        }
     protected:
     private:
         class ProductType

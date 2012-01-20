@@ -19,6 +19,11 @@ class BodyPart : public GameObject<BodyPart>
         Entity* getEntity();
         void setFixture(b2Fixture* _fixture);
         b2Body* getBody();
+
+        static std::string name()
+        {
+            return "BodyPart";
+        }
     protected:
     private:
         b2Fixture* fixture;

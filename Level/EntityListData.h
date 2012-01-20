@@ -5,6 +5,7 @@
 #include <vector>
 class EntityData;
 class AbstractFactories;
+class Level;
 
 class EntityListData : public LoadedData
 {
@@ -20,7 +21,7 @@ class EntityListData : public LoadedData
             {return entities[_index];}
         void removeEntity(unsigned int _index); /// Removes from position and items later on in the list get shuffled down
 
-        void build(AbstractFactories* _factories);
+        void build(AbstractFactories* _factories, Level* _level);
     protected:
     private:
         void virtualSave(XmlDataSaver* _saver, const std::string* _address);

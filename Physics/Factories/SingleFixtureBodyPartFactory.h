@@ -21,8 +21,15 @@ class SingleFixtureBodyPartFactory : public AbstractFactory<BodyPart, SingleFixt
         b2BodyDef bodyDef;
         b2FixtureDef fixtureDef;
         AbstractFactoryBase<CollisionResponse>* responseFactory;
-        AbstractFactoryBase<b2Shape>* shapeFactory;
         PhysicsManager* physicsManager;
+        enum ShapeType
+        {
+            e_Circle = b2Shape::e_circle,
+            e_Polygon = b2Shape::e_polygon,
+            e_Rect,
+            e_ShapeTypeMax,
+        };
+        ShapeType type;
 };
 
 #endif // SINGLEFIXTUREBODYPARTFACTORY_H
