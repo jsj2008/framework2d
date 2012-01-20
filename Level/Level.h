@@ -29,7 +29,7 @@ class Level : public GameObject<Level>
         void loadLevel();
         EntityList* getEntityList(){return entityList;}
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return "Level";

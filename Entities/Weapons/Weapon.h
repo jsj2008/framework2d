@@ -40,7 +40,7 @@ class Weapon : public GameObject<Weapon>
             return "Weapon";
         }
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
     protected:
     private:
         const Weapon::ImmutableData& data;

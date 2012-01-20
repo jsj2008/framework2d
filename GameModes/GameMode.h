@@ -12,7 +12,7 @@ class GameMode : public GameObject<GameMode>
         virtual ~GameMode();
         //virtual void renderGameMode()=0;
         virtual bool update()=0;
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return "GameMode";

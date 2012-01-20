@@ -10,7 +10,7 @@ FiringMechanism::~FiringMechanism()
     //dtor
 }
 
-void FiringMechanism::registerActions()
+void FiringMechanism::registerActions(GameObjectType* _type)
 {
 
 }

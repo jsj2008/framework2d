@@ -1,17 +1,46 @@
 #include "GameObject.h"
 #include <Filesystem/Filesystem.h>
 #include <Filesystem/OrphanList.h>
+#include <Log/Log.h>
 
-GameObjectBase::GameObjectBase(const std::string& _name, unsigned int _eventsSize)
+GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name)
 {
+    type = _type;
     objectName = _name;
-    eventListenerLists.resize(_eventsSize);
-    prev = next = children = parent = nullptr;
+    eventListenerLists.resize(type->eventsSize());
+    Filesystem::global()->getOrphanList()->attachOrphan(this);
+    children = nullptr;
 }
-void GameObjectBase::orphaned()
+GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name, GameObjectBase* _parent, bool _orphan)
+{
+    type = _type;
+    objectName = _name;
+    eventListenerLists.resize(type->eventsSize());
+    if (_parent)
+    {
+        parent = _parent;
+        prev = nullptr;
+        next = _parent->children;
+        if (_parent->children != nullptr)
+        {
+            _parent->children->prev = this;
+        }
+        _parent->children = this;
+    }
+    else if (_orphan)
+    {
+        Filesystem::global()->getOrphanList()->attachOrphan(this);
+    }
+    else
+    {
+        prev = next = parent = nullptr;
+    }
+    children = nullptr;
+}
+/*void GameObjectBase::orphaned() FIXME remove old code
 {
     Filesystem::global()->getOrphanList()->attachOrphan(this);
-}
+}*/
 GameObjectBase::~GameObjectBase()
 {
     for (auto listeners = eventListenerLists.begin(); listeners != eventListenerLists.end(); listeners++)
@@ -29,13 +58,15 @@ GameObjectBase::~GameObjectBase()
         delete prev;
     }
     if (prev) /// FIXME remove this
-    if (prev->children == this)
     {
-        prev->children = next;
-    }
-    else
-    {
-        prev->next = next;
+        if (prev->children == this)
+        {
+            prev->children = next;
+        }
+        else
+        {
+            prev->next = next;
+        }
     }
     if (next != nullptr)
     {
@@ -44,18 +75,20 @@ GameObjectBase::~GameObjectBase()
     parent->detach(this);
 }
 
-void GameObjectBase::registerBaseActions()
+void GameObjectBase::registerBaseActions(GameObjectType* _type)
 {
     static bool done = false;
     if (!done)
     {
         done = true;
-        GameObject<GameObjectBase>::createActionHandle("Kill", &GameObject<GameObjectBase>::killAction);
+        _type->createActionHandle("Kill", &GameObject<GameObjectBase>::killAction);
+        deathEvent = _type->createEventHandle("onDeath");
     }
 }
 
 void GameObjectBase::attachChild(GameObjectBase* _child)
 {
+    assert(_child->parent != this);
     _child->parent->detach(_child);
     _child->parent = this;
     _child->prev = nullptr;
@@ -83,7 +116,11 @@ void GameObjectBase::detach(GameObjectBase* _child)
         _child->next->prev = _child->prev;
 }
 
-void GameObjectBase::EventHandle::fire(GameObjectBase* _object)
+GameObjectType* GameObjectBase::getType()
+{
+    return type;
+}
+void EventHandle::fire(GameObjectBase* _object)
 {
     std::vector<GameObjectEventListener*>& listeners = _object->eventListenerLists[eventIndex];
     for (auto listener = listeners.begin(); listener != listeners.end(); listener++)
@@ -113,35 +150,79 @@ void GameObjectBase::killAction(CollisionObject* _object)
     delete this;
 }
 
-class GameObjectFilesystemIter: public FilesystemIter
+GameObjectBase* GameObjectBase::getNode(const std::string& _address)
 {
-    public:
-        GameObjectFilesystemIter(GameObjectBase* _node){node = _node;}
-        ~GameObjectFilesystemIter(){}
-        FilesystemNode* get(){return node;}
-        GameObjectBase* node;
-};
-FilesystemIter* GameObjectBase::firstChild()
-{
-    if (children)
-        return new GameObjectFilesystemIter(children);
-    else
-        return nullptr;
-}
-FilesystemIter* GameObjectBase::nextChild(FilesystemIter* _prevChild)
-{
-    assert(dynamic_cast<GameObjectFilesystemIter*>(_prevChild));
-    GameObjectFilesystemIter* prevChild = static_cast<GameObjectFilesystemIter*>(_prevChild);
-    assert(prevChild->node->parent == this);
-    if (prevChild->node->next)
+    GameObjectBase* node = this;
+    unsigned int iter = 0;
+    if (_address[0] == '/')
     {
-        prevChild->node = prevChild->node->next;
-        return prevChild;
+        node = Filesystem::global();
+        iter = 1;
     }
-    else
+    try
     {
-        delete prevChild;
-        return nullptr;
+        while (true)
+        {
+            int next = _address.find('/', iter);
+            if (next == -1)
+            {
+                if (_address.size() > iter)
+                    node = node->getIndividualNode(_address.substr(iter, _address.size()));
+                break;
+            }
+            else
+            {
+                node = node->getIndividualNode(_address.substr(iter, next - iter));
+                iter = next+1;
+            }
+        }
     }
+    catch (int i) {}
+    return node;
 }
-typename GameObject<GameEntity>::EventHandle* GameEntity::coonEvent = createEventHandle("Coon");
+#include <cstring>
+GameObjectBase* GameObjectBase::getIndividualNode(const std::string& _address)
+{
+    GameObjectBase* child = children;
+    while (child)
+    {
+        //if (child->get()->nodeName() == _address)
+        if (strcmp(&child->getObjectName()[0], &_address[0]) == 0)
+        {
+            return child;
+        }
+        child = child->getNext();
+    }
+    g_Log.error("No such node: " + _address);
+    throw -1;
+}
+
+EventHandle* GameObjectBase::deathEvent;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

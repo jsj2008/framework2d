@@ -40,21 +40,17 @@ class PrintCommand: public GameConsoleCommand
         {
             try
             {
-                FilesystemNode* _node = node->getNode(_parameters);
-                std::string outString = _node->nodeName() + ":\n";
-
-                for (FilesystemIter* iter = _node->firstChild(); iter; iter = _node->nextChild(iter))
-                {
-                    outString.append(iter->get()->nodeName() + ",\n");
-                }
+                GameObjectBase* _node = node->getNode(_parameters);
+                std::string outString = _node->getType()->print(_node);
                 outputText(outString);
             }
             catch (int i)
             {
+                outputText("Failed");
             }
         }
     private:
-        FilesystemNode* node;
+        GameObjectBase* node;
 };
 GameConsole::GameConsole()
 {

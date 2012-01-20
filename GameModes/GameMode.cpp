@@ -15,7 +15,7 @@ GameMode::~GameMode()
     //dtor
 }
 
-void GameMode::registerActions()
+void GameMode::registerActions(GameObjectType* _type)
 {
 
 }

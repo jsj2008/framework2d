@@ -21,7 +21,7 @@ class CollisionResponse : public GameObject<CollisionResponse>
         void addEvent(const std::string& _collisionName, const std::string& _actionName);
         void setDefaultEvent(const std::string& _actionName);
         unsigned short getId(){return id;}
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return "CollisionResponse";
@@ -45,8 +45,8 @@ class CollisionDatabase
 
         friend class CollisionResponse;
         void addFilter(unsigned short _a, unsigned short _b);
-        void addEvent(unsigned short _a, unsigned short _b, GameObjectBase::ActionHandle* _action);
-        void setDefaultEvent(unsigned short _a, GameObjectBase::ActionHandle* _action);
+        void addEvent(unsigned short _a, unsigned short _b, ActionHandle* _action);
+        void setDefaultEvent(unsigned short _a, ActionHandle* _action);
 };
 
 #endif // COLLISIONDATABASE_H

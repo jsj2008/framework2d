@@ -22,7 +22,7 @@ class Entity : public GameObject<Entity>
         void setRootBody(BodyPart* _body);
         BodyPart* getRootBody();
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         void floatationAction(CollisionObject* _object);
 
         static std::string name()

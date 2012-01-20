@@ -56,7 +56,7 @@ class AbstractFactories : public GameObject<AbstractFactories>
         PhysicsManager* getWorld();
         CollisionDatabase* getCollisionDatabase(){return &collisionDatabase;}
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
 
         static std::string name()
         {

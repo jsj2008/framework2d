@@ -1,10 +1,11 @@
 #ifndef FILESYSTEM_H
 #define FILESYSTEM_H
 
-#include <Filesystem/FilesystemNode.h>
+//#include <Filesystem/FilesystemNode.h>
+#include <GameObject.h>
 class OrphanList;
 
-class Filesystem: public FilesystemNode
+class Filesystem: public GameObject<Filesystem>
 {
     public:
         Filesystem();
@@ -12,14 +13,10 @@ class Filesystem: public FilesystemNode
         OrphanList* getOrphanList() /// "/dev/orphans"
             {return orphanList;}
 
-        static Filesystem* global() /// "/"
-        {
-            static Filesystem filesystem;
-            return &filesystem;
-        }
-        std::string nodeName();
-        FilesystemIter* firstChild();
-        FilesystemIter* nextChild(FilesystemIter* _prevChild);
+        static Filesystem* global(); /// "/"
+        static void registerActions(GameObjectType* _type);
+        /*FilesystemIter* firstChild();
+        FilesystemIter* nextChild(FilesystemIter* _prevChild);*/
     protected:
     private:
         OrphanList* orphanList;

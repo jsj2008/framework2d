@@ -42,9 +42,9 @@ const Vec2f& Entity::getPosition()
     return rootBody->getPosition();
 }
 
-void Entity::registerActions()
+void Entity::registerActions(GameObjectType* _type)
 {
-    createActionHandle("Floatation", &Entity::floatationAction);
+    type.createActionHandle("Floatation", &Entity::floatationAction);
 }
 
 void Entity::floatationAction(CollisionObject* _object)

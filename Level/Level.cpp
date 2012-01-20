@@ -25,7 +25,7 @@ Level::~Level()
     //saveLevel();
 }
 
-void Level::registerActions()
+void Level::registerActions(GameObjectType* _type)
 {
 }
 

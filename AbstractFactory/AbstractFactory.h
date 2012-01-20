@@ -24,7 +24,7 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         Product* use(FactoryParameters* paramters, GameObjectBase* _parent);
         const std::string& getName(){return nameCache;}
         const std::string& getInstanceName(){return instanceName;}
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return Product::name() + "Factory";
@@ -84,7 +84,7 @@ Product* AbstractFactoryBase<Product>::use(FactoryParameters* _parameters, GameO
     return product;
 }
 template <typename Product>
-void AbstractFactoryBase<Product>::registerActions()
+void AbstractFactoryBase<Product>::registerActions(GameObjectType* _type)
 {
 }
 

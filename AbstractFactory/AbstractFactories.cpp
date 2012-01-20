@@ -39,7 +39,7 @@ GameObjectBase* AbstractFactories::addFactory(const std::string& _product, Facto
     return indexedFactoryLists[type->getProductId()]->addFactory(this, _loader);
 }
 
-void AbstractFactories::registerActions()
+void AbstractFactories::registerActions(GameObjectType* _type)
 {
 }
 

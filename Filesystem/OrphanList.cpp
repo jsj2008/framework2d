@@ -1,7 +1,7 @@
 #include "OrphanList.h"
 
-OrphanList::OrphanList()
-:GameObjectBase("orphanList", 0)
+OrphanList::OrphanList(GameObjectBase* _parent)
+:GameObject("orphans", _parent)
 {
     //ctor
 }
@@ -22,4 +22,13 @@ void OrphanList::attachOrphan(GameObjectBase* _node)
         children->prev = _node;
     }
     children = _node;
+}
+
+void OrphanList::registerActions(GameObjectType* _type)
+{
+}
+
+void OrphanList::print(std::string* _output)
+{
+
 }

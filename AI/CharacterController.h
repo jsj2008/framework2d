@@ -19,7 +19,7 @@ class CharacterController : public GameObject<CharacterController>
         unsigned char getBooleanButtonsSize(){return booleanButtonsSize;}
         const char* getBoolButtonsName(unsigned char _index){return booleanButtonsNames[_index];}
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         void setAIEntity(AIEntity* _entity);
         static std::string name()
         {

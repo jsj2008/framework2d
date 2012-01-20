@@ -17,7 +17,7 @@ void Brain::setEntity(AIEntity* _Entity)
     mEntity = _Entity;
 }
 
-void Brain::registerActions()
+void Brain::registerActions(GameObjectType* _type)
 {
 
 }

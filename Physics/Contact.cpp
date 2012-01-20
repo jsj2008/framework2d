@@ -3,7 +3,7 @@
 #include <Physics/BodyParts/BodyPart.h>
 #include <Box2D/Box2D.h>
 
-Contact::Contact(bool _inverted, bool _collides, GameObjectBase::ActionHandle* _actionA, GameObjectBase::ActionHandle* _actionB)
+Contact::Contact(bool _inverted, bool _collides, ActionHandle* _actionA, ActionHandle* _actionB)
 {
     //ctor
     contact = nullptr;

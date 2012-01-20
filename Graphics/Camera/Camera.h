@@ -9,7 +9,7 @@ class Camera : public GameObject<Camera>
     public:
         Camera();
         virtual ~Camera();
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         void updateView(Vec2i resolution);
         const Vec2i& getView(){return view;}
         float getPixelsPerMeter(){return scale;}

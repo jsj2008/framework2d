@@ -4,9 +4,11 @@
 Filesystem g_Filesystem;
 
 Filesystem::Filesystem()
+:GameObject("/", nullptr, false)
 {
     //ctor
-    orphanList = new OrphanList;
+    orphanList = new OrphanList(this);
+    //attachChild(orphanList);
 }
 
 Filesystem::~Filesystem()
@@ -14,7 +16,7 @@ Filesystem::~Filesystem()
     //dtor
 }
 
-class RootFilesystemIter: public FilesystemIter
+/*class RootFilesystemIter: public FilesystemIter
 {
     public:
         RootFilesystemIter(FilesystemNode* _node){node = _node;}
@@ -22,12 +24,8 @@ class RootFilesystemIter: public FilesystemIter
         FilesystemNode* get(){return node;}
     private:
         FilesystemNode* node;
-};
-std::string Filesystem::nodeName()
-{
-    return "/";
-}
-FilesystemIter* Filesystem::firstChild()
+};*/
+/*FilesystemIter* Filesystem::firstChild()
 {
     return new RootFilesystemIter(orphanList);
 }
@@ -35,4 +33,13 @@ FilesystemIter* Filesystem::nextChild(FilesystemIter* _prevChild)
 {
     delete _prevChild;
     return nullptr;
+}*/
+Filesystem* Filesystem::global()
+{
+    static Filesystem filesystem;
+    return &filesystem;
 }
+void Filesystem::registerActions(GameObjectType* _type)
+{
+}
+

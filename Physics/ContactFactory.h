@@ -12,11 +12,11 @@ class ContactFactory
         virtual ~ContactFactory();
         Contact* createContact(bool _inverted);
         void filter();
-        void setEvent(GameObjectBase::ActionHandle* _action, bool _A);
+        void setEvent(ActionHandle* _action, bool _A);
     protected:
     private:
         bool isFiltered;
-        GameObjectBase::ActionHandle* actionA,* actionB;
+        ActionHandle* actionA,* actionB;
 };
 
 #endif // CONTACTFACTORY_H

@@ -49,13 +49,13 @@ void CollisionResponse::addFilter(const std::string& _collisionName)
 void CollisionResponse::addEvent(const std::string& _collisionName, const std::string& _actionName)
 {
     CollisionResponse* other = database->getHandle(_collisionName);
-    GameObjectBase::ActionHandle* action = GameObjectBase::getActionHandle(_actionName);
+    ActionHandle* action = GameObjectType::staticGetActionHandle(_actionName);
     assert(action);
     database->addEvent(id, other->getId(), action);
 }
 void CollisionResponse::setDefaultEvent(const std::string& _actionName)
 {
-    database->setDefaultEvent(id, GameObjectBase::getActionHandle(_actionName));
+    database->setDefaultEvent(id, GameObjectType::staticGetActionHandle(_actionName));
 }
 
 CollisionResponse* CollisionDatabase::getHandle(const std::string& _collisionName)
@@ -104,17 +104,17 @@ void CollisionDatabase::addFilter(unsigned short _a, unsigned short _b)
     contactFactories[_a][_b]->filter();
     contactFactories[_b][_a]->filter();
 }
-void CollisionDatabase::addEvent(unsigned short _a, unsigned short _b, GameObjectBase::ActionHandle* _action)
+void CollisionDatabase::addEvent(unsigned short _a, unsigned short _b, ActionHandle* _action)
 {
     contactFactories[_a][_b]->setEvent(_action, _a < _b);
 }
-void CollisionDatabase::setDefaultEvent(unsigned short _a, GameObjectBase::ActionHandle* _action)
+void CollisionDatabase::setDefaultEvent(unsigned short _a, ActionHandle* _action)
 {
     for (unsigned int i = 0; i < database.size(); i++)
         contactFactories[_a][i]->setEvent(_action, _a < i);
 }
 
-void CollisionResponse::registerActions()
+void CollisionResponse::registerActions(GameObjectType* _type)
 {
 
 }

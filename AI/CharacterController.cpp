@@ -13,7 +13,7 @@ CharacterController::~CharacterController()
     //dtor
 }
 
-void CharacterController::registerActions()
+void CharacterController::registerActions(GameObjectType* _type)
 {
 
 }

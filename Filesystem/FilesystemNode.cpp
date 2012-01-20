@@ -1,7 +1,7 @@
 #include "FilesystemNode.h"
 #include <Filesystem/Filesystem.h>
 #include <Log/Log.h>
-
+/*
 FilesystemNode::FilesystemNode()
 {
     //ctor
@@ -66,4 +66,4 @@ FilesystemIter::FilesystemIter()
 }
 FilesystemIter::~FilesystemIter()
 {
-}
+}*/

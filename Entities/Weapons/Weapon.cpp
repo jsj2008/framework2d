@@ -33,7 +33,7 @@ void Weapon::fireEnd(const Vec2f& source, const Vec2f& position)
     }
 }
 
-void Weapon::registerActions()
+void Weapon::registerActions(GameObjectType* _type)
 {
 
 }

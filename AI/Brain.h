@@ -23,7 +23,7 @@ class Brain : public GameObject<Brain>
         {
             return "Brain";
         }
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         void registerDeathListener(void*){throw -1;}
     protected:
         friend class ShooterGame; /// FIXME

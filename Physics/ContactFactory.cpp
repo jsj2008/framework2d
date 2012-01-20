@@ -23,7 +23,7 @@ void ContactFactory::filter()
     isFiltered = true;
 }
 
-void ContactFactory::setEvent(GameObjectBase::ActionHandle* _action, bool _A)
+void ContactFactory::setEvent(ActionHandle* _action, bool _A)
 {
     if (_A)
         actionA = _action;

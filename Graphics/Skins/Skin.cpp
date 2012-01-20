@@ -29,7 +29,7 @@ void Skin::render(BodyPart* body)
     glPopMatrix();
 }
 
-void Skin::registerActions()
+void Skin::registerActions(GameObjectType* _type)
 {
 
 }

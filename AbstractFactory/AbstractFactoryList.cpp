@@ -4,7 +4,7 @@ AbstractFactoryListBase::~AbstractFactoryListBase()
 {
 }
 
-void AbstractFactoryListBase::registerActions()
+void AbstractFactoryListBase::registerActions(GameObjectType* _type)
 {
 }
 

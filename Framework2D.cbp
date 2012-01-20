@@ -428,6 +428,8 @@
 		<Unit filename="GameModes/ShooterGame.h" />
 		<Unit filename="GameObject.cpp" />
 		<Unit filename="GameObject.h" />
+		<Unit filename="GameObjectType.cpp" />
+		<Unit filename="GameObjectType.h" />
 		<Unit filename="Graphics/Camera/BodyCameraFactory.cpp" />
 		<Unit filename="Graphics/Camera/BodyCameraFactory.h" />
 		<Unit filename="Graphics/Camera/Camera.cpp" />

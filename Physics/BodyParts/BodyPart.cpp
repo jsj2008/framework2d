@@ -13,7 +13,7 @@ BodyPart::~BodyPart()
     //dtor
 }
 
-void BodyPart::registerActions()
+void BodyPart::registerActions(GameObjectType* _type)
 {
 
 }

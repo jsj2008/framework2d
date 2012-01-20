@@ -12,7 +12,7 @@ class BodyPart : public GameObject<BodyPart>
     public:
         BodyPart();
         virtual ~BodyPart();
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         const Vec2f& getPosition();
         float getAngle();
         void applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point);

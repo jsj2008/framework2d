@@ -10,7 +10,7 @@ class b2ContactImpulse;
 class Contact
 {
     public:
-        Contact(bool _inverted, bool _collides, GameObjectBase::ActionHandle* _actionA, GameObjectBase::ActionHandle* _actionB);
+        Contact(bool _inverted, bool _collides, ActionHandle* _actionA, ActionHandle* _actionB);
         void setContact(b2Contact* _contact);
         virtual ~Contact();
     protected:
@@ -40,7 +40,7 @@ class Contact
         b2Contact* contact;
         bool inverted;
         bool collides;
-        GameObjectBase::ActionHandle* actionA,* actionB;
+        ActionHandle* actionA,* actionB;
 
         friend class ContactListener;
         bool preSolveInterface(const b2Manifold* _oldManifold); /// Returns filtering flag

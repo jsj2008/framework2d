@@ -9,7 +9,7 @@ class WeaponAction: public GameObject<WeaponAction>
     public:
         WeaponAction();
         virtual ~WeaponAction();
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         virtual void fire(const Vec2f& _source, const Vec2f& _position)=0;
 
         static std::string name()

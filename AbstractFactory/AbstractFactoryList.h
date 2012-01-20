@@ -25,7 +25,7 @@ class AbstractFactoryListBase : public GameObject<AbstractFactoryListBase>
         virtual UntypedAbstractFactory* getUntypedFactory(const std::string& name)=0;
         virtual GameObjectBase* addFactory(AbstractFactories* _factories, FactoryLoader* _loader)=0;
 
-        static void registerActions();
+        static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return "AbstractFactoryListBase";

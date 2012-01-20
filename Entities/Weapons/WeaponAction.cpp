@@ -10,7 +10,7 @@ WeaponAction::~WeaponAction()
     //dtor
 }
 
-void WeaponAction::registerActions()
+void WeaponAction::registerActions(GameObjectType* _type)
 {
 
 }
