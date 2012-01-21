@@ -93,19 +93,23 @@ template <typename DerivedObject>
 void GameObjectType::createActionHandle(const std::string& _name, void (DerivedObject::*_action)())
 {
     assert(actionHandles.find(_name) == actionHandles.end());
-    assert(g_ActionHandles().find(_name) == g_ActionHandles().end());
     ActionHandle* handle = new TemplateActionHandle<DerivedObject>(_action);
     actionHandles[_name] = handle;
-    g_ActionHandles()[_name] = handle;
+    if (g_ActionHandles().find(_name) == g_ActionHandles().end())
+    {
+        g_ActionHandles()[_name] = handle;
+    }
 }
 template <typename DerivedObject, typename EventObject>
 void GameObjectType::createActionHandle(const std::string& _name, void (DerivedObject::*_action)(EventObject* _object))
 {
     assert(actionHandles.find(_name) == actionHandles.end());
-    assert(g_ActionHandles().find(_name) == g_ActionHandles().end());
     ActionHandle* handle = new TemplateActionWithObjectHandle<DerivedObject, EventObject>(_action);
     actionHandles[_name] = handle;
-    g_ActionHandles()[_name] = handle;
+    if (g_ActionHandles().find(_name) == g_ActionHandles().end())
+    {
+        g_ActionHandles()[_name] = handle;
+    }
 }
 
 #endif // GAMEOBJECTTYPE_H

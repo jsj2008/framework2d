@@ -34,13 +34,12 @@ class PrintCommand: public GameConsoleCommand
         PrintCommand()
         :GameConsoleCommand("print")
         {
-            node = Filesystem::global();
         }
         void execute(const std::string& _parameters)
         {
             try
             {
-                GameObjectBase* _node = node->getNode(_parameters);
+                GameObjectBase* _node = console->getCurrentDirectory()->getNode(_parameters);
                 std::string outString = _node->getType()->print(_node);
                 outputText(outString);
             }
@@ -50,13 +49,78 @@ class PrintCommand: public GameConsoleCommand
             }
         }
     private:
-        GameObjectBase* node;
+};
+/// For some reason std::string::{rfind and find} are not working correctly
+unsigned int rfind(const std::string& _string, char _char)
+{
+    for (unsigned int pos = _string.size()-1; pos != 0; pos--)
+    {
+        if (_string[pos] == _char)
+        {
+            return pos;
+        }
+    }
+    return -1;
+}
+class ExecuteActionCommand: public GameConsoleCommand
+{
+    public:
+        ExecuteActionCommand()
+        :GameConsoleCommand("run")
+        {
+        }
+        void execute(const std::string& _parameters)
+        {
+            try
+            {
+                unsigned int index = rfind(_parameters, '.');
+                GameObjectBase* _node = console->getCurrentDirectory()->getNode(_parameters.substr(0, index));
+                ActionHandle* handle = _node->getType()->getActionHandle(_parameters.substr(index+1, -1));
+                if (handle)
+                {
+                    handle->execute(_node);
+                }
+                else
+                {
+                    g_Log.error("Object has no action called '" + _parameters.substr(index+1, -1) +'\'');
+                }
+                //outputText(_parameters.substr(index+1, -1));
+            }
+            catch (int i)
+            {
+                outputText("Operation failed");
+            }
+        }
+};
+class ChangeDirectoryCommand: public GameConsoleCommand
+{
+    public:
+        ChangeDirectoryCommand()
+        :GameConsoleCommand("cd")
+        {
+        }
+        void execute(const std::string& _parameters)
+        {
+            try
+            {
+                GameObjectBase* _node = console->getCurrentDirectory()->getNode(_parameters);
+                console->setCurrentDirectory(_node);
+            }
+            catch (int i)
+            {
+                outputText("Failed");
+            }
+        }
+    private:
 };
 GameConsole::GameConsole()
 {
+    currentDirectory = Filesystem::global();
     createCEGUIWindow();
     addCommand(new SayCommand());
     addCommand(new PrintCommand());
+    addCommand(new ExecuteActionCommand());
+    addCommand(new ChangeDirectoryCommand());
 }
 
 GameConsole::~GameConsole()
@@ -112,7 +176,11 @@ void GameConsole::parseText(CEGUI::String inMsg)
 	{
         std::string::size_type commandEnd = inString.find(" ", 0);
         std::string command = inString.substr(0, commandEnd);
-        std::string commandArgs = inString.substr(commandEnd + 1, inString.length() - (commandEnd + 1));
+        std::string commandArgs;
+        if (commandEnd != -1)
+        {
+            commandArgs = inString.substr(commandEnd + 1, inString.length() - (commandEnd + 1));
+        }
         for(std::string::size_type i=0; i < command.length(); i++)
         {
             command[i] = tolower(command[i]);

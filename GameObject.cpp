@@ -78,10 +78,11 @@ GameObjectBase::~GameObjectBase()
 void GameObjectBase::registerBaseActions(GameObjectType* _type)
 {
     static bool done = false;
-    if (!done)
+    //if (!done)
     {
         done = true;
         _type->createActionHandle("Kill", &GameObject<GameObjectBase>::killAction);
+        _type->createActionHandle("KillBy", &GameObject<GameObjectBase>::killActionBy);
         deathEvent = _type->createEventHandle("onDeath");
     }
 }
@@ -145,7 +146,11 @@ GameObjectBase* GameObjectBase::getParent()
     return parent;
 }
 
-void GameObjectBase::killAction(CollisionObject* _object)
+void GameObjectBase::killAction()
+{
+    delete this;
+}
+void GameObjectBase::killActionBy(CollisionObject* _object)
 {
     delete this;
 }
@@ -159,25 +164,35 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
         node = Filesystem::global();
         iter = 1;
     }
-    try
+    else if (_address[0] == '.')
     {
-        while (true)
+        iter = 1;
+    }
+    while (true)
+    {
+        if (_address.size() > iter)
         {
             int next = _address.find('/', iter);
-            if (next == -1)
+            std::string address = _address.substr(iter, _address.size());
+            if (address == "..")
             {
-                if (_address.size() > iter)
-                    node = node->getIndividualNode(_address.substr(iter, _address.size()));
-                break;
+                node = node->getParent();
             }
             else
             {
-                node = node->getIndividualNode(_address.substr(iter, next - iter));
-                iter = next+1;
+                if (next == -1)
+                {
+                    node = node->getIndividualNode(address);
+                    break;
+                }
+                else
+                {
+                    node = node->getIndividualNode(address);
+                    iter = next+1;
+                }
             }
-        }
+        } else break;
     }
-    catch (int i) {}
     return node;
 }
 #include <cstring>

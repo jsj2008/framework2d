@@ -15,6 +15,7 @@ class Filesystem: public GameObject<Filesystem>
 
         static Filesystem* global(); /// "/"
         static void registerActions(GameObjectType* _type);
+        static void makeFolders(const std::string& _name); /// Can specify multiple folders with '/' symbol
         /*FilesystemIter* firstChild();
         FilesystemIter* nextChild(FilesystemIter* _prevChild);*/
     protected:

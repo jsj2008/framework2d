@@ -26,11 +26,13 @@ GameObjectType::~GameObjectType()
 
 EventHandle* GameObjectType::createEventHandle(const std::string& _name)
 {
-    assert(g_EventHandles().find(_name) == g_EventHandles().end());
     assert(eventHandles.find(_name) == eventHandles.end());
     EventHandle* handle = new EventHandle(eventHandles.size());
     eventHandles[_name] = handle;
-    g_EventHandles()[_name] = handle;
+    if (g_EventHandles().find(_name) == g_EventHandles().end())
+    {
+        g_EventHandles()[_name] = handle;
+    }
     return handle;
 }
 
@@ -39,6 +41,10 @@ unsigned int GameObjectType::eventsSize()
     return eventHandles.size();
 }
 
+ActionHandle* GameObjectType::getActionHandle(const std::string& _name)
+{
+    return actionHandles[_name];
+}
 
 EventHandle* GameObjectType::staticGetEventHandle(const std::string& _name)
 {

@@ -336,8 +336,8 @@
 		<Unit filename="Events/StringEvents/StringEventListener.h" />
 		<Unit filename="Filesystem/Filesystem.cpp" />
 		<Unit filename="Filesystem/Filesystem.h" />
-		<Unit filename="Filesystem/FilesystemNode.cpp" />
-		<Unit filename="Filesystem/FilesystemNode.h" />
+		<Unit filename="Filesystem/Folder.cpp" />
+		<Unit filename="Filesystem/Folder.h" />
 		<Unit filename="Filesystem/OrphanList.cpp" />
 		<Unit filename="Filesystem/OrphanList.h" />
 		<Unit filename="Game.cpp" />

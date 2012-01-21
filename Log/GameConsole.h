@@ -4,6 +4,7 @@
 #include <CEGUI/CEGUI.h>
 #include <unordered_map>
 #include <Log/Logger.h>
+class GameObjectBase;
 
 class GameConsole;
 class GameConsoleCommand
@@ -14,9 +15,9 @@ class GameConsoleCommand
         virtual void execute(const std::string& _parameters)=0;
     protected:
         void outputText(std::string _msg, unsigned int _colour = -1);
-    private:
         friend class GameConsole;
         GameConsole* console;
+    private:
         std::string name;
 };
 class GameConsole : public Logger
@@ -26,6 +27,8 @@ class GameConsole : public Logger
        ~GameConsole();
        void addCommand(GameConsoleCommand* _command);
        Logger* newLogger(Logger* _newLogger);
+       GameObjectBase* getCurrentDirectory(){return currentDirectory;}
+       void setCurrentDirectory(GameObjectBase* _directory){currentDirectory = _directory;}
     private:
         friend class GameConsoleCommand;
         void createCEGUIWindow();                                  // The function which will load in the CEGUI Window and register event handlers
@@ -37,5 +40,6 @@ class GameConsole : public Logger
 
         CEGUI::Window *consoleWindow;                            // This will be a pointer to the ConsoleRoot window.
         std::unordered_map<std::string, GameConsoleCommand*> commands;
+        GameObjectBase* currentDirectory;
 };
 #endif // GAMECONSOLE_H

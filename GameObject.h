@@ -17,7 +17,8 @@ class GameObjectBase
 
         const std::string& getObjectName(){return objectName;}
 
-        void killAction(CollisionObject* _object); /// Will trigger deathEvent
+        void killAction(); /// Will trigger deathEvent
+        void killActionBy(CollisionObject* _object); /// Will trigger deathEvent
         static void registerBaseActions(GameObjectType* _type);
 
         GameObjectBase* getNext();
@@ -144,7 +145,7 @@ template <typename DerivedObject>
 void GameObject<DerivedObject>::baseRegisterActions(GameObjectType* _type)
 {
     /**
-        A class derived from GameObject needs to have a static registerActions() function.
+        A class derived from GameObject needs to have a static registerActions(GameObjectType* _type) function.
         This function should call createActionHandle for every executable action you want that class to have available for scripting.
     */
     DerivedObject::registerActions(_type);
