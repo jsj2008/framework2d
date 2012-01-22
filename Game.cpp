@@ -30,8 +30,8 @@ Game::Game()
 void Game::init()
 {
     //ctor
-    g_Timer.init();
-    g_Timer.pause();
+    Timer::global()->init();
+    Timer::global()->pause();
 
     g_GraphicsManager.init();
     StaticSoundManager::init();
@@ -47,7 +47,7 @@ void Game::init()
 
     UndoStack::global().init();
 
-    g_Timer.unPause();
+    Timer::global()->unpause();
 }
 Game::~Game()
 {

@@ -31,6 +31,7 @@ void Entity::render()
 void Entity::setRootBody(BodyPart* _rootBody)
 {
     assert(rootBody == nullptr);
+    assert(_rootBody->getParent() == this);
     rootBody = _rootBody;
 }
 BodyPart* Entity::getRootBody()

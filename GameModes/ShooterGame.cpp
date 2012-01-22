@@ -36,16 +36,14 @@ ShooterGame::ShooterGame()
     g_AIManager.init(getLevel()->getWorld()); /// FIXME this shouildn't be global
     g_AIManager.finalisePathfinding();
 
-    FactoryParameters params(data->getFactories());
+    /*FactoryParameters params(data->getFactories());
     params.add<unsigned short>("entityKey", 0);
-    PlayerOneCreated event(static_cast<AIEntity*>(getLevel()->getFactories()->useFactory<Entity>("PlayerFactory",&params, this)));
-    event.trigger();
+    getLevel()->getFactories()->useFactory<Entity>("PlayerFactory",&params, this);*/
 }
 
 ShooterGame::~ShooterGame()
 {
     //dtor
-    delete getLevel(); /// FIXME not managed properly
 }
 
 void ShooterGame::buttonUp(Vec2i mouse, unsigned char button) /// FIXME this needs to be done in a player controller grabber

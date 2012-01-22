@@ -68,8 +68,7 @@ bool PlayMode::activate(const CEGUI::EventArgs& args)
     return true;
 }
 
-
-bool PlayMode::update()
+bool PlayMode::v_Update()
 {
     bool running = true;
     if (GameServerInterface::singleton()->update())

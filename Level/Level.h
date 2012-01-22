@@ -15,7 +15,7 @@ class EntityList;
 class Level : public GameObject<Level>
 {
     public:
-        Level();
+        Level(PhysicsManager* _world, AbstractFactories* _factories);
         virtual ~Level();
         Entity* addBody(const std::string& factory, FactoryParameters* _parameters);
         void addJoint(b2JointDef* def);
@@ -25,7 +25,7 @@ class Level : public GameObject<Level>
         void removeJoint(b2Joint* joint);
         void tick();
         PhysicsManager* getWorld(){return world;}
-        AbstractFactories* getFactories(){return &factories;}
+        AbstractFactories* getFactories();
         void loadLevel();
         EntityList* getEntityList(){return entityList;}
 
@@ -43,7 +43,7 @@ class Level : public GameObject<Level>
 
         PhysicsManager* world;
         EntityList* entityList;
-        AbstractFactories factories;
+        AbstractFactories* factories;
 };
 
 #endif // LEVEL_H

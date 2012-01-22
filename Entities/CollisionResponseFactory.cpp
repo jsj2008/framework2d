@@ -14,6 +14,7 @@ void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* fa
 {
     std::string handleName = loader->get<std::string>("Name", "Default");
     handle = factories->getCollisionDatabase()->getHandle(handleName);
+    attachChild(handle); /// FIXME this is silly
 
     std::vector<std::string> filters = loader->getArray<std::string>("filters", {});
     for (unsigned int i = 0; i < filters.size(); i++)

@@ -16,6 +16,7 @@ class BaseJointEditor : public GameMode, public ClickReleaseEvent
         void click(Vec2i mouse, unsigned char button);
         bool update(){return true;}  // FIXME
     protected:
+        bool v_Update(){return true;}  // FIXME
         b2Body* bodyA;
         Vec2f localPointA;
         bool collideConnected();

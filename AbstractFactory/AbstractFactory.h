@@ -22,8 +22,6 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         virtual ~AbstractFactoryBase();
         virtual void baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)=0;
         Product* use(FactoryParameters* paramters, GameObjectBase* _parent);
-        const std::string& getName(){return nameCache;}
-        const std::string& getInstanceName(){return instanceName;}
         static void registerActions(GameObjectType* _type);
         static std::string name()
         {
@@ -31,8 +29,6 @@ class AbstractFactoryBase : public GameObject<AbstractFactoryBase<Product>>
         }
     protected:
         virtual Product* privateUseFactory(FactoryParameters* _parameters, GameObjectBase* _parent)=0;
-        const std::string nameCache;
-        std::string instanceName;
     private:
 };
 template <typename Product, typename DerivedType>
@@ -66,7 +62,7 @@ class AbstractFactory: public AbstractFactoryBase<Product>
 
 template <typename Product>
 AbstractFactoryBase<Product>::AbstractFactoryBase(const std::string _name)
-:nameCache(_name)
+:GameObject<AbstractFactoryBase<Product>>(_name)
 {
     //ctor
 }
@@ -105,7 +101,7 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 template <typename Product, typename DerivedType>
 void AbstractFactory<Product, DerivedType>::baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)
 {
-    AbstractFactoryBase<Product>::instanceName = _name;
+    GameObjectBase::objectName = _name;
     static_cast<DerivedType*>(this)->init(loader, factories);
 }
 

@@ -23,7 +23,6 @@ class EventScripter : public GameMode, public InputContext
         EventScripter(FreeCamera* _camera, EditorMode* _editorMode);
         virtual ~EventScripter();
         void init();
-        bool update();
         void buttonDown(Vec2i mouse, unsigned char button);
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
@@ -34,6 +33,7 @@ class EventScripter : public GameMode, public InputContext
         bool hide(const CEGUI::EventArgs& _args);
     protected:
     private:
+        bool v_Update();
         EditorMode* editorMode;
         ScriptEventsList* events;
         ActionEventsList* actions;

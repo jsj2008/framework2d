@@ -56,6 +56,9 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
     /*else
         return nullptr;*/
 }
+void PhysicsManager::registerActions(GameObjectType* _type)
+{
+}
 
 using namespace std;
 b2MouseJoint* PhysicsManager::createJoint(b2Body* body, Vec2f& point)
@@ -93,7 +96,7 @@ void PhysicsManager::tick()
     }
     contactListener->process();
     updateEntities();
-    g_Timer.tick();
+    Timer::global()->tick();
 }
 void PhysicsManager::updateEntities()
 {

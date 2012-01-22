@@ -141,6 +141,7 @@ AbstractFactoryBase<Product>* AbstractFactoryList<Product>::getFactory(AbstractF
             factories[_factory] = factory;
             static TextFileFactoryLoader emptyConfig(nullptr, factoriesListList);
             factory->baseInit(_factory, &emptyConfig, factoriesListList);
+            attachChild(factory);
             return factory;
         }
         else
@@ -236,6 +237,7 @@ AbstractFactoryList<Product>::AbstractFactoryList(AbstractFactories* _factoriesL
 {
     //ctor
     factoriesListList = _factoriesListList;
+    factoriesListList->attachChild(this);
 }
 
 template <typename Product>
@@ -255,7 +257,7 @@ void AbstractFactoryList<Product>::print()
     std::ofstream file("Resources/" + productName() + "Factories.txt");
     for (auto i = factories.begin(); i != factories.end(); i++)
     {
-        privatePrint(&file, i->second->getName(), i->first, productName(), EvaluateTypeName<Product>());
+        privatePrint(&file, i->second->getObjectName(), i->first, productName(), EvaluateTypeName<Product>());
     }
 }
 #include <AbstractFactory/EvaluateTypeName.h>

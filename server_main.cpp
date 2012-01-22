@@ -2,15 +2,15 @@
 #include <Timer.h>
 int main(int argv, char* argc[])
 {
-    g_Timer.init();
-    g_Timer.pause();
+    Timer::global()->init();
+    Timer::global()->pause();
 
     Server server(8001);
-    unsigned int startTime = g_Timer.getTicks();
+    unsigned int startTime = Timer::global()->getTicks();
     unsigned int stepsTaken = 0;
     while (true)
     {
-        unsigned int currentTime = g_Timer.getTicks();
+        unsigned int currentTime = Timer::global()->getTicks();
         unsigned int totalTimePassed = currentTime - startTime;
         if (currentTime < startTime) /// FIXME
             totalTimePassed = 0;

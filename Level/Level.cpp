@@ -12,10 +12,13 @@
 #include <cstring>
 #include <fstream>
 using namespace std;
-Level::Level()
+Level::Level(PhysicsManager* _world, AbstractFactories* _factories)
 {
     //ctor
-    world = new PhysicsManager(factories.getCollisionDatabase());
+    world = _world; /// new PhysicsManager(factories.getCollisionDatabase());
+    factories = _factories;
+    attachChild(world);
+    attachChild(factories);
     entityList = nullptr;
 }
 
@@ -27,6 +30,11 @@ Level::~Level()
 
 void Level::registerActions(GameObjectType* _type)
 {
+}
+
+AbstractFactories* Level::getFactories()
+{
+    return factories;
 }
 
 /*Entity* Level::addBody(const std::string& factory, FactoryParameters* _parameters)

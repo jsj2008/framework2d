@@ -31,7 +31,6 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         bool trigger(FactoryCreateEvent<Entity>* event);
         bool trigger(FactoryTypeRegisterEvent<Entity>* event);
         void render();
-        bool update(){return true;}  // FIXME
         bool activate(const CEGUI::EventArgs&);
         void deactivate();
         EntityList* getEntityList();
@@ -132,6 +131,7 @@ class DynamicEditor : public GameMode, public InputContext, public EventsListene
         CEGUI::TabControl* typeTab;
         CEGUI::Window* entityName;
         EditorMode* editorMode;
+        bool v_Update(){return true;}  // FIXME
 };
 
 #endif // DYNAMICEDITOR_H

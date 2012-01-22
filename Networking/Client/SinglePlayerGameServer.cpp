@@ -9,7 +9,7 @@ SinglePlayerGameServer::SinglePlayerGameServer()
 {
     //ctor
     stepsTaken = 0;
-    startTime = g_Timer.getTicks();
+    startTime = Timer::global()->getTicks();
     inited = false;
 }
 
@@ -24,7 +24,7 @@ bool SinglePlayerGameServer::update()
     {
         inited = true;
     }
-    unsigned int currentTime = g_Timer.getTicks();
+    unsigned int currentTime = Timer::global()->getTicks();
     unsigned int totalTimePassed = currentTime - startTime;
     if (currentTime < startTime) /// FIXME
         totalTimePassed = 0;

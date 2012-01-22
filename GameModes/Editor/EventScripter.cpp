@@ -50,7 +50,7 @@ bool EventScripter::hide(const CEGUI::EventArgs& _args)
     actions->hide();
     return true;
 }
-bool EventScripter::update()
+bool EventScripter::v_Update()
 {
     return true;
 }

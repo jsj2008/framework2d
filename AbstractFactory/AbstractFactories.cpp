@@ -3,7 +3,6 @@
 AbstractFactories::AbstractFactories()
 {
     //ctor
-
 }
 
 AbstractFactories::~AbstractFactories()

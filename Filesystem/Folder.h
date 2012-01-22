@@ -7,7 +7,7 @@
 class Folder : public GameObject<Folder>
 {
     public:
-        Folder();
+        Folder(const std::string& _name);
         virtual ~Folder();
         static std::string name()
         {

@@ -10,6 +10,7 @@ SingleFixtureBodyPart::SingleFixtureBodyPart()
 SingleFixtureBodyPart::~SingleFixtureBodyPart()
 {
     //dtor
+    body->GetWorld()->DestroyBody(body);
 }
 
 void SingleFixtureBodyPart::setBody(b2Body* _body)

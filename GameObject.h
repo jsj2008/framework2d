@@ -29,6 +29,7 @@ class GameObjectBase
         void detach(GameObjectBase* _child);
         GameObjectBase* getNode(const std::string& _address);
         GameObjectType* getType();
+        GameObjectBase* getIndividualNode(const std::string& _address);
     protected:
         void setParent(GameObjectBase* _parent);
         void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}
@@ -38,14 +39,13 @@ class GameObjectBase
             return handles;
         }
         void orphaned();
+        std::string objectName;
     private:
         friend class OrphanList;
         GameObjectBase* next,* prev,* children,* parent;
 
         friend class EventHandle;
         std::vector<std::vector<GameObjectEventListener*>> eventListenerLists;
-        std::string objectName;
-        GameObjectBase* getIndividualNode(const std::string& _address);
         GameObjectType* type;
         static EventHandle* deathEvent;
 };

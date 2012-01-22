@@ -4,6 +4,7 @@
 #include <Level/FactoryListData.h>
 #include <Level/Level.h>
 #include <Level/XmlDataSaver.h>
+#include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 
 LevelData::LevelData()
@@ -36,11 +37,10 @@ void LevelData::removeEntityList(unsigned int _index)
 
 Level* LevelData::build()
 {
-    Level* level = new Level;
+    AbstractFactories* factories = new AbstractFactories;
+    Level* level = new Level(new PhysicsManager(factories->getCollisionDatabase()), factories);
     /// Process event lists
-    AbstractFactories* factories = level->getFactories();
     factories->init();
-    level->attachChild(factories);
     factories->setWorld(level->getWorld());
 
     for (unsigned int i = 0; i < factoryLists.size(); i++)

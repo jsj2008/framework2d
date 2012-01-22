@@ -180,7 +180,7 @@ bool DynamicEditor::createFactory(const CEGUI::EventArgs& _args)
 }
 bool DynamicEditor::trigger(FactoryCreateEvent<Entity>* event)
 {
-    std::string name = event->getFactory()->getName();
+    std::string name = event->getFactory()->getObjectName();
     if (name != "AIEntityFactory")
     {
         DynamicEditor::EditorFactoryType* factory = editorFactories[name];

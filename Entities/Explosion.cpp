@@ -9,7 +9,7 @@ Explosion::Explosion(float _radius, float _damage, float _force, unsigned short 
     radius = _radius;
     damage = _damage;
     force = _force;
-    expiryFrame = _frames + g_Timer.getFrame();
+    expiryFrame = _frames + Timer::global()->getFrame();
 }
 
 Explosion::~Explosion()
@@ -33,7 +33,7 @@ void Explosion::update()
         Vec2f point(body->GetWorldCenter());
         body->ApplyLinearImpulse((point-myPosition)*force,body->GetWorldCenter());
     }
-    if (expiryFrame == g_Timer.getFrame())
+    if (expiryFrame == Timer::global()->getFrame())
     {
         delete this;
     }*/

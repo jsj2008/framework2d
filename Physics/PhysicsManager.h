@@ -1,6 +1,7 @@
 #ifndef PHYSICSMANAGER_H
 #define PHYSICSMANAGER_H
 
+#include <GameObject.h>
 #include <stack>
 class RenderCallback;
 class ContactListener;
@@ -22,7 +23,7 @@ class Vec2f;
 #define JUMPING
 #define WORLD_GRAVITY 9.8f
 
-class PhysicsManager
+class PhysicsManager: public GameObject<PhysicsManager>
 {
     public:
         PhysicsManager(CollisionDatabase* _database);
@@ -41,6 +42,11 @@ class PhysicsManager
         b2Body* select(Vec2f& position, void* _ignore = (void*)0xBAADF00D);
         void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
         void tick();
+        static std::string name()
+        {
+            return "PhysicsManager";
+        }
+        static void registerActions(GameObjectType* _type);
     protected:
     private:
         void updateEntities();

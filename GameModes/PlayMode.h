@@ -21,10 +21,10 @@ class PlayMode : public ClickDragEvent, public GameMode, public SingletonEventLi
         void start(unsigned char button);
         void mouseMove(Vec2i mouse);
         bool activate(const CEGUI::EventArgs&);
-        bool update();
         Level* getLevel(){return activeLevel;}
         bool trigger(PlayerOneCreated* event);
     protected:
+        bool v_Update();
         void setLevel(Level* _level);
         Bubble::BubbleType type;
         PlayerInputBrain* playerOneBrain;

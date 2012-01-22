@@ -11,13 +11,14 @@ class GameMode : public GameObject<GameMode>
         GameMode();
         virtual ~GameMode();
         //virtual void renderGameMode()=0;
-        virtual bool update()=0;
+        bool update();
         static void registerActions(GameObjectType* _type);
         static std::string name()
         {
             return "GameMode";
         }
     protected:
+        virtual bool v_Update()=0;
     private:
 };
 

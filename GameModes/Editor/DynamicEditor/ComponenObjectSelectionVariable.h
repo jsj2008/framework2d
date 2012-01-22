@@ -58,10 +58,9 @@ ComponentObjectSelectionVariable<Product>::ComponentObjectSelectionVariable(CEGU
     displayButton = CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("ComponentSelectionDisplay.layout", _factoryName + name);
     displayButton->setPosition(CEGUI::UVector2({{0.5f, 0.0f}, {0.0f,*_uiElementTop}}));
     *_uiElementTop += displayButton->getHeight().asAbsolute(0);
-    displayButton->setProperty("Text",value->getInstanceName());
+    displayButton->setProperty("Text",value->getObjectName());
     displayButton->subscribeEvent(CEGUI::Window::EventMouseClick, {&ComponentObjectSelectionVariable::listDisplay, this});
     _rootWindow->addChildWindow(displayButton);
-
 }
 
 template <typename Product>
@@ -92,7 +91,7 @@ template <typename Product>
 void ComponentObjectSelectionVariable<Product>::setFactory(AbstractFactoryBase<Product>* _value)
 {
     value = _value;
-    displayButton->setText(_value->getInstanceName());
+    displayButton->setText(_value->getObjectName());
 }
 template <typename Product>
 ComponentObjectSelectionVariableFactory<Product>::ComponentObjectSelectionVariableFactory(const std::string& _name, const std::string& _defaultValue)

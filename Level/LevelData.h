@@ -41,7 +41,7 @@ class LevelData : public LoadedData
             {return eventLists[_index];}
         void removeEventList(unsigned int _index); /// Removes from position and items later on in the list get shuffled down
 
-        AbstractFactories* getFactories(){return &factories;}
+        AbstractFactories* getFactories();
 
     protected:
     private:
@@ -49,7 +49,6 @@ class LevelData : public LoadedData
         std::vector<EventListData*> eventLists;
         std::vector<EntityListData*> entityLists;
         std::vector<FactoryListData*> factoryLists;
-        AbstractFactories factories;
 };
 
 #endif // LEVELDATA_H

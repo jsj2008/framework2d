@@ -74,7 +74,6 @@
 	  </PropertyBag>
 	</Factory>
       </FactoryList>
-      
       <EntityList Name="Entities">
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
@@ -90,10 +89,15 @@
 	  <PropertyBag>
 	    <Property Type="Vec2f" Name="position" Value="10 0" />
 	  </PropertyBag>
-	</Entity>
+	</Entity>      
 	<Entity Type="DenseCrate">
 	  <PropertyBag>
 	    <Property Type="Vec2f" Name="position" Value="10 0" />
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="PlayerFactory">
+	  <PropertyBag>
+	    <Property Type="unsigned short" Name="entityKey" Value="0" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

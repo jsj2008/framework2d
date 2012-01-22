@@ -41,6 +41,6 @@ void* UntypedAbstractFactoryImplementation<Product>::use(FactoryParameters* _par
 template <typename Product>
 const std::string& UntypedAbstractFactoryImplementation<Product>::getName()
 {
-    return factory->getName();
+    return factory->getObjectName();
 }
 #endif // UNTYPEDABSTRACTFACTORYIMPLEMENTATION_H

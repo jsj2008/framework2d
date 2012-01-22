@@ -52,6 +52,7 @@ void CollisionResponse::addEvent(const std::string& _collisionName, const std::s
     ActionHandle* action = GameObjectType::staticGetActionHandle(_actionName);
     assert(action);
     database->addEvent(id, other->getId(), action);
+    delete other;
 }
 void CollisionResponse::setDefaultEvent(const std::string& _actionName)
 {

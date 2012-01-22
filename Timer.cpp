@@ -1,7 +1,8 @@
 #include "Timer.h"
+#include <Filesystem/Filesystem.h>
+#include <Filesystem/Folder.h>
 #include <SDL/SDL.h>
 #include <cassert>
-Timer g_Timer;
 void Timer::init()
 {
     int result = SDL_Init(SDL_INIT_TIMER);
@@ -9,15 +10,18 @@ void Timer::init()
     startTime = SDL_GetTicks();
     currentlyPaused = false;
     frame = 0;
+    Filesystem::global()->makeFolders("/dev")->attachChild(this);
 }
 void Timer::pause()
 {
     pauseTime = SDL_GetTicks();
+    currentlyPaused = true;
 }
-void Timer::unPause()
+void Timer::unpause()
 {
     unsigned int totalPauseTime = SDL_GetTicks() - pauseTime;
     startTime += totalPauseTime;
+    currentlyPaused = false;
 }
 unsigned int Timer::getTicks()
 {
@@ -39,3 +43,21 @@ void Timer::tick()
 {
     frame++;
 }
+
+void Timer::registerActions(GameObjectType* _type)
+{
+    _type->createActionHandle("pause", &Timer::pause);
+    _type->createActionHandle("unpause", &Timer::unpause);
+}
+Timer* Timer::global()
+{
+    static Timer* timer = new Timer;
+    return timer;
+}
+
+
+
+
+
+
+

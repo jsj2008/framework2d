@@ -17,9 +17,9 @@ class GeometrySelector : public GameMode, public ClickDragEvent
         void mouseMove(Vec2i mouse);
         void buttonUp(Vec2i mouse, unsigned char button);
         void render();
-        bool update(){return true;}  // FIXME
     protected:
     private:
+        bool v_Update(){return true;}  // FIXME
         b2MouseJoint* mouseJoint;
         unsigned int bodyHealth;
         std::unordered_set<b2MouseJoint*> activeMouseJoints;

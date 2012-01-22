@@ -78,12 +78,12 @@ TypeTableFactoryType<Product>::Value::~Value()
 template <typename Product>
 void TypeTableFactoryType<Product>::Value::output(std::ostream* _stream)
 {
-    *_stream << TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>::value->getInstanceName();
+    *_stream << TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>::value->getObjectName();
 }
 template <typename Product>
 void TypeTableFactoryType<Product>::Value::output(PropertyBagSerializer* _out)
 {
-    _out->outputValue<std::string>(TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>::value->getInstanceName());
+    _out->outputValue<std::string>(TypeTable::TemplateBaseValue<AbstractFactoryBase<Product>*>::value->getObjectName());
 }
 template <typename Product>
 std::string TypeTableFactoryType<Product>::Value::getTypeId()

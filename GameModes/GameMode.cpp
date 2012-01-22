@@ -19,5 +19,10 @@ GameMode::~GameMode()
 
 void GameMode::registerActions(GameObjectType* _type)
 {
-
 }
+
+bool GameMode::update()
+{
+    return v_Update();
+}
+

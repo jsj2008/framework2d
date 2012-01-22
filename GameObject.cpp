@@ -173,7 +173,7 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
         if (_address.size() > iter)
         {
             int next = _address.find('/', iter);
-            std::string address = _address.substr(iter, _address.size());
+            std::string address = _address.substr(iter, next - iter);
             if (address == "..")
             {
                 node = node->getParent();
