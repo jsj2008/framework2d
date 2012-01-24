@@ -6,6 +6,7 @@
 #include <string>
 class FactoryListData;
 class XmlResourceProvider;
+class TiXmlElement;
 
 class FactoryListLoader : public DataLoader<FactoryListLoader, FactoryListData>
 {
@@ -16,6 +17,7 @@ class FactoryListLoader : public DataLoader<FactoryListLoader, FactoryListData>
     protected:
     private:
         XmlResourceProvider* provider;
+        FactoryData* loadFactory(const std::string& _listName, TiXmlElement* _element);
 };
 
 #endif // FACTORYLISTLOADER_H

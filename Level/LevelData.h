@@ -8,6 +8,7 @@ class EventListData;
 class EntityListData;
 class FactoryListData;
 class CollisionListData;
+class FactoryGroupListData;
 class Level;
 
 class LevelData : public LoadedData
@@ -27,15 +28,23 @@ class LevelData : public LoadedData
 
         void addFactoryList(FactoryListData* _list)
             {factoryLists.push_back(_list);}
-        unsigned int FactoryListsSize()
+        unsigned int factoryListsSize()
             {return factoryLists.size();}
         FactoryListData* getFactoryList(unsigned int _index)
             {return factoryLists[_index];}
         void removeFactoryList(unsigned int _index); /// Removes from position and items later on in the list get shuffled down
 
+        void addFactoryGroupList(FactoryGroupListData* _list)
+            {factoryGroupLists.push_back(_list);}
+        unsigned int factoryGroupListsSize()
+            {return factoryGroupLists.size();}
+        FactoryGroupListData* getFactoryGroupList(unsigned int _index)
+            {return factoryGroupLists[_index];}
+        void removeFactoryGroupList(unsigned int _index); /// Removes from position and items later on in the list get shuffled down
+
         void addEventList(EventListData* _list)
             {eventLists.push_back(_list);}
-        unsigned int EventListsSize()
+        unsigned int eventListsSize()
             {return eventLists.size();}
         EventListData* getEventList(unsigned int _index)
             {return eventLists[_index];}
@@ -49,6 +58,7 @@ class LevelData : public LoadedData
         std::vector<EventListData*> eventLists;
         std::vector<EntityListData*> entityLists;
         std::vector<FactoryListData*> factoryLists;
+        std::vector<FactoryGroupListData*> factoryGroupLists;
 };
 
 #endif // LEVELDATA_H

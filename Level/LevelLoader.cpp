@@ -6,7 +6,8 @@
 LevelLoader::LevelLoader(XmlResourceProvider* _provider)
 :eventListLoader(_provider),
 factoryListLoader(_provider),
-entitylistLoader(_provider)
+entitylistLoader(_provider),
+factoryGroupListLoader(_provider)
 {
     //ctor
     provider = _provider;
@@ -17,7 +18,7 @@ LevelLoader::~LevelLoader()
     //dtor
 }
 
-#define LIST_FUNCTIONS 3
+#define LIST_FUNCTIONS 4
 void LevelLoader::virtualLoad(const std::string& _levelName, LevelData* _data)
 {
     static void (LevelLoader::*addListFunctions[LIST_FUNCTIONS])(LevelData* _data, const std::string& _address) =
@@ -25,12 +26,14 @@ void LevelLoader::virtualLoad(const std::string& _levelName, LevelData* _data)
         &LevelLoader::addEventList,
         &LevelLoader::addEntityList,
         &LevelLoader::addFactoryList,
+        &LevelLoader::addFactoryGroupList,
     };
     static const char* listFunctionNames[LIST_FUNCTIONS] =
     {
         "EventList",
         "EntityList",
         "FactoryList",
+        "FactoryGroupList",
     };
 
     _data->init(_levelName);
@@ -85,6 +88,11 @@ void LevelLoader::addFactoryList(LevelData* _data, const std::string& _address)
 {
     FactoryListData* factoryList = factoryListLoader.load(_address);
     _data->addFactoryList(factoryList);
+}
+void LevelLoader::addFactoryGroupList(LevelData* _data, const std::string& _address)
+{
+    FactoryGroupListData* factoryList = factoryGroupListLoader.load(_address);
+    _data->addFactoryGroupList(factoryList);
 }
 
 

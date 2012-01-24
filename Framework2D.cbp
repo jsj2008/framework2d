@@ -503,6 +503,12 @@
 		<Unit filename="Level/EventListLoader.h" />
 		<Unit filename="Level/FactoryData.cpp" />
 		<Unit filename="Level/FactoryData.h" />
+		<Unit filename="Level/FactoryGroupData.cpp" />
+		<Unit filename="Level/FactoryGroupData.h" />
+		<Unit filename="Level/FactoryGroupListData.cpp" />
+		<Unit filename="Level/FactoryGroupListData.h" />
+		<Unit filename="Level/FactoryGroupListLoader.cpp" />
+		<Unit filename="Level/FactoryGroupListLoader.h" />
 		<Unit filename="Level/FactoryListData.cpp" />
 		<Unit filename="Level/FactoryListData.h" />
 		<Unit filename="Level/FactoryListLoader.cpp" />

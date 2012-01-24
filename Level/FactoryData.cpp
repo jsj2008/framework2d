@@ -3,12 +3,13 @@
 #include <AbstractFactory/FactoryLoaders/CppFactoryLoader.h>
 #include <Level/PropertyBagData.h>
 
-FactoryData::FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag)
+FactoryData::FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag, const std::vector<FactoryData*>& _childFactories)
 :loader(nullptr)
 {
     //ctor
     product = _product;
     propertyBag = _propertyBag;
+    childFactories = _childFactories;
     loader.setType(_type);
     loader.setName(_name);
 }

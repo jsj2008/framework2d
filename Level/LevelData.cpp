@@ -2,6 +2,7 @@
 #include <Level/EntityListData.h>
 #include <Level/EventListData.h>
 #include <Level/FactoryListData.h>
+#include <Level/FactoryGroupListData.h>
 #include <Level/Level.h>
 #include <Level/XmlDataSaver.h>
 #include <Physics/PhysicsManager.h>
@@ -46,6 +47,10 @@ Level* LevelData::build()
     for (unsigned int i = 0; i < factoryLists.size(); i++)
     {
         factoryLists[i]->build(factories);
+    }
+    for (unsigned int i = 0; i < factoryGroupLists.size(); i++)
+    {
+        factoryGroupLists[i]->build(factories);
     }
 
     for (unsigned int i = 0; i < entityLists.size(); i++)

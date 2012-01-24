@@ -1,0 +1,13 @@
+Rewrite graphicsmanager
+
+Make a RenderTarget class
+
+Make it redirect to a video stream.
+
+
+
+Game:
+Physiological simulation.
+Non automatic scaling of play, choosing your difficulties to grind on and getting more xp.
+Zoom off edge of screen modulating camera and render transform.
+AI making precision assaults.

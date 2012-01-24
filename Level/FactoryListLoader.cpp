@@ -23,17 +23,28 @@ FactoryListData* FactoryListLoader::virtualLoad(const std::string& _listName, Fa
     TiXmlElement* element = handle.FirstChildElement("Factory").Element();
     for (; element; element = element->NextSiblingElement("Factory"))
     {
-        const char* type = element->Attribute("Type");
-        const char* name = element->Attribute("Name");
-        const char* product = element->Attribute("Product");
-        TiXmlElement* propertyBag = element->FirstChildElement("PropertyBag");
-        PropertyBagData* propertyBagData = new PropertyBagData;
-        XmlPropertyBagLoader loader(propertyBag);
-        loader.readParameters(propertyBagData);
-
-        FactoryData* factory = new FactoryData(type, name, product, propertyBagData);
-        factory->init(_listName + name);
-        list->addFactory(factory);
+        list->addFactory(loadFactory(_listName, element));
     }
     return list;
+}
+
+FactoryData* FactoryListLoader::loadFactory(const std::string& _listName, TiXmlElement* _element)
+{
+    const char* type = _element->Attribute("Type");
+    const char* name = _element->Attribute("Name");
+    const char* product = _element->Attribute("Product");
+    TiXmlElement* propertyBag = _element->FirstChildElement("PropertyBag");
+    PropertyBagData* propertyBagData = new PropertyBagData;
+    XmlPropertyBagLoader loader(propertyBag);
+    loader.readParameters(propertyBagData);
+    std::vector<FactoryData*> childFactories;
+    TiXmlElement* childElement = _element->FirstChildElement("Factory");
+    for (; childElement; childElement = childElement->NextSiblingElement("Factory"))
+    {
+        childFactories.push_back(loadFactory(_listName, childElement));
+    }
+
+    FactoryData* factory = new FactoryData(type, name, product, propertyBagData, childFactories);
+    factory->init(_listName + name);
+    return factory;
 }

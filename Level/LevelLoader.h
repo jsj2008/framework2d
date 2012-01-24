@@ -4,6 +4,7 @@
 #include <Level/EventListLoader.h>
 #include <Level/FactoryListLoader.h>
 #include <Level/EntityListLoader.h>
+#include <Level/FactoryGroupListLoader.h>
 #include <Level/LevelData.h>
 #include <string>
 #include <vector>
@@ -21,11 +22,13 @@ class LevelLoader : public DataLoader<LevelLoader, LevelData>
         EventListLoader eventListLoader;
         FactoryListLoader factoryListLoader;
         EntityListLoader entitylistLoader;
+        FactoryGroupListLoader factoryGroupListLoader;
         XmlResourceProvider* provider;
         std::vector<std::string> getChildrenOfType(const std::string& _type, TiXmlElement* _root, const std::string& _rootAddress);
         void addEventList(LevelData* _data, const std::string& _address);
         void addEntityList(LevelData* _data, const std::string& _address);
         void addFactoryList(LevelData* _data, const std::string& _address);
+        void addFactoryGroupList(LevelData* _data, const std::string& _address);
 };
 
 #endif // LEVELLOADER_H

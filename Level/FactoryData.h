@@ -9,7 +9,7 @@ class AbstractFactories;
 class FactoryData : public LoadedData
 {
     public:
-        FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag);
+        FactoryData(const char* _type, const char* _name, const char* _product, PropertyBagData* _propertyBag, const std::vector<FactoryData*>& _childFactories);
         virtual ~FactoryData();
 
         GameObjectBase* build(AbstractFactories* _factories);
@@ -19,6 +19,7 @@ class FactoryData : public LoadedData
         CppFactoryLoader loader;
         PropertyBagData* propertyBag;
         std::string product;
+        std::vector<FactoryData*> childFactories;
 };
 
 #endif // FACTORYDATA_H

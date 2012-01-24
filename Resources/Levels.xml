@@ -74,6 +74,7 @@
 	  </PropertyBag>
 	</Factory>
       </FactoryList>
+      
       <EntityList Name="Entities">
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
