@@ -64,18 +64,15 @@ struct b2FixtureDef
 	b2FixtureDef()
 	{
 		shape = NULL;
-		userData = NULL;
 		friction = 0.2f;
 		restitution = 0.0f;
 		density = 0.0f;
+		bodyPart = NULL;
 	}
 
 	/// The shape, this must be set. The shape will be cloned, so you
 	/// can create the shape on the stack.
 	const b2Shape* shape;
-
-	/// Use this to store application specific fixture data.
-	void* userData;
 
 	/// The friction coefficient, usually in the range [0,1].
 	float32 friction;

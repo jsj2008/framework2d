@@ -244,6 +244,8 @@
 		<Unit filename="Entities/Bubbles/UpwardsGravityBubble.h" />
 		<Unit filename="Entities/CollisionDatabase.cpp" />
 		<Unit filename="Entities/CollisionDatabase.h" />
+		<Unit filename="Entities/CollisionResponse.cpp" />
+		<Unit filename="Entities/CollisionResponse.h" />
 		<Unit filename="Entities/CollisionResponseFactory.cpp" />
 		<Unit filename="Entities/CollisionResponseFactory.h" />
 		<Unit filename="Entities/Crate.cpp" />

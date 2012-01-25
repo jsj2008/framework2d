@@ -2,7 +2,7 @@
 #define COLLISIONRESPONSEFACTORY_H
 
 #include <AbstractFactory/AbstractFactory.h>
-#include <Entities/CollisionDatabase.h>
+#include <Entities/CollisionResponse.h>
 
 class CollisionResponseFactory : public AbstractFactory<CollisionResponse, CollisionResponseFactory>
 {
@@ -17,7 +17,7 @@ class CollisionResponseFactory : public AbstractFactory<CollisionResponse, Colli
         CollisionResponse* useFactory(FactoryParameters* _parameters);
     protected:
     private:
-        CollisionResponse* handle;
+        CollisionDatabaseHandle* handle;
 };
 
 #endif // COLLISIONRESPONSEFACTORY_H

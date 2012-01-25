@@ -12,9 +12,8 @@ CollisionResponseFactory::~CollisionResponseFactory()
 
 void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
-    std::string handleName = loader->get<std::string>("Name", "Default");
+    std::string handleName = loader->getName();
     handle = factories->getCollisionDatabase()->getHandle(handleName);
-    attachChild(handle); /// FIXME this is silly
 
     std::vector<std::string> filters = loader->getArray<std::string>("filters", {});
     for (unsigned int i = 0; i < filters.size(); i++)
@@ -37,5 +36,5 @@ void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* fa
 }
 CollisionResponse* CollisionResponseFactory::useFactory(FactoryParameters* _parameters)
 {
-    return handle;
+    return new CollisionResponse(handle);
 }

@@ -11,20 +11,19 @@ CollisionDatabase::CollisionDatabase()
     //ctor
     contactFactories = nullptr;
 }
-
 CollisionDatabase::~CollisionDatabase()
 {
     //dtor
 }
 
-CollisionResponse::CollisionResponse(CollisionDatabase* _database, unsigned short _id)
+CollisionDatabaseHandle::CollisionDatabaseHandle(CollisionDatabase* _database, unsigned short _id)
 {
     //ctor
     database = _database;
     id = _id;
 }
 
-CollisionResponse::~CollisionResponse()
+CollisionDatabaseHandle::~CollisionDatabaseHandle()
 {
 
 }
@@ -41,34 +40,35 @@ Contact* CollisionDatabase::createContact(unsigned short _categoryA, unsigned sh
     return nullptr;
 }
 
-void CollisionResponse::addFilter(const std::string& _collisionName)
+void CollisionDatabaseHandle::addFilter(const std::string& _collisionName)
 {
-    CollisionResponse* handle = database->getHandle(_collisionName);
+    CollisionDatabaseHandle* handle = database->getHandle(_collisionName);
     database->addFilter(id, handle->id);
 }
-void CollisionResponse::addEvent(const std::string& _collisionName, const std::string& _actionName)
+void CollisionDatabaseHandle::addEvent(const std::string& _collisionName, const std::string& _actionName)
 {
-    CollisionResponse* other = database->getHandle(_collisionName);
+    CollisionDatabaseHandle* other = database->getHandle(_collisionName);
     ActionHandle* action = GameObjectType::staticGetActionHandle(_actionName);
     assert(action);
     database->addEvent(id, other->getId(), action);
-    delete other;
 }
-void CollisionResponse::setDefaultEvent(const std::string& _actionName)
+void CollisionDatabaseHandle::setDefaultEvent(const std::string& _actionName)
 {
     database->setDefaultEvent(id, GameObjectType::staticGetActionHandle(_actionName));
 }
 
-CollisionResponse* CollisionDatabase::getHandle(const std::string& _collisionName)
+CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collisionName)
 {
+    unsigned short oldSize = database.size();
     auto iter = database.find(_collisionName);
+    CollisionDatabaseHandle* handle;
     if (iter != database.end())
     {
-        return iter->second;
+        handle = iter->second;
     }
     else
     {
-        CollisionResponse* handle = new CollisionResponse(this, database.size());
+        handle = new CollisionDatabaseHandle(this, oldSize);
         database[_collisionName] = handle;
         unsigned short size = database.size();
 
@@ -95,9 +95,8 @@ CollisionResponse* CollisionDatabase::getHandle(const std::string& _collisionNam
         }
         delete[] contactFactories;
         contactFactories = newContactFactories;
-
-        return handle;
     }
+    return handle;
 }
 
 void CollisionDatabase::addFilter(unsigned short _a, unsigned short _b)
@@ -115,10 +114,6 @@ void CollisionDatabase::setDefaultEvent(unsigned short _a, ActionHandle* _action
         contactFactories[_a][i]->setEvent(_action, _a < i);
 }
 
-void CollisionResponse::registerActions(GameObjectType* _type)
-{
-
-}
 
 
 

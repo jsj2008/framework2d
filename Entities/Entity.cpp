@@ -50,4 +50,5 @@ void Entity::registerActions(GameObjectType* _type)
 
 void Entity::floatationAction(CollisionObject* _object)
 {
+    std::cout << "Floating" << std::endl;
 }

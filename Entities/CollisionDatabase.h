@@ -4,28 +4,24 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <GameObject.h>
 class b2Fixture;
 class CollisionDatabase;
 class CollisionObject;
 class ContactFactory;
 class Contact;
 class b2Contact;
+class ActionHandle;
 
-class CollisionResponse : public GameObject<CollisionResponse>
+class CollisionDatabaseHandle
 {
     public:
-        CollisionResponse(CollisionDatabase* _database, unsigned short _id);
-        ~CollisionResponse();
+        CollisionDatabaseHandle(CollisionDatabase* _database, unsigned short _id);
+        ~CollisionDatabaseHandle();
         void addFilter(const std::string& _collisionName);
         void addEvent(const std::string& _collisionName, const std::string& _actionName);
         void setDefaultEvent(const std::string& _actionName);
         unsigned short getId(){return id;}
-        static void registerActions(GameObjectType* _type);
-        static std::string name()
-        {
-            return "CollisionResponse";
-        }
+        CollisionDatabase* getDatabase(){return database;}
     private:
         CollisionDatabase* database;
         unsigned short id;
@@ -36,14 +32,14 @@ class CollisionDatabase
     public:
         CollisionDatabase();
         virtual ~CollisionDatabase();
-        CollisionResponse* getHandle(const std::string& _collisionName);
+        CollisionDatabaseHandle* getHandle(const std::string& _collisionName);
         Contact* createContact(unsigned short _categoryA, unsigned short _categoryB);
     protected:
     private:
-        std::unordered_map<std::string, CollisionResponse*> database;
+        std::unordered_map<std::string, CollisionDatabaseHandle*> database;
         ContactFactory*** contactFactories;
 
-        friend class CollisionResponse;
+        friend class CollisionDatabaseHandle;
         void addFilter(unsigned short _a, unsigned short _b);
         void addEvent(unsigned short _a, unsigned short _b, ActionHandle* _action);
         void setDefaultEvent(unsigned short _a, ActionHandle* _action);

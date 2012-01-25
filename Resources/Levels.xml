@@ -5,24 +5,28 @@
       <EventListRef>Levels.xml/Level1/Events</EventListRef>
       <FactoryList Name="Factories">
 
-	<Factory Name="Projectile" Type="CollisionResponseFactory" Product="CollisionResponse">
-	  <PropertyBag>
-	    <Property Type="string" Name="Name" Value="Projectile" />
-	    <Property Type="string" Name="defaultAction" Value="Kill" />
-	    <Array Type="string" Name="filters">
-	      <Member Value="Projectile" />
-	    </Array>
-	  </PropertyBag>
-	</Factory>
 	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
-	    <Property Type="string" Name="Name" Value="Player" />
 	    <Array Type="string" Name="event__Collisions">
-	      <Member Value="WaterVolume" />
+	      <Member Value="WaterVolumeResponse" />
 	    </Array>
 	    <Array Type="string" Name="event__Actions">
 	      <Member Value="Floatation" />
 	    </Array>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="Crate" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Array Type="string" Name="event__Collisions">
+	      <Member Value="WaterVolumeResponse" />
+	    </Array>
+	    <Array Type="string" Name="event__Actions">
+	      <Member Value="Floatation" />
+	    </Array>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterVolumeResponse" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
 	    <Array Type="string" Name="filters">
 	      <Member Value="Projectile" />
 	    </Array>
@@ -56,11 +60,6 @@
 	    <Property Type="string" Name="body" Value="PlayerBody" /> 
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
-	  <PropertyBag>
-	    <Property Type="float" Name="density" Value="10" />
-	  </PropertyBag>
-	</Factory>
 	<Factory Name="LevelGeometryBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
@@ -68,15 +67,37 @@
 	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="StaticWaterBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="WaterVolumeResponse" />
+	    <Property Type="int" Name="bodyType" Value="0" />
+	    <Property Type="int" Name="shapeType" Value="2" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrateBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="Crate" />
+	  </PropertyBag>
+	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="body" Value="LevelGeometryBody" />
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="StaticWater" Type="LevelGeometryFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="StaticWaterBody" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="DenseCrateBody" />
+	  </PropertyBag>
+	</Factory>
       </FactoryList>
       
       <EntityList Name="Entities">
-	<Entity Type="LevelGeometry">
+	<Entity Type="StaticWater">
 	  <PropertyBag>
 	    <Array Type="Vec2f" Name="points">
 	      <Member Value="-6.46667 17.4 " />
@@ -86,19 +107,15 @@
 	    </Array>
 	  </PropertyBag>
 	</Entity>
-	<Entity Type="DenseCrate">
-	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="10 0" />
-	  </PropertyBag>
-	</Entity>      
-	<Entity Type="DenseCrate">
-	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="10 0" />
-	  </PropertyBag>
-	</Entity>
 	<Entity Type="PlayerFactory">
 	  <PropertyBag>
 	    <Property Type="unsigned short" Name="entityKey" Value="0" />
+	    <Property Type="Vec2f" Name="position" Value="-10, -50" />
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="DenseCrate">
+	  <PropertyBag>
+	    <Property Type="Vec2f" Name="position" Value="10, -50" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

@@ -1,6 +1,7 @@
 #include "Contact.h"
 #include <Physics/CollisionObject.h>
 #include <Physics/BodyParts/BodyPart.h>
+#include <Entities/Entity.h>
 #include <Box2D/Box2D.h>
 
 Contact::Contact(bool _inverted, bool _collides, ActionHandle* _actionA, ActionHandle* _actionB)
@@ -41,13 +42,13 @@ bool Contact::preSolveInterface(const b2Manifold* _oldManifold) /// Returns filt
     ManifoldInterface oldManifold(_oldManifold, inverted);
     if (!inverted)
     {
-        BodyPart* objectA = getObjectA();
+        Entity* objectA = getObjectA();
         if (actionA != nullptr && objectA != nullptr) /// FIXME remove the null checks on object, they should always have one
         {
             CollisionObject object(contact->GetFixtureA(), contact->GetFixtureB());
             actionA->execute<CollisionObject>(objectA, &object);
         }
-        BodyPart* objectB = getObjectB();
+        Entity* objectB = getObjectB();
         if (actionB != nullptr && objectB != nullptr)
         {
             CollisionObject object(contact->GetFixtureB(), contact->GetFixtureA());
@@ -97,15 +98,15 @@ void Contact::insertInFront(Contact* _next)
         _next->prev = this;
     }
 }
-BodyPart* Contact::getObjectA()
+Entity* Contact::getObjectA()
 {
     b2Fixture* fixture = (inverted)? contact->GetFixtureB() : contact->GetFixtureA();
-    return fixture->getBodyPart();
+    return fixture->getBodyPart()->getEntity();
 }
-BodyPart* Contact::getObjectB()
+Entity* Contact::getObjectB()
 {
     b2Fixture* fixture = (inverted)? contact->GetFixtureA() : contact->GetFixtureB();
-    return fixture->getBodyPart();
+    return fixture->getBodyPart()->getEntity();
 }
 
 

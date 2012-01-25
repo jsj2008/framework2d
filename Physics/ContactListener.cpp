@@ -2,6 +2,7 @@
 #include <Entities/Entity.h>
 #include <Physics/CollisionObject.h>
 #include <Entities/CollisionDatabase.h>
+#include <Entities/CollisionResponse.h>
 #include <Physics/ContactFactory.h>
 #include <Physics/Contact.h>
 #include <cstring>

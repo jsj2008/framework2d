@@ -34,6 +34,7 @@ b2Fixture::b2Fixture()
 	m_proxies = NULL;
 	m_proxyCount = 0;
 	m_shape = NULL;
+	bodyPart = NULL;
 	m_density = 0.0f;
 }
 
@@ -60,6 +61,8 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 	m_proxyCount = 0;
 
 	m_density = def->density;
+
+	bodyPart = def->bodyPart;
 }
 
 void b2Fixture::Destroy(b2BlockAllocator* allocator)

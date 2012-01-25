@@ -1,6 +1,7 @@
 #include "SingleFixtureBodyPartFactory.h"
 #include <Physics/PhysicsManager.h>
 #include <Physics/BodyParts/SingleFixtureBodyPart.h>
+#include <Entities/CollisionResponse.h>
 
 SingleFixtureBodyPartFactory::SingleFixtureBodyPartFactory()
 {
