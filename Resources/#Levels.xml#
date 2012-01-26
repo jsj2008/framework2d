@@ -5,8 +5,18 @@
       <EventListRef>Levels.xml/Level1/Events</EventListRef>
       <FactoryList Name="Factories">
 
+	<Factory Name="Projectile" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Projectile" />
+	    <Property Type="string" Name="defaultAction" Value="Kill" />
+	    <Array Type="string" Name="filters">
+	      <Member Value="Projectile" />
+	    </Array>
+	  </PropertyBag>
+	</Factory>
 	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Player" />
 	    <Array Type="string" Name="event__Collisions">
 	      <Member Value="WaterVolumeResponse" />
 	    </Array>
@@ -14,11 +24,13 @@
 	      <Member Value="Floatation" />
 	    </Array>
 	    <Array Type="string" Name="filters">
+	      <Member Value="Projectile" />
 	    </Array>
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="Crate" Type="CollisionResponseFactory" Product="CollisionResponse">
+	<Factory Name="CrateResponse" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Crate" />
 	    <Array Type="string" Name="event__Collisions">
 	      <Member Value="WaterVolumeResponse" />
 	    </Array>
@@ -29,9 +41,9 @@
 	</Factory>
 	<Factory Name="WaterVolumeResponse" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
+	    <Property Type="string" Name="Name" Value="Water" />
 	    <Array Type="string" Name="filters">
-	      <Member Value="Player" />
-	      <Member Value="Crate" />
+	      <Member Value="Projectile" />
 	    </Array>
 	  </PropertyBag>
 	</Factory>
@@ -52,27 +64,21 @@
 	    <Property Type="string" Name="actionFactory" Value="FireBulletAction" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="PlayerWheelBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
-	  <PropertyBag>
-	    <Property Type="string" Name="wheel" Value="PlayerMainBody" />
-	    <Property Type="string" Name="body" Value="PlayerWheelBody" />
-	  </PropertyBag>
-	</Factory>
-	<Factory Name="PlayerMainBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
-	  <PropertyBag>
-	    <Property Type="string" Name="collisionResponse" Value="Player" />
-	  </PropertyBag>
-	</Factory>
 	<Factory Name="PlayerBody" Type="CharacterBodyFactory" Product="BodyPart">
 	  <PropertyBag>
-	    <Property Type="string" Name="body" Value="PlayerMainBody" />
-	    <Property Type="string" Name="wheel" Value="PlayerWheelBody" />
+	    <Property Type="string" Name="collisionResponse" Value="Player" /> 
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="PlayerFactory" Type="AIEntityFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="weapon" Value="Pistol" />
 	    <Property Type="string" Name="body" Value="PlayerBody" /> 
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="float" Name="density" Value="10" />
+	    <Property Type="string" Name="collisionResponse" Value="CrateResponse" /> 
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="LevelGeometryBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
@@ -89,11 +95,6 @@
 	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="DenseCrateBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
-	  <PropertyBag>
-	    <Property Type="string" Name="collisionResponse" Value="Crate" />
-	  </PropertyBag>
-	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="body" Value="LevelGeometryBody" />
@@ -104,27 +105,34 @@
 	    <Property Type="string" Name="body" Value="StaticWaterBody" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
-	  <PropertyBag>
-	    <Property Type="string" Name="body" Value="DenseCrateBody" />
-	  </PropertyBag>
-	</Factory>
       </FactoryList>
       
       <EntityList Name="Entities">
 	<Entity Type="StaticWater">
 	  <PropertyBag>
 	    <Array Type="Vec2f" Name="points">
-	      <Member Value="-12.46667 17.4 " />
+	      <Member Value="-5 -5 " />
+	      <Member Value="5 -5" />
+	      <Member Value="5 5" />
+	      <Member Value="-5 5" />
+	    </Array>
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="LevelGeometry">
+	  <PropertyBag>
+	    <Array Type="Vec2f" Name="points">
+	      <Member Value="-6.46667 17.4 " />
 	      <Member Value="13.4 18.1333 " />
 	      <Member Value="14 24.2667 " />
 	      <Member Value="-8.4 23.7333 " />
 	    </Array>
 	  </PropertyBag>
 	</Entity>
-	<Entity Type="DenseCrate">
+	<Entity Type="PlayerFactory">
 	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="0, -50" />
+	    <Property Type="unsigned short" Name="entityKey" Value="0" />
+	    <Property Type="Vec2f" Name="position" Value="0, -20
+" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

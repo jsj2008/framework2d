@@ -187,7 +187,7 @@ void TemplateActionWithObjectHandle<DerivedObject, EventObject>::execute(GameObj
     (object->*action)(eventObject);
 }
 
-template <typename DerivedObject>
+/*template <typename DerivedObject>
 void GameObject<DerivedObject>::print(std::string* _output)
 {
     _output->append(getObjectName() + "\nChildren:\n");
@@ -201,7 +201,7 @@ void GameObject<DerivedObject>::print(std::string* _output)
     {
         _output->append(iter->first);
     }
-}
+}*/
 
 #endif // GAMEOBJECT_H
 

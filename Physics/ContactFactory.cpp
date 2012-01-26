@@ -4,7 +4,7 @@
 ContactFactory::ContactFactory()
 {
     //ctor
-    isFiltered = false;
+    isFiltered = true;
     actionA = actionB = nullptr;
 }
 
@@ -15,12 +15,12 @@ ContactFactory::~ContactFactory()
 
 Contact* ContactFactory::createContact(bool _inverted)
 {
-    return new Contact(_inverted, !isFiltered, actionA, actionB);
+    return new Contact(_inverted, this);
 }
 
 void ContactFactory::filter()
 {
-    isFiltered = true;
+    isFiltered = false;
 }
 
 void ContactFactory::setEvent(ActionHandle* _action, bool _A)

@@ -72,6 +72,8 @@ void ContactListener::PreSolve(b2Contact* _contact, const b2Manifold* oldManifol
     if (contact != nullptr)
     {
         _contact->SetEnabled(contact->preSolveInterface(oldManifold));
+        //_contact->SetEnabled(false);
+        //contact->preSolveInterface(oldManifold);
     }
 }
 

@@ -22,6 +22,7 @@ class CollisionDatabaseHandle
         void setDefaultEvent(const std::string& _actionName);
         unsigned short getId(){return id;}
         CollisionDatabase* getDatabase(){return database;}
+        bool getFiltered(unsigned short _b);
     private:
         CollisionDatabase* database;
         unsigned short id;
@@ -42,6 +43,7 @@ class CollisionDatabase
         friend class CollisionDatabaseHandle;
         void addFilter(unsigned short _a, unsigned short _b);
         void addEvent(unsigned short _a, unsigned short _b, ActionHandle* _action);
+        bool getFiltered(unsigned short _a, unsigned short _b);
         void setDefaultEvent(unsigned short _a, ActionHandle* _action);
 };
 

@@ -27,6 +27,11 @@ CollisionDatabaseHandle::~CollisionDatabaseHandle()
 {
 
 }
+bool CollisionDatabaseHandle::getFiltered(unsigned short _b)
+{
+    return database->getFiltered(getId(), _b);
+}
+
 
 Contact* CollisionDatabase::createContact(unsigned short _categoryA, unsigned short _categoryB)
 {
@@ -56,7 +61,7 @@ void CollisionDatabaseHandle::setDefaultEvent(const std::string& _actionName)
 {
     database->setDefaultEvent(id, GameObjectType::staticGetActionHandle(_actionName));
 }
-
+#include <iostream>
 CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collisionName)
 {
     unsigned short oldSize = database.size();
@@ -68,6 +73,7 @@ CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collis
     }
     else
     {
+        std::cout << "New collision response: " + _collisionName << std::endl;
         handle = new CollisionDatabaseHandle(this, oldSize);
         database[_collisionName] = handle;
         unsigned short size = database.size();
@@ -104,6 +110,10 @@ void CollisionDatabase::addFilter(unsigned short _a, unsigned short _b)
     contactFactories[_a][_b]->filter();
     contactFactories[_b][_a]->filter();
 }
+bool CollisionDatabase::getFiltered(unsigned short _a, unsigned short _b)
+{
+    return contactFactories[_a][_b]->getFiltered();
+}
 void CollisionDatabase::addEvent(unsigned short _a, unsigned short _b, ActionHandle* _action)
 {
     contactFactories[_a][_b]->setEvent(_action, _a < _b);
@@ -113,6 +123,8 @@ void CollisionDatabase::setDefaultEvent(unsigned short _a, ActionHandle* _action
     for (unsigned int i = 0; i < database.size(); i++)
         contactFactories[_a][i]->setEvent(_action, _a < i);
 }
+
+
 
 
 

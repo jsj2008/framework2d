@@ -1,18 +1,17 @@
 #include "Contact.h"
 #include <Physics/CollisionObject.h>
+#include <Physics/ContactFactory.h>
 #include <Physics/BodyParts/BodyPart.h>
 #include <Entities/Entity.h>
 #include <Box2D/Box2D.h>
 
-Contact::Contact(bool _inverted, bool _collides, ActionHandle* _actionA, ActionHandle* _actionB)
+Contact::Contact(bool _inverted, ContactFactory* _factoryHandle)
 {
     //ctor
     contact = nullptr;
     inverted = _inverted;
-    collides = _collides;
     next = prev = nullptr;
-    actionA = _actionA;
-    actionB = _actionB;
+    factoryHandle = _factoryHandle;
 }
 
 Contact::~Contact()
@@ -43,35 +42,35 @@ bool Contact::preSolveInterface(const b2Manifold* _oldManifold) /// Returns filt
     if (!inverted)
     {
         Entity* objectA = getObjectA();
-        if (actionA != nullptr && objectA != nullptr) /// FIXME remove the null checks on object, they should always have one
+        if (factoryHandle->getActionA() != nullptr && objectA != nullptr) /// FIXME remove the null checks on object, they should always have one
         {
             CollisionObject object(contact->GetFixtureA(), contact->GetFixtureB());
-            actionA->execute<CollisionObject>(objectA, &object);
+            factoryHandle->getActionA()->execute<CollisionObject>(objectA, &object);
         }
         Entity* objectB = getObjectB();
-        if (actionB != nullptr && objectB != nullptr)
+        if (factoryHandle->getActionB() != nullptr && objectB != nullptr)
         {
             CollisionObject object(contact->GetFixtureB(), contact->GetFixtureA());
-            actionB->execute<CollisionObject>(objectB, &object);
+            factoryHandle->getActionB()->execute<CollisionObject>(objectB, &object);
         }
     }
     else
     {
         GameObjectBase* objectA = getObjectA();
-        if (actionA != nullptr && objectA != nullptr)
+        if (factoryHandle->getActionA() != nullptr && objectA != nullptr)
         {
             CollisionObject object(contact->GetFixtureB(), contact->GetFixtureA());
-            actionA->execute<CollisionObject>(objectA, &object);
+            factoryHandle->getActionA()->execute<CollisionObject>(objectA, &object);
         }
         GameObjectBase* objectB = getObjectB();
-        if (actionB != nullptr && objectB != nullptr)
+        if (factoryHandle->getActionB() != nullptr && objectB != nullptr)
         {
             CollisionObject object(contact->GetFixtureA(), contact->GetFixtureB());
-            actionB->execute<CollisionObject>(objectB, &object);
+            factoryHandle->getActionB()->execute<CollisionObject>(objectB, &object);
         }
     }
     preSolve(&oldManifold);
-    return collides;
+    return factoryHandle->getFiltered();
 }
 
 void Contact::postSolveInterface(const b2ContactImpulse* _impulse) /// Returns filtering flag

@@ -13,6 +13,9 @@ class ContactFactory
         Contact* createContact(bool _inverted);
         void filter();
         void setEvent(ActionHandle* _action, bool _A);
+        bool getFiltered(){return isFiltered;}
+        ActionHandle* getActionA(){return actionA;}
+        ActionHandle* getActionB(){return actionB;}
     protected:
     private:
         bool isFiltered;

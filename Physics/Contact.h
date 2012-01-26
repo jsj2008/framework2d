@@ -6,11 +6,12 @@ class Entity;
 class b2Contact;
 class b2Manifold;
 class b2ContactImpulse;
+class ContactFactory;
 
 class Contact
 {
     public:
-        Contact(bool _inverted, bool _collides, ActionHandle* _actionA, ActionHandle* _actionB);
+        Contact(bool _inverted, ContactFactory* _factoryHandle);
         void setContact(b2Contact* _contact);
         virtual ~Contact();
     protected:
@@ -39,8 +40,7 @@ class Contact
     private:
         b2Contact* contact;
         bool inverted;
-        bool collides;
-        ActionHandle* actionA,* actionB;
+        ContactFactory* factoryHandle;
 
         friend class ContactListener;
         bool preSolveInterface(const b2Manifold* _oldManifold); /// Returns filtering flag

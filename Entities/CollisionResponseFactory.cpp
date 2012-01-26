@@ -13,6 +13,8 @@ CollisionResponseFactory::~CollisionResponseFactory()
 void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     std::string handleName = loader->getName();
+    if (handleName == "")
+        handleName = "CollisionResponse";
     handle = factories->getCollisionDatabase()->getHandle(handleName);
 
     std::vector<std::string> filters = loader->getArray<std::string>("filters", {});
