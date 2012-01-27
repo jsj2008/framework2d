@@ -17,6 +17,7 @@
 */
 
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Dynamics/b2Fixture.h>
 #include <new>
 
 b2Shape* b2PolygonShape::Clone(b2BlockAllocator* allocator) const
@@ -155,7 +156,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 			{
 				continue;
 			}
-			
+
 			b2Vec2 r = m_vertices[j] - m_vertices[i1];
 
 			// If this crashes, your polygon is non-convex, has colinear edges,
@@ -186,6 +187,120 @@ bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 	return true;
 }
 
+#define POINT_AT(_n_) _points[_n_%(_size)]
+
+float calculateArea(b2Vec2* _points, int32 _size)
+{
+    float area = 0.0f;
+    for (int32 i = 1; i != _size-1; i++)
+    {
+        float lowestX = FLT_MAX;
+        float highestX = -FLT_MAX;
+        float lowestY = FLT_MAX;
+        float highestY = -FLT_MAX;
+        int32 points[3] = {0, i, i+1};
+        for (int32 ii = 0; ii != 3; ii++)
+        {
+            b2Vec2& v = POINT_AT(points[ii]);
+            if (v.x < lowestX)
+                lowestX = v.x;
+            if (v.x > highestX)
+                highestX = v.x;
+            if (v.y < lowestY)
+                lowestY = v.y;
+            if (v.y > highestY)
+                highestY = v.y;
+        }
+        float thisArea = (highestX - lowestX) * (highestY - lowestY) *0.5f;
+        assert(thisArea > 0.0f);
+        area += thisArea;
+    }
+    return area;
+}
+
+#undef POINT_AT
+#define PUSH_POINT(_x_) shapeBelowLine[verticesPushed] = _x_; \
+verticesPushed++;
+
+int32 getIndex(int32 _n, int32 _max)
+{
+    if (_n < 0)
+        _n += _max;
+    return _n%_max;
+}
+#define POINT_AT(_n_) vertices[getIndex(_n_, m_vertexCount)]
+
+float xOfGivenYInLine(b2Vec2 _a, b2Vec2 _b, float _y)
+{
+    float fraction = (_b.y - _a.y) / (_y - _a.y);
+    return ((_b.x - _a.x) * fraction) + _a.x;
+}
+
+float b2PolygonShape::getArea()
+{
+    return calculateArea(m_vertices, m_vertexCount);
+}
+#include <iostream>
+float b2PolygonShape::getAreaBelowLine(b2Fixture* _fixture, float _height)
+{
+    static int count = 0;
+    count++;
+    if (count == 43)
+    {
+        std::cout <<"Crash" << std::endl;
+    }
+    b2Vec2 vertices[m_vertexCount];
+    for (int32 i = 0; i != m_vertexCount; i++)
+    {
+        vertices[i] = _fixture->GetBody()->GetWorldPoint(m_vertices[i]);
+    }
+    int32 verticesBelowLine = 0;
+    int32 shapeCuttingStartPoint = -1;
+    {
+        bool lastPointSubmerged = vertices[m_vertexCount-1].y > _height;
+        for (int32 i = 0; i != m_vertexCount; i++)
+        {
+            if (vertices[i].y > _height)
+            {
+                verticesBelowLine++;
+                if (!lastPointSubmerged)
+                {
+                    assert(shapeCuttingStartPoint == -1);
+                    shapeCuttingStartPoint = i;
+                }
+                lastPointSubmerged = true;
+            }
+            else
+            {
+                lastPointSubmerged = false;
+            }
+        }
+    }
+    if (verticesBelowLine == 0)
+        return 0.0f;
+    if (verticesBelowLine == m_vertexCount)
+        return getArea();
+
+    b2Vec2 shapeBelowLine[verticesBelowLine+2];
+    int32 verticesPushed = 0;
+    {
+        float x = xOfGivenYInLine(POINT_AT(shapeCuttingStartPoint-1), vertices[shapeCuttingStartPoint], _height);
+        PUSH_POINT(b2Vec2(x, _height))
+    }
+    for (int32 i = 0; i != verticesBelowLine; i++)
+    {
+        int32 index = i + shapeCuttingStartPoint;
+        index = index% m_vertexCount;
+        PUSH_POINT(POINT_AT(index))
+    }
+    {
+        int32 endPoint = shapeCuttingStartPoint + verticesBelowLine -1;
+        float x = xOfGivenYInLine(POINT_AT(endPoint), POINT_AT(endPoint+1), _height);
+        PUSH_POINT(b2Vec2(x, _height))
+    }
+    return calculateArea(shapeBelowLine, verticesBelowLine+2);
+}
+
 bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 								const b2Transform& xf, int32 childIndex) const
 {
@@ -209,7 +324,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		float32 denominator = b2Dot(m_normals[i], d);
 
 		if (denominator == 0.0f)
-		{	
+		{
 			if (numerator < 0.0f)
 			{
 				return false;
@@ -355,7 +470,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// Inertia tensor relative to the local origin (point s).
 	massData->I = density * I;
-	
+
 	// Shift to center of mass then to original body origin.
 	massData->I += massData->mass * (b2Dot(massData->center, massData->center) - b2Dot(center, center));
 }

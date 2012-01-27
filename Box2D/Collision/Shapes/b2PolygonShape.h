@@ -69,6 +69,10 @@ public:
 	/// Get the vertex count.
 	int32 GetVertexCount() const { return m_vertexCount; }
 
+
+	float getAreaBelowLine(b2Fixture* _fixture, float _height);
+	float getArea();
+
 	/// Get a vertex by index.
 	const b2Vec2& GetVertex(int32 index) const;
 

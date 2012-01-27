@@ -2,7 +2,7 @@
 #include <Box2D/Box2D.h>
 #include <Entities/CollisionResponse.h>
 
-CollisionObject::CollisionObject(b2Fixture* _me, b2Fixture* _other)
+CollisionObject::CollisionObject(BodyPart* _me, BodyPart* _other)
 {
     //ctor
     me = _me;
@@ -14,8 +14,3 @@ CollisionObject::~CollisionObject()
     //dtor
 }
 
-unsigned short CollisionObject::getCollisionCategory()
-{
-    CollisionResponse* response = other->GetFilterData().response;
-    return response->getId();
-}

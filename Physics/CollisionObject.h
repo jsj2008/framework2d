@@ -1,18 +1,19 @@
 #ifndef COLLISIONOBJECT_H
 #define COLLISIONOBJECT_H
 
-class b2Fixture;
+class BodyPart;
+
 class CollisionObject
 {
     public:
-        CollisionObject(b2Fixture* _me, b2Fixture* _other);
+        CollisionObject(BodyPart* _me, BodyPart* _other);
         virtual ~CollisionObject();
         unsigned short getCollisionCategory();
-        b2Fixture* getMe(){return me;}
-        b2Fixture* getOther(){return other;}
+        BodyPart* getMe(){return me;}
+        BodyPart* getOther(){return other;}
     protected:
     private:
-        b2Fixture* me,* other;
+        BodyPart* me,* other;
 };
 
 #endif // COLLISIONOBJECT_H

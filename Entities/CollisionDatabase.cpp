@@ -61,7 +61,7 @@ void CollisionDatabaseHandle::setDefaultEvent(const std::string& _actionName)
 {
     database->setDefaultEvent(id, GameObjectType::staticGetActionHandle(_actionName));
 }
-#include <iostream>
+
 CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collisionName)
 {
     unsigned short oldSize = database.size();
@@ -73,7 +73,6 @@ CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collis
     }
     else
     {
-        std::cout << "New collision response: " + _collisionName << std::endl;
         handle = new CollisionDatabaseHandle(this, oldSize);
         database[_collisionName] = handle;
         unsigned short size = database.size();

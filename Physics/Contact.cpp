@@ -44,13 +44,13 @@ bool Contact::preSolveInterface(const b2Manifold* _oldManifold) /// Returns filt
         Entity* objectA = getObjectA();
         if (factoryHandle->getActionA() != nullptr && objectA != nullptr) /// FIXME remove the null checks on object, they should always have one
         {
-            CollisionObject object(contact->GetFixtureA(), contact->GetFixtureB());
+            CollisionObject object(contact->GetFixtureA()->getBodyPart(), contact->GetFixtureB()->getBodyPart());
             factoryHandle->getActionA()->execute<CollisionObject>(objectA, &object);
         }
         Entity* objectB = getObjectB();
         if (factoryHandle->getActionB() != nullptr && objectB != nullptr)
         {
-            CollisionObject object(contact->GetFixtureB(), contact->GetFixtureA());
+            CollisionObject object(contact->GetFixtureB()->getBodyPart(), contact->GetFixtureA()->getBodyPart());
             factoryHandle->getActionB()->execute<CollisionObject>(objectB, &object);
         }
     }
@@ -59,13 +59,13 @@ bool Contact::preSolveInterface(const b2Manifold* _oldManifold) /// Returns filt
         GameObjectBase* objectA = getObjectA();
         if (factoryHandle->getActionA() != nullptr && objectA != nullptr)
         {
-            CollisionObject object(contact->GetFixtureB(), contact->GetFixtureA());
+            CollisionObject object(contact->GetFixtureB()->getBodyPart(), contact->GetFixtureA()->getBodyPart());
             factoryHandle->getActionA()->execute<CollisionObject>(objectA, &object);
         }
         GameObjectBase* objectB = getObjectB();
         if (factoryHandle->getActionB() != nullptr && objectB != nullptr)
         {
-            CollisionObject object(contact->GetFixtureA(), contact->GetFixtureB());
+            CollisionObject object(contact->GetFixtureA()->getBodyPart(), contact->GetFixtureB()->getBodyPart());
             factoryHandle->getActionB()->execute<CollisionObject>(objectB, &object);
         }
     }

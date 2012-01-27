@@ -23,6 +23,8 @@
 #include <Box2D/Common/b2Math.h>
 #include <Box2D/Collision/b2Collision.h>
 
+class b2Fixture;
+
 /// This holds the mass data computed for a shape.
 struct b2MassData
 {
@@ -42,7 +44,7 @@ struct b2MassData
 class b2Shape
 {
 public:
-	
+
 	enum Type
 	{
 		e_circle = 0,
@@ -89,13 +91,27 @@ public:
 	/// @param density the density in kilograms per meter squared.
 	virtual void ComputeMass(b2MassData* massData, float32 density) const = 0;
 
+	virtual float getAreaBelowLine(b2Fixture* _fixture, float _height); /// Default implementation throws an error
+	virtual float getArea();
+
 	Type m_type;
 	float32 m_radius;
 };
 
+#include <cassert>
+
 inline b2Shape::Type b2Shape::GetType() const
 {
 	return m_type;
+}
+
+inline float b2Shape::getAreaBelowLine(b2Fixture* _fixture, float _height)
+{
+    assert(false);
+}
+inline float b2Shape::getArea()
+{
+    assert(false);
 }
 
 #endif

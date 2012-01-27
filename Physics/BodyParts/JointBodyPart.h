@@ -12,6 +12,7 @@ class JointBodyPart : public BodyPart
         void setMotorSpeed(float _speed);
         void setMotorEnabled(bool _enabled);
         void setMotorTorque(float _torque);
+        float getVolumeAboveLine(float _height){return 0;}
     protected:
     private:
 };

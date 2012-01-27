@@ -7,24 +7,12 @@
 
 	<Factory Name="Player" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
-	    <Array Type="string" Name="event__Collisions">
-	      <Member Value="WaterVolumeResponse" />
-	    </Array>
-	    <Array Type="string" Name="event__Actions">
-	      <Member Value="Floatation" />
-	    </Array>
 	    <Array Type="string" Name="filters">
 	    </Array>
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="Crate" Type="CollisionResponseFactory" Product="CollisionResponse">
 	  <PropertyBag>
-	    <Array Type="string" Name="event__Collisions">
-	      <Member Value="WaterVolumeResponse" />
-	    </Array>
-	    <Array Type="string" Name="event__Actions">
-	      <Member Value="Floatation" />
-	    </Array>
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="WaterVolumeResponse" Type="CollisionResponseFactory" Product="CollisionResponse">
@@ -33,6 +21,7 @@
 	      <Member Value="Player" />
 	      <Member Value="Crate" />
 	    </Array>
+	    <Property Type="string" Name="defaultAction" Value="buoyancy" /> 
 	  </PropertyBag>
 	</Factory>
 
@@ -92,6 +81,7 @@
 	<Factory Name="DenseCrateBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="Crate" />
+	    <Property Type="int" Name="shapeType" Value="3" />
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
@@ -119,6 +109,16 @@
 	      <Member Value="13.4 18.1333 " />
 	      <Member Value="14 24.2667 " />
 	      <Member Value="-8.4 23.7333 " />
+	    </Array>
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="LevelGeometry">
+	  <PropertyBag>
+	    <Array Type="Vec2f" Name="points">
+	      <Member Value="-18 0" />
+	      <Member Value="0 18" />
+	      <Member Value="-1 24" />
+	      <Member Value="-18 24" />
 	    </Array>
 	  </PropertyBag>
 	</Entity>

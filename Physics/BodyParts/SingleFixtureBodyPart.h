@@ -13,6 +13,8 @@ class SingleFixtureBodyPart : public BodyPart
         void setBody(b2Body* _body);
         b2Body* getBody();
         b2Fixture* getFixture();
+        float getArea();
+        float getAreaBelowLine(float _height);
     protected:
     private:
         b2Body* body;

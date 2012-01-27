@@ -58,3 +58,46 @@ void BodyPart::applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point)
 {
     fixture->GetBody()->ApplyLinearImpulse(_impulse, _point);
 }
+float BodyPart::getArea()
+{
+    assert(false);
+}
+float BodyPart::getAreaBelowLine(float _height)
+{
+    assert(false);
+}
+
+void BodyPart::applyLinearImpulse(const Vec2f& _impulse)
+{
+    b2MassData mass;
+    fixture->GetBody()->GetMassData(&mass);
+    fixture->GetBody()->ApplyLinearImpulse(_impulse, fixture->GetBody()->GetWorldPoint(mass.center));
+}
+
+float BodyPart::getDensity()
+{
+    return fixture->GetDensity();
+}
+
+Vec2f BodyPart::getLinearVelocity()
+{
+    return fixture->GetBody()->GetLinearVelocity();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
