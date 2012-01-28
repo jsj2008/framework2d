@@ -8,7 +8,7 @@ class b2Contact;
 class ContactFactory
 {
     public:
-        ContactFactory();
+        ContactFactory(bool _isFiltered);
         virtual ~ContactFactory();
         Contact* createContact(bool _inverted);
         void filter();

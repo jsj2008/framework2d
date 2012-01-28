@@ -24,6 +24,25 @@
 	    <Property Type="string" Name="defaultAction" Value="buoyancy" /> 
 	  </PropertyBag>
 	</Factory>
+	<Factory Name="WaterParticleSensor" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="bool" Name="isSensor" Value="true" />
+	    <Array Type="string" Name="filters">
+	      <Member Value="Player" />
+	      <Member Value="Crate" />
+	    </Array>
+
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticle" Type="CollisionResponseFactory" Product="CollisionResponse">
+	  <PropertyBag>
+	    <Property Type="bool" Name="isSensor" Value="false" />
+	    <Array Type="string" Name="filters">
+	      <Member Value="Player" />
+	      <Member Value="Crate" />
+	    </Array>
+	  </PropertyBag>
+	</Factory>
 
 	<Factory Name="Bullet" Type="ProjectileFactory" Product="Entity">
 	  <PropertyBag>
@@ -141,10 +160,31 @@
 	    <Property Type="string" Name="body" Value="DenseCrateBody" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="WaterParticleBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	<Factory Name="WaterParticleSensorFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="WaterParticleSensor" />
+	    <Property Type="float" Name="radius" Value="1" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticleSolidFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="WaterParticle" />
+	    <Property Type="float" Name="radius" Value="0.3" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticleb2Body" Type="b2BodyBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="Crate" />
-	    <Property Type="int" Name="shapeType" Value="3" />
+	    <Property Type="int" Name="bodyType" Value="2" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticleBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="WaterParticleb2Body" />
+	    <Array Type="string" Name="fixtures">
+	      <Member Value="WaterParticleSensorFixture" />
+	      <Member Value="WaterParticleSolidFixture" />
+	    </Array>
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="WaterParticle" Type="CrateFactory" Product="Entity">
@@ -155,7 +195,7 @@
       </FactoryList>
       
       <EntityList Name="Entities">
-	<Entity Type="StaticWater">
+	<Entity Type="LevelGeometry">
 	  <PropertyBag>
 	    <Array Type="Vec2f" Name="points">
 	      <Member Value="-12.46667 17.4 " />
@@ -169,8 +209,8 @@
 	  <PropertyBag>
 	    <Array Type="Vec2f" Name="points">
 	      <Member Value="-18 0" />
-	      <Member Value="-6 18" />
-	      <Member Value="-1 24" />
+	      <Member Value="-12 18" />
+	      <Member Value="-12 24" />
 	      <Member Value="-18 24" />
 	    </Array>
 	  </PropertyBag>
@@ -183,11 +223,6 @@
 	      <Member Value="18 24" />
 	      <Member Value="2 24" />
 	    </Array>
-	  </PropertyBag>
-	</Entity>
-	<Entity Type="DenseCrate">
-	  <PropertyBag>
-	    <Property Type="Vec2f" Name="position" Value="0, -50" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

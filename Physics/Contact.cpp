@@ -70,7 +70,7 @@ bool Contact::preSolveInterface(const b2Manifold* _oldManifold) /// Returns filt
         }
     }
     preSolve(&oldManifold);
-    return factoryHandle->getFiltered();
+    return !factoryHandle->getFiltered();
 }
 
 void Contact::postSolveInterface(const b2ContactImpulse* _impulse) /// Returns filtering flag

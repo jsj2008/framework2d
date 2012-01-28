@@ -62,46 +62,49 @@ void CollisionDatabaseHandle::setDefaultEvent(const std::string& _actionName)
     database->setDefaultEvent(id, GameObjectType::staticGetActionHandle(_actionName));
 }
 
+CollisionDatabaseHandle* CollisionDatabase::createHandle(const std::string& _collisionName, bool _isSensor)
+{
+    areSensors.push_back(_isSensor);
+    CollisionDatabaseHandle* handle = new CollisionDatabaseHandle(this, database.size());
+    database[_collisionName] = handle;
+    unsigned short size = database.size();
+
+    ContactFactory*** newContactFactories;
+    newContactFactories = new ContactFactory**[size];
+    for (unsigned int i = 0; i < size; i++)
+    {
+        newContactFactories[i] = new ContactFactory*[size];
+    }
+    for (unsigned int i = 0; i < size-1; i++)
+    {
+        for (unsigned int ii = 0; ii < size-1; ii++)
+        {
+            newContactFactories[i][ii] = contactFactories[i][ii];
+        }
+    }
+    for (unsigned int i = 0; i < size; i++)
+    {
+        newContactFactories[size-1][i] = newContactFactories[i][size-1] = new ContactFactory(_isSensor || areSensors[i]);
+    }
+    for (unsigned int i = 0; i < size-1; i++)
+    {
+        delete[] contactFactories[i];
+    }
+    delete[] contactFactories;
+    contactFactories = newContactFactories;
+    return handle;
+}
 CollisionDatabaseHandle* CollisionDatabase::getHandle(const std::string& _collisionName)
 {
-    unsigned short oldSize = database.size();
     auto iter = database.find(_collisionName);
-    CollisionDatabaseHandle* handle;
     if (iter != database.end())
     {
-        handle = iter->second;
+        return iter->second;
     }
     else
     {
-        handle = new CollisionDatabaseHandle(this, oldSize);
-        database[_collisionName] = handle;
-        unsigned short size = database.size();
-
-        ContactFactory*** newContactFactories;
-        newContactFactories = new ContactFactory**[size];
-        for (unsigned int i = 0; i < size; i++)
-        {
-            newContactFactories[i] = new ContactFactory*[size];
-        }
-        for (unsigned int i = 0; i < size-1; i++)
-        {
-            for (unsigned int ii = 0; ii < size-1; ii++)
-            {
-                newContactFactories[i][ii] = contactFactories[i][ii];
-            }
-        }
-        for (unsigned int i = 0; i < size; i++)
-        {
-            newContactFactories[size-1][i] = newContactFactories[i][size-1] = new ContactFactory;
-        }
-        for (unsigned int i = 0; i < size-1; i++)
-        {
-            delete[] contactFactories[i];
-        }
-        delete[] contactFactories;
-        contactFactories = newContactFactories;
+        return createHandle(_collisionName, false);
     }
-    return handle;
 }
 
 void CollisionDatabase::addFilter(unsigned short _a, unsigned short _b)

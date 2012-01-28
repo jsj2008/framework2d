@@ -1,10 +1,10 @@
 #include "ContactFactory.h"
 #include <Physics/Contact.h>
 
-ContactFactory::ContactFactory()
+ContactFactory::ContactFactory(bool _isFiltered)
 {
     //ctor
-    isFiltered = true;
+    isFiltered = _isFiltered;
     actionA = actionB = nullptr;
 }
 
@@ -20,7 +20,7 @@ Contact* ContactFactory::createContact(bool _inverted)
 
 void ContactFactory::filter()
 {
-    isFiltered = false;
+    isFiltered = true;
 }
 
 void ContactFactory::setEvent(ActionHandle* _action, bool _A)

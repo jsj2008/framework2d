@@ -5,6 +5,7 @@
 #include <Level/FactoryGroupListData.h>
 #include <Level/Level.h>
 #include <Level/XmlDataSaver.h>
+#include <Entities/Entity.h>
 #include <Physics/PhysicsManager.h>
 #include <AbstractFactory/AbstractFactories.h>
 
@@ -56,6 +57,19 @@ Level* LevelData::build()
     for (unsigned int i = 0; i < entityLists.size(); i++)
     {
         entityLists[i]->build(factories, level);
+    }
+
+    {
+        auto waterFactory = factories->getFactory<Entity>("WaterParticle");
+        FactoryParameters params;
+        for (int i = -10; i != 9; i++)
+        {
+            for (int ii = -20; ii != 10; ii++)
+            {
+                params.add<Vec2f>("position", {i,ii});
+                waterFactory->use(&params, level);
+            }
+        }
     }
     return level;
 }

@@ -9,28 +9,30 @@ CollisionResponseFactory::~CollisionResponseFactory()
 {
     //dtor
 }
+#include <iostream>
 
-void CollisionResponseFactory::init(FactoryLoader* loader, AbstractFactories* factories)
+void CollisionResponseFactory::init(FactoryLoader* _loader, AbstractFactories* factories)
 {
-    std::string handleName = loader->getName();
+    std::string handleName = _loader->getName();
     if (handleName == "")
         handleName = "CollisionResponse";
-    handle = factories->getCollisionDatabase()->getHandle(handleName);
+    bool sensor = _loader->get<bool>("isSensor", false);
+    handle = factories->getCollisionDatabase()->createHandle(handleName, sensor);
 
-    std::vector<std::string> filters = loader->getArray<std::string>("filters", {});
+    std::vector<std::string> filters = _loader->getArray<std::string>("filters", {});
     for (unsigned int i = 0; i < filters.size(); i++)
     {
         handle->addFilter(filters[i]);
     }
 
-    std::string defaultAction = loader->get<std::string>("defaultAction", "null");
+    std::string defaultAction = _loader->get<std::string>("defaultAction", "null");
     if (defaultAction != "null")
     {
         handle->setDefaultEvent(defaultAction);
     }
 
-    std::vector<std::string> handles = loader->getArray<std::string>("event__Collisions", {});
-    std::vector<std::string> actions = loader->getArray<std::string>("event__Actions", {});
+    std::vector<std::string> handles = _loader->getArray<std::string>("event__Collisions", {});
+    std::vector<std::string> actions = _loader->getArray<std::string>("event__Actions", {});
     for (unsigned int i = 0; i < handles.size(); i++)
     {
         handle->addEvent(handles[i], actions[i]);

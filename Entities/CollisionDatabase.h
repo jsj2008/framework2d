@@ -34,11 +34,13 @@ class CollisionDatabase
         CollisionDatabase();
         virtual ~CollisionDatabase();
         CollisionDatabaseHandle* getHandle(const std::string& _collisionName);
+        CollisionDatabaseHandle* createHandle(const std::string& _collisionName, bool _isSensor);
         Contact* createContact(unsigned short _categoryA, unsigned short _categoryB);
     protected:
     private:
         std::unordered_map<std::string, CollisionDatabaseHandle*> database;
         ContactFactory*** contactFactories;
+        std::vector<bool> areSensors;
 
         friend class CollisionDatabaseHandle;
         void addFilter(unsigned short _a, unsigned short _b);

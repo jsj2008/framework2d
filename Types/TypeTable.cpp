@@ -55,6 +55,103 @@ void TypeTable::clear()
     undefinedLog.clear();
 }
 
+class BoolValue: public TypeTable::TemplateBaseValue<bool>
+{
+    public:
+        BoolValue(bool _value)
+        {
+            value = _value;
+        }
+        void output(PropertyBagSerializer* _out)
+        {
+            _out->outputValue(value);
+        }
+        void output(std::ostream* parseDestination)
+        {
+            std::string output = (value)? "true" : "false";
+            *parseDestination << output;
+        }
+        std::string getTypeId()
+        {
+            return "bool";
+        }
+        Value* clone()
+        {
+            return new BoolValue(value);
+        }
+};
+
+BoolValue* parseAsBool(const std::string& _value)
+{
+    if (_value == "True" || _value == "true")
+    {
+        return new BoolValue(true);
+    }
+    if (_value == "False" || _value == "false")
+    {
+        return new BoolValue(false);
+    }
+    throw -1;
+}
+class BoolArrayValue: public TypeTable::TemplateBaseArrayValue<bool>
+{
+    public:
+        BoolArrayValue(){}
+        BoolArrayValue(const std::vector<bool>& _initList)
+        {
+            values = _initList;
+        }
+        void output(PropertyBagSerializer* _out)
+        {
+            _out->outputArray(&values[0], values.size());
+        }
+        void output(std::ostream* parseDestination)
+        {
+            *parseDestination << "{ ";
+            for (unsigned int i = 0; i < values.size(); i++)
+            {
+                *parseDestination << (values[i])? "true" : "false";
+            }
+            *parseDestination << '}';
+        }
+        std::string getTypeId()
+        {
+            return "bool";
+        }
+        Value* clone()
+        {
+            return new BoolArrayValue(values);
+        }
+        void pushValue(const std::string& _value)
+        {
+            values.push_back(parseAsBool(_value));
+        }
+        void pushValue(std::istream* _parseSource)
+        {
+            std::string value;
+            *_parseSource >> value;
+            pushValue(value);
+        }
+};
+class BoolType: public TypeTable::TemplateBaseType<bool>
+{
+    TypeTable::Value* instance(bool _value)
+    {
+        return new BoolValue(_value);
+    }
+    TypeTable::ArrayValue* arrayInstance()
+    {
+        return new BoolArrayValue;
+    }
+    TypeTable::Value* parseInstance(TypeTable* _typeTable, const std::string& _value)
+    {
+        return parseAsBool(_value);
+    }
+    TypeTable::Type* clone()
+    {
+        return new BoolType;
+    }
+};
 
 TypeTable::TypeTable(AbstractFactories* _factories, bool _logUndefined)
 {
@@ -68,6 +165,7 @@ TypeTable::TypeTable(AbstractFactories* _factories, bool _logUndefined)
     registerType<std::vector<Vec2f>>("Vec2fArray");
     registerType<std::vector<Vec2i>>("Vec2iArray");
     registerType<void*>("userData");
+    types()["bool"] = new BoolType;
 }
 template <typename T>
 void TypeTable::registerType(const TypeIndex& _name)
