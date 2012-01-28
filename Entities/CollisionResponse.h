@@ -18,7 +18,6 @@ class CollisionResponse : public GameObject<CollisionResponse>
         {
             return "CollisionResponse";
         }
-        bool collide(unsigned short _id);
     protected:
     private:
         CollisionDatabaseHandle* handle;

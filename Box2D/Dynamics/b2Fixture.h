@@ -67,7 +67,6 @@ struct b2FixtureDef
 		friction = 0.2f;
 		restitution = 0.0f;
 		density = 0.0f;
-		bodyPart = NULL;
 	}
 
 	/// The shape, this must be set. The shape will be cloned, so you
@@ -85,8 +84,6 @@ struct b2FixtureDef
 
 	/// Contact filtering data.
 	b2Filter filter;
-
-    BodyPart* bodyPart;
 };
 
 /// This proxy is used internally to connect fixtures to the broad-phase.
@@ -178,6 +175,8 @@ public:
 	const b2AABB& GetAABB(int32 childIndex) const;
 
     BodyPart* getBodyPart() const;
+
+    void setBodyPart(BodyPart* _bodyPart);
 
 	/// Dump this fixture to the log file.
 	void Dump(int32 bodyIndex);

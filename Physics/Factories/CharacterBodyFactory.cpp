@@ -15,8 +15,8 @@ CharacterBodyFactory::~CharacterBodyFactory()
 
 void CharacterBodyFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
-    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
-    wheelFactory = loader->getFactory<BodyPart>("wheel", "SingleFixtureBodyPartFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body", "b2FixtureBodyPartFactory");
+    wheelFactory = loader->getFactory<BodyPart>("wheel", "b2FixtureBodyPartFactory");
     jointFactory = loader->getFactory<BodyPart>("joint", "JointBodyPartFactory");
 }
 

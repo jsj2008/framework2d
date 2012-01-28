@@ -54,6 +54,4 @@ void Entity::floatationAction(CollisionObject* _object)
     BodyPart* other = _object->getOther();
     other->applyLinearImpulse(other->getLinearVelocity()*-0.1f);
     other->applyLinearImpulse(Vec2f(0, other->getAreaBelowLine(18.5f) * -1.0f * other->getDensity()));
-    std::cout << "Floating " <<  _object->getOther()->getAreaBelowLine(18.5f) << std::endl;
-    //_object->getOther()->getArea() << std::endl;
 }

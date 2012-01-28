@@ -515,6 +515,7 @@ void b2Body::Dump()
 
 void b2Body::setBodyPart(BodyPart* _bodyPart)
 {
+    assert(bodyPart == nullptr);
     bodyPart = _bodyPart;
 }
 

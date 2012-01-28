@@ -61,8 +61,6 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 	m_proxyCount = 0;
 
 	m_density = def->density;
-
-	bodyPart = def->bodyPart;
 }
 
 void b2Fixture::Destroy(b2BlockAllocator* allocator)
@@ -290,5 +288,12 @@ void b2Fixture::Dump(int32 bodyIndex)
 }
 BodyPart* b2Fixture::getBodyPart() const
 {
+    assert(bodyPart);
     return bodyPart;
+}
+
+void b2Fixture::setBodyPart(BodyPart* _bodyPart)
+{
+    assert(bodyPart == nullptr);
+    bodyPart = _bodyPart;
 }

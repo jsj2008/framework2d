@@ -1,18 +1,16 @@
-#ifndef JOINTBODYPART_H
-#define JOINTBODYPART_H
+#ifndef B2BODYBODYPART_H
+#define B2BODYBODYPART_H
 
 #include <Physics/BodyParts/BodyPart.h>
-class b2RevoluteJoint;
+class b2Body;
 
-class JointBodyPart : public BodyPart
+class b2BodyBodyPart : public BodyPart
 {
     public:
-        JointBodyPart(b2RevoluteJoint* _joint);
-        virtual ~JointBodyPart();
-        void setMotorSpeed(float _speed);
-        void setMotorEnabled(bool _enabled);
-        void setMotorTorque(float _torque);
+        b2BodyBodyPart(b2Body* _body);
+        virtual ~b2BodyBodyPart();
         Entity* getEntity();
+        b2Body* getBody();
 
         const Vec2f& getPosition();
         float getAngle();
@@ -24,6 +22,7 @@ class JointBodyPart : public BodyPart
         float getAreaBelowLine(float _height);
     protected:
     private:
+        b2Body* body;
 };
 
-#endif // JOINTBODYPART_H
+#endif // B2BODYBODYPART_H

@@ -205,7 +205,12 @@ GameObjectBase* AbstractFactoryList<Product>::addFactory(AbstractFactories* _fac
     AbstractFactoryBase<Product>* factory;
     if (iter == uninitializedFactories.end())
     {
-        factory = factoryCreators()[_loader->getType()]->createFactory();
+        FactoryCreator<Product>* creator = factoryCreators()[_loader->getType()];
+        if (!creator)
+        {
+            g_Log.error("No such factory type: " + _loader->getType());
+        }
+        factory = creator->createFactory();
     }
     else
     {

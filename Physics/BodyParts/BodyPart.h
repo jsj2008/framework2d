@@ -13,9 +13,9 @@ class BodyPart : public GameObject<BodyPart>
         BodyPart();
         virtual ~BodyPart();
         static void registerActions(GameObjectType* _type);
-        const Vec2f& getPosition();
-        float getAngle();
-        Entity* getEntity();
+        virtual const Vec2f& getPosition()=0;
+        virtual float getAngle()=0;
+        virtual Entity* getEntity()=0;
         void setFixture(b2Fixture* _fixture);
         b2Body* getBody();
 
@@ -24,14 +24,13 @@ class BodyPart : public GameObject<BodyPart>
             return "BodyPart";
         }
 
-        virtual void applyLinearImpulse(const Vec2f& _impulse); /// Center point
-        virtual void applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point);
-        Vec2f getLinearVelocity();
-        virtual float getDensity();
-        virtual float getArea();
-        virtual float getAreaBelowLine(float _height);
+        virtual void applyLinearImpulse(const Vec2f& _impulse)=0; /// Center point
+        virtual void applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point)=0;
+        virtual Vec2f getLinearVelocity()=0;
+        virtual float getDensity()=0;
+        virtual float getArea()=0;
+        virtual float getAreaBelowLine(float _height)=0;
     protected:
-        b2Fixture* fixture;
     private:
 };
 

@@ -1,17 +1,16 @@
-#ifndef JOINTBODYPART_H
-#define JOINTBODYPART_H
+#ifndef SINGLEFIXTUREBODYPORT_H
+#define SINGLEFIXTUREBODYPORT_H
 
 #include <Physics/BodyParts/BodyPart.h>
-class b2RevoluteJoint;
+class b2Fixture;
 
-class JointBodyPart : public BodyPart
+class b2FixtureBodyPart : public BodyPart
 {
     public:
-        JointBodyPart(b2RevoluteJoint* _joint);
-        virtual ~JointBodyPart();
-        void setMotorSpeed(float _speed);
-        void setMotorEnabled(bool _enabled);
-        void setMotorTorque(float _torque);
+        b2FixtureBodyPart(b2Fixture* _fixture);
+        virtual ~b2FixtureBodyPart();
+        b2Body* getBody();
+        b2Fixture* getFixture();
         Entity* getEntity();
 
         const Vec2f& getPosition();
@@ -24,6 +23,7 @@ class JointBodyPart : public BodyPart
         float getAreaBelowLine(float _height);
     protected:
     private:
+        b2Fixture* fixture;
 };
 
-#endif // JOINTBODYPART_H
+#endif // SINGLEFIXTUREBODYPORT_H

@@ -20,7 +20,7 @@ CrateFactory::~CrateFactory()
 void CrateFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     skinFactory = loader->getFactory<Skin>("skin","StaticSkinFactory");
-    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body", "b2FixtureBodyPartFactory");
     //
 }
 Entity* CrateFactory::useFactory(FactoryParameters* _parameters)

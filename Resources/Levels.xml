@@ -41,13 +41,17 @@
 	    <Property Type="string" Name="actionFactory" Value="FireBulletAction" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="PlayerWheelBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	
+	<Factory Name="PlayerWheelFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
-	    <Property Type="string" Name="wheel" Value="PlayerMainBody" />
-	    <Property Type="string" Name="body" Value="PlayerWheelBody" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="PlayerMainBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	<Factory Name="PlayerWheelBody" Type="b2BodyBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="wheel" Value="PlayerMainBody" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="PlayerMainBody" Type="b2BodyBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="Player" />
 	  </PropertyBag>
@@ -64,24 +68,62 @@
 	    <Property Type="string" Name="body" Value="PlayerBody" /> 
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="LevelGeometryBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	<Factory Name="LevelGeometryFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="CollisionResponseFactory" />
-	    <Property Type="int" Name="bodyType" Value="0" />
 	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="StaticWaterBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	<Factory Name="LevelGeometryb2Body" Type="b2BodyBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="int" Name="bodyType" Value="0" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="LevelGeometryBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="LevelGeometryb2Body" />
+	    <Array Type="string" Name="fixtures">
+	      <Member Value="LevelGeometryFixture"/>
+	    </Array>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="StaticWaterFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="WaterVolumeResponse" />
-	    <Property Type="int" Name="bodyType" Value="0" />
 	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
 	</Factory>
-	<Factory Name="DenseCrateBody" Type="SingleFixtureBodyPartFactory" Product="BodyPart">
+	<Factory Name="StaticWaterb2Body" Type="b2BodyBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="int" Name="bodyType" Value="0" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="StaticWaterBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="StaticWaterb2Body" />
+	    <Array Type="string" Name="fixtures">
+	      <Member Value="StaticWaterFixture"/>
+	    </Array>
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrateFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
 	    <Property Type="string" Name="collisionResponse" Value="Crate" />
 	    <Property Type="int" Name="shapeType" Value="3" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrateb2Body" Type="b2BodyBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="Crate" />
+	    <Property Type="int" Name="shapeType" Value="3" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="DenseCrateBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="DenseCrateb2Body" />
+	    <Array Type="string" Name="fixtures">
+	      <Member Value="DenseCrateFixture"/>
+	    </Array>
 	  </PropertyBag>
 	</Factory>
 	<Factory Name="LevelGeometry" Type="LevelGeometryFactory" Product="Entity">
@@ -97,6 +139,17 @@
 	<Factory Name="DenseCrate" Type="CrateFactory" Product="Entity">
 	  <PropertyBag>
 	    <Property Type="string" Name="body" Value="DenseCrateBody" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticleBody" Type="MultiFixtureBodyPartFactory" Product="BodyPart">
+	  <PropertyBag>
+	    <Property Type="string" Name="collisionResponse" Value="Crate" />
+	    <Property Type="int" Name="shapeType" Value="3" />
+	  </PropertyBag>
+	</Factory>
+	<Factory Name="WaterParticle" Type="CrateFactory" Product="Entity">
+	  <PropertyBag>
+	    <Property Type="string" Name="body" Value="WaterParticleBody" />
 	  </PropertyBag>
 	</Factory>
       </FactoryList>
@@ -116,9 +169,19 @@
 	  <PropertyBag>
 	    <Array Type="Vec2f" Name="points">
 	      <Member Value="-18 0" />
-	      <Member Value="0 18" />
+	      <Member Value="-6 18" />
 	      <Member Value="-1 24" />
 	      <Member Value="-18 24" />
+	    </Array>
+	  </PropertyBag>
+	</Entity>
+	<Entity Type="LevelGeometry">
+	  <PropertyBag>
+	    <Array Type="Vec2f" Name="points">
+	      <Member Value="9 0" />
+	      <Member Value="18 0" />
+	      <Member Value="18 24" />
+	      <Member Value="2 24" />
 	    </Array>
 	  </PropertyBag>
 	</Entity>

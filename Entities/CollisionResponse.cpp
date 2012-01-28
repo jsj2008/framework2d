@@ -34,7 +34,3 @@ unsigned short CollisionResponse::getId()
     return handle->getId();
 }
 
-bool CollisionResponse::collide(unsigned short _id)
-{
-    return handle->getFiltered(_id);
-}

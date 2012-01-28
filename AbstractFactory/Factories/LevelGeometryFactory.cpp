@@ -21,7 +21,7 @@ LevelGeometryFactory::~LevelGeometryFactory()
 void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factories)
 {
     skinFactory = loader->getFactory<Skin>("skin", "ConvexPolygonSkinFactory");
-    bodyFactory = loader->getFactory<BodyPart>("body", "SingleFixtureBodyPartFactory");
+    bodyFactory = loader->getFactory<BodyPart>("body", "b2FixtureBodyPartFactory");
 
 }
 

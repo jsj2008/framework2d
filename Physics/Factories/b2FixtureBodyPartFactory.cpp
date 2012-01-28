@@ -1,42 +1,31 @@
-#include "SingleFixtureBodyPartFactory.h"
+#include "b2FixtureBodyPartFactory.h"
 #include <Physics/PhysicsManager.h>
-#include <Physics/BodyParts/SingleFixtureBodyPart.h>
+#include <Physics/BodyParts/b2FixtureBodyPart.h>
 #include <Entities/CollisionResponse.h>
+#include <Physics/BodyParts/b2BodyBodyPart.h>
 
-SingleFixtureBodyPartFactory::SingleFixtureBodyPartFactory()
+b2FixtureBodyPartFactory::b2FixtureBodyPartFactory()
 {
     //ctor
 }
 
-SingleFixtureBodyPartFactory::~SingleFixtureBodyPartFactory()
+b2FixtureBodyPartFactory::~b2FixtureBodyPartFactory()
 {
     //dtor
 }
 
-void SingleFixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactories* _factories)
+void b2FixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactories* _factories)
 {
     physicsManager = _factories->getWorld();
-
-    bodyDef.bullet = _loader->get<bool>("bullet", false);
-    bodyDef.fixedRotation = _loader->get<bool>("fixedRotation", false);
-    bodyDef.type = _loader->get<int>("bodyType", b2_dynamicBody); /// FIXME loader needs to accept enums
 
     responseFactory = _loader->getFactory<CollisionResponse>("collisionResponse", "CollisionResponseFactory");
     fixtureDef.density = _loader->get<float>("density", 1.0f);
     fixtureDef.restitution = _loader->get<float>("restitution", 1.0f);
-    //shapeFactory = _loader->getFactory<b2Shape>("shape", "ShapeFactory");
     type = static_cast<ShapeType>(_loader->get<int>("shapeType", e_Circle)); /// FIXME loader needs to accept enums
 }
 
-BodyPart* SingleFixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)
+BodyPart* b2FixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)
 {
-    bodyDef.position = _parameters->get<Vec2f>("position", {0,0});
-    bodyDef.linearVelocity = _parameters->get<Vec2f>("velocity",{0,0});
-    SingleFixtureBodyPart* bodyPart = new SingleFixtureBodyPart;
-    bodyDef.bodyPart = bodyPart;
-    b2Body* body = physicsManager->createBody(&bodyDef);
-
-    fixtureDef.filter.response = responseFactory->use(_parameters, bodyPart);
     switch (type)
     {
         case e_Circle:
@@ -69,9 +58,13 @@ BodyPart* SingleFixtureBodyPartFactory::useFactory(FactoryParameters* _parameter
         }
     }
 
-    bodyPart->setBody(body);
-    fixtureDef.bodyPart = bodyPart;
-    bodyPart->setFixture(body->CreateFixture(&fixtureDef));
+    BodyPart* body = _parameters->get<BodyPart*>("body", nullptr);
+    assert(dynamic_cast<b2BodyBodyPart*>(body));
+
+    b2Fixture* fixture = static_cast<b2BodyBodyPart*>(body)->getBody()->CreateFixture(&fixtureDef);
+    b2FixtureBodyPart* bodyPart = new b2FixtureBodyPart(fixture);
+
+    fixture->SetFilterData({responseFactory->use(_parameters, bodyPart)});
 
     delete fixtureDef.shape; /// FIXME override the box2d factory for efficiency
 

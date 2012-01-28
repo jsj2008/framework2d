@@ -553,8 +553,10 @@
 		<Unit filename="Physics/BodyParts/BodyPart.h" />
 		<Unit filename="Physics/BodyParts/JointBodyPart.cpp" />
 		<Unit filename="Physics/BodyParts/JointBodyPart.h" />
-		<Unit filename="Physics/BodyParts/SingleFixtureBodyPart.cpp" />
-		<Unit filename="Physics/BodyParts/SingleFixtureBodyPart.h" />
+		<Unit filename="Physics/BodyParts/b2BodyBodyPart.cpp" />
+		<Unit filename="Physics/BodyParts/b2BodyBodyPart.h" />
+		<Unit filename="Physics/BodyParts/b2FixtureBodyPart.cpp" />
+		<Unit filename="Physics/BodyParts/b2FixtureBodyPart.h" />
 		<Unit filename="Physics/CollisionObject.cpp" />
 		<Unit filename="Physics/CollisionObject.h" />
 		<Unit filename="Physics/Contact.cpp" />
@@ -569,8 +571,12 @@
 		<Unit filename="Physics/Factories/CharacterBodyFactory.h" />
 		<Unit filename="Physics/Factories/JointBodyPartFactory.cpp" />
 		<Unit filename="Physics/Factories/JointBodyPartFactory.h" />
-		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.cpp" />
-		<Unit filename="Physics/Factories/SingleFixtureBodyPartFactory.h" />
+		<Unit filename="Physics/Factories/MultiFixtureBodyPartFactory.cpp" />
+		<Unit filename="Physics/Factories/MultiFixtureBodyPartFactory.h" />
+		<Unit filename="Physics/Factories/b2BodyBodyPartFactory.cpp" />
+		<Unit filename="Physics/Factories/b2BodyBodyPartFactory.h" />
+		<Unit filename="Physics/Factories/b2FixtureBodyPartFactory.cpp" />
+		<Unit filename="Physics/Factories/b2FixtureBodyPartFactory.h" />
 		<Unit filename="Physics/PhysicsManager.cpp" />
 		<Unit filename="Physics/PhysicsManager.h" />
 		<Unit filename="Physics/RenderCallback.cpp" />

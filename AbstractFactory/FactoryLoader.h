@@ -36,6 +36,8 @@ class FactoryLoader
         const std::vector<Type>& getArray(const std::string& name, const std::vector<Type>& _default);
         template <typename Product>
         AbstractFactoryBase<Product>* getFactory(const std::string& name, const char* _default);
+        template <typename Product>
+        std::vector<AbstractFactoryBase<Product>*> getFactoryArray(const std::string& name, const std::vector<std::string>& _default);
         template <typename T>
         void addType(const std::string& name);
 
@@ -82,4 +84,57 @@ const std::vector<Type>& FactoryLoader::getArray(const std::string& name, const 
 {
     return mvalues.getArray(name, _default);
 }
+
+template <typename Product>
+std::vector<AbstractFactoryBase<Product>*> FactoryLoader::getFactoryArray(const std::string& name, const std::vector<std::string>& _default)
+{
+    const std::vector<std::string>& stringValues = mvalues.getArray(name, _default);
+    std::vector<AbstractFactoryBase<Product>*> returnValues;
+    returnValues.resize(stringValues.size());
+    for (unsigned int i = 0; i != stringValues.size(); i++)
+    {
+        returnValues[i] =  mvalues.getFactories()->getFactory<Product>(stringValues[i]);
+        /*}
+        catch (int i)
+        {
+            auto factory = mvalues.getFactories()->getFactory<Product>(_default);
+            if (mvalues.loggingUndefined())
+            {
+                mvalues.addValue<AbstractFactoryBase<Product>*>(_name, factory);
+            }
+            returnValues[i] =  factory;
+        }*/
+    }
+    return returnValues;
+}
 #endif // FACTORYLOADER_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,28 +1,26 @@
-#include "BodyPart.h"
+#include "b2FixtureBodyPart.h"
 #include <Box2D/Box2D.h>
 #include <Entities/Entity.h>
 
-BodyPart::BodyPart()
+b2FixtureBodyPart::b2FixtureBodyPart(b2Fixture* _fixture)
 {
     //ctor
+    fixture = _fixture;
+    fixture->setBodyPart(this);
 }
 
-BodyPart::~BodyPart()
+b2FixtureBodyPart::~b2FixtureBodyPart()
 {
     //dtor
+    fixture->GetBody()->DestroyFixture(fixture);
 }
 
-void BodyPart::registerActions(GameObjectType* _type)
-{
-
-}
-
-/*b2Body* BodyPart::getBody()
+b2Body* b2FixtureBodyPart::getBody()
 {
     return fixture->GetBody();
 }
 
-Entity* BodyPart::getEntity()
+Entity* b2FixtureBodyPart::getEntity()
 {
     assert(getParent()); /// FIXME this needs to be less stupid
     GameObjectBase* parent = getParent();
@@ -35,12 +33,8 @@ Entity* BodyPart::getEntity()
     return parent;
     return static_cast<Entity*>(getParent());
 }
-void BodyPart::setFixture(b2Fixture* _fixture)
-{
-    assert(!fixture);
-    fixture = _fixture;
-}
-const Vec2f& BodyPart::getPosition()
+
+const Vec2f& b2FixtureBodyPart::getPosition()
 {
     //assert(fixture);
     if (!fixture)
@@ -49,54 +43,38 @@ const Vec2f& BodyPart::getPosition()
     }
     return fixture->GetBody()->GetPosition();
 }
-float BodyPart::getAngle()
+float b2FixtureBodyPart::getAngle()
 {
     return fixture->GetBody()->GetAngle();
 }
-void BodyPart::applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point)
+void b2FixtureBodyPart::applyLinearImpulse(const Vec2f& _impulse, const Vec2f& _point)
 {
     fixture->GetBody()->ApplyLinearImpulse(_impulse, _point);
 }
-float BodyPart::getArea()
+float b2FixtureBodyPart::getArea()
 {
-    assert(false);
+    return fixture->GetShape()->getArea();
 }
-float BodyPart::getAreaBelowLine(float _height)
+float b2FixtureBodyPart::getAreaBelowLine(float _height)
 {
-    assert(false);
+    return fixture->GetShape()->getAreaBelowLine(fixture, _height);
 }
 
-void BodyPart::applyLinearImpulse(const Vec2f& _impulse)
+void b2FixtureBodyPart::applyLinearImpulse(const Vec2f& _impulse)
 {
     b2MassData mass;
     fixture->GetBody()->GetMassData(&mass);
     fixture->GetBody()->ApplyLinearImpulse(_impulse, fixture->GetBody()->GetWorldPoint(mass.center));
 }
 
-float BodyPart::getDensity()
+float b2FixtureBodyPart::getDensity()
 {
     return fixture->GetDensity();
 }
 
-Vec2f BodyPart::getLinearVelocity()
+Vec2f b2FixtureBodyPart::getLinearVelocity()
 {
     return fixture->GetBody()->GetLinearVelocity();
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
