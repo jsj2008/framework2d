@@ -7,6 +7,7 @@
 #include <Physics/BodyParts/BodyPart.h>
 #include <AbstractFactory/FactoryParameters.h>
 #include <Entities/CollisionDatabase.h>
+#include <Physics/WaterPhysicsSystem.h>
 
 LevelGeometryFactory::LevelGeometryFactory()
 {
@@ -22,7 +23,6 @@ void LevelGeometryFactory::init(FactoryLoader* loader, AbstractFactories* factor
 {
     skinFactory = loader->getFactory<Skin>("skin", "ConvexPolygonSkinFactory");
     bodyFactory = loader->getFactory<BodyPart>("body", "b2FixtureBodyPartFactory");
-
 }
 
 Entity* LevelGeometryFactory::useFactory(FactoryParameters* _parameters)

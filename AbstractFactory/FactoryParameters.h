@@ -15,7 +15,10 @@ class FactoryParameters
         ~FactoryParameters();
 
         template <typename Type>
-        void add(const std::string& name, const Type& value);
+        void add(const std::string& _name, const Type& _value);
+
+        template <typename Type>
+        void addArray(const std::string& _name, const std::vector<Type>& _value);
 
         template <typename Type>
         Type get(const std::string& name, const Type& _default);
@@ -50,6 +53,12 @@ template <typename Type>
 void FactoryParameters::add(const std::string& name, const Type& value)
 {
     table.addValue(name, value);
+}
+
+template <typename Type>
+void FactoryParameters::addArray(const std::string& _name, const std::vector<Type>& _value)
+{
+    table.addArray(_name, _value);
 }
 
 template <typename Type>

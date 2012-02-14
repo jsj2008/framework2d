@@ -216,6 +216,8 @@
 		<Unit filename="AbstractFactory/Factories/TileFactory.h" />
 		<Unit filename="AbstractFactory/Factories/TileMapFactory.cpp" />
 		<Unit filename="AbstractFactory/Factories/TileMapFactory.h" />
+		<Unit filename="AbstractFactory/Factories/WaterVolumeFactory.cpp" />
+		<Unit filename="AbstractFactory/Factories/WaterVolumeFactory.h" />
 		<Unit filename="AbstractFactory/FactoryLoader.cpp" />
 		<Unit filename="AbstractFactory/FactoryLoader.h" />
 		<Unit filename="AbstractFactory/FactoryLoaders/CppFactoryLoader.cpp" />
@@ -266,6 +268,8 @@
 		<Unit filename="Entities/Tile.h" />
 		<Unit filename="Entities/TileMap.cpp" />
 		<Unit filename="Entities/TileMap.h" />
+		<Unit filename="Entities/WaterVolume.cpp" />
+		<Unit filename="Entities/WaterVolume.h" />
 		<Unit filename="Entities/Weapons/FireProjectileAction.cpp" />
 		<Unit filename="Entities/Weapons/FireProjectileAction.h" />
 		<Unit filename="Entities/Weapons/FiringMechanism.cpp" />
@@ -581,6 +585,8 @@
 		<Unit filename="Physics/PhysicsManager.h" />
 		<Unit filename="Physics/RenderCallback.cpp" />
 		<Unit filename="Physics/RenderCallback.h" />
+		<Unit filename="Physics/WaterPhysicsSystem.cpp" />
+		<Unit filename="Physics/WaterPhysicsSystem.h" />
 		<Unit filename="Resources/CEGUI/layouts/DistanceJoints.layout" />
 		<Unit filename="Resources/CEGUI/layouts/DynamicEditor.layout" />
 		<Unit filename="Resources/CEGUI/layouts/EditBox.layout" />

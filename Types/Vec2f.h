@@ -104,6 +104,9 @@ bool b2IsValid(float32 x);
 
 //float operator*(Vec2f A, Vec2f B ){ return A.x*B.x + A.y*B.y; }
 
+float intersectionValue(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd); /// Returns the intersection point on _a
+Vec2f intersectionPosition(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd);
+Vec2f positionFromScalarValue(Vec2f _start, Vec2f _end, float _scalar);
 inline Vec2f operator*(Vec2f a, float s ){ return Vec2f( a.x*s, a.y*s ); }
 
 std::ostream& operator<< (std::ostream &out, Vec2f &vec);

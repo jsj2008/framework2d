@@ -59,7 +59,7 @@ Level* LevelData::build()
         entityLists[i]->build(factories, level);
     }
 
-    {
+    /*{
         auto waterFactory = factories->getFactory<Entity>("WaterParticle");
         FactoryParameters params;
         for (int i = -10; i != 9; i++)
@@ -70,7 +70,7 @@ Level* LevelData::build()
                 waterFactory->use(&params, level);
             }
         }
-    }
+    }*/
     return level;
 }
 

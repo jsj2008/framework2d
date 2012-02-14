@@ -23,12 +23,12 @@ class Entity : public GameObject<Entity>
         BodyPart* getRootBody();
 
         static void registerActions(GameObjectType* _type);
-        void floatationAction(CollisionObject* _object);
 
         static std::string name()
         {
             return "Entity";
         }
+        virtual void floatationAction(CollisionObject* _object); /// FIXME
     protected:
         BodyPart* rootBody;
         Skin* mSkin;

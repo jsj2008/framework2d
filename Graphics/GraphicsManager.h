@@ -11,7 +11,7 @@ class Icon;
 class Sprite;
 class SpriteList;
 
-extern class GraphicsManager
+extern class GraphicsManager : public GameObject<GraphicsManager>
 {
     public:
         GraphicsManager();
@@ -29,6 +29,11 @@ extern class GraphicsManager
         TextureContext* getTexture(const char* texture){return mContentManager.getTexture(texture);}
         void addSprite(Sprite* _sprite);
         void deleteSprite(Sprite* _sprite);
+        static std::string name()
+        {
+            return "GraphicsManager";
+        }
+        static void registerActions(GameObjectType* _type);
     protected:
     private:
         SpriteList* spriteList;

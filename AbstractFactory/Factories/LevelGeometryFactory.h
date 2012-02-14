@@ -22,8 +22,6 @@ class LevelGeometryFactory : public AbstractFactory<Entity, LevelGeometryFactory
         }
     protected:
     private:
-        AbstractFactoryBase<CollisionResponse>* collisionResponse;
-
         AbstractFactoryBase<Skin>* skinFactory;
         AbstractFactoryBase<BodyPart>* bodyFactory;
 };

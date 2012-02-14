@@ -8,6 +8,7 @@
 #include <Physics/RenderCallback.h>
 #include <Physics/ContactListener.h>
 #include <Physics/DebugDraw.h>
+#include <Physics/WaterPhysicsSystem.h>
 #include <Timer.h>
 #include <stack>
 #define DEBUG_DRAW
@@ -32,6 +33,7 @@ void PhysicsManager::init(CollisionDatabase* _database)
     mWorld->SetDebugDraw(debugDraw);
 #endif
     mWorld->SetContactListener(contactListener);
+    attachChild(new WaterPhysicsSystem);
 }
 void PhysicsManager::clear()
 {

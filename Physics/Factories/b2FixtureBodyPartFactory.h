@@ -4,6 +4,7 @@
 #include <AbstractFactory/AbstractFactory.h>
 #include <Physics/BodyParts/BodyPart.h>
 #include <Box2D/Box2D.h>
+class WaterPhysicsSystem;
 
 class b2FixtureBodyPartFactory : public AbstractFactory<BodyPart, b2FixtureBodyPartFactory>
 {
@@ -29,6 +30,8 @@ class b2FixtureBodyPartFactory : public AbstractFactory<BodyPart, b2FixtureBodyP
             e_ShapeTypeMax,
         };
         ShapeType type;
+        WaterPhysicsSystem* waterSystem; /// FIXME needs to not be hardcoded
+        bool addToWaterSystem;
 };
 
 #endif // b2FixtureBodyPartFACTORY_H

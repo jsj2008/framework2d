@@ -19,6 +19,10 @@ b2Body* b2FixtureBodyPart::getBody()
 {
     return fixture->GetBody();
 }
+b2Fixture* b2FixtureBodyPart::getFixture()
+{
+    return fixture;
+}
 
 Entity* b2FixtureBodyPart::getEntity()
 {

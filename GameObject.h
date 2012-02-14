@@ -30,6 +30,8 @@ class GameObjectBase
         GameObjectBase* getNode(const std::string& _address);
         GameObjectType* getType();
         GameObjectBase* getIndividualNode(const std::string& _address);
+        template <typename Type>
+        Type* getChildOfType();
     protected:
         void setParent(GameObjectBase* _parent);
         void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}
@@ -110,6 +112,21 @@ GameObjectType GameObject<DerivedObject>::type(EvaluateTypeName<DerivedObject>()
 
 
 
+template <typename Type>
+Type* GameObjectBase::getChildOfType()
+{
+    Type* ret = nullptr;
+    for (GameObjectBase* child = getChildren(); child; child = child->getNext())
+    {
+        if (dynamic_cast<Type*>(child))
+        {
+            ret = static_cast<Type*>(child);
+            break;
+        }
+    }
+    assert(ret);
+    return ret;
+}
 template <typename DerivedObject>
 AutoInstantiate<DerivedObject>::AutoInstantiate(GameObjectType* _type)
 {

@@ -3,6 +3,7 @@
 #include <Physics/BodyParts/b2FixtureBodyPart.h>
 #include <Entities/CollisionResponse.h>
 #include <Physics/BodyParts/b2BodyBodyPart.h>
+#include <Physics/WaterPhysicsSystem.h>
 
 b2FixtureBodyPartFactory::b2FixtureBodyPartFactory()
 {
@@ -50,6 +51,8 @@ void b2FixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactories* _
             throw -1;
         }
     }
+    waterSystem = _factories->getWorld()->getChildOfType<WaterPhysicsSystem>();
+    addToWaterSystem = _loader->get<bool>("addToWaterSystem", false);
 }
 
 BodyPart* b2FixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)
@@ -74,6 +77,10 @@ BodyPart* b2FixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)
     if (type == e_Polygon)
     {
         delete fixtureDef.shape;
+    }
+    if (addToWaterSystem)
+    {
+        waterSystem->addFixture(bodyPart);
     }
     return bodyPart;
 }

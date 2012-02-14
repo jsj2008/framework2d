@@ -135,3 +135,7 @@ void GraphicsManager::deleteSprite(Sprite* _sprite)
     spriteList->deleteSprite(_sprite);
 }
 
+void GraphicsManager::registerActions(GameObjectType* _type)
+{
+}
+
