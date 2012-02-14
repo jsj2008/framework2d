@@ -6,8 +6,8 @@
 WaterPhysicsSystem::WaterPhysicsSystem()
 {
     //ctor
-    addEdge({-10,0}, {-5,5}, nullptr);
-    addEdge({5,5}, {10,0}, nullptr);
+    addEdge({-10,0}, {-4,6}, nullptr);
+    addEdge({4,6}, {10,0}, nullptr);
     addEdge({-6,5}, {6,5}, nullptr);
 }
 
@@ -44,7 +44,7 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
     {
         try
         {
-            Vec2f position = intersectionPosition(edges[i]->aPosition(), edges[i]->bPosition(), _a, _b);
+            Vec2f position = intersectionPosition(_a, _b, edges[i]->aPosition(), edges[i]->bPosition());
             assert(numIntersections < 2);
             intersections[numIntersections] = edges[i];
             numIntersections++;
@@ -67,15 +67,19 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
         case 1:
         {
             float scalar = intersectionValue(_a, _b, intersections[0]->aPosition(), intersections[0]->bPosition());
-            if (scalar < 0.01f)
+            if (scalar < 0.1f)
             {
                 Vec2f position = intersectionPosition(_a, _b, intersections[0]->aPosition(), intersections[0]->bPosition());
                 createVertex(position, intersections[0], edge);
+                edge->b = new Vertex(_b);
+                edge->b->a = edge;
             }
-            else if (scalar > 0.99f)
+            else if (scalar > 0.9f)
             {
                 Vec2f position = intersectionPosition(_a, _b, intersections[0]->aPosition(), intersections[0]->bPosition());
                 createVertex(position, edge, intersections[0]);
+                edge->a = new Vertex(_a);
+                edge->a->b = edge;
             }
             else assert(false);
             edges.push_back(edge);
@@ -149,8 +153,8 @@ std::vector<Vec2f> WaterPhysicsSystem::getContainer(const Vec2f& _position)
 {
     Vec2f a = _position;
     Vec2f b = a;
-    a.x -= 100;
-    b.x += 100;
+    a.x -= 10000;
+    b.x += 10000;
 
     Edge* left = nullptr;
     float leftX;

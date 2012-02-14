@@ -52,7 +52,7 @@ void b2FixtureBodyPartFactory::init(FactoryLoader* _loader, AbstractFactories* _
         }
     }
     waterSystem = _factories->getWorld()->getChildOfType<WaterPhysicsSystem>();
-    addToWaterSystem = _loader->get<bool>("addToWaterSystem", false);
+    addToWaterSystem = _loader->get<bool>("addToWaterSystem", /*type == e_Polygon*/ false);
 }
 
 BodyPart* b2FixtureBodyPartFactory::useFactory(FactoryParameters* _parameters)

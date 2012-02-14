@@ -220,7 +220,7 @@
 	
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
-	    <Property Type="bool" Name="addToWaterSystem" Value="true" />
+	    <Property Type="bool" Name="addToWaterSystem" Value="True" />
 	    <Array Type="Vec2f" Name="points">
 	      <Member Value="9 0" />
 	      <Member Value="18 0" />
