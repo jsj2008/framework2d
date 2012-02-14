@@ -108,6 +108,7 @@
 	</Factory>
 	<Factory Name="StaticWaterFixture" Type="b2FixtureBodyPartFactory" Product="BodyPart">
 	  <PropertyBag>
+	    <Property Type="bool" Name="addToWaterSystem" Value="false" />
 	    <Property Type="string" Name="collisionResponse" Value="WaterVolumeResponse" />
 	    <Property Type="int" Name="shapeType" Value="2" />
 	  </PropertyBag>
@@ -192,9 +193,13 @@
 	    <Property Type="string" Name="body" Value="WaterParticleBody" />
 	  </PropertyBag>
 	</Factory>
-      </FactoryList>
-      
+      </FactoryList>	
       <EntityList Name="Entities">
+	<Entity Type="StaticWater">
+	  <PropertyBag>
+	    <Property Type="float" Name="height" Value="2.0" />
+	  </PropertyBag>
+	</Entity>
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
 	    <Property Type="bool" Name="addToWaterSystem" Value="true" />
@@ -204,34 +209,6 @@
 	      <Member Value="14 24.2667 " />
 	      <Member Value="-8.4 23.7333 " />
 	    </Array>
-	  </PropertyBag>
-	</Entity>
-	<Entity Type="LevelGeometry">
-	  <PropertyBag>
-	    <Property Type="bool" Name="addToWaterSystem" Value="true" />
-	    <Array Type="Vec2f" Name="points">
-	      <Member Value="-18 0" />
-	      <Member Value="-12 18" />
-	      <Member Value="-12 24" />
-	      <Member Value="-18 24" />
-	    </Array>
-	  </PropertyBag>
-	</Entity>
-	
-	<Entity Type="LevelGeometry">
-	  <PropertyBag>
-	    <Property Type="bool" Name="addToWaterSystem" Value="True" />
-	    <Array Type="Vec2f" Name="points">
-	      <Member Value="9 0" />
-	      <Member Value="18 0" />
-	      <Member Value="18 24" />
-	      <Member Value="2 24" />
-	    </Array>
-	  </PropertyBag>
-	</Entity>
-	<Entity Type="StaticWater">
-	  <PropertyBag>
-	    <Property Type="float" Name="height" Value="2.0" />
 	  </PropertyBag>
 	</Entity>
       </EntityList>

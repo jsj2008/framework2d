@@ -20,7 +20,8 @@ void WaterPhysicsSystem::registerActions(GameObjectType* _type)
 {
 
 }
-
+#include <iostream>
+#define OUTPUT_VEC2F (a, b) a.x << ',' << a.y << ")->(" << b.x << ',' << b.y << ')'
 void WaterPhysicsSystem::addFixture(b2FixtureBodyPart* _bodyPart)
 {
     b2Fixture* fixture = _bodyPart->getFixture();
@@ -31,8 +32,23 @@ void WaterPhysicsSystem::addFixture(b2FixtureBodyPart* _bodyPart)
     {
         Vec2f a = polygon->GetVertex(i);
         Vec2f b = polygon->GetVertex((i+1)%polygon->GetVertexCount());
+        std::cout << "Edges size: " << edges.size() << std::endl;
+        for (unsigned int i = 0; i != edges.size(); i++)
+        {
+            Vec2f a = edges[i]->aPosition();
+            Vec2f b = edges[i]->bPosition();
+            std::cout << "\t (" << a.x << ',' << a.y << ")->(" << b.x << ',' << b.y << ')' << std::endl;
+        }
+        std::cout << "Adding (" << a.x << ',' << a.y << ")->(" << b.x << ',' << b.y << ')' << std::endl;
         addEdge(a, b, _bodyPart);
     }
+        std::cout << "Edges size: " << edges.size() << std::endl;
+        for (unsigned int i = 0; i != edges.size(); i++)
+        {
+            Vec2f a = edges[i]->aPosition();
+            Vec2f b = edges[i]->bPosition();
+            std::cout << "\t (" << a.x << ',' << a.y << ")->(" << b.x << ',' << b.y << ')' << std::endl;
+        }
 }
 
 void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBodyPart* _destructionListener)
@@ -57,10 +73,8 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
     {
         case 0:
         {
-            edge->a = new Vertex(_a);
-            edge->a->b = edge;
-            edge->b = new Vertex(_b);
-            edge->b->a = edge;
+            edge->setA(new Vertex(_a), _b);
+            edge->setB(new Vertex(_b));
             edges.push_back(edge);
             break;
         }
@@ -70,16 +84,14 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
             if (scalar < 0.1f)
             {
                 Vec2f position = intersectionPosition(_a, _b, intersections[0]->aPosition(), intersections[0]->bPosition());
+                edge->setB(position, new Vertex(_b));
                 createVertex(position, intersections[0], edge);
-                edge->b = new Vertex(_b);
-                edge->b->a = edge;
             }
             else if (scalar > 0.9f)
             {
                 Vec2f position = intersectionPosition(_a, _b, intersections[0]->aPosition(), intersections[0]->bPosition());
+                edge->setA(new Vertex(_a), position);
                 createVertex(position, edge, intersections[0]);
-                edge->a = new Vertex(_a);
-                edge->a->b = edge;
             }
             else assert(false);
             edges.push_back(edge);
@@ -91,17 +103,21 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
             float scalar1 = intersectionValue( _a, _b, intersections[1]->aPosition(), intersections[1]->bPosition());
             if (scalar0 > scalar1)
             {
-                /*Edge* temp = intersections[0];
-                intersections[0] = intersections[1];
-                intersections[1] = temp;*/
-                float temp = scalar0;
-                scalar0 = scalar1;
-                scalar1 = temp;
+                {
+                    Edge* temp = intersections[0];
+                    intersections[0] = intersections[1];
+                    intersections[1] = temp;
+                }
+                {
+                    float temp = scalar0;
+                    scalar0 = scalar1;
+                    scalar1 = temp;
+                }
             }
             Vec2f position0 = positionFromScalarValue(_a, _b, scalar0); /// FIXME might be the wrong line
-            createVertex(position0, intersections[0], edge);
-
             Vec2f position1 = positionFromScalarValue(_a, _b, scalar1);
+
+            createVertex(position0, intersections[0], edge, &position1);
             createVertex(position1, edge, intersections[1]);
             edges.push_back(edge);
             break;
@@ -114,37 +130,34 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
     //edges.push_back({_a, _b});
 }
 
-void WaterPhysicsSystem::createVertex(const Vec2f& _position, Edge* _a, Edge* _b)
+void WaterPhysicsSystem::createVertex(const Vec2f& _position, Edge* _a, Edge* _b, Vec2f* _bBPosition)
 {
     Vertex* vertex = nullptr;
-    Vertex* oldA = _a->b;
-    Vertex* oldB = _b->a;
+    Vertex* oldA = _a->getB();
+    Vertex* oldB = _b->getA();
     if (oldA == nullptr)
     {
         if (oldB == nullptr)
         {
             vertex = new Vertex(_position);
-            vertex->a = _b;
-            vertex->b = _a;
         }
         else
         {
             vertex = oldB;
             vertex->position = _position;
-            vertex->a = _b;
-            vertex->b = _a;
         }
     }
     else
     {
         vertex = oldA;
         vertex->position = _position;
-        vertex->a = _b;
-        vertex->b = _a;
     }
     assert(vertex);
-    _a->b = vertex;
-    _b->a = vertex;
+    _a->setB(vertex);
+    if (_bBPosition)
+        _b->setA(vertex, *_bBPosition);
+    else
+        _b->setA(vertex);
 }
 
 Vec2f intersectionPosition(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd, bool _aNeedsIntersect, bool _bNeedsIntersect);
@@ -166,7 +179,7 @@ std::vector<Vec2f> WaterPhysicsSystem::getContainer(const Vec2f& _position)
         Edge* edge = edges[i];
         try
         {
-            Vec2f position = intersectionPosition(edge->aPosition(), edge->bPosition(), a, b, false, true);
+            Vec2f position = intersectionPosition(edge->aPosition(), edge->bPosition(), a, b, true, false);
             if (position.x < _position.x)
             {
                 if (left)
@@ -187,7 +200,7 @@ std::vector<Vec2f> WaterPhysicsSystem::getContainer(const Vec2f& _position)
             {
                 if (right)
                 {
-                    if (rightX < position.x)
+                    if (rightX > position.x)
                     {
                         right = edge;
                         rightX = position.x;
@@ -217,16 +230,16 @@ std::vector<Vec2f> WaterPhysicsSystem::getContainer(const Vec2f& _position)
             shape.push_back({leftX, _position.y});
             return shape;
         }
-        if (right->a->getVertexShape() == Vertex::eLeft) /// FIXME change this to left
+        //if (right->getA()->getVertexShape() == Vertex::eLeft) /// FIXME make this get the next on the vertex
         {
             shape.push_back(right->aPosition());
-            right = right->a->b;
+            right = right->getA()->getNextOutfacing(right);
         }
-        else assert(false);
+        //else assert(false);
     }
 }
 
-WaterPhysicsSystem::Vertex::VertexShape WaterPhysicsSystem::Vertex::getVertexShape()
+/*WaterPhysicsSystem::Vertex::VertexShape WaterPhysicsSystem::Vertex::getVertexShape()
 {
     Vec2f dirA = a->aPosition() - position;
     Vec2f dirB = b->bPosition() - position;
@@ -236,8 +249,110 @@ WaterPhysicsSystem::Vertex::VertexShape WaterPhysicsSystem::Vertex::getVertexSha
     float angleB = atan2(dirB.x, dirB.y);
     float angleDiff = angleB - angleA;
     return eLeft;
-}
+}*/
 
+void WaterPhysicsSystem::Edge::setA(Vertex* _a)
+{
+    if (a)
+        if (a == _a)
+            return;
+        else
+            a->removeEdge(this);
+    a = _a;
+    a->addOutwardsEdge(this);
+}
+void WaterPhysicsSystem::Edge::setB(Vertex* _b)
+{
+    if (b)
+        if (b == _b)
+            return;
+        else
+            b->removeEdge(this);
+    b = _b;
+    b->addInwardsEdge(this);
+}
+void WaterPhysicsSystem::Edge::setA(Vertex* _a, const Vec2f& _b)
+{
+    if (a)
+        a->removeEdge(this);
+    a = _a;
+    a->addOutwardsEdge(this, _b);
+}
+void WaterPhysicsSystem::Edge::setB(const Vec2f& _a, Vertex* _b)
+{
+    if (b)
+        b->removeEdge(this);
+    b = _b;
+    b->addInwardsEdge(_a, this);
+}
+WaterPhysicsSystem::Edge* WaterPhysicsSystem::Vertex::getNextOutfacing(Edge* _b)
+{
+    for (unsigned int i = 0; i != edges.size(); i++)
+    {
+        if (edges[i].edge == _b)
+        {
+            i++;
+            if (i == edges.size())
+                i = 0;
+            return edges[i].edge;
+        }
+    }
+    throw -1;
+}
+void WaterPhysicsSystem::Vertex::addInwardsEdge(Edge* _edge)
+{
+    addInwardsEdge(_edge->aPosition(), _edge);
+}
+void WaterPhysicsSystem::Vertex::addOutwardsEdge(Edge* _edge)
+{
+    addOutwardsEdge(_edge, _edge->bPosition());
+}
+void WaterPhysicsSystem::Vertex::addInwardsEdge(const Vec2f& _a, Edge* _edge)
+{
+    assert(_edge->getB() == this);
+    Vec2f dir = _a - position;
+    dir /= dir.Length();
+    float angle = atan2(dir.y, dir.x);
+    for (auto i = edges.begin(); i != edges.end(); i++)
+    {
+        if (i->angle > angle)
+        {
+            edges.insert(i, {angle, _edge});
+            return;
+        }
+    }
+    edges.push_back({angle, _edge});
+}
+void WaterPhysicsSystem::Vertex::addOutwardsEdge(Edge* _edge, const Vec2f& _b)
+{
+    assert(_edge->getA() == this);
+    Vec2f dir = _b - position;
+    dir /= dir.Length();
+    float angle = atan2(dir.y, dir.x);
+    for (auto i = edges.begin(); i != edges.end(); i++)
+    {
+        if (i->angle > angle)
+        {
+            edges.insert(i, {angle, _edge});
+            return;
+        }
+    }
+    edges.push_back({angle, _edge});
+}
+void WaterPhysicsSystem::Vertex::removeEdge(Edge* _b)
+{
+    for (auto i = edges.begin(); i != edges.end(); i++)
+    {
+        if (i->edge == _b)
+        {
+            edges.erase(i);
+            if (edges.size() == 0)
+                delete this;
+            return;
+        }
+    }
+    throw -1;
+}
 
 
 

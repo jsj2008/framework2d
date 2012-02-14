@@ -23,21 +23,29 @@ class WaterPhysicsSystem : public GameObject<WaterPhysicsSystem>
         void addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBodyPart* _destructionListener);
 
         struct Vertex;
-        struct Edge
+        class Edge
         {
-            enum EdgeType
-            {
-                eLeftFloor,
-                eRightFloor,
-                eRightRoof,
-                eLeftRoof,
-                eEdgeTypeMax
-            };
-            Edge(){a = b = nullptr;}
-            Vertex* a,* b;
-            Vec2f aPosition(){return a->position;}
-            Vec2f bPosition(){return b->position;}
-            EdgeType getEdgeType();
+            public:
+                enum EdgeType
+                {
+                    eLeftFloor,
+                    eRightFloor,
+                    eRightRoof,
+                    eLeftRoof,
+                    eEdgeTypeMax
+                };
+                Edge(){a = b = nullptr;}
+                void setA(Vertex* _a);
+                void setB(Vertex* _b);
+                void setA(Vertex* _a, const Vec2f& _bPosition);
+                void setB(const Vec2f& _aPosition, Vertex* _b);
+                Vertex* getA(){return a;}
+                Vertex* getB(){return b;}
+                Vec2f aPosition(){return a->position;}
+                Vec2f bPosition(){return b->position;}
+                EdgeType getEdgeType();
+            private:
+                Vertex* a,* b;
         };
         struct Vertex
         {
@@ -54,14 +62,26 @@ class WaterPhysicsSystem : public GameObject<WaterPhysicsSystem>
                 eRight,
                 eVertexShapeMax
             };
-            Vertex(const Vec2f& _position){position = _position; a = b = nullptr;}
+            Vertex(const Vec2f& _position){position = _position;}
             Vec2f position;
-            Edge* a,* b;
-            VertexType getVertexType();
-            VertexShape getVertexShape();
+            struct EdgeAttachment
+            {
+                float angle;
+                Edge* edge;
+            };
+            std::vector<EdgeAttachment> edges;
+            void addInwardsEdge(Edge* _edge);
+            void addOutwardsEdge(Edge* _edge);
+            void addInwardsEdge(const Vec2f& _a, Edge* _edge);
+            void addOutwardsEdge(Edge* _edge, const Vec2f& _b);
+            void removeEdge(Edge* _edge);
+            Edge* getNextOutfacing(Edge* _edge);
+            //Edge* a,* b;
+            //VertexType getVertexType();
+            //VertexShape getVertexShape();
         };
 
-        void createVertex(const Vec2f& _position, Edge* _a, Edge* _b);
+        void createVertex(const Vec2f& _position, Edge* _a, Edge* _b, Vec2f* _bBPosition = nullptr);
         //std::unordered_map<b2FixtureBodyPart*, std::vector<Edge>> edgeMap;
         std::vector<Edge*> edges;
 };
