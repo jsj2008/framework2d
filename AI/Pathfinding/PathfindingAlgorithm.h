@@ -25,7 +25,7 @@ class PathfindingAlgorithm
         {
             public:
                 WorkingSetNode(NodeReference _node, float _distanceTravelled){node = _node; distanceTravelled = _distanceTravelled;}
-                bool operator <(const WorkingSetNode& rhs)
+                bool operator <(const WorkingSetNode& rhs)const
                 {
                     return distanceTravelled > rhs.distanceTravelled; /// Priority queue puts the highest at the top, and I want the lowest
                 }

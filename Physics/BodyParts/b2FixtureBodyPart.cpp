@@ -30,8 +30,7 @@ Entity* b2FixtureBodyPart::getEntity()
             return nullptr;
         parent = parent->getParent();
     }
-    return parent;
-    return static_cast<Entity*>(getParent());
+    return static_cast<Entity*>(parent);
 }
 
 const Vec2f& b2FixtureBodyPart::getPosition()

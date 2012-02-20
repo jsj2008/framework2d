@@ -7,3 +7,7 @@ CEGUI.log
 bin
 *.depend
 *.layout
+__pycache__
+Makefile
+.bin
+.dep
