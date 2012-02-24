@@ -1,6 +1,5 @@
 #include "GameServerInterface.h"
 #include <Networking/Client/SinglePlayerGameServer.h>
-#include <Networking/Client/RemoteGameServer.h>
 
 GameServerInterface::GameServerInterface()
 {

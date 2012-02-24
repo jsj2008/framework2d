@@ -10,4 +10,3 @@ gen.build()
 writer = yaac.MakefileWriter(gen)
 writer.compileFlags += " -I . -lSDL -lGL -lGLU -lCEGUIBase -lCEGUIOpenGLRenderer -ltinyxml -lGLEW"
 writer.outputMakefile()
-

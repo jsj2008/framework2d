@@ -18,14 +18,7 @@ GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name, 
     eventListenerLists.resize(type->eventsSize());
     if (_parent)
     {
-        parent = _parent;
-        prev = nullptr;
-        next = _parent->children;
-        if (_parent->children != nullptr)
-        {
-            _parent->children->prev = this;
-        }
-        _parent->children = this;
+      _parent->attachChild(this);
     }
     else if (_orphan)
     {
@@ -33,9 +26,7 @@ GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name, 
     }
     else
     {
-        prev = next = parent = nullptr;
     }
-    children = nullptr;
 }
 /*void GameObjectBase::orphaned() FIXME remove old code
 {
@@ -50,29 +41,6 @@ GameObjectBase::~GameObjectBase()
             (*listener)->eventObjectDeleted();
         }
     }
-    GameObjectBase* child = children;
-    while (child != nullptr)
-    {
-        GameObjectBase* prev = child;
-        child = child->next;
-        delete prev;
-    }
-    if (prev) /// FIXME remove this
-    {
-        if (prev->children == this)
-        {
-            prev->children = next;
-        }
-        else
-        {
-            prev->next = next;
-        }
-    }
-    if (next != nullptr)
-    {
-        next->prev = prev;
-    }
-    parent->detach(this);
 }
 
 void GameObjectBase::registerBaseActions(GameObjectType* _type)
@@ -87,35 +55,8 @@ void GameObjectBase::registerBaseActions(GameObjectType* _type)
     }
 }
 
-void GameObjectBase::attachChild(GameObjectBase* _child)
-{
-    assert(_child->parent != this);
-    _child->parent->detach(_child);
-    _child->parent = this;
-    _child->prev = nullptr;
-    _child->next = children;
-    if (children != nullptr)
-    {
-        children->prev = _child;
-    }
-    children = _child;
-}
 #include <Entities/Entity.h>
 #include <Physics/BodyParts/BodyPart.h>
-void GameObjectBase::detach(GameObjectBase* _child)
-{
-    if (dynamic_cast<Entity*>(this) && dynamic_cast<BodyPart*>(_child))
-    {
-        assert(false);
-    }
-    assert(_child->parent == this);
-    if (_child->prev)
-        _child->prev->next = _child->next;
-    else
-        children = _child->next;
-    if (_child->next)
-        _child->next->prev = _child->prev;
-}
 
 GameObjectType* GameObjectBase::getType()
 {
@@ -129,22 +70,6 @@ void EventHandle::fire(GameObjectBase* _object)
         (*listener)->fire();
     }
 }
-GameObjectBase* GameObjectBase::getNext()
-{
-    return next;
-}
-GameObjectBase* GameObjectBase::getPrev()
-{
-    return prev;
-}
-GameObjectBase* GameObjectBase::getChildren()
-{
-    return children;
-}
-GameObjectBase* GameObjectBase::getParent()
-{
-    return parent;
-}
 
 void GameObjectBase::killAction()
 {
@@ -157,7 +82,7 @@ void GameObjectBase::killActionBy(CollisionObject* _object)
 
 GameObjectBase* GameObjectBase::getNode(const std::string& _address)
 {
-    GameObjectBase* node = this;
+  GameObjectBase* node = this;
     unsigned int iter = 0;
     if (_address[0] == '/')
     {
@@ -176,7 +101,7 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
             std::string address = _address.substr(iter, next - iter);
             if (address == "..")
             {
-                node = node->getParent();
+	      node = node->getParent();
             }
             else
             {
@@ -198,7 +123,7 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
 #include <cstring>
 GameObjectBase* GameObjectBase::getIndividualNode(const std::string& _address)
 {
-    GameObjectBase* child = children;
+  GameObjectBase* child = getChildren();
     while (child)
     {
         //if (child->get()->nodeName() == _address)
