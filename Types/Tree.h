@@ -12,7 +12,9 @@ public:
   ~List();
   void attachChild(ListNode<Object>* _child);
   void detachChild(ListNode<Object>* _child);
+  void append(List<Object>* _other);
   ListNode<Object>* getChildren(){return children;}
+  Object* front(){return static_cast<Object*>(children);}
 protected:
   ListNode<Object>* children;
 };
@@ -26,6 +28,8 @@ class ListNode
   ListNode<Node>* getNext(){return next;}
   ListNode<Node>* getPrev(){return prev;}
   List<Node>* getParent(){return parent;}
+
+  Node* getNextObject(){return static_cast<Node*>(next);}
   Node& operator()(){return static_cast<Node&>(*this);}
 protected:
   friend class List<Node>;
@@ -67,12 +71,23 @@ ListNode<Node>::~ListNode()
 {
   parent->detachChild(this);
 }
+
+template <typename Object>
+void List<Object>::append(List<Object>* _other)
+{
+  ListNode<Object>* child = _other->getChildren();
+  while (child)
+    {
+      attachChild(child);
+    }
+  delete _other;
+}
 template <typename Object>
 void List<Object>::attachChild(ListNode<Object>* _child)
 {
   assert(_child->getParent() != this);
   _child->getParent()->detachChild(_child);
-    _child->parent = static_cast<Object*>(this);
+    _child->parent = this;
     _child->prev = nullptr;
     _child->next = children;
     if (children != nullptr)

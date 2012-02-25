@@ -35,11 +35,7 @@ Entity* b2FixtureBodyPart::getEntity()
 
 const Vec2f& b2FixtureBodyPart::getPosition()
 {
-    //assert(fixture);
-    if (!fixture)
-    {
-        return {0,0};
-    }
+  assert(fixture);
     return fixture->GetBody()->GetPosition();
 }
 float b2FixtureBodyPart::getAngle()
