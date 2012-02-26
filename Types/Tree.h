@@ -69,6 +69,7 @@ List<Object>::~List()
 template <typename Node>
 ListNode<Node>::~ListNode()
 {
+  if (parent)
   parent->detachChild(this);
 }
 
@@ -86,7 +87,8 @@ template <typename Object>
 void List<Object>::attachChild(ListNode<Object>* _child)
 {
   assert(_child->getParent() != this);
-  _child->getParent()->detachChild(_child);
+  if (_child->getParent())
+    _child->getParent()->detachChild(_child);
     _child->parent = this;
     _child->prev = nullptr;
     _child->next = children;

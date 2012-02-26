@@ -7,17 +7,20 @@
 namespace Tasks
 {
   class Task;
+  class TaskManager;
   class Deadline: public ListNode<Deadline>
   {
   public:
-    Deadline();
+    Deadline(TaskManager* _taskManager);
     ~Deadline();
     unsigned int timeEstimate();
     Task* getTask();
+    void addTask(Task* _task);
   private:
     unsigned int timeLimit;
     List<Task> tasks;
     std::vector<Deadline*> prerequisites;
+    TaskManager* taskManager;
   };
 }
 #endif /* _DEADLINE_H */

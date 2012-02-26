@@ -3,8 +3,9 @@
 
 namespace Tasks
 {
-  Deadline::Deadline()
+  Deadline::Deadline(TaskManager* _taskManager)
   {
+    taskManager = _taskManager;
   }
   Deadline::~Deadline()
   {
@@ -25,5 +26,9 @@ namespace Tasks
 	  return task;
       }
     return nullptr;
+  }
+  void Deadline::addTask(Task* _task)
+  {
+    tasks.attachChild(_task);
   }
 }

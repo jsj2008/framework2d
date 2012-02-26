@@ -6,9 +6,9 @@ namespace Tasks
 {
   Worker::Worker()
   {
-    thread = new Thread(&Worker::main, this);
-    mutex = new Mutex(false);
+    mutex = new Mutex(true);
     task = nullptr;
+    thread = new Thread(&Worker::main, this);
   }
   Worker::~Worker()
   {

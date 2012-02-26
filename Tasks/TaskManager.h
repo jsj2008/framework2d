@@ -23,7 +23,9 @@ namespace Tasks
     TaskManager();
     ~TaskManager();
     TaskProfile* getProfile(const std::string& _name);
-    //    virtual void addTask(Task* _task);
+    void addDeadline(Deadline* _deadline);
+    void addTaskToFrameDeadline(Task* _task, unsigned int _frameOffset); /// Offset from the current frame, 0 is the current frame
+    void addTaskToThisFrame(Task* _task){addTaskToFrameDeadline(_task, 0);}
     void addResource(Resource* _resource);
     void idler(WorkerPool* _worker); /// Worker became available
     void run();

@@ -52,6 +52,11 @@ namespace Tasks
 	
 	  }*/
   }
+  void TaskManager::addTaskToFrameDeadline(Task* _task, unsigned int _offset)
+  {
+    assert(_offset == 0); /// FIXME need to properly implement this
+    deadlines.front()->addTask(_task);
+  }
   Task* TaskManager::findTask()
   {
     Deadline* deadline = deadlines.front();
@@ -111,9 +116,16 @@ namespace Tasks
 	}
       else
 	{
-	  idleWorkers->append(pool);
-	  delete _pool;
-	  pool = nullptr;
+	  if (idleWorkers)
+	    {
+	      idleWorkers->append(pool);
+	      delete _pool;
+	      pool = nullptr;
+	    }
+	  else
+	    {
+	      idleWorkers = pool;
+	    }
 	  break;
 	}
     }
