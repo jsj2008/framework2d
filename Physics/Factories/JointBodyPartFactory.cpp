@@ -26,7 +26,7 @@ BodyPart* JointBodyPartFactory::useFactory(FactoryParameters* _parameters)
     assert(dynamic_cast<b2BodyBodyPart*>(bodyA) && dynamic_cast<b2BodyBodyPart*>(bodyB));
     jointDef.bodyA = static_cast<b2BodyBodyPart*>(bodyA)->getBody();
     jointDef.bodyB = static_cast<b2BodyBodyPart*>(bodyB)->getBody();
-    b2RevoluteJoint* joint = world->createJoint(&jointDef);
+    b2RevoluteJoint* joint = static_cast<b2RevoluteJoint*>(world->createJoint(&jointDef));
     BodyPart* bodyPart = new JointBodyPart(joint);
     return bodyPart;
 }

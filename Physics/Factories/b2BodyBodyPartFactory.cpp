@@ -18,7 +18,7 @@ void b2BodyBodyPartFactory::init(FactoryLoader* _loader, AbstractFactories* _fac
 
     bodyDef.bullet = _loader->get<bool>("bullet", false);
     bodyDef.fixedRotation = _loader->get<bool>("fixedRotation", false);
-    bodyDef.type = _loader->get<int>("bodyType", b2_dynamicBody); /// FIXME loader needs to accept enums
+    bodyDef.type = static_cast<b2BodyType>(_loader->get<int>("bodyType", b2_dynamicBody)); /// FIXME loader needs to accept enums
 }
 
 BodyPart* b2BodyBodyPartFactory::useFactory(FactoryParameters* _parameters)

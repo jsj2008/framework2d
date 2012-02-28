@@ -66,7 +66,7 @@ Level* LevelData::build()
         {
             for (int ii = -20; ii != 10; ii++)
             {
-                params.add<Vec2f>("position", {i,ii});
+	      params.add<Vec2f>("position", {float(i),float(ii)});
                 waterFactory->use(&params, level);
             }
         }

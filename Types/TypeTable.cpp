@@ -81,29 +81,31 @@ class BoolValue: public TypeTable::TemplateBaseValue<bool>
         }
 };
 
-BoolValue* parseAsBool(const std::string& _value)
+bool parseAsBool(const std::string& _value)
 {
     if (_value == "True" || _value == "true")
     {
-        return new BoolValue(true);
+      //return new BoolValue(true);
+      return true;
     }
     if (_value == "False" || _value == "false")
     {
-        return new BoolValue(false);
+      //return new BoolValue(false);
+      return false;
     }
     throw -1;
 }
-class BoolArrayValue: public TypeTable::TemplateBaseArrayValue<bool>
+class BoolArrayValue: public TypeTable::TemplateBaseArrayValue<char>
 {
     public:
         BoolArrayValue(){}
-        BoolArrayValue(const std::vector<bool>& _initList)
+        BoolArrayValue(const std::vector<char>& _initList)
         {
             values = _initList;
         }
         void output(PropertyBagSerializer* _out)
         {
-            _out->outputArray(&values[0], values.size());
+	  _out->outputArray(&values[0], values.size());
         }
         void output(std::ostream* parseDestination)
         {
@@ -145,7 +147,7 @@ class BoolType: public TypeTable::TemplateBaseType<bool>
     }
     TypeTable::Value* parseInstance(TypeTable* _typeTable, const std::string& _value)
     {
-        return parseAsBool(_value);
+      return new BoolValue(parseAsBool(_value));
     }
     TypeTable::Type* clone()
     {
