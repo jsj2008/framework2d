@@ -13,15 +13,7 @@ OrphanList::~OrphanList()
 
 void OrphanList::attachOrphan(GameObjectBase* _node)
 {
-    _node->parent = this;
-    _node->parent = this;
-    _node->prev = nullptr;
-    _node->next = children;
-    if (children != nullptr)
-    {
-        children->prev = _node;
-    }
-    children = _node;
+  attachChild(_node);
 }
 
 void OrphanList::registerActions(GameObjectType* _type)
