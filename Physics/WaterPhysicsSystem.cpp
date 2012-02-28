@@ -54,7 +54,7 @@ void WaterPhysicsSystem::addFixture(b2FixtureBodyPart* _bodyPart)
 void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBodyPart* _destructionListener)
 {
     Edge* edge = new Edge;
-    Edge* intersections[2] = {-1, -1};
+    Edge* intersections[2] = {0, 0};
     unsigned int numIntersections = 0;
     for (unsigned int i = 0; i != edges.size(); i++)
     {

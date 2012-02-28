@@ -14,5 +14,5 @@ Makefile
 *~
 #*#
 __hidden__
-
+*.mat
 

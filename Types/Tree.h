@@ -71,7 +71,8 @@ template <typename Object>
 void List<Object>::attachChild(ListNode<Object>* _child)
 {
   assert(_child->getParent() != this);
-  _child->getParent()->detachChild(_child);
+  if (_child->getParent())
+      _child->getParent()->detachChild(_child);
     _child->parent = static_cast<Object*>(this);
     _child->prev = nullptr;
     _child->next = children;
