@@ -11,3 +11,8 @@ __pycache__
 Makefile
 .bin
 .dep
+*~
+#*#
+__hidden__
+
+

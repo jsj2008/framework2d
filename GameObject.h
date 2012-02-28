@@ -2,12 +2,13 @@
 #define GAMEOBJECT_H
 
 #include <GameObjectType.h>
+#include <Types/Tree.h>
 #include <string>
 #include <vector>
 #include <cassert>
 class CollisionObject;
 
-class GameObjectBase
+class GameObjectBase: public TreeNode<GameObjectBase>
 {
     public:
 
@@ -21,19 +22,13 @@ class GameObjectBase
         void killActionBy(CollisionObject* _object); /// Will trigger deathEvent
         static void registerBaseActions(GameObjectType* _type);
 
-        GameObjectBase* getNext();
-        GameObjectBase* getPrev();
-        GameObjectBase* getChildren();
-        GameObjectBase* getParent();
-        void attachChild(GameObjectBase* _child);
-        void detach(GameObjectBase* _child);
         GameObjectBase* getNode(const std::string& _address);
         GameObjectType* getType();
         GameObjectBase* getIndividualNode(const std::string& _address);
         template <typename Type>
         Type* getChildOfType();
     protected:
-        void setParent(GameObjectBase* _parent);
+        void setParent(TreeNode<GameObjectBase*>* _parent);
         void fireEvent(EventHandle* _eventHandle){_eventHandle->fire(this);}
         static std::unordered_map<std::string,ActionHandle*>& actionHandles()
         {
@@ -44,8 +39,7 @@ class GameObjectBase
         std::string objectName;
     private:
         friend class OrphanList;
-        GameObjectBase* next,* prev,* children,* parent;
-
+	ListNode<GameObjectBase> filesystemNode;
         friend class EventHandle;
         std::vector<std::vector<GameObjectEventListener*>> eventListenerLists;
         GameObjectType* type;
