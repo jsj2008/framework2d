@@ -2,7 +2,7 @@
 
 namespace Tasks
 {
-  Task::Task(Profile* _profile)
+  Task::Task(TaskProfile* _profile)
   {
     profile = _profile;
   }
@@ -20,6 +20,9 @@ namespace Tasks
   bool Task::lock()
   {
     return true;
+  }
+  void Task::unlock()
+  {
   }
 }
 

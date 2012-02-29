@@ -6,6 +6,7 @@
 
 namespace Tasks
 {
+  class TaskProfile;
   class ActionTask : public Task
   {
   public:

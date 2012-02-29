@@ -4,17 +4,17 @@
 #include <Log/Log.h>
 
 GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name)
+  :NamedTreeNode<GameObjectBase>(_name)
 {
     type = _type;
-    objectName = _name;
     eventListenerLists.resize(type->eventsSize());
     Filesystem::global()->getOrphanList()->attachOrphan(this);
     children = nullptr;
 }
 GameObjectBase::GameObjectBase(GameObjectType* _type, const std::string& _name, GameObjectBase* _parent, bool _orphan)
+  :NamedTreeNode<GameObjectBase>(_name)
 {
     type = _type;
-    objectName = _name;
     eventListenerLists.resize(type->eventsSize());
     if (_parent)
     {
@@ -120,7 +120,11 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
     }
     return node;
 }
-
+GameObjectBase* GameObjectBase::getIndividualNode(const std::string& _address)
+{
+  return static_cast<GameObjectBase*>
+    ((this)->getChildByName(_address));
+}
 EventHandle* GameObjectBase::deathEvent;
 
 

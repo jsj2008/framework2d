@@ -4,23 +4,24 @@
 #include <Types/Tree.h>
 namespace Tasks
 {
-  class Profile;
+  class TaskProfile;
   class Priority;
   class TaskManager;
   class Task : public ListNode<Task>
   {
   public:
-    Task(Profile* _profile);
+    Task(TaskProfile* _profile);
     ~Task();
     void execute();
     bool lock();
+    void unlock();
     unsigned int timeEstimate();
     unsigned int* getVariables();
-    const Profile* getProfile(){return profile;}
+    const TaskProfile* getTaskProfile(){return profile;}
     Priority* getPriority(TaskManager* _manager);
   private:
     virtual void virtualExecute()=0;
-    Profile* profile;
+    TaskProfile* profile;
   };
 }
 #endif /* _TASK_H */

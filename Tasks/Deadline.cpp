@@ -32,4 +32,8 @@ namespace Tasks
   {
     tasks.attachChild(_task);
   }
+  void Deadline::addPrerequisite(Deadline* _deadline)
+  {
+    prerequisites.push_back(_deadline);
+  }
 }

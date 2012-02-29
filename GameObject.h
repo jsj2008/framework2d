@@ -8,15 +8,13 @@
 #include <cassert>
 class CollisionObject;
 
-class GameObjectBase: public TreeNode<GameObjectBase>
+class GameObjectBase: public NamedTreeNode<GameObjectBase>
 {
     public:
 
         GameObjectBase(GameObjectType* _type, const std::string& _name);
         GameObjectBase(GameObjectType* _type, const std::string& _name, GameObjectBase* _parent, bool _orphan);
         virtual ~GameObjectBase();
-
-        const std::string& getObjectName(){return objectName;}
 
         void killAction(); /// Will trigger deathEvent
         void killActionBy(CollisionObject* _object); /// Will trigger deathEvent
@@ -36,7 +34,6 @@ class GameObjectBase: public TreeNode<GameObjectBase>
             return handles;
         }
         void orphaned();
-        std::string objectName;
     private:
         friend class OrphanList;
 	ListNode<GameObjectBase> filesystemNode;

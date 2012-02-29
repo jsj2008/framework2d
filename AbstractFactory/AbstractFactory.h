@@ -101,7 +101,7 @@ AbstractFactory<Product, DerivedType>::~AbstractFactory()
 template <typename Product, typename DerivedType>
 void AbstractFactory<Product, DerivedType>::baseInit(const std::string& _name, FactoryLoader* loader, AbstractFactories* factories)
 {
-    GameObjectBase::objectName = _name;
+  GameObjectBase::setObjectName(_name);
     static_cast<DerivedType*>(this)->init(loader, factories);
 }
 

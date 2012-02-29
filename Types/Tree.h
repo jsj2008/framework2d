@@ -30,6 +30,8 @@ class ListNode
   ListNode<Node>* getNext(){return next;}
   ListNode<Node>* getPrev(){return prev;}
   List<Node>* getParent(){return parent;}
+  Node* getPrevObject(){return static_cast<Node*>(static_cast<ListNode<Node>*>(this)->getPrev());}
+//  Node* getNextObject(){return static_cast<Node*>(static_cast<ListNode<Node>*>(this)->getNext());}
 
   Node* getNextObject(){return static_cast<Node*>(next);}
   Node& operator()(){return static_cast<Node&>(*this);}
@@ -44,6 +46,7 @@ class NamedList: public List<Object>
 {
 public:
   Object* operator [](const std::string& _name);
+  Object* getObjectByName(const std::string& _name){return operator[](_name);}
 };
 
 template <typename Node>
@@ -52,6 +55,8 @@ class NamedListNode: public ListNode<Node>
 public:
   NamedListNode(const std::string& _name){name = _name;}
   const std::string& getNodeName(){return name;}
+  const std::string& getObjectName(){return name;}
+  void setObjectName(const std::string& _name){name = _name;}
 private:
   std::string name;
 };
@@ -66,6 +71,24 @@ public:
   Node* getPrev(){return static_cast<Node*>(static_cast<ListNode<TreeNode<Node>>*>(this)->getPrev());}
   Node* getNext(){return static_cast<Node*>(static_cast<ListNode<TreeNode<Node>>*>(this)->getNext());}
   Node* getChildren(){return static_cast<Node*>(static_cast<List<TreeNode<Node>>*>(this)->getChildren());}
+  Node* getChildByName(const std::string& _name){return static_cast<Node*>(static_cast<List<TreeNode<Node>>*>(this)->getObjectByName(_name));}
+  Node& operator()(){return static_cast<Node&>(*this);}
+  //  void attachChild(Node* _child);
+  //  void detachChild(Node* _child);
+protected:
+};
+
+template <typename Node> /// <Type of the Tree>
+class NamedTreeNode: public NamedListNode<NamedTreeNode<Node>>, public NamedList<NamedTreeNode<Node>>
+{
+public:
+  NamedTreeNode(const std::string& _name):NamedListNode<NamedTreeNode<Node>>(_name){}
+  ~NamedTreeNode(){}
+  Node* getParent(){return static_cast<Node*>(static_cast<ListNode<NamedTreeNode<Node>>*>(this)->getParent());}
+  Node* getPrev(){return static_cast<Node*>(static_cast<ListNode<NamedTreeNode<Node>>*>(this)->getPrev());}
+  Node* getNext(){return static_cast<Node*>(static_cast<ListNode<NamedTreeNode<Node>>*>(this)->getNext());}
+  Node* getChildren(){return static_cast<Node*>(static_cast<List<NamedTreeNode<Node>>*>(this)->getChildren());}
+  Node* getChildByName(const std::string& _name){return static_cast<Node*>(static_cast<NamedList<NamedTreeNode<Node>>*>(this)->getObjectByName(_name));}
   Node& operator()(){return static_cast<Node&>(*this);}
   //  void attachChild(Node* _child);
   //  void detachChild(Node* _child);

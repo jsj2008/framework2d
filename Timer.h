@@ -6,6 +6,7 @@
 class Timer: public GameObject<Timer>
 {
     public:
+        Timer();
         void init();
         void pause();
         void unpause();

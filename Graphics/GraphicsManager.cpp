@@ -7,6 +7,8 @@
 #include <Graphics/Skins/AllSkins.h>
 #include <Graphics/Sprites/SpriteList.h>
 #include <Log/Log.h>
+#include <Filesystem/Filesystem.h>
+#include <Filesystem/Folder.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 GraphicsManager g_GraphicsManager;
@@ -16,11 +18,14 @@ bool function(const CEGUI::EventArgs& e)
     return true;
 }
 GraphicsManager::GraphicsManager()
+  :GameObject<GraphicsManager>("graphics")
 {
 }
 void GraphicsManager::init()
 {
     //ctor
+  Filesystem::global()->makeFolders("/dev")->attachChild(this);
+
     int result = SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
         assert(result == 0);
     SDL_EnableUNICODE(1);

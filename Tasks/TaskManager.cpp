@@ -19,7 +19,7 @@ namespace Tasks
     /// Hard coded TaskManager initialiser
     Deadline* graphicsFrame = new Deadline(this, "graphicsFrame");
     {
-      TaskGroup* renderObjects = new TaskGroup;
+      TaskGroup* renderObjects = new TaskGroup(nullptr);
       graphicsFrame->addTask(renderObjects);
       TaskProfile* renderEveryFrameProfile = new TaskProfile(true);
       std::vector<std::string> renderTasks =

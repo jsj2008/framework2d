@@ -5,15 +5,17 @@
 
 namespace Tasks
 {
+  class TaskProfile;
   class TaskGroup : public Task
   {
   public:
-    TaskGroup();
+    TaskGroup(TaskProfile* _profile);
     ~TaskGroup();
     void virtualExecute();
     void addTask(Task* _task);
   private:
-    List<Task> tasks;
+    List<Task> finishedTasks;
+    List<Task> unfinishedTasks;
   };
 }
 #endif /* _TASKGROUP_H */

@@ -17,11 +17,11 @@ public:
 };
 int main(int argv, char* argc[])
 {
+  g_Game.init();
+  g_Game.run();
   Tasks::TaskManager* manager = new Tasks::TaskManager;
   manager->run();
   manager->addTaskToThisFrame(new TestTask());
-  //    g_Game.init();
-  //   g_Game.run();
   //    Filesystem::global()->shutdown();
     return 0;
 }

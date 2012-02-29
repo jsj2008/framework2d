@@ -1,4 +1,5 @@
 #include "ActionTask.h"
+#include <Filesystem/Filesystem.h>
 
 namespace Tasks
 {
@@ -19,7 +20,7 @@ namespace Tasks
   {
   }
 
-  void ActionTask::execute()
+  void ActionTask::virtualExecute()
   {
     action->execute(object);
   }

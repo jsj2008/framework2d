@@ -3,6 +3,11 @@
 #include <Filesystem/Folder.h>
 #include <SDL/SDL.h>
 #include <cassert>
+
+Timer::Timer()
+  :GameObject<Timer>("timer")
+{
+}
 void Timer::init()
 {
     int result = SDL_Init(SDL_INIT_TIMER);

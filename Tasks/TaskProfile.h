@@ -9,9 +9,9 @@ namespace Tasks
   public:
     TaskProfile(bool _executeNextFrame);
     ~TaskProfile();
-    
+    bool isExecutedNextFrame(){return executeNextFrame;}
   private:
-
+    bool executeNextFrame;
     Dependency* dependencies;
   };
 }
