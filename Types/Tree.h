@@ -1,6 +1,8 @@
 #ifndef _LISTNODE_H
 #define _LISTNODE_H
 
+#include <string>
+
 template <typename Object> /// <Type stored in the List>
 class ListNode;
 
@@ -12,7 +14,9 @@ public:
   ~List();
   void attachChild(ListNode<Object>* _child);
   void detachChild(ListNode<Object>* _child);
+  void append(List<Object>* _other);
   ListNode<Object>* getChildren(){return children;}
+  Object* front(){return static_cast<Object*>(children);}
 protected:
   ListNode<Object>* children;
 };
@@ -26,11 +30,30 @@ class ListNode
   ListNode<Node>* getNext(){return next;}
   ListNode<Node>* getPrev(){return prev;}
   List<Node>* getParent(){return parent;}
+
+  Node* getNextObject(){return static_cast<Node*>(next);}
   Node& operator()(){return static_cast<Node&>(*this);}
 protected:
   friend class List<Node>;
   ListNode<Node>* next,* prev;
   List<Node>* parent;
+};
+
+template <typename Object>
+class NamedList: public List<Object>
+{
+public:
+  Object* operator [](const std::string& _name);
+};
+
+template <typename Node>
+class NamedListNode: public ListNode<Node>
+{
+public:
+  NamedListNode(const std::string& _name){name = _name;}
+  const std::string& getNodeName(){return name;}
+private:
+  std::string name;
 };
 
 template <typename Node> /// <Type of the Tree>
@@ -65,7 +88,35 @@ List<Object>::~List()
 template <typename Node>
 ListNode<Node>::~ListNode()
 {
+  if (parent)
   parent->detachChild(this);
+}
+
+#include <cstring>
+template <typename Object>
+Object* NamedList<Object>::operator [](const std::string& _address)
+{
+  Object* child = static_cast<List<Object>*>(this)->front();
+    while (child)
+    {
+        //if (child->get()->nodeName() == _address)
+        if (strcmp(&child->getNodeName()[0], &_address[0]) == 0)
+        {
+            return child;
+        }
+        child = child->getNext();
+    }
+    throw -1;
+}
+template <typename Object>
+void List<Object>::append(List<Object>* _other)
+{
+  ListNode<Object>* child = _other->getChildren();
+  while (child)
+    {
+      attachChild(child);
+    }
+  delete _other;
 }
 template <typename Object>
 void List<Object>::attachChild(ListNode<Object>* _child)
@@ -73,7 +124,8 @@ void List<Object>::attachChild(ListNode<Object>* _child)
   assert(_child->getParent() != this);
   if (_child->getParent())
       _child->getParent()->detachChild(_child);
-    _child->parent = static_cast<Object*>(this);
+  _child->parent = this;
+  //_child->parent = static_cast<Object*>(this);
     _child->prev = nullptr;
     _child->next = children;
     if (children != nullptr)

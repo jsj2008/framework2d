@@ -1,15 +1,13 @@
 #ifndef GRAPHICSMANAGER_H
 #define GRAPHICSMANAGER_H
 
-class Camera;
 #include <Graphics/Skins/Skin.h>
 #include <Graphics/GraphicalContentManager.h>
 #include <Types/Vec2i.h>
 #include <Box2D/Common/b2Settings.h>
 #include <Graphics/Camera/Camera.h>
+class Camera;
 class Icon;
-class Sprite;
-class SpriteList;
 
 extern class GraphicsManager : public GameObject<GraphicsManager>
 {
@@ -27,8 +25,6 @@ extern class GraphicsManager : public GameObject<GraphicsManager>
         void setCamera(Camera* _camera){mCamera = _camera;}
         MaterialContext* getMaterial(const char* material){return mContentManager.getMaterial(material);}
         TextureContext* getTexture(const char* texture){return mContentManager.getTexture(texture);}
-        void addSprite(Sprite* _sprite);
-        void deleteSprite(Sprite* _sprite);
         static std::string name()
         {
             return "GraphicsManager";
@@ -36,7 +32,6 @@ extern class GraphicsManager : public GameObject<GraphicsManager>
         static void registerActions(GameObjectType* _type);
     protected:
     private:
-        SpriteList* spriteList;
         Camera* mCamera;
         Vec2i resolution;
         GraphicalContentManager mContentManager;

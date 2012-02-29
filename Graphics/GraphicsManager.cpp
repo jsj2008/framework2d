@@ -69,7 +69,6 @@ void GraphicsManager::init()
     glColor4f(1,1,1,1);
 
     mCamera = 0;
-    spriteList = new SpriteList();
 }
 
 GraphicsManager::~GraphicsManager()
@@ -126,16 +125,9 @@ float GraphicsManager::getPixelsPerMeter()
 {
     return mCamera->getPixelsPerMeter();
 }
-void GraphicsManager::addSprite(Sprite* _sprite)
-{
-    spriteList->addSprite(_sprite);
-}
-void GraphicsManager::deleteSprite(Sprite* _sprite)
-{
-    spriteList->deleteSprite(_sprite);
-}
 
 void GraphicsManager::registerActions(GameObjectType* _type)
 {
+  _type->createActionHandle("bufferFlip", &GraphicsManager::endScene);
 }
 

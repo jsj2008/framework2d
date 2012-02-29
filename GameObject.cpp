@@ -120,22 +120,6 @@ GameObjectBase* GameObjectBase::getNode(const std::string& _address)
     }
     return node;
 }
-#include <cstring>
-GameObjectBase* GameObjectBase::getIndividualNode(const std::string& _address)
-{
-  GameObjectBase* child = getChildren();
-    while (child)
-    {
-        //if (child->get()->nodeName() == _address)
-        if (strcmp(&child->getObjectName()[0], &_address[0]) == 0)
-        {
-            return child;
-        }
-        child = child->getNext();
-    }
-    g_Log.error("No such node: " + _address);
-    throw -1;
-}
 
 EventHandle* GameObjectBase::deathEvent;
 
