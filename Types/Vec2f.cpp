@@ -166,12 +166,14 @@ float intersectionValue(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd, 
         float _bdeltaY = _bEnd.y - _bStart.y;
         if (_adeltaY == 0.0f)
         {
-            assert(_adeltaX != 0.0f);
+	  if (_adeltaX == 0.0f)
+	    throw -1;
             return (_bStart.x - _aStart.x) / (_aEnd.x - _aStart.x);
         }
         if (_bdeltaY == 0.0f)
         {
-            assert(_bdeltaX != 0.0f);
+	  if(_bdeltaX == 0.0f)
+	    throw -1;
             float aIntersect1 = (_bStart.y - _aStart.y) / (_aEnd.y - _aStart.y);
             float aIntersect2 = (_bEnd.y - _aStart.y) / (_aEnd.y - _aStart.y);
             float bIntersect1 = (_aStart.x - _bStart.x) / (_bEnd.x - _bStart.x);

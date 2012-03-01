@@ -24,6 +24,8 @@ private:
   void addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBodyPart* _destructionListener);
 
   struct Vertex;
+  struct Volume;
+  struct Boundary;
   class Edge
   {
   public:
@@ -36,6 +38,7 @@ private:
 	eEdgeTypeMax
       };
     Edge(){a = b = nullptr;}
+    ~Edge();
     void setA(Vertex* _a);
     void setB(Vertex* _b);
     void setA(Vertex* _a, const Vec2f& _bPosition);
@@ -45,9 +48,12 @@ private:
     Vec2f aPosition(){return a->position;}
     Vec2f bPosition(){return b->position;}
     EdgeType getEdgeType();
-    Edge* split(Vertex* _point);
+    Edge* split(Vec2f _point, Boundary* _boundary);
+    void setVolume(Volume* _volume);
+    Volume* getVolume();
   private:
     Vertex* a,* b;
+    Volume* volume;
   };
   struct Vertex
   {
@@ -64,7 +70,8 @@ private:
 	eRight,
 	eVertexShapeMax
       };
-    Vertex(const Vec2f& _position){position = _position;}
+    Vertex(const Vec2f& _position, Boundary* _boundary = nullptr, bool _anchor = false);
+    ~Vertex();
     Vec2f position;
     struct EdgeAttachment
     {
@@ -78,21 +85,47 @@ private:
     void addOutwardsEdge(Edge* _edge, const Vec2f& _b);
     void removeEdge(Edge* _edge);
     Edge* getNextOutfacing(Edge* _edge);
+    Boundary* boundary;
+    bool anchor;
     //Edge* a,* b;
     //VertexType getVertexType();
     //VertexShape getVertexShape();
   };
-  struct Volume
+  class Boundary
   {
+  public:
+    Boundary(){left = right = nullptr;}
+    ~Boundary();
+    void setLeft(Vertex* _left);
+    void setRight(Vertex* _right);
+    Vertex* getLeft(){return left;}
+    Vertex* getRight(){return right;}
+    Vec2f getLeftPosition();
+    Vec2f getRightPosition();
+  private:
+    Vertex* left,* right;
+  };
+  class Volume
+  {
+  public:
+    Volume(){left = right = nullptr;}
+    ~Volume();
+    Edge* getLeft(){return left;}
+    Edge* getRight(){return right;}
+    void setLeft(Edge* _left);
+    void setRight(Edge* _right);
+  private:
     Edge* left,* right;
   };
-  Edge* findIntersectingEdge(Vec2f _a, Vec2f* _b, Edge* _exception = nullptr);
+  Edge* findIntersectingEdge(Vec2f _a, Vec2f* _b, Edge* _exception = nullptr, Edge* _exception2 = nullptr);
+  void addFinalisedVertex(Vertex* _vertex, Edge* _edge, bool _leftEdge);
   void addFinalisedEdge(Edge* _edge);
   void createVertex(const Vec2f& _position, Edge* _a, Edge* _b, Vec2f* _bBPosition = nullptr);
 
   //std::unordered_map<b2FixtureBodyPart*, std::vector<Edge>> edgeMap;
   std::vector<Edge*> edges;
   std::vector<Volume*> volumes;
+  std::vector<Boundary*> boundaries;
 };
 
 #endif // WATERPHYSICSSYSTEM_H
