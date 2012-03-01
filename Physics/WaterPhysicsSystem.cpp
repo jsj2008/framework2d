@@ -9,7 +9,7 @@ WaterPhysicsSystem::WaterPhysicsSystem()
   addEdge({5,5}, {10,-5}, nullptr);
   addEdge({-5,0}, {-7,10}, nullptr);
   addEdge({-10,-6}, {-5,0}, nullptr);
-  //addEdge({-7,10}, {5,5}, nullptr);
+  addEdge({-7,10}, {5,5}, nullptr);
 }
 
 WaterPhysicsSystem::~WaterPhysicsSystem()
@@ -66,7 +66,7 @@ void WaterPhysicsSystem::addEdge(const Vec2f& _a, const Vec2f& _b, b2FixtureBody
 	  intersections[numIntersections] = edges[i];
 	  numIntersections++;
         }
-      catch (int i)
+      catch (int ii)
         {
         }
     }
@@ -159,34 +159,39 @@ void WaterPhysicsSystem::addFinalisedVertex(Vertex* _vertex, Edge* _edge, bool _
   Vertex* left;
   Vertex* right;
   Vertex** unsetVertex;
-  Boundary* boundary = new Boundary;
-  boundaries.push_back(boundary);
+  Boundary* boundary = _vertex->getBoundary();
+  if (boundary == nullptr)
+    {
+      boundary = new Boundary(this);
+      boundaries.push_back(boundary);
+    }
   if (_leftEdge)
     {
       b = a + Vec2f(500, 0);
       left = _vertex;
       unsetVertex = &right;
+      boundary->setLeft(_vertex);
     }
   else
     {
       b = a - Vec2f(500, 0);
       right = _vertex;
       unsetVertex = &left;
-    }
-  Edge* opposingEdge = findIntersectingEdge(a, &b, _edge); //FIXME
+      boundary->setRight(_vertex);
+      }
+  Edge* opposingEdge = findIntersectingEdge(a, &b, _edge);
   if (opposingEdge)
     {
-      *unsetVertex = new Vertex(b, boundary, true);
+      *unsetVertex = new Vertex(b, nullptr, true);
     }
   else
     {
       *unsetVertex = nullptr;
     }
-  if (left)
+    if (left)
     boundary->setLeft(left);
   if (right)
     boundary->setRight(right);
-  _vertex->boundary = boundary;
 }
 void WaterPhysicsSystem::addFinalisedEdge(Edge* _edge)
 {
@@ -203,7 +208,30 @@ void WaterPhysicsSystem::addFinalisedEdge(Edge* _edge)
     }
   addFinalisedVertex(_edge->getA(), _edge, leftEdge);
   addFinalisedVertex(_edge->getB(), _edge, leftEdge);
-  
+
+  //  for (Boundary* boundary = boundaries.front(); boundary; boundary = boundary->getNextObject())
+  for (unsigned int i = 0; i != boundaries.size(); i++)
+    {
+      Boundary* boundary = boundaries[i];
+      if (boundary)
+      try
+	{
+	  Vec2f position = intersectionPosition(_edge->aPosition(), _edge->bPosition(), boundary->getLeftPosition(), boundary->getRightPosition());
+	  Vertex* vertex = new Vertex(position, nullptr, true);
+	  if (leftEdge)
+	    {
+	      //assert(boundary->getLeft() == nullptr);
+	      boundary->setLeft(vertex);
+	    }
+	  else
+	    {
+	      // assert(boundary->getRight() == nullptr);
+	      boundary->setRight(vertex);
+	    }
+	}
+      catch (int i)
+	{}
+    }
   /*
   edges.push_back(_edge);
   Vec2f a = _edge->aPosition();
@@ -415,14 +443,17 @@ void WaterPhysicsSystem::renderWireframe()
     }
   glBegin(GL_LINES);
   glColor3f(1,1,0.5f);
+  //  for (Boundary* boundary = boundaries.front(); boundary; boundary = boundary->getNextObject())
   for (unsigned int i = 0; i != boundaries.size(); i++)
     {
-      Vec2f p = boundaries[i]->getLeftPosition();
-      std::cout << "Left: " << p << std::endl;
-      glVertex2f(p.x, p.y);
-      p = boundaries[i]->getRightPosition();
-      std::cout << "Right: " << p << std::endl;
-      glVertex2f(p.x, p.y);
+      Boundary* boundary = boundaries[i];
+      if (boundary)
+	{
+	  Vec2f p = boundary->getLeftPosition();
+	  glVertex2f(p.x, p.y);
+	  p = boundary->getRightPosition();
+	  glVertex2f(p.x, p.y);
+	}
     }
   glEnd();
 }
@@ -487,6 +518,33 @@ WaterPhysicsSystem::Vertex::Vertex(const Vec2f& _position, Boundary* _boundary, 
   boundary = _boundary;
   anchor = _anchor;
 }
+void WaterPhysicsSystem::Vertex::setBoundary(Boundary* _boundary)
+{
+  if (boundary != _boundary)
+    {
+      if (boundary)
+	boundary->removeVertex(this);
+      boundary = _boundary;
+    }
+}
+void WaterPhysicsSystem::Boundary::removeVertex(Vertex* _vertex)
+{
+  if (_vertex == left)
+    {
+      left = nullptr;
+      //      if (right == nullptr)
+	//	system->_removeBoundary(this);
+//	      delete this;
+    }
+  else if (_vertex == right)
+    {
+      assert(_vertex == right);
+      right = nullptr;
+      //      if (left == nullptr)
+	// delete this
+	//	system->_removeBoundary(this);
+    }
+}
 WaterPhysicsSystem::Edge* WaterPhysicsSystem::Vertex::getNextOutfacing(Edge* _b)
 {
   for (unsigned int i = 0; i != edges.size(); i++)
@@ -515,10 +573,24 @@ WaterPhysicsSystem::Vertex::~Vertex()
 }
 WaterPhysicsSystem::Boundary::~Boundary()
 {
-  assert(false);
+  if (left)
+    left->setBoundary(nullptr);
+  if (right)
+    right->setBoundary(nullptr);
+  system->_removeBoundary(this);
+}
+void WaterPhysicsSystem::_removeBoundary(Boundary* _boundary)
+{
+  for (unsigned int i = 0; i != boundaries.size(); i++)
+    if (boundaries[i] == _boundary)
+      boundaries[i] = nullptr;
 }
 void WaterPhysicsSystem::Boundary::setLeft(Vertex* _left)
 {
+  if (_left)
+    _left->setBoundary(this);
+  if (left)
+    left->setBoundary(nullptr);
   left = _left;
   if (left == nullptr && right == nullptr)
     delete this;
@@ -526,6 +598,10 @@ void WaterPhysicsSystem::Boundary::setLeft(Vertex* _left)
 }
 void WaterPhysicsSystem::Boundary::setRight(Vertex* _right)
 {
+  if (_right)
+    _right->setBoundary(this);
+  if (right)
+    right->setBoundary(nullptr);
   right = _right;
   if (left == nullptr && right == nullptr)
     delete this;

@@ -3,11 +3,14 @@
 
 #include <GameObject.h>
 #include <Types/Vec2f.h>
+#include <Types/Tree.h>
 #include <unordered_map>
 class b2FixtureBodyPart;
 
 class WaterPhysicsSystem : public GameObject<WaterPhysicsSystem>
 {
+private:
+  class Boundary;
 public:
   WaterPhysicsSystem();
   virtual ~WaterPhysicsSystem();
@@ -18,6 +21,7 @@ public:
   static void registerActions(GameObjectType* _type);
   void renderWireframe();
   void addFixture(b2FixtureBodyPart* _bodyPart);
+  void _removeBoundary(Boundary* _boundary);
   std::vector<Vec2f> getContainer(const Vec2f& _position);
 protected:
 private:
@@ -55,8 +59,9 @@ private:
     Vertex* a,* b;
     Volume* volume;
   };
-  struct Vertex
+  class Vertex
   {
+  public:
     enum VertexType
       {
 	eBed,
@@ -85,25 +90,30 @@ private:
     void addOutwardsEdge(Edge* _edge, const Vec2f& _b);
     void removeEdge(Edge* _edge);
     Edge* getNextOutfacing(Edge* _edge);
-    Boundary* boundary;
     bool anchor;
-    //Edge* a,* b;
+    Boundary* getBoundary(){return boundary;}
+    void setBoundary(Boundary* _boundary);
+  private:
+    Boundary* boundary;
+        //Edge* a,* b;
     //VertexType getVertexType();
     //VertexShape getVertexShape();
   };
   class Boundary
   {
   public:
-    Boundary(){left = right = nullptr;}
+    Boundary(WaterPhysicsSystem* _system){system = _system; left = right = nullptr;}
     ~Boundary();
     void setLeft(Vertex* _left);
     void setRight(Vertex* _right);
     Vertex* getLeft(){return left;}
     Vertex* getRight(){return right;}
+    void removeVertex(Vertex* _removed);
     Vec2f getLeftPosition();
     Vec2f getRightPosition();
   private:
     Vertex* left,* right;
+    WaterPhysicsSystem* system;
   };
   class Volume
   {

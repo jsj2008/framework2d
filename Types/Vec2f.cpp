@@ -273,8 +273,6 @@ float intersectionValue(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd, 
 
 Vec2f intersectionPosition(Vec2f _aStart, Vec2f _aEnd, Vec2f _bStart, Vec2f _bEnd, bool _aNeedsIntersect, bool _bNeedsIntersect)
 {
-  std::cout << "Intersecting " << _aStart << _aEnd <<  _bStart <<  _bEnd << std::endl;
-
     float intersect = intersectionValue(_aStart, _aEnd, _bStart, _bEnd, _aNeedsIntersect, _bNeedsIntersect);
     return ((_aEnd - _aStart) * intersect) + _aStart;
     /*
