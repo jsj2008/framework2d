@@ -11,7 +11,6 @@
 #include <Physics/WaterPhysicsSystem.h>
 #include <Timer.h>
 #include <stack>
-#define DEBUG_DRAW
 
 PhysicsManager::PhysicsManager(CollisionDatabase* _database)
 {
@@ -60,6 +59,8 @@ b2Joint* PhysicsManager::createJoint(b2JointDef* def)
 }
 void PhysicsManager::registerActions(GameObjectType* _type)
 {
+  _type->createActionHandle("render", &PhysicsManager::render);
+  _type->createActionHandle("renderWireframe", &PhysicsManager::renderWireframe);
 }
 
 using namespace std;
@@ -123,14 +124,14 @@ void PhysicsManager::render()
     float y2 = y + ((float)resolution.y / g_GraphicsManager.getPixelsPerMeter());
     aabb.upperBound = Vec2f(x2,y2);
     mWorld->QueryAABB(mRenderCallback,aabb);
-#ifdef DEBUG_DRAW
-    mWorld->DrawDebugData();
-#endif
-
     /*aabb.lowerBound = Vec2f(g_GraphicsManager.getView().ScreenToWorldSpace());
     x2 = aabb.lowerBound.x + ((float)g_GraphicsManager.getXRes() / g_GraphicsManager.getPixelsPerMeter());
     y2 = aabb.lowerBound.y + ((float)g_GraphicsManager.getYRes() / g_GraphicsManager.getPixelsPerMeter());
     aabb.upperBound = Vec2f(x2,y2);*/
+}
+void PhysicsManager::renderWireframe()
+{
+  mWorld->DrawDebugData();
 }
 class PhySimpleCallback : public b2QueryCallback
 {

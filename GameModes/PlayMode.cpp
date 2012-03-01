@@ -11,7 +11,9 @@
 #include <AI/AIManager.h>
 #include <Entities/AIEntity.h>
 #include <Graphics/Camera/FreeCamera.h>
+#include <Physics/PhysicsManager.h>
 #include <Networking/Client/SinglePlayerGameServer.h>
+#include <Physics/WaterPhysicsSystem.h>
 #include <SDL/SDL.h>
 
 PlayMode::PlayMode()
@@ -80,7 +82,9 @@ bool PlayMode::v_Update()
     running = g_InputManager.processInput();
     g_GraphicsManager.beginScene();
     g_InputManager.render();
-    activeLevel->render();
+    //activeLevel->getWorld()->renderWireframe();
+    activeLevel->getWorld()->getChildOfType<WaterPhysicsSystem>()->renderWireframe();
+    //    activeLevel->render();
     g_AIManager.tempRender();
     //SDL_Delay(5);
     g_GraphicsManager.endScene();

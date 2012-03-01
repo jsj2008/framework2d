@@ -195,11 +195,6 @@
 	</Factory>
       </FactoryList>	
       <EntityList Name="Entities">
-	<Entity Type="StaticWater">
-	  <PropertyBag>
-	    <Property Type="float" Name="height" Value="2.0" />
-	  </PropertyBag>
-	</Entity>
 	<Entity Type="LevelGeometry">
 	  <PropertyBag>
 	    <Property Type="bool" Name="addToWaterSystem" Value="true" />

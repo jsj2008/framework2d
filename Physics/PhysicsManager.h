@@ -39,6 +39,7 @@ class PhysicsManager: public GameObject<PhysicsManager>
         void destroyBody(b2Body* _body);
         bool update();
         void render();
+  void renderWireframe();
         b2Body* select(Vec2f& position, void* _ignore = (void*)0xBAADF00D);
         void AABBQuery(b2QueryCallback* callback, const Vec2f& point);
         void tick();
